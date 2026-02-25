@@ -42,7 +42,7 @@ const FoundersPage = () => {
               Our Founders
             </h1>
             <p className="text-base md:text-lg text-white/70 max-w-lg leading-relaxed">
-              The team behind BhorX.ai — researchers, engineers, and visionaries on a mission to decode aging.
+              The team behind BohrX.ai — researchers, engineers, and visionaries on a mission to decode aging.
             </p>
           </motion.div>
         </div>
