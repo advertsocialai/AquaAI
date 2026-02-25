@@ -1,13 +1,14 @@
 import { motion } from 'framer-motion';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import founderOneImg from '@/assets/founder-one.jpg';
 
 const founders = [
   {
     name: "Founder One",
     role: "CEO & Co-Founder",
     bio: "Visionary leader with a background in computational biology and AI. Passionate about using technology to extend healthy human lifespan.",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
+    image: founderOneImg,
   },
   {
     name: "Founder Two",
