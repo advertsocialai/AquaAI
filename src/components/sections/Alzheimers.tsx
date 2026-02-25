@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
-export function BioAge() {
+export function Alzheimers() {
   return (
-    <section id="bioage" className="relative h-screen flex items-end overflow-hidden">
+    <section className="relative h-screen flex items-end overflow-hidden">
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1920&q=80')`,
+          backgroundImage: `url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=1920&q=80')`,
         }}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
@@ -21,16 +21,16 @@ export function BioAge() {
           className="max-w-2xl"
         >
           <h2 className="text-4xl md:text-6xl font-bold text-white uppercase tracking-tight leading-[1.05] mb-6">
-            Understanding Biological Age
+            Detecting Alzheimer's Through EEG Signals
           </h2>
           <p className="text-base md:text-lg text-white/70 mb-8 max-w-lg leading-relaxed">
-            Biological age is the truest measure of your health and longevity potential. Our AI decodes the signals hidden in your biology.
+            Using AI to analyze brainwave patterns for early detection of Alzheimer's disease — enabling intervention before symptoms appear.
           </p>
           <Link
-            to="/bioage"
+            to="/alzheimers"
             className="inline-block border border-white/40 text-white text-xs tracking-[0.25em] font-medium px-8 py-4 hover:bg-white hover:text-black transition-all duration-300 uppercase"
           >
-            Explore
+            Learn More
           </Link>
         </motion.div>
       </div>
