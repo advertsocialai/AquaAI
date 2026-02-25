@@ -7,21 +7,15 @@ import founderTwoImg from '@/assets/founder-two.jpg';
 const founders = [
   {
     name: "Founder One",
-    role: "CEO & Co-Founder",
+    role: "Co-Founder",
     bio: "Visionary leader with a background in computational biology and AI. Passionate about using technology to extend healthy human lifespan.",
     image: founderOneImg,
   },
   {
     name: "Founder Two",
-    role: "CTO & Co-Founder",
+    role: "Co-Founder",
     bio: "Deep learning researcher and engineer with expertise in multi-omics data integration and scalable AI infrastructure.",
     image: founderTwoImg,
-  },
-  {
-    name: "Founder Three",
-    role: "Chief Science Officer",
-    bio: "Neuroscientist and biostatistician specializing in aging biomarkers and EEG signal analysis for neurodegenerative disease detection.",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80",
   },
 ];
 
@@ -56,7 +50,7 @@ const FoundersPage = () => {
 
       <section className="py-24 bg-black">
         <div className="container mx-auto px-6 lg:px-8 max-w-4xl">
-          <div className="grid md:grid-cols-3 gap-16">
+          <div className="grid md:grid-cols-2 gap-16 max-w-2xl mx-auto">
             {founders.map((founder, i) => (
               <motion.div
                 key={founder.name}
