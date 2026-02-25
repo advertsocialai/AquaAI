@@ -11,7 +11,7 @@ import { Footer } from "@/components/layout/Footer";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-black relative snap-y snap-mandatory overflow-y-auto h-screen">
+    <div className="min-h-screen bg-black relative snap-y snap-proximity overflow-y-auto h-screen">
       <Header />
       <main>
         <Hero />

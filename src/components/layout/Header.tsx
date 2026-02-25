@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import bhorxLogo from '@/assets/bhorx-logo.png';
 
 const navItems = [
@@ -62,22 +63,36 @@ export function Header() {
           </button>
         </div>
 
-        {mobileMenuOpen && (
-          <div className="md:hidden py-8 bg-black/95 backdrop-blur-sm">
-            <nav className="flex flex-col gap-6">
-              {navItems.map((item) => (
-                <Link
-                  key={item.label}
-                  to={item.to}
-                  className="text-sm font-medium text-white/70 hover:text-white transition-colors tracking-[0.2em]"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-          </div>
-        )}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="md:hidden overflow-hidden bg-black/95 backdrop-blur-sm"
+            >
+              <nav className="flex flex-col gap-6 py-8">
+                {navItems.map((item, i) => (
+                  <motion.div
+                    key={item.label}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05, duration: 0.3 }}
+                  >
+                    <Link
+                      to={item.to}
+                      className="text-sm font-medium text-white/70 hover:text-white transition-colors tracking-[0.2em]"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  </motion.div>
+                ))}
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </header>
   );
