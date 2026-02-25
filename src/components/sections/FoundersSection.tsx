@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
-export function BioAge() {
+export function FoundersSection() {
   return (
-    <section id="bioage" className="relative h-screen flex items-end overflow-hidden">
+    <section className="relative h-screen flex items-end overflow-hidden">
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1920&q=80')`,
+          backgroundImage: `url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&q=80')`,
         }}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
@@ -21,16 +21,16 @@ export function BioAge() {
           className="max-w-2xl"
         >
           <h2 className="text-4xl md:text-6xl font-bold text-white uppercase tracking-tight leading-[1.05] mb-6">
-            Understanding Biological Age
+            Meet the Founders
           </h2>
           <p className="text-base md:text-lg text-white/70 mb-8 max-w-lg leading-relaxed">
-            Biological age is the truest measure of your health and longevity potential. Our AI decodes the signals hidden in your biology.
+            A team of researchers, engineers, and visionaries united by a single mission — to extend healthy human lifespan through AI.
           </p>
           <Link
-            to="/bioage"
+            to="/founders"
             className="inline-block border border-white/40 text-white text-xs tracking-[0.25em] font-medium px-8 py-4 hover:bg-white hover:text-black transition-all duration-300 uppercase"
           >
-            Explore
+            Our Team
           </Link>
         </motion.div>
       </div>

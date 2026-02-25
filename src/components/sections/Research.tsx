@@ -25,12 +25,11 @@ export function Research() {
           <p className="text-base md:text-lg text-white/70 mb-8 max-w-lg leading-relaxed">
             Our work is grounded in peer-reviewed research, open benchmarks, and reproducible experiments. Every model we deploy has been rigorously validated.
           </p>
-          <a
-            href="#"
-            className="inline-block border border-white/40 text-white text-xs tracking-[0.25em] font-medium px-8 py-4 hover:bg-white hover:text-black transition-all duration-300 uppercase"
+          <span
+            className="inline-block border border-white/20 text-white/40 text-xs tracking-[0.25em] font-medium px-8 py-4 uppercase cursor-default"
           >
-            View Publications
-          </a>
+            Publications Coming Soon
+          </span>
         </motion.div>
       </div>
     </section>

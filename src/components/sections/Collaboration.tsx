@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 export function Collaboration() {
   return (
@@ -25,12 +26,12 @@ export function Collaboration() {
           <p className="text-base md:text-lg text-white/70 mb-8 max-w-lg leading-relaxed">
             Whether you're a researcher, institution, or investor—we're looking for partners who share our vision of extending healthy human lifespan through AI.
           </p>
-          <a
-            href="#"
+          <Link
+            to="/collaborate"
             className="inline-block border border-white/40 text-white text-xs tracking-[0.25em] font-medium px-8 py-4 hover:bg-white hover:text-black transition-all duration-300 uppercase"
           >
             Get in Touch
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>

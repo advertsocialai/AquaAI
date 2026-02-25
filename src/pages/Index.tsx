@@ -1,10 +1,11 @@
-import { motion } from "framer-motion";
 import { Header } from "@/components/layout/Header";
 import { Hero } from "@/components/sections/Hero";
 import { WhatWeBuilt } from "@/components/sections/WhatWeBuilt";
 import { Research } from "@/components/sections/Research";
 import { BioAge } from "@/components/sections/BioAge";
+import { Alzheimers } from "@/components/sections/Alzheimers";
 import { Collaboration } from "@/components/sections/Collaboration";
+import { FoundersSection } from "@/components/sections/FoundersSection";
 import { Footer } from "@/components/layout/Footer";
 
 const Index = () => {
@@ -16,7 +17,9 @@ const Index = () => {
         <WhatWeBuilt />
         <Research />
         <BioAge />
+        <Alzheimers />
         <Collaboration />
+        <FoundersSection />
       </main>
       <Footer />
     </div>

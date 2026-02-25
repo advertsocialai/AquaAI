@@ -1,12 +1,14 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import bhorxLogo from '@/assets/bhorx-logo.png';
 
 const navItems = [
-  { label: "TECHNOLOGY", href: "#technology" },
-  { label: "RESEARCH", href: "#research" },
-  { label: "BIO-AGE", href: "#bioage" },
-  { label: "COLLABORATE", href: "#collaborate" },
+  { label: "TECHNOLOGY", to: "/technology" },
+  { label: "BIO-AGE", to: "/bioage" },
+  { label: "ALZHEIMER'S", to: "/alzheimers" },
+  { label: "FOUNDERS", to: "/founders" },
+  { label: "COLLABORATE", to: "/collaborate" },
 ];
 
 export function Header() {
@@ -16,29 +18,29 @@ export function Header() {
     <header className="fixed top-0 left-0 right-0 z-50">
       <div className="container mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <a href="/" className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3">
             <img src={bhorxLogo} alt="BhorX.ai Logo" className="w-10 h-10 object-contain" />
             <span className="text-lg font-bold text-white tracking-wider">
               BHORX<span className="font-light">.AI</span>
             </span>
-          </a>
+          </Link>
 
           <nav className="hidden md:flex items-center gap-10">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.label}
-                href={item.href}
+                to={item.to}
                 className="text-xs font-medium text-white/70 hover:text-white transition-colors tracking-[0.2em]"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
           <div className="hidden md:block">
-            <a href="#collaborate" className="text-xs font-medium text-white/70 hover:text-white transition-colors tracking-[0.2em]">
+            <Link to="/collaborate" className="text-xs font-medium text-white/70 hover:text-white transition-colors tracking-[0.2em]">
               CONTACT
-            </a>
+            </Link>
           </div>
 
           <button
@@ -53,14 +55,14 @@ export function Header() {
           <div className="md:hidden py-8 bg-black/95 backdrop-blur-sm">
             <nav className="flex flex-col gap-6">
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.label}
-                  href={item.href}
+                  to={item.to}
                   className="text-sm font-medium text-white/70 hover:text-white transition-colors tracking-[0.2em]"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.label}
-                </a>
+                </Link>
               ))}
             </nav>
           </div>

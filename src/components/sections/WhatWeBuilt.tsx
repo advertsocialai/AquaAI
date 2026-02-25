@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 export function WhatWeBuilt() {
   return (
@@ -25,12 +26,12 @@ export function WhatWeBuilt() {
           <p className="text-base md:text-lg text-white/70 mb-8 max-w-lg leading-relaxed">
             From research-grade prediction models to production systems, we build the full stack of longevity AI infrastructure.
           </p>
-          <a
-            href="#research"
+          <Link
+            to="/technology"
             className="inline-block border border-white/40 text-white text-xs tracking-[0.25em] font-medium px-8 py-4 hover:bg-white hover:text-black transition-all duration-300 uppercase"
           >
             Learn More
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>
