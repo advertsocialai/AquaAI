@@ -1,10 +1,13 @@
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { TextReveal } from '@/components/ui/text-reveal';
 
 const CollaboratePage = () => {
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => { document.title = "Collaborate — BohrX.ai"; }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -12,34 +15,36 @@ const CollaboratePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-background">
       <Header />
       <section className="relative h-screen flex items-end overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed"
           style={{
             backgroundImage: `url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80')`,
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
         <div className="container mx-auto px-6 lg:px-8 relative z-10 pb-24">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-2xl"
-          >
-            <h1 className="text-5xl md:text-7xl font-bold text-white uppercase tracking-tight leading-[1.05] mb-6">
-              Collaborate With Us
-            </h1>
-            <p className="text-base md:text-lg text-white/70 max-w-lg leading-relaxed">
+          <div className="max-w-2xl">
+            <TextReveal
+              text="Collaborate With Us"
+              as="h1"
+              className="text-5xl md:text-7xl font-bold text-foreground uppercase tracking-tight leading-[1.05] mb-6"
+            />
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.5 }}
+              className="text-base md:text-lg text-foreground/70 max-w-lg leading-relaxed"
+            >
               Whether you're a researcher, institution, or investor — we're looking for partners who share our vision.
-            </p>
-          </motion.div>
+            </motion.p>
+          </div>
         </div>
       </section>
 
-      <section className="py-24 bg-black">
+      <section className="py-24 bg-background">
         <div className="container mx-auto px-6 lg:px-8 max-w-xl">
           {submitted ? (
             <motion.div
@@ -47,10 +52,10 @@ const CollaboratePage = () => {
               animate={{ opacity: 1 }}
               className="text-center py-16"
             >
-              <h2 className="text-2xl font-bold text-white uppercase tracking-tight mb-4">
+              <h2 className="text-2xl font-bold text-foreground uppercase tracking-tight mb-4">
                 Thank You
               </h2>
-              <p className="text-white/60">
+              <p className="text-muted-foreground">
                 We'll be in touch soon.
               </p>
             </motion.div>
@@ -64,39 +69,39 @@ const CollaboratePage = () => {
               className="space-y-8"
             >
               <div>
-                <label className="block text-xs text-white/50 uppercase tracking-[0.2em] mb-2">Name</label>
+                <label className="block text-xs text-muted-foreground uppercase tracking-[0.2em] mb-2">Name</label>
                 <input
                   type="text"
                   required
-                  className="w-full bg-transparent border-b border-white/20 text-white py-3 text-sm focus:outline-none focus:border-white/60 transition-colors"
+                  className="w-full bg-transparent border-b border-border text-foreground py-3 text-sm focus:outline-none focus:border-foreground/60 transition-colors"
                 />
               </div>
               <div>
-                <label className="block text-xs text-white/50 uppercase tracking-[0.2em] mb-2">Email</label>
+                <label className="block text-xs text-muted-foreground uppercase tracking-[0.2em] mb-2">Email</label>
                 <input
                   type="email"
                   required
-                  className="w-full bg-transparent border-b border-white/20 text-white py-3 text-sm focus:outline-none focus:border-white/60 transition-colors"
+                  className="w-full bg-transparent border-b border-border text-foreground py-3 text-sm focus:outline-none focus:border-foreground/60 transition-colors"
                 />
               </div>
               <div>
-                <label className="block text-xs text-white/50 uppercase tracking-[0.2em] mb-2">Organization</label>
+                <label className="block text-xs text-muted-foreground uppercase tracking-[0.2em] mb-2">Organization</label>
                 <input
                   type="text"
-                  className="w-full bg-transparent border-b border-white/20 text-white py-3 text-sm focus:outline-none focus:border-white/60 transition-colors"
+                  className="w-full bg-transparent border-b border-border text-foreground py-3 text-sm focus:outline-none focus:border-foreground/60 transition-colors"
                 />
               </div>
               <div>
-                <label className="block text-xs text-white/50 uppercase tracking-[0.2em] mb-2">Message</label>
+                <label className="block text-xs text-muted-foreground uppercase tracking-[0.2em] mb-2">Message</label>
                 <textarea
                   required
                   rows={4}
-                  className="w-full bg-transparent border-b border-white/20 text-white py-3 text-sm focus:outline-none focus:border-white/60 transition-colors resize-none"
+                  className="w-full bg-transparent border-b border-border text-foreground py-3 text-sm focus:outline-none focus:border-foreground/60 transition-colors resize-none"
                 />
               </div>
               <button
                 type="submit"
-                className="border border-white/40 text-white text-xs tracking-[0.25em] font-medium px-8 py-4 hover:bg-white hover:text-black transition-all duration-300 uppercase"
+                className="border border-foreground/40 text-foreground text-xs tracking-[0.25em] font-medium px-8 py-4 hover:bg-foreground hover:text-background transition-all duration-300 uppercase"
               >
                 Send Message
               </button>

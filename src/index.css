@@ -41,3 +41,20 @@
     scroll-behavior: smooth;
   }
 }
+
+@layer utilities {
+  .bg-hero-fade {
+    animation: heroFadeIn 1.2s ease-out both;
+  }
+}
+
+@keyframes heroFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(1.02);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
