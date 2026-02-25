@@ -8,7 +8,7 @@ const founders = [
   {
     name: "Founder One",
     role: "Co-Founder",
-    bio: "Visionary leader with a background in computational biology and AI. Passionate about using technology to extend healthy human lifespan.",
+    bio: "Architect of scalable AI platforms enabling secure, cloud-native deployment of advanced machine learning and generative AI systems.",
     image: founderOneImg,
   },
   {
