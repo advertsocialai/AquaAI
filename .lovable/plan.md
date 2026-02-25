@@ -1,79 +1,114 @@
 
 
-# Expand BhorX.ai: Add Pages, Founders, Alzheimer's Section (Skip Publications)
+# Making BohrX.ai a 10/10 Experience
 
-## Overview
-We'll add real pages behind the buttons, introduce an Alzheimer's EEG detection section, add a Founders page, and skip the publications/research page for now since you're a startup.
+## The Problem
 
-## What's Changing
+Right now, every section on the homepage follows the exact same pattern: background photo, gradient overlay, text at bottom-left, button. It's clean but **repetitive and predictable**. There's no rhythm, no surprise, no psychological tension. A truly impressive site needs visual variety, motion storytelling, and moments that make visitors pause.
 
-### 1. New Home Page Section: Alzheimer's EEG Detection
-A new full-screen cinematic section added between BioAge and Collaboration:
-- Brain/neuroscience background image
-- Heading: "Detecting Alzheimer's Through EEG Signals"
-- Description about using AI to analyze brainwave patterns for early detection
-- "Learn More" button linking to `/alzheimers`
+## The Upgrade Strategy
 
-### 2. New Home Page Section: Founders
-A new full-screen section after Collaboration (before footer):
-- Clean portraits/team-style background image
-- Heading: "Meet the Founders"
-- Brief intro text about the founding team
-- "Our Team" button linking to `/founders`
+The goal is to use **psychological principles** -- curiosity gaps, the Zeigarnik effect (incomplete patterns demand attention), progressive disclosure, and the Von Restorff effect (things that stand out are remembered) -- to make the site unforgettable.
 
-### 3. New Pages (all following SpaceX cinematic style)
+---
 
-| Page | Route | Content |
-|------|-------|---------|
-| **Technology** | `/technology` | Full-screen hero + detail sections about BhorX.ai's longevity AI stack |
-| **Bio-Age** | `/bioage` | Hero + explanation of biological age prediction, how it works |
-| **Alzheimer's EEG** | `/alzheimers` | Hero + the problem, EEG approach, AI methodology, early results |
-| **Founders** | `/founders` | Hero + founder profiles with photos, bios, roles |
-| **Collaborate** | `/collaborate` | Hero + partnership info, simple contact form |
+### 1. Scroll-Snapping Between Sections
 
-No Research/Publications page for now -- the Research section on the home page will stay as a visual section but the "View Publications" button will say "Coming Soon" or link to the collaborate page.
+Lock each full-screen section into view so users experience one "scene" at a time, like flipping through a cinematic story. This creates **focus and intentionality** -- each section gets full attention.
 
-### 4. Fix Navigation
-- Header nav updated to use React Router `Link` components
-- Nav items: TECHNOLOGY, BIO-AGE, ALZHEIMER'S, FOUNDERS, COLLABORATE
-- Remove RESEARCH from nav (keep section on home page, just not as a nav destination)
-- All section CTA buttons link to their respective pages
+- Add `scroll-snap-type: y mandatory` to the main container
+- Each section gets `scroll-snap-align: start`
 
-### 5. Update Routing
-Register all 5 new routes in `App.tsx`.
+### 2. Parallax Depth on Hero Images
+
+Background images move at a slower rate than content as users scroll, creating a sense of **depth and immersion** that flat pages lack.
+
+- Apply `background-attachment: fixed` or use a scroll-driven transform on image layers
+- Subtle effect (not extreme) to maintain elegance
+
+### 3. Cinematic Text Reveal Animations
+
+Instead of text fading in as a block, reveal headings **line by line or word by word** with staggered timing. This creates a sense of **unfolding narrative** and keeps users reading.
+
+- Split heading text into individual words/lines
+- Use Framer Motion staggerChildren with a slight delay per word
+- Apply a clip/mask reveal (text slides up from behind a hidden overflow)
+
+### 4. A "By the Numbers" Stats Section
+
+Add a section between Research and BioAge with animated counters. Numbers like "3,400+ biomarkers analyzed" or "12M+ data points" trigger the **authority bias** -- people trust quantified claims.
+
+- Create a minimal horizontal layout with 3-4 stats
+- Numbers count up from 0 when scrolled into view using the existing `animated-counter.tsx` component
+- Keep the design sparse: just numbers, labels, thin separators
+
+### 5. Scroll Progress Indicator
+
+A thin white line at the top of the viewport that grows as users scroll down. This creates a **completion drive** (Zeigarnik effect) -- users subconsciously want to reach the end.
+
+- Fixed bar at top, width tied to scroll percentage
+- 1px height, white, subtle
+
+### 6. Smooth Page Transitions
+
+When navigating between pages, instead of a hard cut, use a **fade-to-black transition**. This mimics film editing and makes the site feel like a cohesive experience, not separate pages.
+
+- Wrap route content in AnimatePresence with fade/slide animations
+- Exit animation before enter animation
+
+### 7. Custom Cursor Effect
+
+Replace the default cursor with a subtle **spotlight or dot-ring cursor** on desktop. This makes the site feel interactive and premium. Psychologically, it turns passive viewing into active exploration.
+
+- Small white dot (8px) as primary cursor
+- Larger ring (32px) that follows with slight delay (lerp)
+- Ring expands on hover over interactive elements
+
+### 8. Varied Section Layouts (Break the Pattern)
+
+The Von Restorff effect says the thing that's different gets remembered. Right now every section looks the same. We need to break the pattern:
+
+- **Hero**: Keep as-is (full photo, text bottom-left) -- this sets the baseline
+- **WhatWeBuilt**: Move text to **right side** instead of left
+- **Research**: Add a **horizontal scrolling stat ticker** across the section
+- **BioAge**: Use a **split layout** -- photo on left half, text on right half (no full-bleed image)
+- **Collaboration**: Text **centered** with a large typographic treatment
+
+### 9. Header Backdrop Blur on Scroll
+
+The header is currently fully transparent. Add a subtle backdrop blur + dark tint that activates after scrolling past the first viewport. This provides **visual grounding** and makes navigation feel stable.
+
+- Track scroll position
+- After 100px scroll, apply `backdrop-blur-md bg-black/50`
+- Smooth transition
+
+### 10. Footer Enhancement
+
+Add social links (LinkedIn, Twitter/X) and a subtle "Back to top" action. The footer is the last impression -- make it feel intentional.
+
+---
 
 ## Technical Details
 
-### New files to create:
-- `src/components/sections/Alzheimers.tsx` -- home page section
-- `src/components/sections/Founders.tsx` -- home page section
-- `src/pages/TechnologyPage.tsx` -- full page
-- `src/pages/BioAgePage.tsx` -- full page
-- `src/pages/AlzheimersPage.tsx` -- full page
-- `src/pages/FoundersPage.tsx` -- full page with founder profiles
-- `src/pages/CollaboratePage.tsx` -- full page with contact info
+### Files to Create
+- `src/components/ui/custom-cursor.tsx` -- Dot + ring cursor component
+- `src/components/ui/scroll-progress.tsx` -- Top progress bar
+- `src/components/ui/text-reveal.tsx` -- Word-by-word text animation component
+- `src/components/sections/Stats.tsx` -- Animated stats section
+- `src/components/layout/PageTransition.tsx` -- Route transition wrapper
 
-### Files to modify:
-- `src/App.tsx` -- Add 5 new routes
-- `src/pages/Index.tsx` -- Add Alzheimers and Founders sections
-- `src/components/layout/Header.tsx` -- Update nav to use React Router Links, add new nav items
-- `src/components/sections/WhatWeBuilt.tsx` -- Button links to `/technology`
-- `src/components/sections/Research.tsx` -- Change button to "Coming Soon" or link to `/collaborate`
-- `src/components/sections/BioAge.tsx` -- Button links to `/bioage`
-- `src/components/sections/Collaboration.tsx` -- Button links to `/collaborate`
-- `src/components/layout/Footer.tsx` -- Fix footer links
+### Files to Modify
+- `src/pages/Index.tsx` -- Add Stats section, scroll-snap, new layouts
+- `src/components/sections/Hero.tsx` -- Parallax + text reveal
+- `src/components/sections/WhatWeBuilt.tsx` -- Right-aligned layout
+- `src/components/sections/BioAge.tsx` -- Split layout
+- `src/components/sections/Collaboration.tsx` -- Centered typography
+- `src/components/sections/Research.tsx` -- Text reveal animations
+- `src/components/layout/Header.tsx` -- Scroll-aware backdrop blur
+- `src/components/layout/Footer.tsx` -- Social links, back-to-top
+- `src/App.tsx` -- Wrap routes in PageTransition, add custom cursor + scroll progress
+- `src/index.css` -- Scroll-snap rules, custom cursor hiding, smooth scroll tweaks
 
-### Page structure (each new page):
-1. Shared Header
-2. Full-screen hero with background image and heading
-3. Content sections with paragraphs and key points (black bg, white text, minimal)
-4. Shared Footer
-
-### Founders Page specifics:
-- Hero section with team photo background
-- Grid of founder cards (photo, name, role, short bio) -- kept minimal, no fancy effects
-- Each card: circular avatar photo, name in bold uppercase, role, 2-3 line bio
-- Placeholder photos from Unsplash portraits until real ones are added
-
-All pages maintain the black background, white text, cinematic SpaceX style.
+### Dependencies
+- No new dependencies needed -- everything uses existing Framer Motion + GSAP + Tailwind
 
