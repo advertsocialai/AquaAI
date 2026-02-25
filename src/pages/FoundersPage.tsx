@@ -6,13 +6,13 @@ import founderTwoImg from '@/assets/founder-two.jpg';
 
 const founders = [
   {
-    name: "Founder One",
+    name: "Chaitanya Gowtham Raju",
     role: "Co-Founder",
     bio: "Architect of scalable AI platforms enabling secure, cloud-native deployment of advanced machine learning and generative AI systems.\nExpert in building production-grade AI infrastructure that powers biomedical research, large-scale data processing, and intelligent automation.",
     image: founderOneImg,
   },
   {
-    name: "Founder Two",
+    name: "Sridhara Syam Sharma",
     role: "Co-Founder",
     bio: "AI researcher and builder focused on healthcare intelligence and scalable ML systems. Worked on EEG-based diagnostics, quantum-ML frameworks, and real-world AI deployment.\nDriven by building systems that move from research to measurable impact.",
     image: founderTwoImg,
