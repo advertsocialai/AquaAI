@@ -2,6 +2,8 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { TextReveal } from '@/components/ui/text-reveal';
 
+const ticker = ['RESEARCHERS', 'INSTITUTIONS', 'INVESTORS', 'CLINICIANS', 'BIOTECH', 'PHARMA', 'UNIVERSITIES', 'HOSPITALS'];
+
 export function Collaboration() {
   return (
     <section id="collaborate" className="relative h-screen flex items-center justify-center overflow-hidden snap-start">
@@ -54,6 +56,21 @@ export function Collaboration() {
             Get in Touch
           </Link>
         </motion.div>
+
+        {/* Reverse-scrolling ticker */}
+        <div className="overflow-hidden border-y border-white/10 py-4 mt-16">
+          <motion.div
+            className="flex gap-12 whitespace-nowrap"
+            animate={{ x: ['-50%', '0%'] }}
+            transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
+          >
+            {[...ticker, ...ticker].map((item, i) => (
+              <span key={i} className="text-xs text-white/30 tracking-[0.3em] font-medium">
+                {item}
+              </span>
+            ))}
+          </motion.div>
+        </div>
       </div>
     </section>
   );
