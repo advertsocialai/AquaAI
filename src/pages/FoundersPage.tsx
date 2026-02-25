@@ -13,7 +13,7 @@ const founders = [
     role: "Co-Founder",
     bio: "Architect of scalable AI platforms enabling secure, cloud-native deployment of advanced machine learning and generative AI systems.\nExpert in building production-grade AI infrastructure that powers biomedical research, large-scale data processing, and intelligent automation.",
     image: founderOneImg,
-    linkedin: "https://linkedin.com",
+    linkedin: "https://www.linkedin.com/in/chaitanya-gowtham/",
   },
   {
     name: "Sridhara Syam",
