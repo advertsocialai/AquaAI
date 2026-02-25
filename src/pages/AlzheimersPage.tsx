@@ -27,6 +27,19 @@ const sections = [
   },
 ];
 
+const keyFindings = [
+  { stat: '89%', unit: 'sensitivity', label: 'Detection of early-stage Alzheimer\'s from 5-minute EEG recordings' },
+  { stat: '5', unit: 'minutes', label: 'Recording time needed for a single diagnostic assessment' },
+  { stat: '<$50', unit: 'per test', label: 'Estimated cost compared to $3,000+ for PET scans' },
+];
+
+const methodology = [
+  { step: '01', title: 'Signal Acquisition', description: 'Standard 19-channel EEG recordings captured in clinical or at-home settings.' },
+  { step: '02', title: 'Preprocessing', description: 'Artifact removal, bandpass filtering, and epoch segmentation of raw EEG signals.' },
+  { step: '03', title: 'Feature Extraction', description: 'Spectral, temporal, and connectivity features extracted using signal processing algorithms.' },
+  { step: '04', title: 'Classification', description: 'CNN-attention hybrid models classify signals as healthy, MCI, or early Alzheimer\'s.' },
+];
+
 const AlzheimersPage = () => {
   useEffect(() => { document.title = "Alzheimer's Detection — BohrX.ai"; }, []);
 
@@ -80,6 +93,79 @@ const AlzheimersPage = () => {
           ))}
         </div>
       </section>
+
+      {/* Key Findings */}
+      <section className="py-24 bg-background border-t border-border">
+        <div className="container mx-auto px-6 lg:px-8 max-w-4xl">
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-xs text-muted-foreground tracking-[0.3em] uppercase mb-4 text-center"
+          >
+            Key Findings
+          </motion.p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-12">
+            {keyFindings.map((f, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
+                className="text-center"
+              >
+                <div className="text-4xl md:text-5xl font-bold text-foreground tracking-tight mb-1">
+                  {f.stat}
+                </div>
+                <div className="text-xs text-muted-foreground tracking-[0.3em] uppercase mb-3">{f.unit}</div>
+                <p className="text-sm text-muted-foreground leading-relaxed">{f.label}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Methodology */}
+      <section className="py-24 bg-background border-t border-border">
+        <div className="container mx-auto px-6 lg:px-8 max-w-3xl">
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-xs text-muted-foreground tracking-[0.3em] uppercase mb-4 text-center"
+          >
+            Methodology
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-3xl md:text-4xl font-bold text-foreground uppercase tracking-tight text-center mb-16"
+          >
+            Our Approach
+          </motion.h2>
+          <div className="space-y-12">
+            {methodology.map((m, i) => (
+              <motion.div
+                key={m.step}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
+                className="flex gap-6"
+              >
+                <span className="text-3xl font-bold text-foreground/10 font-mono shrink-0">{m.step}</span>
+                <div>
+                  <h3 className="text-lg font-bold text-foreground uppercase tracking-wider mb-2">{m.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{m.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );

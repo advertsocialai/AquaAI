@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Linkedin } from 'lucide-react';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { TextReveal } from '@/components/ui/text-reveal';
@@ -12,13 +13,21 @@ const founders = [
     role: "Co-Founder",
     bio: "Architect of scalable AI platforms enabling secure, cloud-native deployment of advanced machine learning and generative AI systems.\nExpert in building production-grade AI infrastructure that powers biomedical research, large-scale data processing, and intelligent automation.",
     image: founderOneImg,
+    linkedin: "https://linkedin.com",
   },
   {
     name: "Sridhara Syam Sharma",
     role: "Co-Founder",
     bio: "AI researcher and builder focused on healthcare intelligence and scalable ML systems. Worked on EEG-based diagnostics, quantum-ML frameworks, and real-world AI deployment.\nDriven by building systems that move from research to measurable impact.",
     image: founderTwoImg,
+    linkedin: "https://linkedin.com",
   },
+];
+
+const advisors = [
+  { name: 'Coming Soon', role: 'Scientific Advisor' },
+  { name: 'Coming Soon', role: 'Clinical Advisor' },
+  { name: 'Coming Soon', role: 'Industry Advisor' },
 ];
 
 const FoundersPage = () => {
@@ -54,6 +63,31 @@ const FoundersPage = () => {
         </div>
       </section>
 
+      {/* Vision Quote */}
+      <section className="py-24 bg-background border-b border-border">
+        <div className="container mx-auto px-6 lg:px-8 max-w-3xl text-center">
+          <motion.blockquote
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1 }}
+            className="text-2xl md:text-3xl font-bold text-foreground uppercase tracking-tight leading-[1.2] mb-6"
+          >
+            "We started BohrX because we believe the biggest problems in healthcare won't be solved by incremental progress — they need a fundamentally different approach."
+          </motion.blockquote>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="text-xs text-muted-foreground tracking-[0.3em] uppercase"
+          >
+            — The Founders
+          </motion.p>
+        </div>
+      </section>
+
+      {/* Founder Cards */}
       <section className="py-24 bg-background">
         <div className="container mx-auto px-6 lg:px-8 max-w-4xl">
           <div className="grid md:grid-cols-2 gap-16 max-w-2xl mx-auto">
@@ -77,14 +111,62 @@ const FoundersPage = () => {
                 <p className="text-xs text-muted-foreground uppercase tracking-[0.2em] mb-4">
                   {founder.role}
                 </p>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
                   {founder.bio}
                 </p>
+                <a
+                  href={founder.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors tracking-wider uppercase"
+                >
+                  <Linkedin className="w-4 h-4" strokeWidth={1.5} />
+                  LinkedIn
+                </a>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
+
+      {/* Advisors */}
+      <section className="py-24 bg-background border-t border-border">
+        <div className="container mx-auto px-6 lg:px-8 max-w-3xl text-center">
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-xs text-muted-foreground tracking-[0.3em] uppercase mb-4"
+          >
+            Advisory Board
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-3xl md:text-4xl font-bold text-foreground uppercase tracking-tight mb-16"
+          >
+            Advisors
+          </motion.h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+            {advisors.map((a, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
+                className="border border-dashed border-border p-8"
+              >
+                <div className="w-16 h-16 border border-dashed border-border mx-auto mb-4" />
+                <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-1">{a.name}</h3>
+                <p className="text-xs text-muted-foreground/60 tracking-[0.2em] uppercase">{a.role}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
