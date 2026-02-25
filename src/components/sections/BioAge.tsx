@@ -2,6 +2,8 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { TextReveal } from '@/components/ui/text-reveal';
 
+const ticker = ['DNA METHYLATION', 'EPIGENETIC CLOCKS', 'TELOMERE LENGTH', 'BLOOD BIOMARKERS', 'HORVATH CLOCK', 'PHENOTYPIC AGE', 'GRIP STRENGTH', 'VO2 MAX'];
+
 export function BioAge() {
   return (
     <section id="bioage" className="relative h-screen flex items-center overflow-hidden snap-start">
@@ -21,6 +23,20 @@ export function BioAge() {
 
       <div className="container mx-auto px-6 lg:px-8 relative z-10">
         <div className="md:ml-[55%] max-w-lg">
+          {/* Horizontal scrolling ticker */}
+          <div className="overflow-hidden border-y border-white/10 py-3 mb-8">
+            <motion.div
+              className="flex gap-12 whitespace-nowrap"
+              animate={{ x: ['0%', '-50%'] }}
+              transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
+            >
+              {[...ticker, ...ticker].map((item, i) => (
+                <span key={i} className="text-xs text-white/30 tracking-[0.3em] font-medium">
+                  {item}
+                </span>
+              ))}
+            </motion.div>
+          </div>
           <TextReveal
             text="Understanding Biological Age"
             as="h2"
