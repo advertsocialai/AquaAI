@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export function Alzheimers() {
   return (
-    <section className="relative h-screen flex items-end overflow-hidden">
+    <section className="relative h-screen flex items-end overflow-hidden snap-start">
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
