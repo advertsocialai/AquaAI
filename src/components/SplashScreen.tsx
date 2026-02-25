@@ -60,7 +60,7 @@ export function SplashScreen({ onEnter }: SplashScreenProps) {
                     
                     <h1 className="relative text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight">
                       <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent drop-shadow-2xl">
-                        Bhorx.ai
+                        Bohrx.ai
                       </span>
                     </h1>
                   </motion.div>
