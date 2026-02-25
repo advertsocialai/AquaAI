@@ -20,7 +20,7 @@ const founders = [
     role: "Co-Founder",
     bio: "AI researcher and builder focused on healthcare intelligence and scalable ML systems. Worked on EEG-based diagnostics, quantum-ML frameworks, and real-world AI deployment.\nDriven by building systems that move from research to measurable impact.",
     image: founderTwoImg,
-    linkedin: "https://linkedin.com",
+    linkedin: "https://www.linkedin.com/in/sridhara-syam-chandrabhotla-18098b221/",
   },
 ];
 
