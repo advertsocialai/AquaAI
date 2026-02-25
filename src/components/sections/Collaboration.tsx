@@ -1,107 +1,36 @@
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { ArrowRight, Building2, FlaskConical, TrendingUp } from 'lucide-react';
-
-const audiences = [
-  {
-    icon: FlaskConical,
-    title: "Researchers",
-    description: "Access our models, datasets, and collaborate on publications.",
-  },
-  {
-    icon: Building2,
-    title: "Labs & Institutions",
-    description: "Partner with us to deploy longevity AI in your organization.",
-  },
-  {
-    icon: TrendingUp,
-    title: "Investors",
-    description: "Join us in building the future of longevity science.",
-  },
-];
 
 export function Collaboration() {
   return (
-    <section className="py-32 bg-secondary/30 relative overflow-hidden">
-      {/* Gradient background */}
-      <div className="absolute inset-0 bg-gradient-radial from-primary/5 via-transparent to-transparent" />
+    <section id="collaborate" className="relative h-screen flex items-end overflow-hidden">
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80')`,
+        }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
 
-      <div className="container mx-auto px-6 lg:px-8 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center max-w-4xl mx-auto"
-        >
-          <span className="text-primary font-mono text-sm tracking-wider uppercase mb-4 block">
-            Join Us
-          </span>
-          <h2 className="text-display-md md:text-display-lg font-bold text-gradient-hero mb-6">
-            Let's Build the Future
-            <br />
-            of Longevity Together
-          </h2>
-          <p className="text-xl text-muted-foreground mb-12">
-            Whether you're a researcher, institution, or investor, we're looking for
-            partners who share our vision of extending healthy human lifespan through AI.
-          </p>
-        </motion.div>
-
+      <div className="container mx-auto px-6 lg:px-8 relative z-10 pb-24">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid md:grid-cols-3 gap-6 mb-16"
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-2xl"
         >
-          {audiences.map((audience, index) => (
-            <Card
-              key={index}
-              className="bg-card border-border p-8 text-center hover:border-primary/50 transition-all duration-300 group"
-            >
-              <div className="w-16 h-16 rounded-2xl bg-secondary flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/10 transition-colors">
-                <audience.icon className="w-8 h-8 text-primary" />
-              </div>
-              <h3 className="text-xl font-bold text-foreground mb-3">
-                {audience.title}
-              </h3>
-              <p className="text-muted-foreground">
-                {audience.description}
-              </p>
-            </Card>
-          ))}
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center"
-        >
-          <Card className="inline-block bg-card border-border p-8 md:p-12">
-            <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-              Ready to collaborate?
-            </h3>
-            <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-              Get in touch to discuss research partnerships, enterprise solutions, or investment opportunities.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="group bg-primary hover:bg-primary/90 px-8 py-6 text-lg">
-                Contact Us
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="px-8 py-6 text-lg border-border hover:bg-secondary"
-              >
-                View Careers
-              </Button>
-            </div>
-          </Card>
+          <h2 className="text-4xl md:text-6xl font-bold text-white uppercase tracking-tight leading-[1.05] mb-6">
+            Join Our Mission
+          </h2>
+          <p className="text-base md:text-lg text-white/70 mb-8 max-w-lg leading-relaxed">
+            Whether you're a researcher, institution, or investor—we're looking for partners who share our vision of extending healthy human lifespan through AI.
+          </p>
+          <a
+            href="#"
+            className="inline-block border border-white/40 text-white text-xs tracking-[0.25em] font-medium px-8 py-4 hover:bg-white hover:text-black transition-all duration-300 uppercase"
+          >
+            Get in Touch
+          </a>
         </motion.div>
       </div>
     </section>
