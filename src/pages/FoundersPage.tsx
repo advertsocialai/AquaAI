@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import founderOneImg from '@/assets/founder-one.jpg';
+import founderTwoImg from '@/assets/founder-two.jpg';
 
 const founders = [
   {
@@ -14,7 +15,7 @@ const founders = [
     name: "Founder Two",
     role: "CTO & Co-Founder",
     bio: "Deep learning researcher and engineer with expertise in multi-omics data integration and scalable AI infrastructure.",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80",
+    image: founderTwoImg,
   },
   {
     name: "Founder Three",
