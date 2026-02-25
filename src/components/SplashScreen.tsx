@@ -11,63 +11,46 @@ export function SplashScreen({ onEnter }: SplashScreenProps) {
   const [isExiting, setIsExiting] = useState(false)
 
   useEffect(() => {
-    // Fade in content after spiral loads
-    const timer = setTimeout(() => {
-      setShowContent(true)
-    }, 1500)
-
+    const timer = setTimeout(() => setShowContent(true), 1500)
     return () => clearTimeout(timer)
   }, [])
 
   const handleEnter = () => {
     setIsExiting(true)
-    setTimeout(() => {
-      onEnter()
-    }, 800)
+    setTimeout(() => onEnter(), 800)
   }
 
   return (
     <AnimatePresence>
       {!isExiting && (
         <motion.div
-          className="fixed inset-0 z-50 bg-black"
+          className="fixed inset-0 z-50 bg-background"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: 'easeInOut' }}
         >
-          {/* Spiral Animation Background */}
           <SpiralAnimation />
 
-          {/* Content Overlay */}
           <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
             <AnimatePresence>
               {showContent && (
                 <motion.div
-                  className="flex flex-col items-center gap-6"
+                  className="flex flex-col items-center gap-8"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1, ease: 'easeOut' }}
                 >
-                  {/* Logo/Brand Name */}
-                  <motion.div
-                    className="relative"
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 1.2, ease: 'easeOut', delay: 0.2 }}
+                  <motion.h1
+                    className="text-5xl md:text-7xl lg:text-8xl font-bold text-foreground uppercase tracking-[0.15em]"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1.2, delay: 0.2 }}
                   >
-                    {/* Glow effect behind text */}
-                    <div className="absolute inset-0 blur-3xl opacity-60 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 rounded-full scale-150" />
-                    
-                    <h1 className="relative text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight">
-                      <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent drop-shadow-2xl">
-                        Bohrx.ai
-                      </span>
-                    </h1>
-                  </motion.div>
+                    BOHRX.AI
+                  </motion.h1>
 
-                  {/* Tagline */}
                   <motion.p
-                    className="text-white/60 text-lg md:text-xl tracking-widest uppercase font-light"
+                    className="text-muted-foreground text-sm md:text-base tracking-[0.3em] uppercase font-light"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1, delay: 0.8 }}
@@ -75,43 +58,25 @@ export function SplashScreen({ onEnter }: SplashScreenProps) {
                     The Future of Longevity
                   </motion.p>
 
-                  {/* Enter Button */}
                   <motion.button
                     onClick={handleEnter}
-                    className="mt-8 relative group"
+                    className="mt-6 px-10 py-3 text-foreground/80 text-sm tracking-[0.3em] uppercase font-light border border-border hover:border-foreground/40 hover:text-foreground transition-all duration-300"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1, delay: 1.2 }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    {/* Button glow */}
-                    <div className="absolute inset-0 blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-500 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full" />
-                    
-                    <span className="relative px-8 py-3 text-white/80 text-lg tracking-[0.3em] uppercase font-light border border-white/20 rounded-full backdrop-blur-sm hover:border-white/40 hover:text-white transition-all duration-300 block">
-                      Enter
-                    </span>
+                    Enter
                   </motion.button>
 
-                  {/* Subtle pulsing indicator */}
                   <motion.div
-                    className="absolute bottom-12 left-1/2 -translate-x-1/2"
+                    className="absolute bottom-16 left-1/2 -translate-x-1/2"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1, delay: 1.5 }}
                   >
-                    <motion.div
-                      className="w-1 h-8 rounded-full bg-gradient-to-b from-white/40 to-transparent"
-                      animate={{ 
-                        opacity: [0.4, 0.8, 0.4],
-                        scaleY: [1, 1.2, 1]
-                      }}
-                      transition={{ 
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: 'easeInOut'
-                      }}
-                    />
+                    <div className="w-px h-10 bg-gradient-to-b from-muted-foreground/50 to-transparent" />
                   </motion.div>
                 </motion.div>
               )}
