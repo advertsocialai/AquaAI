@@ -16,8 +16,8 @@ export function Footer() {
           </p>
           <a
             href="mailto:hello@bohrx.ai"
-            className="text-xs text-muted-foreground hover:text-foreground/70 transition-colors tracking-[0.2em] mt-3 inline-block"
-          >
+            className="text-xs text-muted-foreground hover:text-foreground/70 transition-colors tracking-[0.2em] mt-3 inline-block">
+
             HELLO@BOHRX.AI
           </a>
         </div>
@@ -28,7 +28,7 @@ export function Footer() {
           </p>
 
           <div className="flex items-center gap-8">
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-foreground/70 transition-colors tracking-wider">LINKEDIN</a>
+            <a target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-foreground/70 transition-colors tracking-wider" href="https://www.linkedin.com/company/bohrx-ai/">LINKEDIN</a>
             <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-foreground/70 transition-colors tracking-wider">X</a>
             <a href="#" className="text-xs text-muted-foreground hover:text-foreground/70 transition-colors tracking-wider">PRIVACY</a>
             <a href="#" className="text-xs text-muted-foreground hover:text-foreground/70 transition-colors tracking-wider">TERMS</a>
@@ -36,13 +36,13 @@ export function Footer() {
 
           <button
             onClick={scrollToTop}
-            className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground/70 transition-colors tracking-wider group"
-          >
+            className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground/70 transition-colors tracking-wider group">
+
             BACK TO TOP
             <ArrowUp className="w-3 h-3 group-hover:-translate-y-0.5 transition-transform" />
           </button>
         </div>
       </div>
-    </footer>
-  );
+    </footer>);
+
 }
