@@ -31,7 +31,7 @@ export function Header() {
       <div className="container mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center gap-3">
-            <img src={bhorxLogo} alt="BohrX.ai Logo" className="w-10 h-10 object-contain mix-blend-screen brightness-125" />
+            <img src={bhorxLogo} alt="BohrX.ai Logo" className="w-10 h-10 object-contain" />
             <span className="text-lg font-bold text-white tracking-wider">
               BOHRX<span className="font-light">.AI</span>
             </span>
