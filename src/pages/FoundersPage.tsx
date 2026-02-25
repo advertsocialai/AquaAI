@@ -14,7 +14,7 @@ const founders = [
   {
     name: "Founder Two",
     role: "Co-Founder",
-    bio: "Deep learning researcher and engineer with expertise in multi-omics data integration and scalable AI infrastructure.",
+    bio: "AI researcher and builder focused on healthcare intelligence and scalable ML systems. Worked on EEG-based diagnostics, quantum-ML frameworks, and real-world AI deployment.\nDriven by building systems that move from research to measurable impact.",
     image: founderTwoImg,
   },
 ];
