@@ -1,88 +1,79 @@
 
 
-# Redesign: SpaceX-Inspired Landing Page
+# Expand BhorX.ai: Add Pages, Founders, Alzheimer's Section (Skip Publications)
 
-## The Problem
-The current site has many telltale signs of AI-generated design: gradient blobs, pulsing rings, spotlight cursors, noise textures, animated counters, Spline 3D scenes, and heavy use of decorative effects. SpaceX's website is the opposite -- minimal, photography-driven, and content-focused.
+## Overview
+We'll add real pages behind the buttons, introduce an Alzheimer's EEG detection section, add a Founders page, and skip the publications/research page for now since you're a startup.
 
-## SpaceX Design Language
-- **Full-viewport sections** that each fill the entire screen, scrolling vertically between them
-- **Large cinematic background images** behind each section
-- **Minimal, clean navigation** -- transparent header, simple text links, no colored buttons
-- **Bold uppercase headings** with restrained typography
-- **Very few UI elements** -- no cards, no badges, no tags, no gradient blobs
-- **Simple bordered CTA buttons** -- not filled/colored
-- **Black background, white text** -- almost no accent colors
-- **No decorative effects** -- no noise, no spotlight, no 3D, no pulsing animations
+## What's Changing
 
-## What Changes
+### 1. New Home Page Section: Alzheimer's EEG Detection
+A new full-screen cinematic section added between BioAge and Collaboration:
+- Brain/neuroscience background image
+- Heading: "Detecting Alzheimer's Through EEG Signals"
+- Description about using AI to analyze brainwave patterns for early detection
+- "Learn More" button linking to `/alzheimers`
 
-### 1. Remove Splash Screen
-- Remove `SplashScreen` component and go straight to the main page
-- Remove spiral animation dependency
+### 2. New Home Page Section: Founders
+A new full-screen section after Collaboration (before footer):
+- Clean portraits/team-style background image
+- Heading: "Meet the Founders"
+- Brief intro text about the founding team
+- "Our Team" button linking to `/founders`
 
-### 2. Simplify the Header
-- Make it fully transparent with no border or background blur
-- Simple logo on the left, uppercase text links in the center, minimal right-side element
-- Remove "Sign In" and "Get Started" buttons -- replace with a simple text link or nothing
-- Use uppercase, spaced-out letter styling for nav items
+### 3. New Pages (all following SpaceX cinematic style)
 
-### 3. Rebuild Hero as Full-Screen Image Section
-- Full viewport height with a large background image (using a high-quality Unsplash biotech/science image)
-- Remove Spline 3D scene, gradient blobs, pulsing rings, magnetic buttons, animated counters
-- Simple left-aligned heading + one paragraph + one bordered "EXPLORE" button
-- Stats removed or moved elsewhere
+| Page | Route | Content |
+|------|-------|---------|
+| **Technology** | `/technology` | Full-screen hero + detail sections about BhorX.ai's longevity AI stack |
+| **Bio-Age** | `/bioage` | Hero + explanation of biological age prediction, how it works |
+| **Alzheimer's EEG** | `/alzheimers` | Hero + the problem, EEG approach, AI methodology, early results |
+| **Founders** | `/founders` | Hero + founder profiles with photos, bios, roles |
+| **Collaborate** | `/collaborate` | Hero + partnership info, simple contact form |
 
-### 4. Rebuild All Sections as Full-Screen Image Panels
-Each section becomes a full-viewport panel with a background image and minimal overlaid text:
+No Research/Publications page for now -- the Research section on the home page will stay as a visual section but the "View Publications" button will say "Coming Soon" or link to the collaborate page.
 
-- **Section 2 (Technology):** Full-screen image with heading "Revolutionizing Longevity Science" + short description + "LEARN MORE" button
-- **Section 3 (Research):** Full-screen image with heading "Science at the Core" + description + "VIEW PUBLICATIONS" button  
-- **Section 4 (Bio-Age):** Full-screen image with heading "Understanding Biological Age" + description + "EXPLORE" button
-- **Section 5 (Collaboration):** Full-screen image with heading "Join Our Mission" + description + "GET IN TOUCH" button
+### 4. Fix Navigation
+- Header nav updated to use React Router `Link` components
+- Nav items: TECHNOLOGY, BIO-AGE, ALZHEIMER'S, FOUNDERS, COLLABORATE
+- Remove RESEARCH from nav (keep section on home page, just not as a nav destination)
+- All section CTA buttons link to their respective pages
 
-All cards, grids, tags, icons, and decorative elements are removed.
-
-### 5. Simplify the Footer
-- Minimal single-line footer or very small footer
-- Remove newsletter input, link columns, social icons grid
-- Just copyright + a few inline links
-
-### 6. Strip Decorative Components
-Remove or stop using:
-- `NoiseTexture`
-- `GradientBlob`
-- `PulsingRings`
-- `SpotlightCursor`
-- `Spotlight`
-- `MagneticButton`
-- `AnimatedCounter`
-- `SplineScene`
-- `SpiralAnimation`
-- `TiltCard`
-
-### 7. Update Global Styles
-- Remove gradient text classes and glow effects from CSS
-- Simplify to pure black (#000) background, white text
-- Button style: bordered, uppercase, letter-spaced, no fill
+### 5. Update Routing
+Register all 5 new routes in `App.tsx`.
 
 ## Technical Details
 
+### New files to create:
+- `src/components/sections/Alzheimers.tsx` -- home page section
+- `src/components/sections/Founders.tsx` -- home page section
+- `src/pages/TechnologyPage.tsx` -- full page
+- `src/pages/BioAgePage.tsx` -- full page
+- `src/pages/AlzheimersPage.tsx` -- full page
+- `src/pages/FoundersPage.tsx` -- full page with founder profiles
+- `src/pages/CollaboratePage.tsx` -- full page with contact info
+
 ### Files to modify:
-- `src/pages/Index.tsx` -- Remove splash screen, noise texture
-- `src/components/layout/Header.tsx` -- Transparent minimal header
-- `src/components/sections/Hero.tsx` -- Full-screen image hero, minimal text
-- `src/components/sections/WhatWeBuilt.tsx` -- Full-screen image section
-- `src/components/sections/Research.tsx` -- Full-screen image section
-- `src/components/sections/BioAge.tsx` -- Full-screen image section
-- `src/components/sections/Collaboration.tsx` -- Full-screen image section
-- `src/components/layout/Footer.tsx` -- Minimal footer
-- `src/index.css` -- Simplified styles, remove glow/gradient utilities
-- `index.html` -- Update meta if needed
+- `src/App.tsx` -- Add 5 new routes
+- `src/pages/Index.tsx` -- Add Alzheimers and Founders sections
+- `src/components/layout/Header.tsx` -- Update nav to use React Router Links, add new nav items
+- `src/components/sections/WhatWeBuilt.tsx` -- Button links to `/technology`
+- `src/components/sections/Research.tsx` -- Change button to "Coming Soon" or link to `/collaborate`
+- `src/components/sections/BioAge.tsx` -- Button links to `/bioage`
+- `src/components/sections/Collaboration.tsx` -- Button links to `/collaborate`
+- `src/components/layout/Footer.tsx` -- Fix footer links
 
-### Background images
-Will use high-quality Unsplash images for each section (biotech, DNA, lab, science themes) referenced via URL.
+### Page structure (each new page):
+1. Shared Header
+2. Full-screen hero with background image and heading
+3. Content sections with paragraphs and key points (black bg, white text, minimal)
+4. Shared Footer
 
-### Estimated scope
-This is a significant visual overhaul of every section, but the routing and page structure remain the same. The content (BhorX.ai branding and longevity/bio-age topic) stays -- only the visual presentation changes to match SpaceX's clean, cinematic style.
+### Founders Page specifics:
+- Hero section with team photo background
+- Grid of founder cards (photo, name, role, short bio) -- kept minimal, no fancy effects
+- Each card: circular avatar photo, name in bold uppercase, role, 2-3 line bio
+- Placeholder photos from Unsplash portraits until real ones are added
+
+All pages maintain the black background, white text, cinematic SpaceX style.
 
