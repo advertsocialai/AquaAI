@@ -31,66 +31,55 @@ export function SplashScreen({ onEnter }: SplashScreenProps) {
         >
           <AtomAnimation />
 
-          <div className="absolute inset-0 flex flex-col items-center z-10">
-            {/* Text content positioned above the atom */}
+          {/* Centered BohrX over nucleus */}
+          <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+            {/* Radial vignette behind text */}
+            <div
+              className="absolute w-[280px] h-[280px] rounded-full"
+              style={{
+                background: 'radial-gradient(circle, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 40%, transparent 70%)',
+              }}
+            />
             <AnimatePresence>
               {showContent && (
-                <motion.div
-                  className="flex flex-col items-center gap-4 mt-[12vh] md:mt-[15vh]"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 1, ease: 'easeOut' }}
+                <motion.h1
+                  className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight relative"
+                  style={{
+                    color: 'white',
+                    textShadow: '0 0 80px rgba(0,0,0,1), 0 0 40px rgba(0,0,0,0.9), 0 4px 20px rgba(0,0,0,1)',
+                    fontFamily: 'system-ui, -apple-system, sans-serif',
+                  }}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 1.2, ease: 'easeOut' }}
                 >
-                  <motion.h1
-                    className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight"
-                    style={{
-                      color: 'white',
-                      textShadow: '0 0 60px rgba(0,0,0,0.9), 0 4px 30px rgba(0,0,0,1)',
-                      fontFamily: 'system-ui, -apple-system, sans-serif',
-                    }}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1.2, delay: 0.2 }}
-                  >
-                    Bohr<span className="font-black italic">X</span>
-                  </motion.h1>
-
-                  <motion.p
-                    className="text-xs md:text-sm tracking-[0.4em] uppercase font-light"
-                    style={{ color: 'rgba(255,255,255,0.5)', textShadow: '0 0 30px rgba(0,0,0,0.9)' }}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1, delay: 0.8 }}
-                  >
-                    AI for Humanity
-                  </motion.p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {/* Enter button at bottom */}
-            <AnimatePresence>
-              {showContent && (
-                <motion.div
-                  className="absolute bottom-[12vh] flex flex-col items-center gap-6"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 1, delay: 1.2 }}
-                >
-                  <motion.button
-                    onClick={handleEnter}
-                    className="px-12 py-3 text-sm tracking-[0.3em] uppercase font-light border border-white/20 hover:border-white/50 hover:bg-white/5 transition-all duration-300"
-                    style={{ color: 'rgba(255,255,255,0.7)', textShadow: '0 0 20px rgba(0,0,0,0.8)' }}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Enter
-                  </motion.button>
-                  <div className="w-px h-8 bg-gradient-to-b from-white/30 to-transparent" />
-                </motion.div>
+                  Bohr<span className="font-black italic">X</span>
+                </motion.h1>
               )}
             </AnimatePresence>
           </div>
+
+          {/* Enter button at very bottom */}
+          <AnimatePresence>
+            {showContent && (
+              <motion.div
+                className="absolute bottom-8 left-0 right-0 flex justify-center z-10"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 1.5 }}
+              >
+                <motion.button
+                  onClick={handleEnter}
+                  className="px-10 py-2.5 text-xs tracking-[0.3em] uppercase font-light border border-white/15 hover:border-white/40 hover:bg-white/5 transition-all duration-300 pointer-events-auto"
+                  style={{ color: 'rgba(255,255,255,0.5)' }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Enter
+                </motion.button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       )}
     </AnimatePresence>

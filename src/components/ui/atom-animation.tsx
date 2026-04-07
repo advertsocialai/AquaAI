@@ -129,7 +129,7 @@ export function AtomAnimation() {
         viewBox="0 0 680 680"
         xmlns="http://www.w3.org/2000/svg"
         className="w-[min(90vw,480px)] h-[min(90vw,480px)]"
-        style={{ filter: 'drop-shadow(0 0 18px rgba(91,70,184,0.5))' }}
+        style={{ filter: 'drop-shadow(0 0 12px rgba(91,70,184,0.35))' }}
       >
         <defs>
           <radialGradient id="nucleus" cx="40%" cy="35%" r="55%">
@@ -165,13 +165,13 @@ export function AtomAnimation() {
 
         {/* Orbit rings */}
         <ellipse id="orbit1" cx="340" cy="340" rx="260" ry="75"
-          fill="none" stroke="#b06de0" strokeWidth="1.8" opacity="0.7"
+          fill="none" stroke="#b06de0" strokeWidth="1.4" opacity="0.45"
           className="animate-orbit1-glow" />
         <ellipse id="orbit2" cx="340" cy="340" rx="260" ry="75"
-          fill="none" stroke="#2ec4a0" strokeWidth="1.8" opacity="0.85"
+          fill="none" stroke="#2ec4a0" strokeWidth="1.4" opacity="0.5"
           transform="rotate(60 340 340)" className="animate-orbit2-glow" />
         <ellipse id="orbit3" cx="340" cy="340" rx="260" ry="75"
-          fill="none" stroke="#6888d8" strokeWidth="1.8" opacity="0.75"
+          fill="none" stroke="#6888d8" strokeWidth="1.4" opacity="0.45"
           transform="rotate(120 340 340)" className="animate-orbit3-glow" />
 
         {/* Nucleus */}
