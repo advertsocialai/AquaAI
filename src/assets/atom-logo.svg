@@ -1,0 +1,32 @@
+<svg viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="nucleus" cx="40%" cy="35%" r="55%">
+      <stop offset="0%" stop-color="#9b8fd4"/>
+      <stop offset="40%" stop-color="#5b46b8"/>
+      <stop offset="100%" stop-color="#1a0f5c"/>
+    </radialGradient>
+    <radialGradient id="eGreen" cx="35%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#a0f0d8"/>
+      <stop offset="100%" stop-color="#2ec4a0"/>
+    </radialGradient>
+    <radialGradient id="ePink" cx="35%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#f5b8e8"/>
+      <stop offset="100%" stop-color="#d966b8"/>
+    </radialGradient>
+    <radialGradient id="eBlue" cx="35%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#d0e8ff"/>
+      <stop offset="100%" stop-color="#88b4e8"/>
+    </radialGradient>
+  </defs>
+  <ellipse cx="340" cy="340" rx="260" ry="75" fill="none" stroke="#b06de0" stroke-width="2" opacity="0.7"/>
+  <ellipse cx="340" cy="340" rx="260" ry="75" fill="none" stroke="#2ec4a0" stroke-width="2" opacity="0.85" transform="rotate(60 340 340)"/>
+  <ellipse cx="340" cy="340" rx="260" ry="75" fill="none" stroke="#6888d8" stroke-width="2" opacity="0.75" transform="rotate(120 340 340)"/>
+  <circle cx="340" cy="340" r="58" fill="url(#nucleus)"/>
+  <ellipse cx="322" cy="320" rx="18" ry="12" fill="white" opacity="0.45"/>
+  <circle cx="600" cy="340" r="14" fill="url(#ePink)" stroke="#f5a0d8" stroke-width="1.5"/>
+  <circle cx="596" cy="335" r="5" fill="white" opacity="0.7"/>
+  <circle cx="210" cy="115" r="14" fill="url(#eGreen)" stroke="#80e8cc" stroke-width="1.5"/>
+  <circle cx="206" cy="110" r="5" fill="white" opacity="0.7"/>
+  <circle cx="210" cy="565" r="14" fill="url(#eBlue)" stroke="#b8d8f8" stroke-width="1.5"/>
+  <circle cx="206" cy="560" r="5" fill="white" opacity="0.7"/>
+</svg>
