@@ -31,7 +31,7 @@ export function Header() {
       <div className="container mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center gap-3">
-            <img src={atomLogo} alt="BohrX.ai Logo" className="w-10 h-10 object-contain" />
+            <img src={atomLogo} alt="BohrX.ai Logo" className="w-11 h-11 object-contain" style={{ filter: 'drop-shadow(0 0 6px rgba(168,85,247,0.5))' }} />
             <span className="text-lg font-bold text-white tracking-wider">
               BOHRX<span className="font-light">.AI</span>
             </span>
