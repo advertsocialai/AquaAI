@@ -15,10 +15,10 @@ export function Footer() {
             Advancing the Science of Longevity
           </p>
           <a
-            href="mailto:hello@bohrx.ai"
+            href="mailto:founders@bohrx.ai"
             className="text-xs text-muted-foreground hover:text-foreground/70 transition-colors tracking-[0.2em] mt-3 inline-block">
 
-            HELLO@BOHRX.AI
+            founders@bohrx.ai
           </a>
         </div>
 
