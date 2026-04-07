@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import bhorxLogo from '@/assets/bhorx-logo.png';
+import atomLogo from '@/assets/atom-logo.svg';
 
 const navItems = [
   { label: "TECHNOLOGY", to: "/technology" },
@@ -31,7 +31,7 @@ export function Header() {
       <div className="container mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center gap-3">
-            <img src={bhorxLogo} alt="BohrX.ai Logo" className="w-10 h-10 object-contain" />
+            <img src={atomLogo} alt="BohrX.ai Logo" className="w-10 h-10 object-contain" />
             <span className="text-lg font-bold text-white tracking-wider">
               BOHRX<span className="font-light">.AI</span>
             </span>
