@@ -1,29 +1,23 @@
 
 
-# Add Animated Atom to Splash Screen
+# Redesign Splash Screen - Clean & Minimal
 
-## What and Why
+## Problem
+The current splash screen feels cluttered -- the "AI for Humanity" caption competes with the atom animation, and the text overlaps awkwardly with the bright orbits. The overall composition doesn't feel polished.
 
-The best placement for this animated atom is the **splash screen**, replacing the current spiral animation. Here's why:
+## Changes
 
-- The splash screen is the first thing users see -- a glowing, spinning atom with colorful orbits is a perfect "loading" visual for a biotech/science company called **BohrX** (named after the Bohr atomic model)
-- It directly reinforces your brand identity
-- The rest of the site has a clean, minimal design -- putting a large animated atom in the hero or header would clash with that aesthetic
-- The splash screen is designed for exactly this kind of dramatic visual moment
+1. **Remove the "AI for Humanity" subtitle entirely** -- strip it out so only the BohrX logo and Enter button remain.
 
-## What Changes
+2. **Center BohrX text directly over the nucleus** -- instead of placing text above the atom, overlay it dead-center on top of the nucleus so it feels integrated with the animation rather than fighting it. The atom becomes the backdrop for the logo.
 
-1. **Create `src/components/ui/atom-animation.tsx`** -- A React component that renders the animated atom SVG inline. Will use CSS animations for the spinning orbits, nucleus glow pulse, and electron trail effects (ported from the uploaded `atom_animated.html` which has the richer JS-driven electron movement with trails and depth layering).
+3. **Add a subtle radial dark vignette** behind the text area so the white text always reads clearly against the glowing orbits.
 
-2. **Update `src/components/SplashScreen.tsx`** -- Replace `<SpiralAnimation />` with the new `<AtomAnimation />` component. Keep the existing BOHRX.AI title, tagline, and Enter button overlay on top.
+4. **Move Enter button lower and make it more subtle** -- smaller, more translucent, positioned at the very bottom as a minimal prompt.
 
-3. **Optional cleanup** -- The old `spiral-animation.tsx` can be kept or removed depending on preference.
+5. **Reduce atom animation brightness slightly** -- lower the orbit stroke opacity and electron glow so the animation supports the text rather than overpowering it.
 
-## Technical Details
-
-- The atom animation uses CSS keyframes for orbit glow pulsing and a small JS `requestAnimationFrame` loop for electron position calculation (parametric ellipse math) and trail rendering
-- Electrons will have proper depth-sorting so they pass behind the nucleus realistically
-- Colors: purple nucleus (#5b46b8), pink/green/blue electrons matching the uploaded file
-- The animation renders as an inline SVG inside a React component -- no external dependencies needed
-- Will be sized to fill the splash screen viewport with the atom centered
+## Files to Edit
+- `src/components/SplashScreen.tsx` -- remove subtitle, center the BohrX heading over the atom, add vignette overlay
+- `src/components/ui/atom-animation.tsx` -- slightly reduce glow intensity
 
