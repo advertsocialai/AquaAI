@@ -3,9 +3,9 @@ import { TextReveal } from "@/components/ui/text-reveal";
 
 export function Hero() {
   return (
-    <section className="relative h-screen flex items-end overflow-hidden snap-start">
+    <section className="relative min-h-[100svh] md:h-screen flex items-end overflow-hidden md:snap-start">
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat md:bg-fixed"
         style={{
           backgroundImage: `url('https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=1920&q=80')`,
         }}

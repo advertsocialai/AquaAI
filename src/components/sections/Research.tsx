@@ -5,9 +5,9 @@ const ticker = ['EPIGENETICS', 'PROTEOMICS', 'METABOLOMICS', 'GENOMICS', 'TRANSC
 
 export function Research() {
   return (
-    <section id="research" className="relative h-screen flex flex-col justify-end overflow-hidden snap-start">
+    <section id="research" className="relative min-h-[100svh] md:h-screen flex flex-col justify-end overflow-hidden md:snap-start">
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat md:bg-fixed"
         style={{
           backgroundImage: `url('https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=1920&q=80')`,
         }}

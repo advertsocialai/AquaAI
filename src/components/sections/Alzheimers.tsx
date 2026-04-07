@@ -4,9 +4,9 @@ import { motion } from 'framer-motion';
 
 export function Alzheimers() {
   return (
-    <section className="relative h-screen flex items-end overflow-hidden snap-start">
+    <section className="relative min-h-[100svh] md:h-screen flex items-end overflow-hidden md:snap-start">
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat md:bg-fixed"
         style={{
           backgroundImage: `url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=1920&q=80')`,
         }}

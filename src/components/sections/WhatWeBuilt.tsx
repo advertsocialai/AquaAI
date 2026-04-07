@@ -4,9 +4,9 @@ import { TextReveal } from '@/components/ui/text-reveal';
 
 export function WhatWeBuilt() {
   return (
-    <section id="technology" className="relative h-screen flex items-end overflow-hidden snap-start">
+    <section id="technology" className="relative min-h-[100svh] md:h-screen flex items-end overflow-hidden md:snap-start">
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat md:bg-fixed"
         style={{
           backgroundImage: `url('https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=1920&q=80')`,
         }}
