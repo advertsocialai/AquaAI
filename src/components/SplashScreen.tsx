@@ -41,21 +41,23 @@ export function SplashScreen({ onEnter }: SplashScreenProps) {
                   transition={{ duration: 1, ease: 'easeOut' }}
                 >
                   <motion.h1
-                    className="text-5xl md:text-7xl lg:text-8xl font-bold text-foreground uppercase tracking-[0.15em]"
+                    className="text-5xl md:text-7xl lg:text-8xl font-bold uppercase tracking-[0.15em] drop-shadow-[0_0_30px_rgba(0,0,0,0.9)]"
+                    style={{ color: 'white', textShadow: '0 0 40px rgba(0,0,0,0.8), 0 2px 20px rgba(0,0,0,0.9)' }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1.2, delay: 0.2 }}
                   >
-                    BOHRX.AI
+                    BOHRX<span className="text-[#b06de0]">.</span>AI
                   </motion.h1>
 
                   <motion.p
-                    className="text-muted-foreground text-sm md:text-base tracking-[0.3em] uppercase font-light"
+                    className="text-sm md:text-base tracking-[0.3em] uppercase font-light drop-shadow-[0_0_20px_rgba(0,0,0,0.9)]"
+                    style={{ color: 'rgba(255,255,255,0.7)', textShadow: '0 0 30px rgba(0,0,0,0.8)' }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1, delay: 0.8 }}
                   >
-                    The Future of Longevity
+                    AI for Humanity
                   </motion.p>
 
                   <motion.button
