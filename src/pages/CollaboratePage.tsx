@@ -6,11 +6,17 @@ import { TextReveal } from '@/components/ui/text-reveal';
 
 const CollaboratePage = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({ name: '', email: '', organization: '', message: '' });
 
   useEffect(() => { document.title = "Collaborate — BohrX.ai"; }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const subject = encodeURIComponent(`Collaboration Inquiry from ${formData.name}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\nOrganization: ${formData.organization}\n\nMessage:\n${formData.message}`
+    );
+    window.open(`mailto:founders@bohrx.ai?subject=${subject}&body=${body}`, '_self');
     setSubmitted(true);
   };
 
