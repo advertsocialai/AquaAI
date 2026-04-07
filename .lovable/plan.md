@@ -1,23 +1,26 @@
 
 
-# Redesign Splash Screen - Clean & Minimal
+# Fix Header Logo - Make It Bold and Visible
 
 ## Problem
-The current splash screen feels cluttered -- the "AI for Humanity" caption competes with the atom animation, and the text overlaps awkwardly with the bright orbits. The overall composition doesn't feel polished.
+The current atom-logo.svg uses light, pastel colors with thin strokes that wash out at 40x40px on a dark background. It looks pale and doesn't read as a proper logo at small sizes.
 
 ## Changes
 
-1. **Remove the "AI for Humanity" subtitle entirely** -- strip it out so only the BohrX logo and Enter button remain.
+### 1. Redesign `src/assets/atom-logo.svg`
+Make it punchy at small sizes:
+- **Thicker orbit strokes** (6 → 10) with higher opacity (full 1.0)
+- **Brighter, more saturated colors** -- vibrant purple (#a855f7), bright teal (#34d399), vivid blue (#60a5fa) for orbits
+- **Larger nucleus** (r=62 → 75) with brighter purple gradient so it's clearly visible
+- **Bigger electrons** (r=18 → 22) with more saturated fills
+- **Remove the subtle white highlight ellipses** that add visual noise at small sizes
+- **Drop the low-opacity values** -- everything should be bold and fully opaque
 
-2. **Center BohrX text directly over the nucleus** -- instead of placing text above the atom, overlay it dead-center on top of the nucleus so it feels integrated with the animation rather than fighting it. The atom becomes the backdrop for the logo.
-
-3. **Add a subtle radial dark vignette** behind the text area so the white text always reads clearly against the glowing orbits.
-
-4. **Move Enter button lower and make it more subtle** -- smaller, more translucent, positioned at the very bottom as a minimal prompt.
-
-5. **Reduce atom animation brightness slightly** -- lower the orbit stroke opacity and electron glow so the animation supports the text rather than overpowering it.
+### 2. Update Header logo styling in `src/components/layout/Header.tsx`
+- Add a subtle `drop-shadow` filter or glow to the logo img so it pops against the dark/transparent header
+- Possibly increase size slightly from `w-10 h-10` to `w-11 h-11`
 
 ## Files to Edit
-- `src/components/SplashScreen.tsx` -- remove subtitle, center the BohrX heading over the atom, add vignette overlay
-- `src/components/ui/atom-animation.tsx` -- slightly reduce glow intensity
+- `src/assets/atom-logo.svg` -- redesign with bolder colors, thicker strokes, larger elements
+- `src/components/layout/Header.tsx` -- add glow/shadow effect to logo image
 
