@@ -94,6 +94,8 @@ const CollaboratePage = () => {
                 <input
                   type="text"
                   required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full bg-transparent border-b border-border text-foreground py-3 text-sm focus:outline-none focus:border-foreground/60 transition-colors"
                 />
               </div>
