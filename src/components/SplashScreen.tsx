@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { SpiralAnimation } from '@/components/ui/spiral-animation'
+import { AtomAnimation } from '@/components/ui/atom-animation'
 
 interface SplashScreenProps {
   onEnter: () => void
@@ -29,7 +29,7 @@ export function SplashScreen({ onEnter }: SplashScreenProps) {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: 'easeInOut' }}
         >
-          <SpiralAnimation />
+          <AtomAnimation />
 
           <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
             <AnimatePresence>
