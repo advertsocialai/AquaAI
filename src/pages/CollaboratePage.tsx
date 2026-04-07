@@ -104,6 +104,8 @@ const CollaboratePage = () => {
                 <input
                   type="email"
                   required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full bg-transparent border-b border-border text-foreground py-3 text-sm focus:outline-none focus:border-foreground/60 transition-colors"
                 />
               </div>
@@ -111,6 +113,8 @@ const CollaboratePage = () => {
                 <label className="block text-xs text-muted-foreground uppercase tracking-[0.2em] mb-2">Organization</label>
                 <input
                   type="text"
+                  value={formData.organization}
+                  onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
                   className="w-full bg-transparent border-b border-border text-foreground py-3 text-sm focus:outline-none focus:border-foreground/60 transition-colors"
                 />
               </div>
@@ -119,6 +123,8 @@ const CollaboratePage = () => {
                 <textarea
                   required
                   rows={4}
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   className="w-full bg-transparent border-b border-border text-foreground py-3 text-sm focus:outline-none focus:border-foreground/60 transition-colors resize-none"
                 />
               </div>
