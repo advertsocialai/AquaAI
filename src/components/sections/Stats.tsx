@@ -10,7 +10,7 @@ const stats = [
 
 export function Stats() {
   return (
-    <section className="h-screen flex items-center snap-start bg-black relative overflow-hidden">
+    <section className="min-h-[100svh] md:h-screen flex items-center md:snap-start bg-black relative overflow-hidden">
       {/* Subtle grid texture */}
       <div className="absolute inset-0 opacity-[0.03]"
         style={{

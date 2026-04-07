@@ -4,9 +4,9 @@ import { TextReveal } from '@/components/ui/text-reveal';
 
 export function Collaboration() {
   return (
-    <section id="collaborate" className="relative h-screen flex items-center justify-center overflow-hidden snap-start">
+    <section id="collaborate" className="relative min-h-[100svh] md:h-screen flex items-center justify-center overflow-hidden md:snap-start">
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat md:bg-fixed"
         style={{
           backgroundImage: `url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80')`,
         }}

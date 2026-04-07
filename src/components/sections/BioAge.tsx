@@ -4,7 +4,7 @@ import { TextReveal } from '@/components/ui/text-reveal';
 
 export function BioAge() {
   return (
-    <section id="bioage" className="relative h-screen flex items-center overflow-hidden snap-start">
+    <section id="bioage" className="relative min-h-[100svh] md:h-screen flex items-center overflow-hidden md:snap-start">
       {/* Split layout: image left, text right */}
       <div className="absolute inset-0 grid md:grid-cols-2">
         <div
