@@ -31,55 +31,62 @@ export function SplashScreen({ onEnter }: SplashScreenProps) {
         >
           <AtomAnimation />
 
-          <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
+          <div className="absolute inset-0 flex flex-col items-center z-10">
+            {/* Text content positioned above the atom */}
             <AnimatePresence>
               {showContent && (
                 <motion.div
-                  className="flex flex-col items-center gap-8"
+                  className="flex flex-col items-center gap-4 mt-[12vh] md:mt-[15vh]"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1, ease: 'easeOut' }}
                 >
                   <motion.h1
-                    className="text-5xl md:text-7xl lg:text-8xl font-bold uppercase tracking-[0.15em] drop-shadow-[0_0_30px_rgba(0,0,0,0.9)]"
-                    style={{ color: 'white', textShadow: '0 0 40px rgba(0,0,0,0.8), 0 2px 20px rgba(0,0,0,0.9)' }}
+                    className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight"
+                    style={{
+                      color: 'white',
+                      textShadow: '0 0 60px rgba(0,0,0,0.9), 0 4px 30px rgba(0,0,0,1)',
+                      fontFamily: 'system-ui, -apple-system, sans-serif',
+                    }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1.2, delay: 0.2 }}
                   >
-                    BOHRX<span className="text-[#b06de0]">.</span>AI
+                    Bohr<span className="font-black italic">X</span>
                   </motion.h1>
 
                   <motion.p
-                    className="text-sm md:text-base tracking-[0.3em] uppercase font-light drop-shadow-[0_0_20px_rgba(0,0,0,0.9)]"
-                    style={{ color: 'rgba(255,255,255,0.7)', textShadow: '0 0 30px rgba(0,0,0,0.8)' }}
+                    className="text-xs md:text-sm tracking-[0.4em] uppercase font-light"
+                    style={{ color: 'rgba(255,255,255,0.5)', textShadow: '0 0 30px rgba(0,0,0,0.9)' }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1, delay: 0.8 }}
                   >
                     AI for Humanity
                   </motion.p>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
+            {/* Enter button at bottom */}
+            <AnimatePresence>
+              {showContent && (
+                <motion.div
+                  className="absolute bottom-[12vh] flex flex-col items-center gap-6"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 1, delay: 1.2 }}
+                >
                   <motion.button
                     onClick={handleEnter}
-                    className="mt-6 px-10 py-3 text-foreground/80 text-sm tracking-[0.3em] uppercase font-light border border-border hover:border-foreground/40 hover:text-foreground transition-all duration-300"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1, delay: 1.2 }}
+                    className="px-12 py-3 text-sm tracking-[0.3em] uppercase font-light border border-white/20 hover:border-white/50 hover:bg-white/5 transition-all duration-300"
+                    style={{ color: 'rgba(255,255,255,0.7)', textShadow: '0 0 20px rgba(0,0,0,0.8)' }}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
                     Enter
                   </motion.button>
-
-                  <motion.div
-                    className="absolute bottom-16 left-1/2 -translate-x-1/2"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1, delay: 1.5 }}
-                  >
-                    <div className="w-px h-10 bg-gradient-to-b from-muted-foreground/50 to-transparent" />
-                  </motion.div>
+                  <div className="w-px h-8 bg-gradient-to-b from-white/30 to-transparent" />
                 </motion.div>
               )}
             </AnimatePresence>
