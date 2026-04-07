@@ -16,7 +16,7 @@ import { SectionIndicator } from "@/components/ui/section-indicator";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-black relative snap-y snap-proximity overflow-y-auto h-screen">
+    <div className="min-h-screen bg-black relative md:snap-y md:snap-proximity">
       <Header />
       <main>
         <div data-section="1"><Hero /></div>
