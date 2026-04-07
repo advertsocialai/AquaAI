@@ -6,11 +6,17 @@ import { TextReveal } from '@/components/ui/text-reveal';
 
 const CollaboratePage = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({ name: '', email: '', organization: '', message: '' });
 
   useEffect(() => { document.title = "Collaborate — BohrX.ai"; }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const subject = encodeURIComponent(`Collaboration Inquiry from ${formData.name}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\nOrganization: ${formData.organization}\n\nMessage:\n${formData.message}`
+    );
+    window.open(`mailto:founders@bohrx.ai?subject=${subject}&body=${body}`, '_self');
     setSubmitted(true);
   };
 
@@ -88,6 +94,8 @@ const CollaboratePage = () => {
                 <input
                   type="text"
                   required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full bg-transparent border-b border-border text-foreground py-3 text-sm focus:outline-none focus:border-foreground/60 transition-colors"
                 />
               </div>
@@ -96,6 +104,8 @@ const CollaboratePage = () => {
                 <input
                   type="email"
                   required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full bg-transparent border-b border-border text-foreground py-3 text-sm focus:outline-none focus:border-foreground/60 transition-colors"
                 />
               </div>
@@ -103,6 +113,8 @@ const CollaboratePage = () => {
                 <label className="block text-xs text-muted-foreground uppercase tracking-[0.2em] mb-2">Organization</label>
                 <input
                   type="text"
+                  value={formData.organization}
+                  onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
                   className="w-full bg-transparent border-b border-border text-foreground py-3 text-sm focus:outline-none focus:border-foreground/60 transition-colors"
                 />
               </div>
@@ -111,6 +123,8 @@ const CollaboratePage = () => {
                 <textarea
                   required
                   rows={4}
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   className="w-full bg-transparent border-b border-border text-foreground py-3 text-sm focus:outline-none focus:border-foreground/60 transition-colors resize-none"
                 />
               </div>
