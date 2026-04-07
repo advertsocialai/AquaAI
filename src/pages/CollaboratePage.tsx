@@ -44,6 +44,21 @@ const CollaboratePage = () => {
         </div>
       </section>
 
+      {/* Contact Info */}
+      <section className="py-16 bg-background border-b border-border">
+        <div className="container mx-auto px-6 lg:px-8 max-w-xl text-center space-y-4">
+          <p className="text-xs text-muted-foreground uppercase tracking-[0.3em] mb-2">Get In Touch</p>
+          <a href="mailto:founders@bohrx.ai" className="block text-sm text-foreground hover:text-foreground/70 transition-colors tracking-wider">
+            founders@bohrx.ai
+          </a>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-muted-foreground">
+            <a href="tel:+916304071465" className="hover:text-foreground transition-colors">+91 6304071465</a>
+            <span className="hidden sm:inline text-border">|</span>
+            <a href="tel:+16194399675" className="hover:text-foreground transition-colors">+1 (619) 439-9675</a>
+          </div>
+        </div>
+      </section>
+
       <section className="py-24 bg-background">
         <div className="container mx-auto px-6 lg:px-8 max-w-xl">
           {submitted ? (
