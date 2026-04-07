@@ -63,3 +63,28 @@
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
+
+@keyframes nucleusPulse {
+  0%, 100% { filter: drop-shadow(0 0 14px #5b46b8) drop-shadow(0 0 30px #1a0f5c); }
+  50% { filter: drop-shadow(0 0 28px #9b8fd4) drop-shadow(0 0 55px #5b46b8); }
+}
+
+@keyframes orbit1Glow {
+  0%, 100% { stroke-opacity: 0.55; }
+  50% { stroke-opacity: 0.95; }
+}
+
+@keyframes orbit2Glow {
+  0%, 100% { stroke-opacity: 0.6; }
+  50% { stroke-opacity: 1; }
+}
+
+@keyframes orbit3Glow {
+  0%, 100% { stroke-opacity: 0.5; }
+  50% { stroke-opacity: 0.9; }
+}
+
+.animate-nucleus-pulse { animation: nucleusPulse 3s ease-in-out infinite; }
+.animate-orbit1-glow { animation: orbit1Glow 4s ease-in-out infinite; }
+.animate-orbit2-glow { animation: orbit2Glow 4s ease-in-out infinite 0.6s; }
+.animate-orbit3-glow { animation: orbit3Glow 4s ease-in-out infinite 1.2s; }
