@@ -31,8 +31,8 @@ export function Header() {
       <div className="container mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center gap-3">
-            <img src={atomLogo} alt="BohrX.ai Logo" className="w-10 h-10 object-contain" />
-            <span className="text-lg font-bold text-white tracking-wider">
+            <img src={atomLogo} alt="BohrX.ai Logo" className="w-10 h-10 object-contain brightness-125 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" />
+            <span className="text-lg font-bold text-white tracking-wider drop-shadow-[0_0_6px_rgba(255,255,255,0.2)]">
               BOHRX<span className="font-light">.AI</span>
             </span>
           </Link>
@@ -42,7 +42,7 @@ export function Header() {
               <Link
                 key={item.label}
                 to={item.to}
-                className="text-xs font-medium text-white/70 hover:text-white transition-colors tracking-[0.2em]"
+                className="text-xs font-medium text-white/80 hover:text-white transition-colors tracking-[0.2em]"
               >
                 {item.label}
               </Link>
@@ -54,6 +54,7 @@ export function Header() {
               CONTACT
             </Link>
           </div>
+          {/* Mobile nav links also boosted */}
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
