@@ -7,10 +7,10 @@ export function Hero() {
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat md:bg-fixed"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=1920&q=80')`,
+          backgroundImage: `url('https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1920&q=80')`,
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/20" />
 
       <div className="container mx-auto px-6 lg:px-8 relative z-10 pb-24">
         <div className="max-w-2xl">
