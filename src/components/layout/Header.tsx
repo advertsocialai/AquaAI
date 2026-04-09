@@ -42,7 +42,7 @@ export function Header() {
               <Link
                 key={item.label}
                 to={item.to}
-                className="text-xs font-medium text-white/80 hover:text-white transition-colors tracking-[0.2em]"
+                className="text-xs font-medium text-white/90 hover:text-white transition-colors tracking-[0.2em] drop-shadow-[0_0_4px_rgba(255,255,255,0.15)]"
               >
                 {item.label}
               </Link>
@@ -50,7 +50,7 @@ export function Header() {
           </nav>
 
           <div className="hidden md:block">
-            <Link to="/collaborate" className="text-xs font-medium text-white/80 hover:text-white transition-colors tracking-[0.2em]">
+            <Link to="/collaborate" className="text-xs font-medium text-white/90 hover:text-white transition-colors tracking-[0.2em] drop-shadow-[0_0_4px_rgba(255,255,255,0.15)]">
               CONTACT
             </Link>
           </div>
