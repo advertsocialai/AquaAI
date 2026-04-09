@@ -12,7 +12,7 @@ import { Partners } from "@/components/sections/Partners";
 import { Timeline } from "@/components/sections/Timeline";
 import { FoundersSection } from "@/components/sections/FoundersSection";
 import { Footer } from "@/components/layout/Footer";
-import { SectionIndicator } from "@/components/ui/section-indicator";
+
 
 const Index = () => {
   return (
@@ -33,7 +33,6 @@ const Index = () => {
         <div data-section="12"><FoundersSection /></div>
       </main>
       <Footer />
-      <SectionIndicator totalSections={12} />
     </div>
   );
 };
