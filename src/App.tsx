@@ -17,6 +17,8 @@ import BioAgePage from "./pages/BioAgePage";
 import AlzheimersPage from "./pages/AlzheimersPage";
 import FoundersPage from "./pages/FoundersPage";
 import CollaboratePage from "./pages/CollaboratePage";
+import PrivacyPage from "./pages/PrivacyPage";
+import TermsPage from "./pages/TermsPage";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +41,8 @@ function AnimatedRoutes() {
         <Route path="/alzheimers" element={<PageTransition><AlzheimersPage /></PageTransition>} />
         <Route path="/founders" element={<PageTransition><FoundersPage /></PageTransition>} />
         <Route path="/collaborate" element={<PageTransition><CollaboratePage /></PageTransition>} />
+        <Route path="/privacy" element={<PageTransition><PrivacyPage /></PageTransition>} />
+        <Route path="/terms" element={<PageTransition><TermsPage /></PageTransition>} />
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>
     </AnimatePresence>

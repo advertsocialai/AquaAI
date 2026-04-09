@@ -1,4 +1,5 @@
 import { ArrowUp } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export function Footer() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -30,8 +31,8 @@ export function Footer() {
           <div className="flex items-center gap-8">
             <a target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-foreground/70 transition-colors tracking-wider" href="https://www.linkedin.com/company/bohrx-ai/">LINKEDIN</a>
             <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-foreground/70 transition-colors tracking-wider">X</a>
-            <a href="#" className="text-xs text-muted-foreground hover:text-foreground/70 transition-colors tracking-wider">PRIVACY</a>
-            <a href="#" className="text-xs text-muted-foreground hover:text-foreground/70 transition-colors tracking-wider">TERMS</a>
+            <Link to="/privacy" className="text-xs text-muted-foreground hover:text-foreground/70 transition-colors tracking-wider">PRIVACY</Link>
+            <Link to="/terms" className="text-xs text-muted-foreground hover:text-foreground/70 transition-colors tracking-wider">TERMS</Link>
           </div>
 
           <button
