@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { CustomCursor } from "@/components/ui/custom-cursor";
-
+import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { NoiseTexture } from "@/components/ui/noise-texture";
 import { SplashScreen } from "@/components/SplashScreen";
 import { PageTransition } from "@/components/layout/PageTransition";
