@@ -50,7 +50,7 @@ export function Header() {
           </nav>
 
           <div className="hidden md:block">
-            <Link to="/collaborate" className="text-xs font-medium text-white/70 hover:text-white transition-colors tracking-[0.2em]">
+            <Link to="/collaborate" className="text-xs font-medium text-white/80 hover:text-white transition-colors tracking-[0.2em]">
               CONTACT
             </Link>
           </div>
