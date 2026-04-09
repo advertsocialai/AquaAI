@@ -1,7 +1,15 @@
 import { motion, useScroll } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 export function ScrollProgress() {
+  const [mounted, setMounted] = useState(false);
   const { scrollYProgress } = useScroll();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
 
   return (
     <motion.div
