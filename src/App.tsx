@@ -15,7 +15,6 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import TechnologyPage from "./pages/TechnologyPage";
 import BioAgePage from "./pages/BioAgePage";
-import AlzheimersPage from "./pages/AlzheimersPage";
 import FoundersPage from "./pages/FoundersPage";
 import CollaboratePage from "./pages/CollaboratePage";
 import PrivacyPage from "./pages/PrivacyPage";
@@ -39,7 +38,6 @@ function AnimatedRoutes() {
         <Route path="/" element={<PageTransition><Index /></PageTransition>} />
         <Route path="/technology" element={<PageTransition><TechnologyPage /></PageTransition>} />
         <Route path="/bioage" element={<PageTransition><BioAgePage /></PageTransition>} />
-        <Route path="/alzheimers" element={<PageTransition><AlzheimersPage /></PageTransition>} />
         <Route path="/founders" element={<PageTransition><FoundersPage /></PageTransition>} />
         <Route path="/collaborate" element={<PageTransition><CollaboratePage /></PageTransition>} />
         <Route path="/privacy" element={<PageTransition><PrivacyPage /></PageTransition>} />

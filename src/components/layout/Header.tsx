@@ -7,7 +7,6 @@ import atomLogo from '@/assets/atom-logo.svg';
 const navItems = [
   { label: "TECHNOLOGY", to: "/technology" },
   { label: "BIO-AGE", to: "/bioage" },
-  { label: "ALZHEIMER'S", to: "/alzheimers" },
   { label: "FOUNDERS", to: "/founders" },
   { label: "COLLABORATE", to: "/collaborate" },
 ];

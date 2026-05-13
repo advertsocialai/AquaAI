@@ -6,7 +6,6 @@ import { Research } from "@/components/sections/Research";
 import { Stats } from "@/components/sections/Stats";
 import { Pipeline } from "@/components/sections/Pipeline";
 import { BioAge } from "@/components/sections/BioAge";
-import { Alzheimers } from "@/components/sections/Alzheimers";
 import { Collaboration } from "@/components/sections/Collaboration";
 import { Partners } from "@/components/sections/Partners";
 import { Timeline } from "@/components/sections/Timeline";
@@ -26,11 +25,10 @@ const Index = () => {
         <div data-section="5"><Stats /></div>
         <div data-section="6"><Pipeline /></div>
         <div data-section="7"><BioAge /></div>
-        <div data-section="8"><Alzheimers /></div>
-        <div data-section="9"><Collaboration /></div>
-        <div data-section="10"><Partners /></div>
-        <div data-section="11"><Timeline /></div>
-        <div data-section="12"><FoundersSection /></div>
+        <div data-section="8"><Collaboration /></div>
+        <div data-section="9"><Partners /></div>
+        <div data-section="10"><Timeline /></div>
+        <div data-section="11"><FoundersSection /></div>
       </main>
       <Footer />
     </div>
