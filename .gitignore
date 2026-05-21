@@ -22,3 +22,35 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# ── Secrets — NEVER commit ──────────────────────────────────────────
+.env
+**/.env
+*.env.local
+backend/.env
+
+# ── Python / backend ────────────────────────────────────────────────
+backend/venv/
+**/__pycache__/
+*.pyc
+*.pyo
+
+# ── Backend runtime data (regenerated at runtime) ───────────────────
+backend/uploads/
+runs/
+
+# ── Training artifacts ──────────────────────────────────────────────
+training/data/
+training/runs/
+*.pt
+*.onnx
+*.tflite
+*.joblib
+
+# ── Flutter / mobile build artifacts ────────────────────────────────
+mobile/build/
+mobile/.dart_tool/
+mobile/.flutter-plugins
+mobile/.flutter-plugins-dependencies
+mobile/ios/Pods/
+mobile/android/.gradle/

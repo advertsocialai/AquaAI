@@ -1,0 +1,241 @@
+import 'package:flutter/material.dart';
+import '../../utils/constants.dart';
+import '../seed_counter/seed_counter_screen.dart';
+import '../disease_detector/disease_detector_screen.dart';
+import '../quality_grader/quality_grader_screen.dart';
+import '../reports/reports_screen.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
+
+  final _screens = const [
+    _HomeTab(),
+    SeedCounterScreen(),
+    DiseaseDetectorScreen(),
+    QualityGraderScreen(),
+    ReportsScreen(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _screens[_selectedIndex],
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _selectedIndex,
+        onDestinationSelected: (i) => setState(() => _selectedIndex = i),
+        destinations: const [
+          NavigationDestination(icon: Icon(Icons.home_outlined),
+              selectedIcon: Icon(Icons.home), label: 'Home'),
+          NavigationDestination(icon: Icon(Icons.numbers_outlined),
+              selectedIcon: Icon(Icons.numbers), label: 'Counter'),
+          NavigationDestination(icon: Icon(Icons.biotech_outlined),
+              selectedIcon: Icon(Icons.biotech), label: 'Disease'),
+          NavigationDestination(icon: Icon(Icons.stars_outlined),
+              selectedIcon: Icon(Icons.stars), label: 'Quality'),
+          NavigationDestination(icon: Icon(Icons.description_outlined),
+              selectedIcon: Icon(Icons.description), label: 'Reports'),
+        ],
+      ),
+    );
+  }
+}
+
+class _HomeTab extends StatelessWidget {
+  const _HomeTab();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('AquaAI'),
+        actions: [
+          IconButton(icon: const Icon(Icons.sync), onPressed: () {}),
+          IconButton(icon: const Icon(Icons.person_outline), onPressed: () {}),
+        ],
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Platform banner
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(AppColors.primary), Color(0xFF2d6a9f)],
+                ),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Shrimp Seed Detect & Counter',
+                      style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+                  SizedBox(height: 4),
+                  Text('AI-Powered PL Diagnostics Platform',
+                      style: TextStyle(color: Colors.white70, fontSize: 13)),
+                  SizedBox(height: 12),
+                  Row(children: [
+                    _StatChip(label: '32 Features', icon: Icons.star),
+                    SizedBox(width: 8),
+                    _StatChip(label: '4 AI Models', icon: Icons.psychology),
+                    SizedBox(width: 8),
+                    _StatChip(label: '100% Offline', icon: Icons.wifi_off),
+                  ]),
+                ],
+              ),
+            ),
+            const SizedBox(height: 24),
+            const Text('Modules', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 12),
+            GridView.count(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisCount: 2,
+              mainAxisSpacing: 12,
+              crossAxisSpacing: 12,
+              childAspectRatio: 1.1,
+              children: [
+                _ModuleCard(
+                  title: 'Seed Counter',
+                  subtitle: 'Count & extrapolate PL batches',
+                  icon: Icons.numbers,
+                  color: const Color(0xFF0ea5e9),
+                  badge: 'M1 · 8 Features',
+                  onTap: () {},
+                ),
+                _ModuleCard(
+                  title: 'Disease Detector',
+                  subtitle: 'EHP, WSSV & 4 more diseases',
+                  icon: Icons.biotech,
+                  color: const Color(0xFFef4444),
+                  badge: 'M2 · 8 Features',
+                  onTap: () {},
+                ),
+                _ModuleCard(
+                  title: 'Quality Grader',
+                  subtitle: 'Composite QS 0-100 score',
+                  icon: Icons.stars,
+                  color: const Color(AppColors.primary),
+                  badge: 'M3 · 8 Features',
+                  onTap: () {},
+                ),
+                _ModuleCard(
+                  title: 'Reports',
+                  subtitle: 'PDF certs & analytics',
+                  icon: Icons.description,
+                  color: const Color(0xFF8b5cf6),
+                  badge: 'M4 · 8 Features',
+                  onTap: () {},
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+            const Text('Quick Stats', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 12),
+            Row(children: [
+              Expanded(child: _QuickStatCard(label: 'Sessions Today', value: '0', icon: Icons.today)),
+              const SizedBox(width: 12),
+              Expanded(child: _QuickStatCard(label: 'Pending Sync', value: '0', icon: Icons.cloud_upload)),
+            ]),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _StatChip extends StatelessWidget {
+  final String label;
+  final IconData icon;
+  const _StatChip({required this.label, required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(mainAxisSize: MainAxisSize.min, children: [
+        Icon(icon, color: Colors.white, size: 12),
+        const SizedBox(width: 4),
+        Text(label, style: const TextStyle(color: Colors.white, fontSize: 10)),
+      ]),
+    );
+  }
+}
+
+class _ModuleCard extends StatelessWidget {
+  final String title, subtitle, badge;
+  final IconData icon;
+  final Color color;
+  final VoidCallback onTap;
+  const _ModuleCard({required this.title, required this.subtitle,
+    required this.icon, required this.color, required this.badge, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: color.withOpacity(0.08),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: color.withOpacity(0.2)),
+        ),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Icon(icon, color: color, size: 32),
+          const Spacer(),
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold, color: color, fontSize: 14)),
+          Text(subtitle, style: TextStyle(fontSize: 11, color: color.withOpacity(0.7)),
+              maxLines: 2, overflow: TextOverflow.ellipsis),
+          const SizedBox(height: 4),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+            decoration: BoxDecoration(color: color.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(4)),
+            child: Text(badge, style: TextStyle(fontSize: 9, color: color, fontWeight: FontWeight.bold)),
+          ),
+        ]),
+      ),
+    );
+  }
+}
+
+class _QuickStatCard extends StatelessWidget {
+  final String label, value;
+  final IconData icon;
+  const _QuickStatCard({required this.label, required this.value, required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade50,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey.shade200),
+      ),
+      child: Row(children: [
+        Icon(icon, color: Colors.grey.shade600),
+        const SizedBox(width: 12),
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(value, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+          Text(label, style: TextStyle(fontSize: 11, color: Colors.grey.shade600)),
+        ]),
+      ]),
+    );
+  }
+}

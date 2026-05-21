@@ -19,6 +19,7 @@ import FoundersPage from "./pages/FoundersPage";
 import CollaboratePage from "./pages/CollaboratePage";
 import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
+import AquaAIPage from "./pages/AquaAIPage";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +43,7 @@ function AnimatedRoutes() {
         <Route path="/collaborate" element={<PageTransition><CollaboratePage /></PageTransition>} />
         <Route path="/privacy" element={<PageTransition><PrivacyPage /></PageTransition>} />
         <Route path="/terms" element={<PageTransition><TermsPage /></PageTransition>} />
+        <Route path="/aquaai" element={<PageTransition><AquaAIPage /></PageTransition>} />
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>
     </AnimatePresence>
