@@ -3,6 +3,7 @@ import {
   Landmark, BadgeCheck, AlertTriangle, FileSpreadsheet,
   TrendingUp, ShieldCheck, IndianRupee,
 } from 'lucide-react';
+import { LoanApplication } from './LoanApplication';
 
 type Farm = {
   id: string;
@@ -143,6 +144,11 @@ export function RiskScoringModule() {
             <div className="flex items-center justify-between"><span className="text-white/70">Fraud flagged</span><span className="font-bold text-red-400 tabular-nums">1</span></div>
           </div>
         </div>
+      </div>
+
+      <div>
+        <div className="text-[11px] uppercase tracking-widest text-white/30 mb-3">New Loan Application</div>
+        <LoanApplication />
       </div>
     </div>
   );

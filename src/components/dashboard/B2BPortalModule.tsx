@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import {
   Package, Truck, Star, TrendingUp, FileCheck, CheckCircle2, AlertCircle,
 } from 'lucide-react';
+import { DisputeResolution } from './DisputeResolution';
 
 const BATCHES = [
   { id: 'HB-3401', species: 'L. vannamei', size: 'PL-12', count: '5 lakh',  qs: 92, status: 'Ready',   buyer: '—'              },
@@ -108,6 +109,11 @@ export function B2BPortalModule() {
             </div>
           ))}
         </div>
+      </div>
+
+      <div>
+        <div className="text-[11px] uppercase tracking-widest text-white/30 mb-3">Dispute Resolution</div>
+        <DisputeResolution />
       </div>
 
       <div className="p-5 rounded-2xl border border-white/10 bg-white/[0.03] flex items-start gap-3">
