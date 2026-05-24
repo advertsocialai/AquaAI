@@ -21,6 +21,7 @@ import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
 import AquaAIPage from "./pages/AquaAIPage";
 import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,7 @@ function AnimatedRoutes() {
         <Route path="/terms" element={<PageTransition><TermsPage /></PageTransition>} />
         <Route path="/aquaai" element={<PageTransition><AquaAIPage /></PageTransition>} />
         <Route path="/login" element={<PageTransition><LoginPage /></PageTransition>} />
+        <Route path="/signup" element={<PageTransition><SignupPage /></PageTransition>} />
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>
     </AnimatePresence>
