@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,17 +14,32 @@ import { ChatBot } from "@/components/ChatBot";
 import { PageTransition } from "@/components/layout/PageTransition";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import BioAgePage from "./pages/BioAgePage";
-import FoundersPage from "./pages/FoundersPage";
-import CollaboratePage from "./pages/CollaboratePage";
-import PrivacyPage from "./pages/PrivacyPage";
-import TermsPage from "./pages/TermsPage";
-import AquaAIPage from "./pages/AquaAIPage";
-import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
-import SettingsPage from "./pages/SettingsPage";
+
+// Lazy-load every heavy route — keeps the first JS payload small and
+// the splash-to-interactive time on slow networks low.
+const BioAgePage      = lazy(() => import("./pages/BioAgePage"));
+const FoundersPage    = lazy(() => import("./pages/FoundersPage"));
+const CollaboratePage = lazy(() => import("./pages/CollaboratePage"));
+const PrivacyPage     = lazy(() => import("./pages/PrivacyPage"));
+const TermsPage       = lazy(() => import("./pages/TermsPage"));
+const AquaAIPage      = lazy(() => import("./pages/AquaAIPage"));
+const LoginPage       = lazy(() => import("./pages/LoginPage"));
+const SignupPage      = lazy(() => import("./pages/SignupPage"));
+const SettingsPage    = lazy(() => import("./pages/SettingsPage"));
+const KycPage         = lazy(() => import("./pages/KycPage"));
 
 const queryClient = new QueryClient();
+
+function RouteFallback() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="flex items-center gap-3 text-white/40 text-sm">
+        <div className="w-4 h-4 rounded-full border-2 border-cyan-400 border-t-transparent animate-spin" />
+        Loading…
+      </div>
+    </div>
+  );
+}
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -38,20 +53,23 @@ function AnimatedRoutes() {
   const location = useLocation();
   return (
     <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageTransition><Index /></PageTransition>} />
-        <Route path="/technology" element={<Navigate to="/aquaai" replace />} />
-        <Route path="/bioage" element={<PageTransition><BioAgePage /></PageTransition>} />
-        <Route path="/founders" element={<PageTransition><FoundersPage /></PageTransition>} />
-        <Route path="/collaborate" element={<PageTransition><CollaboratePage /></PageTransition>} />
-        <Route path="/privacy" element={<PageTransition><PrivacyPage /></PageTransition>} />
-        <Route path="/terms" element={<PageTransition><TermsPage /></PageTransition>} />
-        <Route path="/aquaai" element={<PageTransition><AquaAIPage /></PageTransition>} />
-        <Route path="/login" element={<PageTransition><LoginPage /></PageTransition>} />
-        <Route path="/signup" element={<PageTransition><SignupPage /></PageTransition>} />
-        <Route path="/settings" element={<PageTransition><SettingsPage /></PageTransition>} />
-        <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
-      </Routes>
+      <Suspense fallback={<RouteFallback />}>
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<PageTransition><Index /></PageTransition>} />
+          <Route path="/technology" element={<Navigate to="/aquaai" replace />} />
+          <Route path="/bioage" element={<PageTransition><BioAgePage /></PageTransition>} />
+          <Route path="/founders" element={<PageTransition><FoundersPage /></PageTransition>} />
+          <Route path="/collaborate" element={<PageTransition><CollaboratePage /></PageTransition>} />
+          <Route path="/privacy" element={<PageTransition><PrivacyPage /></PageTransition>} />
+          <Route path="/terms" element={<PageTransition><TermsPage /></PageTransition>} />
+          <Route path="/aquaai" element={<PageTransition><AquaAIPage /></PageTransition>} />
+          <Route path="/login" element={<PageTransition><LoginPage /></PageTransition>} />
+          <Route path="/signup" element={<PageTransition><SignupPage /></PageTransition>} />
+          <Route path="/settings" element={<PageTransition><SettingsPage /></PageTransition>} />
+          <Route path="/kyc" element={<PageTransition><KycPage /></PageTransition>} />
+          <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+        </Routes>
+      </Suspense>
     </AnimatePresence>
   );
 }

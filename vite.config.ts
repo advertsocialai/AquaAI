@@ -63,4 +63,20 @@ export default defineConfig(() => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    chunkSizeWarningLimit: 800,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react:      ["react", "react-dom", "react-router-dom"],
+          framer:     ["framer-motion"],
+          charts:     ["recharts"],
+          maps:       ["leaflet"],
+          icons:      ["lucide-react"],
+          i18n:       ["i18next", "react-i18next", "i18next-browser-languagedetector"],
+          tanstack:   ["@tanstack/react-query"],
+        },
+      },
+    },
+  },
 }));
