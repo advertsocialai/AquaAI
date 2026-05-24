@@ -1,0 +1,20 @@
+species,scientific_name,size,size_unit,price_low,price_high,price_unit,market,district,state,date,source,notes
+L. vannamei,Litopenaeus vannamei,30,count/kg,480,550,INR/kg,Farmgate,West Godavari,AP,2026-05-01,MPEDA,
+L. vannamei,Litopenaeus vannamei,40,count/kg,380,450,INR/kg,Farmgate,West Godavari,AP,2026-05-01,MPEDA,
+L. vannamei,Litopenaeus vannamei,50,count/kg,320,380,INR/kg,Farmgate,West Godavari,AP,2026-05-01,MPEDA,
+L. vannamei,Litopenaeus vannamei,60,count/kg,280,330,INR/kg,Farmgate,West Godavari,AP,2026-05-01,MPEDA,
+L. vannamei,Litopenaeus vannamei,70,count/kg,240,290,INR/kg,Farmgate,West Godavari,AP,2026-05-01,MPEDA,
+L. vannamei,Litopenaeus vannamei,80,count/kg,210,260,INR/kg,Farmgate,West Godavari,AP,2026-05-01,MPEDA,
+L. vannamei,Litopenaeus vannamei,100,count/kg,180,220,INR/kg,Farmgate,West Godavari,AP,2026-05-01,MPEDA,
+L. vannamei,Litopenaeus vannamei,120,count/kg,160,200,INR/kg,Farmgate,West Godavari,AP,2026-05-01,MPEDA,
+P. monodon,Penaeus monodon,20,count/kg,750,900,INR/kg,Farmgate,East Godavari,AP,2026-05-01,MPEDA,Black tiger
+P. monodon,Penaeus monodon,30,count/kg,600,720,INR/kg,Farmgate,East Godavari,AP,2026-05-01,MPEDA,Black tiger
+P. monodon,Penaeus monodon,40,count/kg,500,600,INR/kg,Farmgate,East Godavari,AP,2026-05-01,MPEDA,Black tiger
+Scampi,Macrobrachium rosenbergii,8,count/kg,550,700,INR/kg,Farmgate,Krishna,AP,2026-05-01,MPEDA,6-10 ct
+Scampi,Macrobrachium rosenbergii,15,count/kg,400,550,INR/kg,Farmgate,Krishna,AP,2026-05-01,MPEDA,10-20 ct
+L. vannamei,Litopenaeus vannamei,40,count/kg,395,460,INR/kg,Mandi,Bhimavaram,AP,2026-05-01,Crowdsourced,
+L. vannamei,Litopenaeus vannamei,40,count/kg,4.85,5.20,USD/kg,Export FOB,Visakhapatnam,AP,2026-05-01,IFCO,
+L. vannamei,Litopenaeus vannamei,60,count/kg,285,335,INR/kg,Farmgate,Nellore,AP,2026-05-01,Cluster avg,
+L. vannamei,Litopenaeus vannamei,80,count/kg,215,265,INR/kg,Farmgate,Surat,GJ,2026-05-01,Cluster avg,
+L. vannamei,Litopenaeus vannamei,60,count/kg,290,340,INR/kg,Farmgate,Bhubaneswar,OD,2026-05-01,Cluster avg,
+P. monodon,Penaeus monodon,30,count/kg,610,730,INR/kg,Farmgate,Kakdwip,WB,2026-05-01,Cluster avg,

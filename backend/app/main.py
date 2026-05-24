@@ -15,6 +15,7 @@ from app.api.v1 import ai_agent
 from app.api.v1.subscriptions import router as subscriptions_router, insurance_router
 from app.api.v1 import pricing, marketplace, logistics
 from app.api.v1 import advisory, knowledge, community, surveillance
+from app.api.v1 import pricing_ws
 
 app = FastAPI(
     title=settings.app_name,
@@ -59,6 +60,7 @@ app.include_router(advisory.router, prefix=PREFIX)         # M6 Advisory + weath
 app.include_router(knowledge.router, prefix=PREFIX)        # M7 Knowledge hub
 app.include_router(community.router, prefix=PREFIX)        # M8 Community & forums
 app.include_router(surveillance.router, prefix=PREFIX)     # M9 Govt surveillance + NSPAAD
+app.include_router(pricing_ws.router, prefix=PREFIX)       # WebSocket price ticker
 
 
 @app.on_event("startup")

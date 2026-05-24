@@ -21,6 +21,7 @@ import { KnowledgeHubModule } from './KnowledgeHubModule';
 import { CommunityModule } from './CommunityModule';
 import { ReportsModule } from './ReportsModule';
 import { AdminModule } from './AdminModule';
+import { LivePriceTicker } from './LivePriceTicker';
 
 import { SeedScanner } from '@/components/SeedScanner';
 import { DiagnosisDemo } from '@/components/DiagnosisDemo';
@@ -129,6 +130,8 @@ export function AquaDashboard() {
         </div>
         <RoleSelector role={role} onChange={setRole} />
       </div>
+
+      <LivePriceTicker />
 
       {/* Role-specific KPI summary (Module 01 — Dashboard) */}
       <KpiDashboard role={role} />

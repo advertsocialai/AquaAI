@@ -1,0 +1,14 @@
+species,scientific_name,market_size,price_low,price_high,price_unit,market,district,state,date,source
+Rohu,Labeo rohita,1-2 kg,140,180,INR/kg,Farmgate,Krishna,AP,2026-05-01,Cluster avg
+Catla,Catla catla,1.5-3 kg,130,170,INR/kg,Farmgate,Krishna,AP,2026-05-01,Cluster avg
+Mrigal,Cirrhinus mrigala,1-2 kg,110,150,INR/kg,Farmgate,Krishna,AP,2026-05-01,Cluster avg
+Common Carp,Cyprinus carpio,1-2 kg,100,130,INR/kg,Farmgate,Krishna,AP,2026-05-01,Cluster avg
+Pangasius / Basa,Pangasius hypophthalmus,1-2 kg,110,140,INR/kg,Farmgate,Krishna,AP,2026-05-01,Cluster avg
+Tilapia (GIFT),Oreochromis niloticus,500g-1 kg,120,160,INR/kg,Farmgate,Bhimavaram,AP,2026-05-01,Cluster avg
+Murrel / Korramenu,Channa striata,500g-1 kg,350,500,INR/kg,Farmgate,Krishna,AP,2026-05-01,Cluster avg
+Pearl Spot,Etroplus suratensis,200-400 g,280,400,INR/kg,Farmgate,Alappuzha,KL,2026-05-01,Cluster avg
+Snakehead,Ophiocephalus,500g-1 kg,320,450,INR/kg,Farmgate,East Godavari,AP,2026-05-01,Cluster avg
+Magur,Clarias batrachus,500g-1 kg,180,260,INR/kg,Farmgate,Kakdwip,WB,2026-05-01,Cluster avg
+Rohu,Labeo rohita,1-2 kg,135,175,INR/kg,Mandi,Hyderabad,TG,2026-05-01,Mandi feed
+Tilapia (GIFT),Oreochromis niloticus,500g-1 kg,125,165,INR/kg,Farmgate,Bhubaneswar,OD,2026-05-01,Cluster avg
+Pangasius / Basa,Pangasius hypophthalmus,1-2 kg,108,138,INR/kg,Farmgate,Surat,GJ,2026-05-01,Cluster avg
