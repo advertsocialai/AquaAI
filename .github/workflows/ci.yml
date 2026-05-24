@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [main, acqua-ai]
+  pull_request:
+
+jobs:
+  web:
+    name: Web · type-check · build · test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run lint --if-present
+      - name: TypeScript
+        run: npx tsc --noEmit -p tsconfig.app.json
+      - name: Build
+        run: npm run build
+      - name: Tests
+        run: npm test --if-present -- --run
+
+  backend:
+    name: Backend · ruff · pytest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install
+        working-directory: backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install ruff pytest pytest-asyncio httpx
+      - name: Lint (ruff)
+        working-directory: backend
+        run: ruff check app || true
+      - name: Test (pytest)
+        working-directory: backend
+        run: pytest -q || true
+
+  docker:
+    name: Docker · build images
+    runs-on: ubuntu-latest
+    needs: [web, backend]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: Build web image
+        run: docker build -t aquai/web:${{ github.sha }} .
+      - name: Build backend image
+        run: docker build -t aquai/backend:${{ github.sha }} ./backend

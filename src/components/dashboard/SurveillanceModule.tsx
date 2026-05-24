@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import {
   Shield, AlertTriangle, FileText, MapPin, TrendingUp, Activity, Eye,
 } from 'lucide-react';
+import { OutbreakHeatmap } from './OutbreakHeatmap';
 
 const OUTBREAKS = [
   { district: 'West Godavari', state: 'AP', species: 'L. vannamei', disease: 'EHP',   farms: 14, severity: 'high'   },
@@ -41,6 +42,8 @@ export function SurveillanceModule() {
           </div>
         ))}
       </div>
+
+      <OutbreakHeatmap />
 
       <div>
         <div className="flex items-center gap-2 mb-3">
