@@ -3,6 +3,7 @@ import {
   Package, Truck, Star, TrendingUp, FileCheck, CheckCircle2, AlertCircle,
 } from 'lucide-react';
 import { DisputeResolution } from './DisputeResolution';
+import { DispatchOrders } from './DispatchOrders';
 
 const BATCHES = [
   { id: 'HB-3401', species: 'L. vannamei', size: 'PL-12', count: '5 lakh',  qs: 92, status: 'Ready',   buyer: '—'              },
@@ -109,6 +110,11 @@ export function B2BPortalModule() {
             </div>
           ))}
         </div>
+      </div>
+
+      <div>
+        <div className="text-[11px] uppercase tracking-widest text-white/30 mb-3">Dispatch Orders</div>
+        <DispatchOrders />
       </div>
 
       <div>

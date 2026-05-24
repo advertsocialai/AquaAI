@@ -1,36 +1,33 @@
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import {
   KeyRound, BrainCircuit, IndianRupee, ShoppingCart, Truck, LifeBuoy,
   Building2, Shield, Landmark, Calculator, BookOpen, MessageSquare,
-  FileText, Settings,
+  FileText, Settings, Loader2,
 } from 'lucide-react';
 import { RoleSelector, type Role } from './RoleSelector';
-import { OnboardingModule } from './OnboardingModule';
-import { PricingModule } from './PricingModule';
-import { MarketplaceModule } from './MarketplaceModule';
-import { LogisticsModule } from './LogisticsModule';
-import { AdvisoryModule } from './AdvisoryModule';
-import { B2BPortalModule } from './B2BPortalModule';
-import { SurveillanceModule } from './SurveillanceModule';
-import { RiskScoringModule } from './RiskScoringModule';
 import { KpiDashboard } from './KpiDashboard';
-import { CalculatorsModule } from './CalculatorsModule';
-import { KnowledgeHubModule } from './KnowledgeHubModule';
-import { CommunityModule } from './CommunityModule';
-import { ReportsModule } from './ReportsModule';
-import { AdminModule } from './AdminModule';
 import { LivePriceTicker } from './LivePriceTicker';
 
-import { SeedScanner } from '@/components/SeedScanner';
-import { DiagnosisDemo } from '@/components/DiagnosisDemo';
-import { GradCamViewer } from '@/components/GradCamViewer';
-import { BatchExtrapolator } from '@/components/BatchExtrapolator';
-import { CertificateVerify } from '@/components/CertificateVerify';
-import { OutbreakMap } from '@/components/OutbreakMap';
-import { WaterQualityPanel } from '@/components/WaterQualityPanel';
-import { ContinuousLearning } from '@/components/ContinuousLearning';
+// Lazy-load every heavy tab body. Each becomes its own chunk so the
+// AquaAIPage initial download stays small. Tab payloads (charts, maps,
+// PDFs, leaflet) are only fetched when the user opens that tab.
+const OnboardingModule  = lazy(() => import('./OnboardingModule').then((m) => ({ default: m.OnboardingModule })));
+const PricingModule     = lazy(() => import('./PricingModule').then((m)    => ({ default: m.PricingModule })));
+const MarketplaceModule = lazy(() => import('./MarketplaceModule').then((m)=> ({ default: m.MarketplaceModule })));
+const LogisticsModule   = lazy(() => import('./LogisticsModule').then((m)  => ({ default: m.LogisticsModule })));
+const AdvisoryModule    = lazy(() => import('./AdvisoryModule').then((m)   => ({ default: m.AdvisoryModule })));
+const B2BPortalModule   = lazy(() => import('./B2BPortalModule').then((m)  => ({ default: m.B2BPortalModule })));
+const SurveillanceModule= lazy(() => import('./SurveillanceModule').then((m)=>({ default: m.SurveillanceModule })));
+const RiskScoringModule = lazy(() => import('./RiskScoringModule').then((m)=> ({ default: m.RiskScoringModule })));
+const CalculatorsModule = lazy(() => import('./CalculatorsModule').then((m)=> ({ default: m.CalculatorsModule })));
+const KnowledgeHubModule= lazy(() => import('./KnowledgeHubModule').then((m)=>({ default: m.KnowledgeHubModule })));
+const CommunityModule   = lazy(() => import('./CommunityModule').then((m)  => ({ default: m.CommunityModule })));
+const ReportsModule     = lazy(() => import('./ReportsModule').then((m)    => ({ default: m.ReportsModule })));
+const AdminModule       = lazy(() => import('./AdminModule').then((m)      => ({ default: m.AdminModule })));
+
+const DiagnosticsModule = lazy(() => import('./DiagnosticsLazy'));
 
 type TabId =
   | 'onboarding' | 'diagnostics' | 'pricing' | 'marketplace'
@@ -65,45 +62,11 @@ const ROLE_ACCESS: Record<Role, { default: TabId; tabs: TabId[] }> = {
   govt:        { default: 'surveillance', tabs: ['onboarding', 'surveillance', 'advisory', 'knowledge', 'community', 'reports', 'admin'] },
 };
 
-function DiagnosticsModule() {
+function TabLoader() {
   return (
-    <div className="space-y-10">
-      <div className="grid lg:grid-cols-2 gap-8">
-        <div>
-          <div className="text-[11px] uppercase tracking-widest text-white/30 mb-2">Seed Counter</div>
-          <SeedScanner />
-        </div>
-        <div>
-          <div className="text-[11px] uppercase tracking-widest text-white/30 mb-2">Disease &amp; Quality</div>
-          <DiagnosisDemo />
-        </div>
-      </div>
-      <div>
-        <div className="text-[11px] uppercase tracking-widest text-white/30 mb-2">Explainable AI (Grad-CAM)</div>
-        <GradCamViewer />
-      </div>
-      <div>
-        <div className="text-[11px] uppercase tracking-widest text-white/30 mb-2">Batch Extrapolation</div>
-        <BatchExtrapolator />
-      </div>
-      <div>
-        <div className="text-[11px] uppercase tracking-widest text-white/30 mb-2">Tamper-Evident QC Certificate</div>
-        <CertificateVerify />
-      </div>
-      <div className="grid lg:grid-cols-2 gap-8">
-        <div>
-          <div className="text-[11px] uppercase tracking-widest text-white/30 mb-2">Outbreak Map</div>
-          <OutbreakMap />
-        </div>
-        <div>
-          <div className="text-[11px] uppercase tracking-widest text-white/30 mb-2">Water Quality</div>
-          <WaterQualityPanel />
-        </div>
-      </div>
-      <div>
-        <div className="text-[11px] uppercase tracking-widest text-white/30 mb-2">Continuous Learning</div>
-        <ContinuousLearning />
-      </div>
+    <div className="flex items-center justify-center py-16 text-sm text-white/40">
+      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+      Loading module…
     </div>
   );
 }
@@ -171,20 +134,22 @@ export function AquaDashboard() {
                   {role.toUpperCase()}
                 </div>
               </div>
-              {id === 'onboarding'   && <OnboardingModule role={role} />}
-              {id === 'diagnostics'  && <DiagnosticsModule />}
-              {id === 'pricing'      && <PricingModule />}
-              {id === 'marketplace'  && <MarketplaceModule />}
-              {id === 'logistics'    && <LogisticsModule />}
-              {id === 'advisory'     && <AdvisoryModule />}
-              {id === 'b2b'          && <B2BPortalModule />}
-              {id === 'surveillance' && <SurveillanceModule />}
-              {id === 'risk'         && <RiskScoringModule />}
-              {id === 'calculators'  && <CalculatorsModule />}
-              {id === 'knowledge'    && <KnowledgeHubModule />}
-              {id === 'community'    && <CommunityModule />}
-              {id === 'reports'      && <ReportsModule />}
-              {id === 'admin'        && <AdminModule role={role} />}
+              <Suspense fallback={<TabLoader />}>
+                {id === 'onboarding'   && <OnboardingModule role={role} />}
+                {id === 'diagnostics'  && <DiagnosticsModule />}
+                {id === 'pricing'      && <PricingModule />}
+                {id === 'marketplace'  && <MarketplaceModule />}
+                {id === 'logistics'    && <LogisticsModule />}
+                {id === 'advisory'     && <AdvisoryModule />}
+                {id === 'b2b'          && <B2BPortalModule />}
+                {id === 'surveillance' && <SurveillanceModule />}
+                {id === 'risk'         && <RiskScoringModule />}
+                {id === 'calculators'  && <CalculatorsModule />}
+                {id === 'knowledge'    && <KnowledgeHubModule />}
+                {id === 'community'    && <CommunityModule />}
+                {id === 'reports'      && <ReportsModule />}
+                {id === 'admin'        && <AdminModule role={role} />}
+              </Suspense>
             </motion.div>
           </TabsContent>
         ))}

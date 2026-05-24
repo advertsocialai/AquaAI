@@ -4,6 +4,7 @@ import {
   FileText, Download, Search, Calendar, FileCheck, FileBarChart,
   ShieldCheck, Truck, Landmark, Award, Filter,
 } from 'lucide-react';
+import { QcCertificatePreview } from './QcCertificatePreview';
 
 type ReportKind =
   | 'qc-cert' | 'surveillance' | 'hatchery-perf' | 'export-audit'
@@ -165,6 +166,13 @@ export function ReportsModule() {
           </tbody>
         </table>
       </motion.div>
+
+      {kind === 'qc-cert' && (
+        <div>
+          <div className="text-[11px] uppercase tracking-widest text-white/30 mb-3">Sample certificate preview</div>
+          <QcCertificatePreview />
+        </div>
+      )}
 
       <div className="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-white/[0.03]">
         <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
