@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { TrendingUp, TrendingDown, Search, Globe2, MapPin } from 'lucide-react';
+import { PriceHistoryChart } from './PriceHistoryChart';
 
 type Row = {
   species: string;
@@ -121,6 +122,8 @@ export function PricingModule() {
 
   return (
     <div className="space-y-6">
+      <PriceHistoryChart />
+
       <div className="flex flex-wrap items-center gap-3">
         <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-white/10 bg-white/5 flex-1 min-w-[200px]">
           <Search className="w-4 h-4 text-white/40" />

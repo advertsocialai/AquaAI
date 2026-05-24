@@ -1,0 +1,96 @@
+{
+  "common": {
+    "signIn": "సైన్ ఇన్",
+    "signUp": "ఖాతా సృష్టించండి",
+    "signOut": "సైన్ అవుట్",
+    "continue": "కొనసాగించండి",
+    "back": "వెనుకకు",
+    "next": "తదుపరి",
+    "finish": "ముగించండి",
+    "search": "శోధించండి",
+    "save": "సేవ్ చేయండి",
+    "cancel": "రద్దు చేయండి",
+    "loading": "లోడ్ అవుతోంది…",
+    "language": "భాష"
+  },
+  "nav": {
+    "home": "హోమ్",
+    "aquaai": "ఆక్వాAI",
+    "technology": "సాంకేతికత",
+    "founders": "వ్యవస్థాపకులు",
+    "collaborate": "సహకరించండి"
+  },
+  "roles": {
+    "farmer": "రైతు",
+    "vle": "విలేజ్ ఏజెంట్",
+    "hatchery": "హేచరీ",
+    "transporter": "రవాణాదారు",
+    "supplier": "ఐస్ / O₂ సరఫరా",
+    "trader": "వ్యాపారి / ఎగుమతి",
+    "bank": "బ్యాంక్ / బీమా",
+    "govt": "MPEDA / ప్రభుత్వం"
+  },
+  "tabs": {
+    "onboarding": "ఆన్‌బోర్డింగ్",
+    "diagnostics": "డయాగ్నోస్టిక్స్",
+    "pricing": "ధరలు",
+    "marketplace": "మార్కెట్‌ప్లేస్",
+    "logistics": "లాజిస్టిక్స్",
+    "advisory": "సలహా",
+    "calculators": "క్యాలిక్యులేటర్లు",
+    "knowledge": "నాలెడ్జ్ హబ్",
+    "community": "కమ్యూనిటీ",
+    "reports": "నివేదికలు",
+    "b2b": "B2B పోర్టల్",
+    "surveillance": "నిఘా",
+    "risk": "రిస్క్ స్కోరింగ్",
+    "admin": "అడ్మిన్"
+  },
+  "dashboard": {
+    "viewAs": "ఇలా చూడండి",
+    "modulesAvailable": "{{count}} మాడ్యూల్స్ అందుబాటులో ఉన్నాయి",
+    "default": "డిఫాల్ట్",
+    "title": "ఏకీకృత డాష్‌బోర్డ్",
+    "subtitle": "6 మాడ్యూల్స్ · 8 పాత్రలు"
+  },
+  "pricing": {
+    "title": "లైవ్ ప్రైసింగ్ ఇంటెలిజెన్స్",
+    "tabPrawn": "రొయ్యలు & శ్రింప్",
+    "tabFreshwater": "మంచినీటి చేపలు",
+    "tabMarine": "ఉప్పునీటి / సముద్రం",
+    "searchPlaceholder": "జాతిని శోధించండి…",
+    "marketFarmgate": "ఫామ్‌గేట్",
+    "marketMandi": "మండి",
+    "marketExportFob": "ఎగుమతి FOB",
+    "species": "జాతి",
+    "size": "పరిమాణం",
+    "low": "తక్కువ ₹/kg",
+    "high": "ఎక్కువ ₹/kg",
+    "mid": "మధ్యస్థం",
+    "trend": "ధోరణి",
+    "noMatches": "ఏ జాతి సరిపోలలేదు"
+  },
+  "advisory": {
+    "cropCalendar": "పంట క్యాలెండర్",
+    "liveAlerts": "ప్రత్యక్ష హెచ్చరికలు",
+    "weather": "వాతావరణం (IMD)",
+    "voiceAssistant": "వాయిస్ అసిస్టెంట్",
+    "schemes": "ప్రభుత్వ పథకాలు",
+    "community": "కమ్యూనిటీ"
+  },
+  "login": {
+    "welcomeBack": "తిరిగి స్వాగతం",
+    "subtitle": "మీ మొబైల్ నంబర్‌తో సైన్ ఇన్ చేయండి",
+    "mobileLabel": "మొబైల్ నంబర్",
+    "sendOtp": "OTP పంపండి",
+    "otpLabel": "6-అంకెల OTP",
+    "newUser": "ఆక్వాAIకి కొత్తవారా?",
+    "createAccount": "ఖాతా సృష్టించండి",
+    "valueProp1Title": "లైవ్ AI డయాగ్నోస్టిక్స్",
+    "valueProp1Desc": "30 సెకన్లలో PCR-ధృవీకరించబడిన గుర్తింపు",
+    "valueProp2Title": "ఉత్తమ ధరలు",
+    "valueProp2Desc": "లైవ్ మండి + ఎగుమతి రేట్లు, 31+ జాతులు",
+    "valueProp3Title": "ధృవీకరించబడిన మార్కెట్‌ప్లేస్",
+    "valueProp3Desc": "KYC-ధృవీకరించబడిన సరఫరాదారులు, ఎస్క్రో చెల్లింపులు"
+  }
+}

@@ -3,6 +3,7 @@ import {
   CalendarDays, CloudRain, MessageCircle, Phone, BookOpen,
   Users, Bell, Languages, AlertTriangle,
 } from 'lucide-react';
+import { VoiceAssistant } from './VoiceAssistant';
 
 const CROP_CALENDAR = [
   { day: 'D-0',   stage: 'Pond Prep',      action: 'Lime, dry, fill, fertilise' },
@@ -103,21 +104,8 @@ export function AdvisoryModule() {
         </div>
       </div>
 
-      <div className="p-6 rounded-2xl border border-white/10 bg-white/[0.03]">
-        <div className="flex items-center gap-2 mb-4">
-          <Languages className="w-4 h-4 text-violet-400" />
-          <span className="text-sm font-semibold text-white">Voice Assistant</span>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {['Telugu', 'Tamil', 'Odia', 'Bengali', 'Hindi', 'English'].map((lang) => (
-            <span key={lang} className="px-2.5 py-1 rounded-full border border-white/10 bg-white/[0.04] text-xs text-white/70">
-              {lang}
-            </span>
-          ))}
-        </div>
-        <div className="mt-4 flex items-center gap-2 text-xs text-white/40">
-          <MessageCircle className="w-3.5 h-3.5" /> WhatsApp bot · daily alerts in your language
-        </div>
+      <div className="lg:col-span-2">
+        <VoiceAssistant />
       </div>
 
       <div className="p-6 rounded-2xl border border-white/10 bg-white/[0.03]">

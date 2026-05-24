@@ -1,0 +1,96 @@
+{
+  "common": {
+    "signIn": "Sign in",
+    "signUp": "Create account",
+    "signOut": "Sign out",
+    "continue": "Continue",
+    "back": "Back",
+    "next": "Next",
+    "finish": "Finish",
+    "search": "Search",
+    "save": "Save",
+    "cancel": "Cancel",
+    "loading": "Loading…",
+    "language": "Language"
+  },
+  "nav": {
+    "home": "Home",
+    "aquaai": "AquaAI",
+    "technology": "Technology",
+    "founders": "Founders",
+    "collaborate": "Collaborate"
+  },
+  "roles": {
+    "farmer": "Farmer",
+    "vle": "VLE / Agent",
+    "hatchery": "Hatchery",
+    "transporter": "Transporter",
+    "supplier": "Ice / O₂ Supply",
+    "trader": "Trader / Export",
+    "bank": "Bank / Insurer",
+    "govt": "MPEDA / Govt"
+  },
+  "tabs": {
+    "onboarding": "Onboarding",
+    "diagnostics": "Diagnostics",
+    "pricing": "Pricing",
+    "marketplace": "Marketplace",
+    "logistics": "Logistics",
+    "advisory": "Advisory",
+    "calculators": "Calculators",
+    "knowledge": "Knowledge Hub",
+    "community": "Community",
+    "reports": "Reports",
+    "b2b": "B2B Portal",
+    "surveillance": "Surveillance",
+    "risk": "Risk Scoring",
+    "admin": "Admin"
+  },
+  "dashboard": {
+    "viewAs": "View as",
+    "modulesAvailable": "{{count}} modules available",
+    "default": "default",
+    "title": "Unified Dashboard",
+    "subtitle": "6 Modules · 8 Roles"
+  },
+  "pricing": {
+    "title": "Live Pricing Intelligence",
+    "tabPrawn": "Prawn & Shrimp",
+    "tabFreshwater": "Freshwater Fish",
+    "tabMarine": "Brackish / Marine",
+    "searchPlaceholder": "Search species…",
+    "marketFarmgate": "Farmgate",
+    "marketMandi": "Mandi",
+    "marketExportFob": "Export FOB",
+    "species": "Species",
+    "size": "Size",
+    "low": "Low ₹/kg",
+    "high": "High ₹/kg",
+    "mid": "Mid",
+    "trend": "Trend",
+    "noMatches": "No species matched"
+  },
+  "advisory": {
+    "cropCalendar": "Crop Calendar",
+    "liveAlerts": "Live Alerts",
+    "weather": "Weather (IMD)",
+    "voiceAssistant": "Voice Assistant",
+    "schemes": "Govt Schemes Match",
+    "community": "Community"
+  },
+  "login": {
+    "welcomeBack": "Welcome back",
+    "subtitle": "Sign in with your mobile number",
+    "mobileLabel": "Mobile number",
+    "sendOtp": "Send OTP",
+    "otpLabel": "6-digit OTP",
+    "newUser": "New to AquaI?",
+    "createAccount": "Create an account",
+    "valueProp1Title": "Live AI Diagnostics",
+    "valueProp1Desc": "PCR-validated detection in 30 seconds",
+    "valueProp2Title": "Best Prices",
+    "valueProp2Desc": "Live mandi + export rates, 31+ species",
+    "valueProp3Title": "Verified Marketplace",
+    "valueProp3Desc": "KYC-checked suppliers, escrow payments"
+  }
+}

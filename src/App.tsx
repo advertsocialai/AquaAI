@@ -10,6 +10,7 @@ import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { NoiseTexture } from "@/components/ui/noise-texture";
 import { SplashScreen } from "@/components/SplashScreen";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { ChatBot } from "@/components/ChatBot";
 import { PageTransition } from "@/components/layout/PageTransition";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -80,6 +81,7 @@ const App = () => {
         <BrowserRouter>
           <ScrollToTop />
           <AnimatedRoutes />
+          <ChatBot />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
