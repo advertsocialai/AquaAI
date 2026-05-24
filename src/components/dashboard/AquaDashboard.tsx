@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import {
   KeyRound, BrainCircuit, IndianRupee, ShoppingCart, Truck, LifeBuoy,
-  Building2, Shield, Landmark,
+  Building2, Shield, Landmark, Calculator, BookOpen,
 } from 'lucide-react';
 import { RoleSelector, type Role } from './RoleSelector';
 import { OnboardingModule } from './OnboardingModule';
@@ -14,6 +14,9 @@ import { AdvisoryModule } from './AdvisoryModule';
 import { B2BPortalModule } from './B2BPortalModule';
 import { SurveillanceModule } from './SurveillanceModule';
 import { RiskScoringModule } from './RiskScoringModule';
+import { KpiDashboard } from './KpiDashboard';
+import { CalculatorsModule } from './CalculatorsModule';
+import { KnowledgeHubModule } from './KnowledgeHubModule';
 
 import { SeedScanner } from '@/components/SeedScanner';
 import { DiagnosisDemo } from '@/components/DiagnosisDemo';
@@ -26,7 +29,8 @@ import { ContinuousLearning } from '@/components/ContinuousLearning';
 
 type TabId =
   | 'onboarding' | 'diagnostics' | 'pricing' | 'marketplace'
-  | 'logistics' | 'advisory' | 'b2b' | 'surveillance' | 'risk';
+  | 'logistics' | 'advisory' | 'b2b' | 'surveillance' | 'risk'
+  | 'calculators' | 'knowledge';
 
 const TABS: { id: TabId; label: string; short: string; icon: React.ElementType; accent: string }[] = [
   { id: 'onboarding',   label: 'Onboarding',   short: 'M1', icon: KeyRound,     accent: '#38bdf8' },
@@ -35,20 +39,22 @@ const TABS: { id: TabId; label: string; short: string; icon: React.ElementType; 
   { id: 'marketplace',  label: 'Marketplace',  short: 'M4', icon: ShoppingCart, accent: '#fb923c' },
   { id: 'logistics',    label: 'Logistics',    short: 'M5', icon: Truck,        accent: '#f472b6' },
   { id: 'advisory',     label: 'Advisory',     short: 'M6', icon: LifeBuoy,     accent: '#facc15' },
+  { id: 'calculators',  label: 'Calculators',  short: 'CALC',icon: Calculator,  accent: '#38bdf8' },
+  { id: 'knowledge',    label: 'Knowledge Hub',short: 'KB', icon: BookOpen,     accent: '#facc15' },
   { id: 'b2b',          label: 'B2B Portal',   short: 'B2B',icon: Building2,    accent: '#a78bfa' },
   { id: 'surveillance', label: 'Surveillance', short: 'GOV',icon: Shield,       accent: '#f87171' },
   { id: 'risk',         label: 'Risk Scoring', short: 'BNK',icon: Landmark,     accent: '#facc15' },
 ];
 
 const ROLE_ACCESS: Record<Role, { default: TabId; tabs: TabId[] }> = {
-  farmer:      { default: 'advisory',     tabs: ['onboarding', 'diagnostics', 'pricing', 'marketplace', 'logistics', 'advisory'] },
-  vle:         { default: 'diagnostics',  tabs: ['onboarding', 'diagnostics', 'pricing', 'marketplace', 'logistics', 'advisory'] },
-  hatchery:    { default: 'b2b',          tabs: ['onboarding', 'b2b', 'diagnostics', 'marketplace', 'logistics', 'advisory'] },
-  transporter: { default: 'logistics',    tabs: ['onboarding', 'logistics', 'advisory'] },
-  supplier:    { default: 'marketplace',  tabs: ['onboarding', 'marketplace', 'logistics', 'pricing'] },
-  trader:      { default: 'pricing',      tabs: ['onboarding', 'pricing', 'b2b', 'marketplace', 'logistics'] },
-  bank:        { default: 'risk',         tabs: ['onboarding', 'risk', 'pricing', 'advisory'] },
-  govt:        { default: 'surveillance', tabs: ['onboarding', 'surveillance', 'advisory'] },
+  farmer:      { default: 'advisory',     tabs: ['onboarding', 'diagnostics', 'pricing', 'marketplace', 'logistics', 'advisory', 'calculators', 'knowledge'] },
+  vle:         { default: 'diagnostics',  tabs: ['onboarding', 'diagnostics', 'pricing', 'marketplace', 'logistics', 'advisory', 'calculators', 'knowledge'] },
+  hatchery:    { default: 'b2b',          tabs: ['onboarding', 'b2b', 'diagnostics', 'marketplace', 'logistics', 'advisory', 'calculators', 'knowledge'] },
+  transporter: { default: 'logistics',    tabs: ['onboarding', 'logistics', 'advisory', 'knowledge'] },
+  supplier:    { default: 'marketplace',  tabs: ['onboarding', 'marketplace', 'logistics', 'pricing', 'knowledge'] },
+  trader:      { default: 'pricing',      tabs: ['onboarding', 'pricing', 'b2b', 'marketplace', 'logistics', 'knowledge'] },
+  bank:        { default: 'risk',         tabs: ['onboarding', 'risk', 'pricing', 'advisory', 'knowledge'] },
+  govt:        { default: 'surveillance', tabs: ['onboarding', 'surveillance', 'advisory', 'knowledge'] },
 };
 
 function DiagnosticsModule() {
@@ -117,6 +123,9 @@ export function AquaDashboard() {
         <RoleSelector role={role} onChange={setRole} />
       </div>
 
+      {/* Role-specific KPI summary (Module 01 — Dashboard) */}
+      <KpiDashboard role={role} />
+
       <Tabs value={tab} onValueChange={(v) => setTab(v as TabId)}>
         <TabsList className="w-full h-auto flex-wrap justify-start bg-white/[0.03] border border-white/10 p-1.5 gap-1">
           {visibleTabs.map(({ id, label, short, icon: Icon, accent }) => {
@@ -161,6 +170,8 @@ export function AquaDashboard() {
               {id === 'b2b'          && <B2BPortalModule />}
               {id === 'surveillance' && <SurveillanceModule />}
               {id === 'risk'         && <RiskScoringModule />}
+              {id === 'calculators'  && <CalculatorsModule />}
+              {id === 'knowledge'    && <KnowledgeHubModule />}
             </motion.div>
           </TabsContent>
         ))}
