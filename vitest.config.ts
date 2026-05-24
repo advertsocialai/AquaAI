@@ -12,10 +12,12 @@ export default defineConfig({
     globals: true,
     setupFiles: ["./src/test/setup.ts"],
     css: false,
+    include: ["src/**/*.{test,spec}.{ts,tsx}"],
+    exclude: ["node_modules", "dist", "tests/e2e/**", "**/*.config.*"],
     coverage: {
       provider: "v8",
       reporter: ["text", "html"],
-      exclude: ["node_modules", "dist", "src/test/**", "**/*.config.*"],
+      exclude: ["node_modules", "dist", "src/test/**", "tests/**", "**/*.config.*"],
     },
   },
 });

@@ -16,6 +16,7 @@ from app.api.v1.subscriptions import router as subscriptions_router, insurance_r
 from app.api.v1 import pricing, marketplace, logistics
 from app.api.v1 import advisory, knowledge, community, surveillance
 from app.api.v1 import pricing_ws
+from app.api.v1 import kyc, payments, metrics as metrics_router
 
 app = FastAPI(
     title=settings.app_name,
@@ -61,6 +62,9 @@ app.include_router(knowledge.router, prefix=PREFIX)        # M7 Knowledge hub
 app.include_router(community.router, prefix=PREFIX)        # M8 Community & forums
 app.include_router(surveillance.router, prefix=PREFIX)     # M9 Govt surveillance + NSPAAD
 app.include_router(pricing_ws.router, prefix=PREFIX)       # WebSocket price ticker
+app.include_router(kyc.router, prefix=PREFIX)               # NSDL e-KYC + PAN + GST + bank
+app.include_router(payments.router, prefix=PREFIX)          # Razorpay orders + webhook + payouts
+app.include_router(metrics_router.router)                   # /metrics for Prometheus
 
 
 @app.on_event("startup")

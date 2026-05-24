@@ -1,4 +1,5 @@
 import { Component, ReactNode } from 'react';
+import { Sentry } from '@/lib/sentry';
 
 interface Props {
   children: ReactNode;
@@ -18,7 +19,11 @@ export class ErrorBoundary extends Component<Props, State> {
     return { hasError: true };
   }
 
-  componentDidCatch(error: Error) {
+  componentDidCatch(error: Error, info: { componentStack?: string | null }) {
+    // Report to Sentry if a DSN is configured; no-op otherwise.
+    Sentry.captureException(error, {
+      contexts: { react: { componentStack: info.componentStack ?? '' } },
+    });
     console.error('App error caught by boundary:', error);
   }
 

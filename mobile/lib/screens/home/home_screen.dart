@@ -8,6 +8,9 @@ import '../pricing/pricing_screen.dart';
 import '../marketplace/marketplace_screen.dart';
 import '../advisory/advisory_screen.dart';
 import '../chat/chat_screen.dart';
+import '../settings/settings_screen.dart';
+import '../profile/profile_screen.dart';
+import '../kyc/kyc_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -71,6 +74,9 @@ class _MoreTab extends StatelessWidget {
     _MoreItem('Quality Grader', Icons.stars, 'Composite QS score', 2),
     _MoreItem('Reports', Icons.description, 'QC cert archive', 3),
     _MoreItem('AquaI Chat', Icons.chat_bubble_outline, 'Multilingual assistant', 4),
+    _MoreItem('Profile', Icons.person_outline, 'Role + farm details', 5),
+    _MoreItem('KYC', Icons.security_outlined, 'Aadhaar · PAN · GST · Bank', 6),
+    _MoreItem('Settings', Icons.settings_outlined, 'Language, theme, alerts', 7),
   ];
 
   @override
@@ -105,8 +111,11 @@ class _MoreTab extends StatelessWidget {
                   case 1: screen = const DiseaseDetectorScreen(); break;
                   case 2: screen = const QualityGraderScreen(); break;
                   case 3: screen = const ReportsScreen(); break;
-                  case 4:
-                  default: screen = const ChatScreen();
+                  case 4: screen = const ChatScreen(); break;
+                  case 5: screen = const ProfileScreen(); break;
+                  case 6: screen = const KycScreen(); break;
+                  case 7:
+                  default: screen = const SettingsScreen();
                 }
                 Navigator.push(
                     context, MaterialPageRoute(builder: (_) => screen));
