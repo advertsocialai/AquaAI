@@ -4,7 +4,7 @@ import { TextReveal } from '@/components/ui/text-reveal';
 
 export function WhatWeBuilt() {
   return (
-    <section id="technology" className="relative min-h-[100svh] md:h-screen flex items-end overflow-hidden md:snap-start">
+    <section id="aquaai-preview" className="relative min-h-[100svh] md:h-screen flex items-end overflow-hidden md:snap-start">
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat md:bg-fixed"
         style={{
@@ -37,7 +37,7 @@ export function WhatWeBuilt() {
             From research-grade prediction models to production systems, we build the full stack of longevity AI infrastructure.
           </motion.p>
           <Link
-            to="/technology"
+            to="/aquaai"
             className="inline-block border border-white/40 text-white text-xs tracking-[0.25em] font-medium px-8 py-4 hover:bg-white hover:text-black transition-all duration-300 uppercase"
           >
             Learn More

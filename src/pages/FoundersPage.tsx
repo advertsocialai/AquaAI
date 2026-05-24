@@ -5,22 +5,14 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { TextReveal } from '@/components/ui/text-reveal';
 import founderOneImg from '@/assets/founder-one.jpg';
-import founderTwoImg from '@/assets/founder-two.jpg';
 
 const founders = [
   {
     name: "Chaitanya Gowtham",
-    role: "Co-Founder",
+    role: "Founder",
     bio: "Architect of scalable AI platforms enabling secure, cloud-native deployment of advanced machine learning and generative AI systems.\nExpert in building production-grade AI infrastructure that powers biomedical research, large-scale data processing, and intelligent automation.",
     image: founderOneImg,
     linkedin: "https://www.linkedin.com/in/chaitanya-gowtham/",
-  },
-  {
-    name: "Sridhara Syam",
-    role: "Co-Founder",
-    bio: "AI researcher and builder focused on healthcare intelligence and scalable ML systems. Worked on EEG-based diagnostics, quantum-ML frameworks, and real-world AI deployment.\nDriven by building systems that move from research to measurable impact.",
-    image: founderTwoImg,
-    linkedin: "https://www.linkedin.com/in/sridhara-syam-chandrabhotla-18098b221/",
   },
 ];
 

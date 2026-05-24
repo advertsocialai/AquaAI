@@ -29,7 +29,7 @@ export function Hero() {
             AI-powered tools that turn complex biological data into actionable insights—advancing healthspan research and personalized medicine.
           </motion.p>
           <motion.a
-            href="#technology"
+            href="/aquaai"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1 }}

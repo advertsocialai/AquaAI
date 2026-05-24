@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, LogIn } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import atomLogo from '@/assets/atom-logo.svg';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 
 const navItems = [
-  { label: "TECHNOLOGY", to: "/technology" },
-  { label: "BIO-AGE", to: "/bioage" },
   { label: "AQUA AI", to: "/aquaai" },
+  { label: "BIO-AGE", to: "/bioage" },
   { label: "FOUNDERS", to: "/founders" },
   { label: "COLLABORATE", to: "/collaborate" },
 ];
@@ -49,7 +49,14 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-4">
+            <LanguageSwitcher />
+            <Link
+              to="/login"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-white/90 hover:text-white tracking-[0.2em]"
+            >
+              <LogIn className="w-3.5 h-3.5" /> SIGN IN
+            </Link>
             <Link to="/collaborate" className="text-xs font-medium text-white/90 hover:text-white transition-colors tracking-[0.2em] drop-shadow-[0_0_4px_rgba(255,255,255,0.15)]">
               CONTACT
             </Link>

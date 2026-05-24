@@ -13,6 +13,8 @@ from app.api.v1 import water_quality, training_data
 from app.api.v1 import ml_management
 from app.api.v1 import ai_agent
 from app.api.v1.subscriptions import router as subscriptions_router, insurance_router
+from app.api.v1 import pricing, marketplace, logistics
+from app.api.v1 import advisory, knowledge, community, surveillance
 
 app = FastAPI(
     title=settings.app_name,
@@ -50,6 +52,13 @@ app.include_router(subscriptions_router, prefix=PREFIX)   # Subscription & billi
 app.include_router(insurance_router, prefix=PREFIX)        # Insurance API integration
 app.include_router(ml_management.router, prefix=PREFIX)   # ML training & model management
 app.include_router(ai_agent.router, prefix=PREFIX)        # AquaAI Diagnostic Agent
+app.include_router(pricing.router, prefix=PREFIX)          # M3 Pricing intelligence
+app.include_router(marketplace.router, prefix=PREFIX)      # M4 Marketplace catalogues
+app.include_router(logistics.router, prefix=PREFIX)        # M5 Logistics & transport
+app.include_router(advisory.router, prefix=PREFIX)         # M6 Advisory + weather + assistant
+app.include_router(knowledge.router, prefix=PREFIX)        # M7 Knowledge hub
+app.include_router(community.router, prefix=PREFIX)        # M8 Community & forums
+app.include_router(surveillance.router, prefix=PREFIX)     # M9 Govt surveillance + NSPAAD
 
 
 @app.on_event("startup")

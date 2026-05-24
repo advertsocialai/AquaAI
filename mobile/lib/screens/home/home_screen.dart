@@ -4,6 +4,10 @@ import '../seed_counter/seed_counter_screen.dart';
 import '../disease_detector/disease_detector_screen.dart';
 import '../quality_grader/quality_grader_screen.dart';
 import '../reports/reports_screen.dart';
+import '../pricing/pricing_screen.dart';
+import '../marketplace/marketplace_screen.dart';
+import '../advisory/advisory_screen.dart';
+import '../chat/chat_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,10 +21,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final _screens = const [
     _HomeTab(),
-    SeedCounterScreen(),
-    DiseaseDetectorScreen(),
-    QualityGraderScreen(),
-    ReportsScreen(),
+    PricingScreen(),
+    MarketplaceScreen(),
+    AdvisoryScreen(),
+    _MoreTab(),
   ];
 
   @override
@@ -33,18 +37,94 @@ class _HomeScreenState extends State<HomeScreen> {
         destinations: const [
           NavigationDestination(icon: Icon(Icons.home_outlined),
               selectedIcon: Icon(Icons.home), label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.numbers_outlined),
-              selectedIcon: Icon(Icons.numbers), label: 'Counter'),
-          NavigationDestination(icon: Icon(Icons.biotech_outlined),
-              selectedIcon: Icon(Icons.biotech), label: 'Disease'),
-          NavigationDestination(icon: Icon(Icons.stars_outlined),
-              selectedIcon: Icon(Icons.stars), label: 'Quality'),
-          NavigationDestination(icon: Icon(Icons.description_outlined),
-              selectedIcon: Icon(Icons.description), label: 'Reports'),
+          NavigationDestination(icon: Icon(Icons.currency_rupee_outlined),
+              selectedIcon: Icon(Icons.currency_rupee), label: 'Pricing'),
+          NavigationDestination(icon: Icon(Icons.storefront_outlined),
+              selectedIcon: Icon(Icons.storefront), label: 'Market'),
+          NavigationDestination(icon: Icon(Icons.tips_and_updates_outlined),
+              selectedIcon: Icon(Icons.tips_and_updates), label: 'Advisory'),
+          NavigationDestination(icon: Icon(Icons.apps_outlined),
+              selectedIcon: Icon(Icons.apps), label: 'More'),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const ChatScreen()),
+          );
+        },
+        backgroundColor: const Color(0xFF2E75B6),
+        icon: const Icon(Icons.chat_bubble_outline),
+        label: const Text('Ask AquaI'),
       ),
     );
   }
+}
+
+class _MoreTab extends StatelessWidget {
+  const _MoreTab();
+
+  static const _items = [
+    _MoreItem('Seed Counter', Icons.numbers, 'YOLOv8n PL counting', 0),
+    _MoreItem('Disease Detector', Icons.biotech, 'EHP / WSSV / AHPND', 1),
+    _MoreItem('Quality Grader', Icons.stars, 'Composite QS score', 2),
+    _MoreItem('Reports', Icons.description, 'QC cert archive', 3),
+    _MoreItem('AquaI Chat', Icons.chat_bubble_outline, 'Multilingual assistant', 4),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('More')),
+      body: ListView.separated(
+        padding: const EdgeInsets.all(12),
+        itemCount: _items.length,
+        separatorBuilder: (_, __) => const SizedBox(height: 8),
+        itemBuilder: (_, i) {
+          final it = _items[i];
+          return Card(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: Colors.grey.shade300),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: ListTile(
+              leading: CircleAvatar(
+                backgroundColor: const Color(0xFF2E75B6).withOpacity(0.15),
+                child: Icon(it.icon, color: const Color(0xFF0B5394)),
+              ),
+              title: Text(it.title,
+                  style: const TextStyle(fontWeight: FontWeight.w600)),
+              subtitle: Text(it.subtitle, style: const TextStyle(fontSize: 12)),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () {
+                Widget screen;
+                switch (it.target) {
+                  case 0: screen = const SeedCounterScreen(); break;
+                  case 1: screen = const DiseaseDetectorScreen(); break;
+                  case 2: screen = const QualityGraderScreen(); break;
+                  case 3: screen = const ReportsScreen(); break;
+                  case 4:
+                  default: screen = const ChatScreen();
+                }
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (_) => screen));
+              },
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _MoreItem {
+  final String title;
+  final IconData icon;
+  final String subtitle;
+  final int target;
+  const _MoreItem(this.title, this.icon, this.subtitle, this.target);
 }
 
 class _HomeTab extends StatelessWidget {
