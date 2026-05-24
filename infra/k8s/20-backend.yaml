@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aquai-backend
+  namespace: aquai
+  labels: { app: aquai-backend }
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: { maxUnavailable: 0, maxSurge: 1 }
+  selector:
+    matchLabels: { app: aquai-backend }
+  template:
+    metadata:
+      labels: { app: aquai-backend }
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: "/metrics"
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+        - name: api
+          image: REPLACE_WITH_ECR/aquai/backend:latest
+          imagePullPolicy: Always
+          ports:
+            - { containerPort: 8000, name: http }
+          envFrom:
+            - configMapRef: { name: aquai-config }
+            - secretRef:    { name: aquai-secrets }
+          resources:
+            requests: { cpu: "200m", memory: "512Mi" }
+            limits:   { cpu: "1500m", memory: "2Gi" }
+          livenessProbe:
+            httpGet: { path: /health, port: http }
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          readinessProbe:
+            httpGet: { path: /health, port: http }
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          volumeMounts:
+            - { name: uploads, mountPath: /data/uploads }
+      volumes:
+        - name: uploads
+          persistentVolumeClaim: { claimName: aquai-uploads }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aquai-backend
+  namespace: aquai
+spec:
+  selector: { app: aquai-backend }
+  ports:
+    - { port: 80, targetPort: http, name: http }
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: aquai-uploads
+  namespace: aquai
+spec:
+  accessModes: ["ReadWriteOnce"]
+  storageClassName: gp3
+  resources: { requests: { storage: 100Gi } }
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: aquai-backend
+  namespace: aquai
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: aquai-backend
+  minReplicas: 3
+  maxReplicas: 12
+  metrics:
+    - type: Resource
+      resource: { name: cpu,    target: { type: Utilization, averageUtilization: 70 } }
+    - type: Resource
+      resource: { name: memory, target: { type: Utilization, averageUtilization: 75 } }
