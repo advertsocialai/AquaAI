@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import {
   KeyRound, BrainCircuit, IndianRupee, ShoppingCart, Truck, LifeBuoy,
+  Building2, Shield, Landmark,
 } from 'lucide-react';
 import { RoleSelector, type Role } from './RoleSelector';
 import { OnboardingModule } from './OnboardingModule';
@@ -10,6 +11,9 @@ import { PricingModule } from './PricingModule';
 import { MarketplaceModule } from './MarketplaceModule';
 import { LogisticsModule } from './LogisticsModule';
 import { AdvisoryModule } from './AdvisoryModule';
+import { B2BPortalModule } from './B2BPortalModule';
+import { SurveillanceModule } from './SurveillanceModule';
+import { RiskScoringModule } from './RiskScoringModule';
 
 import { SeedScanner } from '@/components/SeedScanner';
 import { DiagnosisDemo } from '@/components/DiagnosisDemo';
@@ -20,14 +24,32 @@ import { OutbreakMap } from '@/components/OutbreakMap';
 import { WaterQualityPanel } from '@/components/WaterQualityPanel';
 import { ContinuousLearning } from '@/components/ContinuousLearning';
 
-const TABS = [
-  { id: 'onboarding',  label: 'Onboarding',   short: 'M1', icon: KeyRound,     accent: '#38bdf8' },
-  { id: 'diagnostics', label: 'Diagnostics',  short: 'M2', icon: BrainCircuit, accent: '#a78bfa' },
-  { id: 'pricing',     label: 'Pricing',      short: 'M3', icon: IndianRupee,  accent: '#34d399' },
-  { id: 'marketplace', label: 'Marketplace',  short: 'M4', icon: ShoppingCart, accent: '#fb923c' },
-  { id: 'logistics',   label: 'Logistics',    short: 'M5', icon: Truck,        accent: '#f472b6' },
-  { id: 'advisory',    label: 'Advisory',     short: 'M6', icon: LifeBuoy,     accent: '#facc15' },
+type TabId =
+  | 'onboarding' | 'diagnostics' | 'pricing' | 'marketplace'
+  | 'logistics' | 'advisory' | 'b2b' | 'surveillance' | 'risk';
+
+const TABS: { id: TabId; label: string; short: string; icon: React.ElementType; accent: string }[] = [
+  { id: 'onboarding',   label: 'Onboarding',   short: 'M1', icon: KeyRound,     accent: '#38bdf8' },
+  { id: 'diagnostics',  label: 'Diagnostics',  short: 'M2', icon: BrainCircuit, accent: '#a78bfa' },
+  { id: 'pricing',      label: 'Pricing',      short: 'M3', icon: IndianRupee,  accent: '#34d399' },
+  { id: 'marketplace',  label: 'Marketplace',  short: 'M4', icon: ShoppingCart, accent: '#fb923c' },
+  { id: 'logistics',    label: 'Logistics',    short: 'M5', icon: Truck,        accent: '#f472b6' },
+  { id: 'advisory',     label: 'Advisory',     short: 'M6', icon: LifeBuoy,     accent: '#facc15' },
+  { id: 'b2b',          label: 'B2B Portal',   short: 'B2B',icon: Building2,    accent: '#a78bfa' },
+  { id: 'surveillance', label: 'Surveillance', short: 'GOV',icon: Shield,       accent: '#f87171' },
+  { id: 'risk',         label: 'Risk Scoring', short: 'BNK',icon: Landmark,     accent: '#facc15' },
 ];
+
+const ROLE_ACCESS: Record<Role, { default: TabId; tabs: TabId[] }> = {
+  farmer:      { default: 'advisory',     tabs: ['onboarding', 'diagnostics', 'pricing', 'marketplace', 'logistics', 'advisory'] },
+  vle:         { default: 'diagnostics',  tabs: ['onboarding', 'diagnostics', 'pricing', 'marketplace', 'logistics', 'advisory'] },
+  hatchery:    { default: 'b2b',          tabs: ['onboarding', 'b2b', 'diagnostics', 'marketplace', 'logistics', 'advisory'] },
+  transporter: { default: 'logistics',    tabs: ['onboarding', 'logistics', 'advisory'] },
+  supplier:    { default: 'marketplace',  tabs: ['onboarding', 'marketplace', 'logistics', 'pricing'] },
+  trader:      { default: 'pricing',      tabs: ['onboarding', 'pricing', 'b2b', 'marketplace', 'logistics'] },
+  bank:        { default: 'risk',         tabs: ['onboarding', 'risk', 'pricing', 'advisory'] },
+  govt:        { default: 'surveillance', tabs: ['onboarding', 'surveillance', 'advisory'] },
+};
 
 function DiagnosticsModule() {
   return (
@@ -74,21 +96,30 @@ function DiagnosticsModule() {
 
 export function AquaDashboard() {
   const [role, setRole] = useState<Role>('farmer');
-  const [tab, setTab] = useState(TABS[1].id);
+  const [tab, setTab] = useState<TabId>(ROLE_ACCESS.farmer.default);
+
+  useEffect(() => {
+    const access = ROLE_ACCESS[role];
+    if (!access.tabs.includes(tab)) setTab(access.default);
+  }, [role, tab]);
+
+  const visibleTabs = TABS.filter((t) => ROLE_ACCESS[role].tabs.includes(t.id));
 
   return (
     <div className="space-y-6">
       <div className="p-5 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm">
         <div className="flex items-center justify-between mb-3">
           <div className="text-[11px] uppercase tracking-widest text-white/30">View As</div>
-          <div className="text-[11px] text-white/30">Role-based access · multi-role support</div>
+          <div className="text-[11px] text-white/30">
+            {visibleTabs.length} module{visibleTabs.length === 1 ? '' : 's'} available · default: {TABS.find(t => t.id === ROLE_ACCESS[role].default)?.label}
+          </div>
         </div>
         <RoleSelector role={role} onChange={setRole} />
       </div>
 
-      <Tabs value={tab} onValueChange={setTab}>
+      <Tabs value={tab} onValueChange={(v) => setTab(v as TabId)}>
         <TabsList className="w-full h-auto flex-wrap justify-start bg-white/[0.03] border border-white/10 p-1.5 gap-1">
-          {TABS.map(({ id, label, short, icon: Icon, accent }) => {
+          {visibleTabs.map(({ id, label, short, icon: Icon, accent }) => {
             const active = id === tab;
             return (
               <TabsTrigger
@@ -104,7 +135,7 @@ export function AquaDashboard() {
           })}
         </TabsList>
 
-        {TABS.map(({ id, label, icon: Icon, accent }) => (
+        {visibleTabs.map(({ id, label, icon: Icon, accent }) => (
           <TabsContent key={id} value={id} className="mt-6">
             <motion.div
               key={id + role}
@@ -121,12 +152,15 @@ export function AquaDashboard() {
                   {role.toUpperCase()}
                 </div>
               </div>
-              {id === 'onboarding'  && <OnboardingModule role={role} />}
-              {id === 'diagnostics' && <DiagnosticsModule />}
-              {id === 'pricing'     && <PricingModule />}
-              {id === 'marketplace' && <MarketplaceModule />}
-              {id === 'logistics'   && <LogisticsModule />}
-              {id === 'advisory'    && <AdvisoryModule />}
+              {id === 'onboarding'   && <OnboardingModule role={role} />}
+              {id === 'diagnostics'  && <DiagnosticsModule />}
+              {id === 'pricing'      && <PricingModule />}
+              {id === 'marketplace'  && <MarketplaceModule />}
+              {id === 'logistics'    && <LogisticsModule />}
+              {id === 'advisory'     && <AdvisoryModule />}
+              {id === 'b2b'          && <B2BPortalModule />}
+              {id === 'surveillance' && <SurveillanceModule />}
+              {id === 'risk'         && <RiskScoringModule />}
             </motion.div>
           </TabsContent>
         ))}
