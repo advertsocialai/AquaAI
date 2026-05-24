@@ -2,18 +2,11 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
-import { SeedScanner } from '@/components/SeedScanner';
-import { DiagnosisDemo } from '@/components/DiagnosisDemo';
-import { GradCamViewer } from '@/components/GradCamViewer';
-import { CertificateVerify } from '@/components/CertificateVerify';
-import { OutbreakMap } from '@/components/OutbreakMap';
-import { WaterQualityPanel } from '@/components/WaterQualityPanel';
-import { ContinuousLearning } from '@/components/ContinuousLearning';
-import { BatchExtrapolator } from '@/components/BatchExtrapolator';
+import { AquaDashboard } from '@/components/dashboard/AquaDashboard';
 import {
-  Fish, Microscope, BarChart3, ShieldCheck, Cpu, Wifi, WifiOff,
-  Activity, AlertTriangle, CheckCircle2, TrendingUp, Layers,
-  BrainCircuit, Zap, FlaskConical, Camera, Waves
+  Fish, Microscope, ShieldCheck, Cpu, WifiOff,
+  Activity, AlertTriangle, TrendingUp, Layers,
+  BrainCircuit, Zap, FlaskConical, Camera,
 } from 'lucide-react';
 
 const API_BASE = 'http://localhost:8000/api/v1';
@@ -64,42 +57,6 @@ function StatCard({ label, value, sub, icon: Icon, color }: {
       <div className="text-3xl font-bold text-white mb-1">{value}</div>
       <div className="text-sm text-white/50">{label}</div>
       {sub && <div className="text-xs text-white/30 mt-1">{sub}</div>}
-    </motion.div>
-  );
-}
-
-// ── Module card ────────────────────────────────────────────────────────────────
-
-function ModuleCard({ num, title, subtitle, features, icon: Icon, accent }: {
-  num: string; title: string; subtitle: string;
-  features: string[]; icon: React.ElementType; accent: string;
-}) {
-  return (
-    <motion.div
-      className="p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm"
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-    >
-      <div className="flex items-start gap-4 mb-6">
-        <div className="p-3 rounded-xl" style={{ background: `${accent}22` }}>
-          <Icon className="w-7 h-7" style={{ color: accent }} />
-        </div>
-        <div>
-          <div className="text-xs font-mono text-white/30 mb-1">{num}</div>
-          <div className="text-xl font-bold text-white">{title}</div>
-          <div className="text-sm text-white/50">{subtitle}</div>
-        </div>
-      </div>
-      <ul className="space-y-2">
-        {features.map((f) => (
-          <li key={f} className="flex items-center gap-2 text-sm text-white/70">
-            <CheckCircle2 className="w-3.5 h-3.5 shrink-0" style={{ color: accent }} />
-            {f}
-          </li>
-        ))}
-      </ul>
     </motion.div>
   );
 }
@@ -343,77 +300,6 @@ function AccuracyTable() {
 const AquaAIPage = () => {
   useEffect(() => { document.title = "AquaAI — BohrX.ai"; }, []);
 
-  const modules = [
-    {
-      num: 'M1 · 8 Features',
-      title: 'Seed Counter',
-      subtitle: 'YOLOv8 Nano object detection',
-      icon: Fish,
-      accent: '#38bdf8',
-      features: [
-        'Live bounding-box count preview (F01)',
-        '3-frame burst + median ensemble (F02)',
-        'Mortality % traffic-light alert (F03)',
-        'CV% size uniformity flag (F04)',
-        'IntensLight LED brightness control (F05)',
-        'Volume-based batch extrapolation (F06)',
-        'Split-sample sub-count (F07)',
-        'Offline-first SQLite sync (F08)',
-      ],
-    },
-    {
-      num: 'M2 · 8 Features',
-      title: 'Disease Detector',
-      subtitle: 'EfficientNetB0 + YOLOv8 Nano',
-      icon: Microscope,
-      accent: '#f87171',
-      features: [
-        'Y-channel monochrome + CLAHE (F09)',
-        'EfficientNetB0 EHP 3-class classifier (F10)',
-        'YOLOv8 spore bounding-box detection (F11)',
-        '6-disease multi-screen (EHP/WSSV/AHPND/BGD/HPV/WFS) (F12)',
-        'Hard-fail REJECT — unconditional (F13)',
-        'Grad-CAM heatmap overlay (F14)',
-        'Traffic-light risk display (F15)',
-        'PCR feedback + continuous learning (F16)',
-      ],
-    },
-    {
-      num: 'M3 · 8 Features',
-      title: 'Quality Grader',
-      subtitle: '4-model fusion · composite score 0-100',
-      icon: ShieldCheck,
-      accent: '#a78bfa',
-      features: [
-        'Composite QS 0-100 (30/25/20/15/10% weights) (F17)',
-        'EfficientNetB0 visual health regression (F18)',
-        'MobileNetV3 PL stage ID (F19)',
-        'Transparency score (F20)',
-        'Stocking density recommendation (F21)',
-        'Invoice quantity mismatch alert (F22)',
-        'HMAC-signed QC certificate PDF+QR (F23)',
-        '4-step multi-camera session (F24)',
-      ],
-    },
-    {
-      num: 'M4 · 8 Features',
-      title: 'Reports & Analytics',
-      subtitle: 'FastAPI backend · OTA model updates',
-      icon: BarChart3,
-      accent: '#34d399',
-      features: [
-        'Tamper-evident HMAC certificate (F25)',
-        'Public QR verification endpoint (F26)',
-        'Farm analytics dashboard (F27)',
-        'Disease trends + regional heatmap (F28)',
-        'OTA model delivery for 5 AI models (F29)',
-        'Hatchery B2B portal (F30)',
-        'Outbreak FCM + WhatsApp alerts (F31)',
-        'CSV/PDF batch export (F32)',
-      ],
-    },
-  ];
-
   const mlPipeline = [
     { step: '01', title: 'Capture', desc: '3-frame burst from overhead/monochrome camera. Blur + brightness quality gate applied before inference.' },
     { step: '02', title: 'Preprocess', desc: 'Y-channel extraction → CLAHE contrast enhancement → letterbox resize → INT8 normalisation.' },
@@ -505,17 +391,21 @@ const AquaAIPage = () => {
         </div>
       </section>
 
-      {/* 4 Modules */}
-      <section className="py-24 border-t border-white/5">
+      {/* Unified Dashboard — 6 modules × 8 roles */}
+      <section id="dashboard" className="py-24 border-t border-white/5">
         <div className="container mx-auto px-6 lg:px-8">
-          <motion.div className="mb-16"
+          <motion.div className="mb-10"
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="text-xs text-white/30 uppercase tracking-widest mb-4">Platform Modules</div>
-            <h2 className="text-4xl md:text-5xl font-bold">32 Features<br /><span className="text-white/40">Across 4 Modules</span></h2>
+            <div className="text-xs text-white/30 uppercase tracking-widest mb-4">AquaI Platform</div>
+            <h2 className="text-4xl md:text-5xl font-bold">Unified Dashboard<br />
+              <span className="text-white/40">6 Modules · 8 Roles</span>
+            </h2>
+            <p className="text-white/40 mt-3 text-sm max-w-2xl">
+              Switch roles to see role-specific access. Each module is a self-contained surface:
+              onboarding, diagnostics, pricing, marketplace, logistics, advisory.
+            </p>
           </motion.div>
-          <div className="grid md:grid-cols-2 gap-6">
-            {modules.map((m) => <ModuleCard key={m.num} {...m} />)}
-          </div>
+          <AquaDashboard />
         </div>
       </section>
 
@@ -557,122 +447,6 @@ const AquaAIPage = () => {
         </div>
       </section>
 
-      {/* Interactive AI Demos */}
-      <section className="py-24 border-t border-white/5">
-        <div className="container mx-auto px-6 lg:px-8">
-          <motion.div className="mb-12"
-            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="text-xs text-white/30 uppercase tracking-widest mb-4">Try It Live</div>
-            <h2 className="text-4xl font-bold">Run the AI Yourself</h2>
-            <p className="text-white/40 mt-3 text-sm max-w-2xl">
-              Two live tools wired straight to the running backend. Use your camera or upload
-              an image — every result below is real model inference, not a mock-up.
-            </p>
-          </motion.div>
-
-          <div className="grid lg:grid-cols-2 gap-8 items-start">
-            <div>
-              <div className="flex items-center gap-2 mb-3">
-                <Camera className="w-4 h-4 text-sky-400" />
-                <span className="text-sm font-semibold text-white">Seed Counter</span>
-                <span className="text-xs text-white/30">— count PL on a tray</span>
-              </div>
-              <SeedScanner />
-            </div>
-            <div>
-              <div className="flex items-center gap-2 mb-3">
-                <Microscope className="w-4 h-4 text-violet-400" />
-                <span className="text-sm font-semibold text-white">Disease &amp; Quality</span>
-                <span className="text-xs text-white/30">— diagnose an HP smear</span>
-              </div>
-              <DiagnosisDemo />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Explainable AI — Grad-CAM */}
-      <section className="py-24 border-t border-white/5 bg-white/2">
-        <div className="container mx-auto px-6 lg:px-8">
-          <motion.div className="mb-12"
-            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="text-xs text-white/30 uppercase tracking-widest mb-4">Explainable AI</div>
-            <h2 className="text-4xl font-bold">See Inside the Diagnosis</h2>
-            <p className="text-white/40 mt-3 text-sm max-w-2xl">
-              Grad-CAM heatmaps reveal exactly which tissue regions drove the AI's
-              EHP decision — so a VLE can trust, and a vet can audit, every result.
-            </p>
-          </motion.div>
-          <GradCamViewer />
-        </div>
-      </section>
-
-      {/* Field Tools — batch extrapolation */}
-      <section className="py-24 border-t border-white/5 bg-white/2">
-        <div className="container mx-auto px-6 lg:px-8">
-          <motion.div className="mb-12"
-            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="text-xs text-white/30 uppercase tracking-widest mb-4">Field Tools</div>
-            <h2 className="text-4xl font-bold">Batch Extrapolation</h2>
-            <p className="text-white/40 mt-3 text-sm max-w-2xl">
-              Count a small sample, get the whole-batch estimate — and an instant flag
-              if the hatchery invoice doesn't add up.
-            </p>
-          </motion.div>
-          <BatchExtrapolator />
-        </div>
-      </section>
-
-      {/* Verified Quality — certificates */}
-      <section className="py-24 border-t border-white/5">
-        <div className="container mx-auto px-6 lg:px-8">
-          <motion.div className="mb-12"
-            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="text-xs text-white/30 uppercase tracking-widest mb-4">Trust &amp; Compliance</div>
-            <h2 className="text-4xl font-bold">Tamper-Evident QC Certificates</h2>
-            <p className="text-white/40 mt-3 text-sm max-w-2xl">
-              Every diagnosis can be sealed into an HMAC-signed certificate — verifiable
-              by buyers, insurers and auditors with a QR scan or an ID lookup.
-            </p>
-          </motion.div>
-          <CertificateVerify />
-        </div>
-      </section>
-
-      {/* Regional Intelligence — outbreak + water quality */}
-      <section className="py-24 border-t border-white/5 bg-white/2">
-        <div className="container mx-auto px-6 lg:px-8">
-          <motion.div className="mb-12"
-            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="text-xs text-white/30 uppercase tracking-widest mb-4">Regional Intelligence</div>
-            <h2 className="text-4xl font-bold">Outbreak &amp; Pond Monitoring</h2>
-            <p className="text-white/40 mt-3 text-sm max-w-2xl">
-              Disease spreads through water. AquaAI tracks regional outbreak density and
-              the pond conditions that precede it — turning isolated tests into early warning.
-            </p>
-          </motion.div>
-          <div className="space-y-8">
-            <OutbreakMap />
-            <WaterQualityPanel />
-          </div>
-        </div>
-      </section>
-
-      {/* Continuous Learning */}
-      <section className="py-24 border-t border-white/5">
-        <div className="container mx-auto px-6 lg:px-8">
-          <motion.div className="mb-12"
-            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="text-xs text-white/30 uppercase tracking-widest mb-4">Self-Improving</div>
-            <h2 className="text-4xl font-bold">The Model Gets Smarter Every Week</h2>
-            <p className="text-white/40 mt-3 text-sm max-w-2xl">
-              Real PCR lab results flow back into the training pipeline — the AI learns
-              from its own field performance and ships improvements over the air.
-            </p>
-          </motion.div>
-          <ContinuousLearning />
-        </div>
-      </section>
 
       {/* Live Backend Dashboard */}
       <section className="py-24 border-t border-white/5 bg-white/2">
