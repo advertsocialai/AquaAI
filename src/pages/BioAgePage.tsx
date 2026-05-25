@@ -36,7 +36,7 @@ const methodology = [
 ];
 
 const BioAgePage = () => {
-  useEffect(() => { document.title = "Biological Age — BohrX.ai"; }, []);
+  useEffect(() => { document.title = "Biological Age — Aqua AI"; }, []);
 
   return (
     <div className="min-h-screen bg-background">

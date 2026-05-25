@@ -37,12 +37,12 @@ const PrivacyPage = () => {
 
           <section>
             <h2 className="text-lg font-semibold text-foreground mb-3">6. Your Rights</h2>
-            <p>You have the right to access, correct, or delete your personal data. To exercise these rights, please contact us at founders@bohrx.ai.</p>
+            <p>You have the right to access, correct, or delete your personal data. To exercise these rights, please contact us at support@aquai.in.</p>
           </section>
 
           <section>
             <h2 className="text-lg font-semibold text-foreground mb-3">7. Contact</h2>
-            <p>For questions about this Privacy Policy, contact us at <a href="mailto:founders@bohrx.ai" className="text-foreground underline underline-offset-4 hover:text-foreground/70 transition-colors">founders@bohrx.ai</a>.</p>
+            <p>For questions about this Privacy Policy, contact us at <a href="mailto:support@aquai.in" className="text-foreground underline underline-offset-4 hover:text-foreground/70 transition-colors">support@aquai.in</a>.</p>
           </section>
         </div>
       </main>

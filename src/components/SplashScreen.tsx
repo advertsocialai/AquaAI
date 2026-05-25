@@ -31,7 +31,7 @@ export function SplashScreen({ onEnter }: SplashScreenProps) {
         >
           <AtomAnimation />
 
-          {/* Centered BohrX over nucleus */}
+          {/* Centered Aqua AI over nucleus */}
           <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
             {/* Radial vignette behind text */}
             <div

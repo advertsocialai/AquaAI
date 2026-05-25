@@ -40,7 +40,7 @@ export function Mission() {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-xl mx-auto"
         >
-          At BohrX.ai, we are building the infrastructure to understand, measure, and ultimately reverse biological aging. 
+          At Aqua AI, we are building the infrastructure to understand, measure, and ultimately reverse biological aging. 
           Not through speculation — through rigorous science, massive datasets, and AI systems designed to find what humans cannot.
         </motion.p>
 

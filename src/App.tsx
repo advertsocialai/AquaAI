@@ -19,7 +19,6 @@ import NotFound from "./pages/NotFound";
 // the splash-to-interactive time on slow networks low.
 const BioAgePage      = lazy(() => import("./pages/BioAgePage"));
 const FoundersPage    = lazy(() => import("./pages/FoundersPage"));
-const CollaboratePage = lazy(() => import("./pages/CollaboratePage"));
 const PrivacyPage     = lazy(() => import("./pages/PrivacyPage"));
 const TermsPage       = lazy(() => import("./pages/TermsPage"));
 const AquaAIPage      = lazy(() => import("./pages/AquaAIPage"));
@@ -29,6 +28,10 @@ const SettingsPage    = lazy(() => import("./pages/SettingsPage"));
 const KycPage         = lazy(() => import("./pages/KycPage"));
 const VerifyPage      = lazy(() => import("./pages/VerifyPage"));
 const ForgotPasswordPage = lazy(() => import("./pages/ForgotPasswordPage"));
+const CareersPage     = lazy(() => import("./pages/CareersPage"));
+const ContactPage     = lazy(() => import("./pages/ContactPage"));
+const KnowledgePage   = lazy(() => import("./pages/KnowledgePage"));
+const AboutPage       = lazy(() => import("./pages/AboutPage"));
 
 const queryClient = new QueryClient();
 
@@ -61,7 +64,6 @@ function AnimatedRoutes() {
           <Route path="/technology" element={<Navigate to="/aquaai" replace />} />
           <Route path="/bioage" element={<PageTransition><BioAgePage /></PageTransition>} />
           <Route path="/founders" element={<PageTransition><FoundersPage /></PageTransition>} />
-          <Route path="/collaborate" element={<PageTransition><CollaboratePage /></PageTransition>} />
           <Route path="/privacy" element={<PageTransition><PrivacyPage /></PageTransition>} />
           <Route path="/terms" element={<PageTransition><TermsPage /></PageTransition>} />
           <Route path="/aquaai" element={<PageTransition><AquaAIPage /></PageTransition>} />
@@ -71,6 +73,12 @@ function AnimatedRoutes() {
           <Route path="/kyc" element={<PageTransition><KycPage /></PageTransition>} />
           <Route path="/forgot-password" element={<PageTransition><ForgotPasswordPage /></PageTransition>} />
           <Route path="/verify/:certId" element={<PageTransition><VerifyPage /></PageTransition>} />
+          <Route path="/careers" element={<PageTransition><CareersPage /></PageTransition>} />
+          <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
+          <Route path="/collaborate" element={<Navigate to="/contact" replace />} />
+          <Route path="/knowledge" element={<PageTransition><KnowledgePage /></PageTransition>} />
+          <Route path="/knowledge/:slug" element={<PageTransition><KnowledgePage /></PageTransition>} />
+          <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
       </Suspense>

@@ -1,41 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { AquaDashboard } from '@/components/dashboard/AquaDashboard';
 import {
-  Fish, Microscope, ShieldCheck, Cpu, WifiOff,
-  Activity, AlertTriangle, TrendingUp, Layers,
+  Fish, Microscope, WifiOff, Activity, Layers,
   BrainCircuit, Zap, FlaskConical, Camera,
 } from 'lucide-react';
-
-const API_BASE = 'http://localhost:8000/api/v1';
-
-// ── API helpers ────────────────────────────────────────────────────────────────
-
-async function apiGet(path: string) {
-  try {
-    const res = await fetch(`${API_BASE}${path}`);
-    if (!res.ok) return null;
-    return res.json();
-  } catch {
-    return null;
-  }
-}
-
-async function apiPost(path: string, body: object, token?: string) {
-  try {
-    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-    if (token) headers['Authorization'] = `Bearer ${token}`;
-    const res = await fetch(`${API_BASE}${path}`, {
-      method: 'POST', headers, body: JSON.stringify(body),
-    });
-    if (!res.ok) return null;
-    return res.json();
-  } catch {
-    return null;
-  }
-}
 
 // ── Stat card ──────────────────────────────────────────────────────────────────
 
@@ -58,203 +29,6 @@ function StatCard({ label, value, sub, icon: Icon, color }: {
       <div className="text-sm text-white/50">{label}</div>
       {sub && <div className="text-xs text-white/30 mt-1">{sub}</div>}
     </motion.div>
-  );
-}
-
-// ── Skeleton loader ────────────────────────────────────────────────────────────
-
-function Skeleton({ className = '' }: { className?: string }) {
-  return <div className={`animate-pulse rounded bg-white/10 ${className}`} />;
-}
-
-// ── Live Dashboard Panel ───────────────────────────────────────────────────────
-
-function LiveDashboard() {
-  const [data, setData] = useState<any>(null);
-  const [models, setModels] = useState<any[]>([]);
-  const [agent, setAgent] = useState<any>(null);
-  const [health, setHealth] = useState<'checking' | 'online' | 'offline'>('checking');
-  const [updatedAt, setUpdatedAt] = useState<number | null>(null);
-  const [, forceTick] = useState(0);
-
-  useEffect(() => {
-    let mounted = true;
-    async function load() {
-      let isOnline = false;
-      try {
-        const h = await fetch('http://localhost:8000/health', { cache: 'no-store' });
-        isOnline = h.ok;
-      } catch {
-        isOnline = false;
-      }
-      if (!mounted) return;
-      setHealth(isOnline ? 'online' : 'offline');
-      if (!isOnline) return;
-
-      const [sum, mods, ag] = await Promise.all([
-        apiGet('/analytics/public-summary'),
-        apiGet('/model-updates/latest'),
-        apiGet('/ai-agent/status'),
-      ]);
-      if (!mounted) return;
-      if (sum) setData(sum);
-      if (mods) setModels(Array.isArray(mods) ? mods : []);
-      if (ag) setAgent(ag);
-      setUpdatedAt(Date.now());
-    }
-    load();
-    const refresh = setInterval(load, 15000);   // auto-refresh
-    const ticker = setInterval(() => forceTick((t) => t + 1), 1000);
-    return () => {
-      mounted = false;
-      clearInterval(refresh);
-      clearInterval(ticker);
-    };
-  }, []);
-
-  const agoText =
-    updatedAt != null ? `${Math.floor((Date.now() - updatedAt) / 1000)}s ago` : '—';
-
-  const aiOnline = agent?.api_key_configured === true;
-  const aiLabel = aiOnline ? 'Claude Opus 4' : 'Offline ML';
-
-  return (
-    <div className="space-y-6">
-      {/* Status bar */}
-      <div className="flex flex-wrap items-center gap-2">
-        <StatusPill
-          ok={health === 'online'}
-          checking={health === 'checking'}
-          label={
-            health === 'online'
-              ? 'API Online'
-              : health === 'checking'
-              ? 'Connecting…'
-              : 'API Offline'
-          }
-        />
-        {health === 'online' && (
-          <>
-            <Pill icon={Cpu} text="PostgreSQL" tone="ok" />
-            <Pill
-              icon={BrainCircuit}
-              text={aiLabel}
-              tone={aiOnline ? 'opus' : 'neutral'}
-            />
-            <span className="ml-auto text-[11px] text-white/30 flex items-center gap-1">
-              <Activity className="w-3 h-3" /> updated {agoText}
-            </span>
-          </>
-        )}
-      </div>
-
-      {health === 'offline' && (
-        <div className="flex items-start gap-3 p-4 rounded-xl border border-red-500/20 bg-red-500/5">
-          <WifiOff className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
-          <div className="text-sm">
-            <div className="text-red-400 font-semibold">Backend not reachable</div>
-            <div className="text-white/40 text-xs mt-1">
-              Start it from the <span className="font-mono text-white/60">backend/</span> folder:{' '}
-              <span className="font-mono text-white/60">./start.sh</span> — the API should
-              come up on <span className="font-mono text-white/60">localhost:8000</span>.
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Stat grid */}
-      {health === 'checking' && (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="p-4 rounded-xl border border-white/10 bg-white/5">
-              <Skeleton className="w-4 h-4 mb-3" />
-              <Skeleton className="w-16 h-7 mb-2" />
-              <Skeleton className="w-20 h-3" />
-            </div>
-          ))}
-        </div>
-      )}
-
-      {data && (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {[
-            { label: 'Counting Sessions', value: data.seed_counter?.total_sessions ?? 0, color: '#38bdf8', icon: Activity },
-            { label: 'Avg Mortality', value: `${data.seed_counter?.avg_mortality_pct ?? 0}%`, color: '#fb923c', icon: AlertTriangle },
-            { label: 'Graded Batches', value: data.quality_grader?.total_graded ?? 0, color: '#a78bfa', icon: ShieldCheck },
-            { label: 'Avg QS Score', value: `${data.quality_grader?.avg_quality_score ?? 0}/100`, color: '#34d399', icon: TrendingUp },
-            { label: 'Diagnoses Run', value: data.disease_detector?.total_diagnoses ?? 0, color: '#60a5fa', icon: Microscope },
-            { label: 'Hard Fails', value: data.disease_detector?.critical_detections ?? 0, color: '#f87171', icon: AlertTriangle },
-          ].map(({ label, value, color, icon: Icon }) => (
-            <div key={label} className="p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/[0.07] transition">
-              <Icon className="w-4 h-4 mb-2" style={{ color }} />
-              <div className="text-2xl font-bold text-white tabular-nums">{value}</div>
-              <div className="text-xs text-white/40">{label}</div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* AI models OTA */}
-      {models.length > 0 && (
-        <div>
-          <div className="text-xs text-white/30 uppercase tracking-widest mb-3">
-            AI Models — OTA Registry
-          </div>
-          <div className="space-y-2">
-            {models.map((m) => (
-              <div key={m.model_name} className="flex items-center justify-between p-3 rounded-xl border border-white/8 bg-white/[0.03]">
-                <div className="flex items-center gap-3">
-                  <BrainCircuit className="w-4 h-4 text-violet-400" />
-                  <span className="text-sm text-white/80 capitalize">
-                    {m.model_name.replace(/_/g, ' ')}
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-xs text-white/40 font-mono">
-                    v{m.version} · {m.file_size_mb}MB
-                  </span>
-                  <span className="flex items-center gap-1 text-[10px] text-emerald-400">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> current
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function StatusPill({ ok, checking, label }: { ok: boolean; checking: boolean; label: string }) {
-  const color = checking ? '#94a3b8' : ok ? '#34d399' : '#f87171';
-  return (
-    <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-xs">
-      <span className="relative flex w-2 h-2">
-        {ok && (
-          <span
-            className="absolute inline-flex h-full w-full rounded-full opacity-60 animate-ping"
-            style={{ background: color }}
-          />
-        )}
-        <span className="relative inline-flex rounded-full w-2 h-2" style={{ background: color }} />
-      </span>
-      <span style={{ color }}>{label}</span>
-    </span>
-  );
-}
-
-function Pill({ icon: Icon, text, tone }: { icon: React.ElementType; text: string; tone: 'ok' | 'opus' | 'neutral' }) {
-  const tones = {
-    ok: 'text-emerald-300 border-emerald-400/20 bg-emerald-400/5',
-    opus: 'text-violet-300 border-violet-400/30 bg-violet-400/10',
-    neutral: 'text-white/50 border-white/10 bg-white/5',
-  };
-  return (
-    <span className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs ${tones[tone]}`}>
-      <Icon className="w-3 h-3" />
-      {text}
-    </span>
   );
 }
 
@@ -298,7 +72,7 @@ function AccuracyTable() {
 // ── Main page ──────────────────────────────────────────────────────────────────
 
 const AquaAIPage = () => {
-  useEffect(() => { document.title = "AquaAI — BohrX.ai"; }, []);
+  useEffect(() => { document.title = "Aqua AI — Aquaculture Intelligence"; }, []);
 
   const mlPipeline = [
     { step: '01', title: 'Capture', desc: '3-frame burst from overhead/monochrome camera. Blur + brightness quality gate applied before inference.' },
@@ -447,23 +221,6 @@ const AquaAIPage = () => {
         </div>
       </section>
 
-
-      {/* Live Backend Dashboard */}
-      <section className="py-24 border-t border-white/5 bg-white/2">
-        <div className="container mx-auto px-6 lg:px-8">
-          <motion.div className="mb-12"
-            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="text-xs text-white/30 uppercase tracking-widest mb-4">Live Integration</div>
-            <h2 className="text-4xl font-bold">Backend Dashboard</h2>
-            <p className="text-white/40 mt-3 text-sm">
-              Connected to FastAPI at localhost:8000 — real-time data from the running backend.
-            </p>
-          </motion.div>
-          <div className="p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
-            <LiveDashboard />
-          </div>
-        </div>
-      </section>
 
       {/* Tech Stack */}
       <section className="py-24 border-t border-white/5">

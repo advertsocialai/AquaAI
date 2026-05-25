@@ -12,7 +12,7 @@ const TermsPage = () => {
         <div className="space-y-10 text-sm leading-relaxed text-foreground/80">
           <section>
             <h2 className="text-lg font-semibold text-foreground mb-3">1. Acceptance of Terms</h2>
-            <p>By accessing and using the BOHRX.AI website and services, you agree to be bound by these Terms of Service. If you do not agree, please do not use our services.</p>
+            <p>By accessing and using the Aqua AI website and services, you agree to be bound by these Terms of Service. If you do not agree, please do not use our services.</p>
           </section>
 
           <section>
@@ -22,7 +22,7 @@ const TermsPage = () => {
 
           <section>
             <h2 className="text-lg font-semibold text-foreground mb-3">3. Intellectual Property</h2>
-            <p>All content, research, data, and materials on this website are the property of BOHRX.AI or its licensors and are protected by intellectual property laws. You may not reproduce, distribute, or create derivative works without prior written consent.</p>
+            <p>All content, research, data, and materials on this website are the property of Aqua AI or its licensors and are protected by intellectual property laws. You may not reproduce, distribute, or create derivative works without prior written consent.</p>
           </section>
 
           <section>
@@ -32,7 +32,7 @@ const TermsPage = () => {
 
           <section>
             <h2 className="text-lg font-semibold text-foreground mb-3">5. Limitation of Liability</h2>
-            <p>BOHRX.AI shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of our website or services.</p>
+            <p>Aqua AI shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of our website or services.</p>
           </section>
 
           <section>
@@ -42,7 +42,7 @@ const TermsPage = () => {
 
           <section>
             <h2 className="text-lg font-semibold text-foreground mb-3">7. Contact</h2>
-            <p>For questions about these Terms of Service, contact us at <a href="mailto:founders@bohrx.ai" className="text-foreground underline underline-offset-4 hover:text-foreground/70 transition-colors">founders@bohrx.ai</a>.</p>
+            <p>For questions about these Terms of Service, contact us at <a href="mailto:support@aquai.in" className="text-foreground underline underline-offset-4 hover:text-foreground/70 transition-colors">support@aquai.in</a>.</p>
           </section>
         </div>
       </main>

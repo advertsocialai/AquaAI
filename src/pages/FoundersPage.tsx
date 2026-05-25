@@ -16,14 +16,8 @@ const founders = [
   },
 ];
 
-const advisors = [
-  { name: 'Coming Soon', role: 'Scientific Advisor' },
-  { name: 'Coming Soon', role: 'Clinical Advisor' },
-  { name: 'Coming Soon', role: 'Industry Advisor' },
-];
-
 const FoundersPage = () => {
-  useEffect(() => { document.title = "Founders — BohrX.ai"; }, []);
+  useEffect(() => { document.title = "Founders — Aqua AI"; }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -49,7 +43,7 @@ const FoundersPage = () => {
               transition={{ duration: 1, delay: 0.5 }}
               className="text-base md:text-lg text-foreground/70 max-w-lg leading-relaxed"
             >
-              The team behind BohrX.ai — researchers, engineers, and visionaries on a mission to decode aging.
+              The team behind Aqua AI — engineers and researchers on a mission to decode aquaculture for India's farmers, hatcheries and government bodies.
             </motion.p>
           </div>
         </div>
@@ -65,7 +59,7 @@ const FoundersPage = () => {
             transition={{ duration: 1 }}
             className="text-2xl md:text-3xl font-bold text-foreground uppercase tracking-tight leading-[1.2] mb-6"
           >
-            "We started BohrX because we believe the biggest problems in healthcare won't be solved by incremental progress — they need a fundamentally different approach."
+            "We started Aqua AI because the biggest problems in Indian aquaculture won't be solved by incremental progress — they need a fundamentally different approach."
           </motion.blockquote>
           <motion.p
             initial={{ opacity: 0 }}
@@ -115,44 +109,6 @@ const FoundersPage = () => {
                   <Linkedin className="w-4 h-4" strokeWidth={1.5} />
                   LinkedIn
                 </a>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Advisors */}
-      <section className="py-24 bg-background border-t border-border">
-        <div className="container mx-auto px-6 lg:px-8 max-w-3xl text-center">
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-xs text-muted-foreground tracking-[0.3em] uppercase mb-4"
-          >
-            Advisory Board
-          </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-bold text-foreground uppercase tracking-tight mb-16"
-          >
-            Advisors
-          </motion.h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-            {advisors.map((a, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
-                className="border border-dashed border-border p-8"
-              >
-                <div className="w-16 h-16 border border-dashed border-border mx-auto mb-4" />
-                <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-1">{a.name}</h3>
-                <p className="text-xs text-muted-foreground/60 tracking-[0.2em] uppercase">{a.role}</p>
               </motion.div>
             ))}
           </div>

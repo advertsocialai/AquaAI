@@ -1,49 +1,195 @@
-import { ArrowUp } from 'lucide-react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Instagram,
+  Send, Check, ArrowRight,
+} from 'lucide-react';
+import atomLogo from '@/assets/atom-logo.svg';
+
+const QUICK_LINKS = [
+  { label: 'Home',          to: '/' },
+  { label: 'Aqua AI',       to: '/aquaai' },
+  { label: 'Knowledge Hub', to: '/knowledge' },
+  { label: 'About',         to: '/about' },
+  { label: 'Careers',       to: '/careers' },
+  { label: 'Contact',       to: '/contact' },
+];
+
+const PLATFORM_LINKS = [
+  { label: 'Diagnostics',  to: '/aquaai' },
+  { label: 'Pricing',      to: '/aquaai' },
+  { label: 'Marketplace',  to: '/aquaai' },
+  { label: 'Logistics',    to: '/aquaai' },
+  { label: 'Verify cert',  to: '/verify/QC-2026-04421' },
+];
+
+const LEGAL_LINKS = [
+  { label: 'Privacy',  to: '/privacy' },
+  { label: 'Terms',    to: '/terms' },
+  { label: 'Sign in',  to: '/login' },
+  { label: 'Sign up',  to: '/signup' },
+];
 
 export function Footer() {
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
+
+  function subscribe(e: React.FormEvent) {
+    e.preventDefault();
+    if (!/\S+@\S+\.\S+/.test(email)) return;
+    setSubscribed(true);
+    setEmail('');
+    setTimeout(() => setSubscribed(false), 4000);
+  }
 
   return (
-    <footer className="bg-background border-t border-border py-16">
-      <div className="container mx-auto px-6 lg:px-8">
-        {/* Wordmark */}
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground uppercase tracking-[0.15em] mb-3">
-            BOHRX.AI
-          </h2>
-          <p className="text-xs text-muted-foreground tracking-[0.3em] uppercase">
-            Advancing the Science of Longevity
-          </p>
-          <a
-            href="mailto:founders@bohrx.ai"
-            className="text-xs text-muted-foreground hover:text-foreground/70 transition-colors tracking-[0.2em] mt-3 inline-block">
-
-            founders@bohrx.ai
-          </a>
-        </div>
-
-        <div className="border-t border-border pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-xs text-muted-foreground tracking-wider">
-            © {new Date().getFullYear()} BOHRX.AI
-          </p>
-
-          <div className="flex items-center gap-8">
-            <a target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-foreground/70 transition-colors tracking-wider" href="https://www.linkedin.com/company/bohrx-ai/">LINKEDIN</a>
-            <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-foreground/70 transition-colors tracking-wider">X</a>
-            <Link to="/privacy" className="text-xs text-muted-foreground hover:text-foreground/70 transition-colors tracking-wider">PRIVACY</Link>
-            <Link to="/terms" className="text-xs text-muted-foreground hover:text-foreground/70 transition-colors tracking-wider">TERMS</Link>
+    <footer className="border-t border-white/10 bg-black">
+      {/* Top: newsletter */}
+      <div className="border-b border-white/5">
+        <div className="container mx-auto px-6 lg:px-8 py-12 grid md:grid-cols-2 gap-8 items-center">
+          <div>
+            <div className="text-[11px] uppercase tracking-widest text-cyan-300 mb-2">Subscribe to stay updated</div>
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">Trends, innovations and more — weekly</h3>
+            <p className="text-sm text-white/50">
+              Disease alerts, pricing trends, new articles. In your language. Unsubscribe anytime.
+            </p>
           </div>
-
-          <button
-            onClick={scrollToTop}
-            className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground/70 transition-colors tracking-wider group">
-
-            BACK TO TOP
-            <ArrowUp className="w-3 h-3 group-hover:-translate-y-0.5 transition-transform" />
-          </button>
+          <form onSubmit={subscribe} className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-1 px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03] focus-within:border-cyan-400/40">
+              <Mail className="w-4 h-4 text-cyan-400" />
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your@email.in"
+                className="bg-transparent outline-none text-white text-sm flex-1 placeholder:text-white/30"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={subscribed}
+              className="inline-flex items-center gap-1.5 px-4 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-60 text-black font-semibold text-sm"
+            >
+              {subscribed ? <><Check className="w-4 h-4" /> Subscribed</> : <><Send className="w-4 h-4" /> Subscribe</>}
+            </button>
+          </form>
         </div>
       </div>
-    </footer>);
 
+      {/* Main footer grid */}
+      <div className="container mx-auto px-6 lg:px-8 py-12 grid grid-cols-2 md:grid-cols-5 gap-8">
+        {/* Brand + apps */}
+        <div className="col-span-2 md:col-span-2 space-y-4">
+          <Link to="/" className="inline-flex items-center gap-3">
+            <img src={atomLogo} alt="Aqua AI" className="w-9 h-9 object-contain" />
+            <span className="text-lg font-bold text-white tracking-wider">AQUA<span className="font-light"> AI</span></span>
+          </Link>
+          <p className="text-sm text-white/55 leading-relaxed max-w-sm">
+            India's AI-powered aquaculture intelligence platform. Live pricing, PCR-grade
+            diagnostics, verified marketplace, logistics and government surveillance — in 6
+            Indian languages.
+          </p>
+          <div className="flex items-center gap-2 pt-2">
+            <a
+              href="#"
+              className="flex items-center gap-2 px-3 py-2 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition"
+              aria-label="Get it on Google Play"
+            >
+              <svg viewBox="0 0 24 24" className="w-4 h-4 text-white" fill="currentColor">
+                <path d="M3 20.5V3.5c0-.4.4-.7.8-.5l13 8.5c.4.2.4.8 0 1l-13 8.5c-.4.2-.8-.1-.8-.5z" />
+              </svg>
+              <div className="flex flex-col leading-tight">
+                <span className="text-[9px] uppercase text-white/40">Get it on</span>
+                <span className="text-xs font-semibold text-white">Google Play</span>
+              </div>
+            </a>
+            <a
+              href="#"
+              className="flex items-center gap-2 px-3 py-2 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition"
+              aria-label="Download on the App Store"
+            >
+              <svg viewBox="0 0 24 24" className="w-4 h-4 text-white" fill="currentColor">
+                <path d="M17.05 12.04c-.03-2.79 2.28-4.13 2.38-4.2-1.3-1.9-3.32-2.16-4.04-2.19-1.72-.17-3.36 1.01-4.23 1.01-.87 0-2.22-.99-3.65-.96-1.88.03-3.61 1.09-4.58 2.77-1.95 3.38-.5 8.39 1.4 11.13.93 1.34 2.04 2.85 3.5 2.8 1.4-.06 1.93-.91 3.63-.91 1.7 0 2.18.91 3.66.88 1.51-.03 2.47-1.37 3.39-2.71 1.07-1.55 1.5-3.05 1.52-3.13-.03-.01-2.93-1.13-2.96-4.49zM14.5 4.07c.78-.94 1.3-2.25 1.16-3.55-1.12.04-2.47.74-3.27 1.68-.72.83-1.35 2.16-1.18 3.42 1.24.1 2.51-.63 3.29-1.55z" />
+              </svg>
+              <div className="flex flex-col leading-tight">
+                <span className="text-[9px] uppercase text-white/40">Download on</span>
+                <span className="text-xs font-semibold text-white">App Store</span>
+              </div>
+            </a>
+          </div>
+          <div className="flex items-center gap-3 pt-2">
+            <a href="#" aria-label="LinkedIn" className="text-white/40 hover:text-cyan-300"><Linkedin className="w-4 h-4" /></a>
+            <a href="#" aria-label="Twitter"  className="text-white/40 hover:text-cyan-300"><Twitter className="w-4 h-4" /></a>
+            <a href="#" aria-label="Facebook" className="text-white/40 hover:text-cyan-300"><Facebook className="w-4 h-4" /></a>
+            <a href="#" aria-label="Instagram"className="text-white/40 hover:text-cyan-300"><Instagram className="w-4 h-4" /></a>
+          </div>
+        </div>
+
+        {/* Quick links */}
+        <div>
+          <div className="text-xs uppercase tracking-widest text-cyan-300 mb-4">Quick Links</div>
+          <ul className="space-y-2">
+            {QUICK_LINKS.map((l) => (
+              <li key={l.label}>
+                <Link to={l.to} className="text-sm text-white/60 hover:text-white transition">
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Platform */}
+        <div>
+          <div className="text-xs uppercase tracking-widest text-cyan-300 mb-4">Platform</div>
+          <ul className="space-y-2">
+            {PLATFORM_LINKS.map((l) => (
+              <li key={l.label}>
+                <Link to={l.to} className="text-sm text-white/60 hover:text-white transition">
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Get in touch */}
+        <div>
+          <div className="text-xs uppercase tracking-widest text-cyan-300 mb-4">Get in touch</div>
+          <ul className="space-y-3 text-sm">
+            <li className="flex items-start gap-2 text-white/60">
+              <Phone className="w-3.5 h-3.5 mt-0.5 text-cyan-400 shrink-0" />
+              <a href="tel:+919000000000" className="hover:text-white">+91 90000 00000</a>
+            </li>
+            <li className="flex items-start gap-2 text-white/60">
+              <Mail className="w-3.5 h-3.5 mt-0.5 text-cyan-400 shrink-0" />
+              <a href="mailto:support@aquai.in" className="hover:text-white">support@aquai.in</a>
+            </li>
+            <li className="flex items-start gap-2 text-white/60">
+              <MapPin className="w-3.5 h-3.5 mt-0.5 text-cyan-400 shrink-0" />
+              <span>Andhra Pradesh, India</span>
+            </li>
+          </ul>
+          <Link
+            to="/contact"
+            className="inline-flex items-center gap-1.5 mt-4 text-xs text-cyan-400 hover:underline"
+          >
+            Send a message <ArrowRight className="w-3 h-3" />
+          </Link>
+        </div>
+      </div>
+
+      {/* Bottom strip */}
+      <div className="border-t border-white/5">
+        <div className="container mx-auto px-6 lg:px-8 py-5 flex flex-wrap items-center justify-between gap-3 text-[11px] text-white/35">
+          <div>© {new Date().getFullYear()} Aqua AI — Innovative aquaculture solutions for sustainable farming practices.</div>
+          <div className="flex items-center gap-4">
+            {LEGAL_LINKS.map((l) => (
+              <Link key={l.label} to={l.to} className="hover:text-white/70 transition">{l.label}</Link>
+            ))}
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
 }

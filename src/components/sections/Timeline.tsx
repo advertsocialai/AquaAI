@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 
 const milestones = [
-  { year: '2023', title: 'Founded', description: 'BohrX.ai incorporated with a vision to decode biological aging using AI.', upcoming: false },
+  { year: '2023', title: 'Founded', description: 'Aqua AI incorporated with a vision to decode biological aging using AI.', upcoming: false },
   { year: '2023', title: 'First AI Model', description: 'Developed initial deep learning models for biological age prediction from blood biomarkers.', upcoming: false },
   { year: '2024', title: 'Bio-Age Platform', description: 'Released production-grade biological age scoring platform for research partners.', upcoming: false },
   { year: '2025', title: 'Clinical Validation', description: 'Partnering with clinical institutions to validate models in real-world settings.', upcoming: true },

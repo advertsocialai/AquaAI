@@ -8,7 +8,7 @@ const CollaboratePage = () => {
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', organization: '', message: '' });
 
-  useEffect(() => { document.title = "Collaborate — BohrX.ai"; }, []);
+  useEffect(() => { document.title = "Collaborate — Aqua AI"; }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,7 +16,7 @@ const CollaboratePage = () => {
     const body = encodeURIComponent(
       `Name: ${formData.name}\nEmail: ${formData.email}\nOrganization: ${formData.organization}\n\nMessage:\n${formData.message}`
     );
-    window.open(`mailto:founders@bohrx.ai?subject=${subject}&body=${body}`, '_self');
+    window.open(`mailto:support@aquai.in?subject=${subject}&body=${body}`, '_self');
     setSubmitted(true);
   };
 
@@ -54,8 +54,8 @@ const CollaboratePage = () => {
       <section className="py-16 bg-background border-b border-border">
         <div className="container mx-auto px-6 lg:px-8 max-w-xl text-center space-y-4">
           <p className="text-xs text-muted-foreground uppercase tracking-[0.3em] mb-2">Get In Touch</p>
-          <a href="mailto:founders@bohrx.ai" className="block text-sm text-foreground hover:text-foreground/70 transition-colors tracking-wider">
-            founders@bohrx.ai
+          <a href="mailto:support@aquai.in" className="block text-sm text-foreground hover:text-foreground/70 transition-colors tracking-wider">
+            support@aquai.in
           </a>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-muted-foreground">
             <a href="tel:+916304071465" className="hover:text-foreground transition-colors">+91 6304071465</a>
