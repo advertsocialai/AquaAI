@@ -193,9 +193,12 @@ export default function LoginPage() {
                 Sign in <ShieldCheck className="w-4 h-4" />
               </button>
 
-              <button type="button" className="text-xs text-white/40 hover:text-white w-full text-center">
-                Didn't get the code? Resend in 30s
-              </button>
+              <div className="flex items-center justify-between text-xs">
+                <button type="button" className="text-white/40 hover:text-white">
+                  Didn't get the code? Resend in 30s
+                </button>
+                <Link to="/forgot-password" className="text-cyan-400 hover:underline">Forgot password</Link>
+              </div>
             </motion.form>
           )}
 

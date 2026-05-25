@@ -27,6 +27,8 @@ const LoginPage       = lazy(() => import("./pages/LoginPage"));
 const SignupPage      = lazy(() => import("./pages/SignupPage"));
 const SettingsPage    = lazy(() => import("./pages/SettingsPage"));
 const KycPage         = lazy(() => import("./pages/KycPage"));
+const VerifyPage      = lazy(() => import("./pages/VerifyPage"));
+const ForgotPasswordPage = lazy(() => import("./pages/ForgotPasswordPage"));
 
 const queryClient = new QueryClient();
 
@@ -67,6 +69,8 @@ function AnimatedRoutes() {
           <Route path="/signup" element={<PageTransition><SignupPage /></PageTransition>} />
           <Route path="/settings" element={<PageTransition><SettingsPage /></PageTransition>} />
           <Route path="/kyc" element={<PageTransition><KycPage /></PageTransition>} />
+          <Route path="/forgot-password" element={<PageTransition><ForgotPasswordPage /></PageTransition>} />
+          <Route path="/verify/:certId" element={<PageTransition><VerifyPage /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
       </Suspense>

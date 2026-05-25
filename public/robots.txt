@@ -1,14 +1,11 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
 User-agent: *
 Allow: /
+
+# Don't index transient auth or verification routes that include personal identifiers.
+Disallow: /login
+Disallow: /signup
+Disallow: /kyc
+Disallow: /settings
+Disallow: /forgot-password
+
+Sitemap: https://bohrx.ai/sitemap.xml
