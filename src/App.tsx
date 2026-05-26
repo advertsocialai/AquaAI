@@ -31,6 +31,7 @@ const ForgotPasswordPage = lazy(() => import("./pages/ForgotPasswordPage"));
 const CareersPage     = lazy(() => import("./pages/CareersPage"));
 const ContactPage     = lazy(() => import("./pages/ContactPage"));
 const KnowledgePage   = lazy(() => import("./pages/KnowledgePage"));
+const KnowledgeArticlePage = lazy(() => import("./pages/KnowledgeArticlePage"));
 const AboutPage       = lazy(() => import("./pages/AboutPage"));
 
 const queryClient = new QueryClient();
@@ -77,7 +78,7 @@ function AnimatedRoutes() {
           <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
           <Route path="/collaborate" element={<Navigate to="/contact" replace />} />
           <Route path="/knowledge" element={<PageTransition><KnowledgePage /></PageTransition>} />
-          <Route path="/knowledge/:slug" element={<PageTransition><KnowledgePage /></PageTransition>} />
+          <Route path="/knowledge/:slug" element={<PageTransition><KnowledgeArticlePage /></PageTransition>} />
           <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
