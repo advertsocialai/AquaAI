@@ -4,6 +4,10 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { AquaDashboard } from '@/components/dashboard/AquaDashboard';
 import {
+  TrustStrip, BuiltForRoles, HowItWorks, Testimonials,
+  MobileAppCta, FaqSection, FinalCta,
+} from '@/components/aquaai-sections';
+import {
   Fish, Microscope, WifiOff, Activity, Layers,
   BrainCircuit, Zap, FlaskConical, Camera,
 } from 'lucide-react';
@@ -153,6 +157,10 @@ const AquaAIPage = () => {
         </div>
       </section>
 
+      <TrustStrip />
+      <BuiltForRoles />
+      <HowItWorks />
+
       {/* Stats */}
       <section className="py-20 border-t border-white/5">
         <div className="container mx-auto px-6 lg:px-8">
@@ -253,6 +261,11 @@ const AquaAIPage = () => {
           </div>
         </div>
       </section>
+
+      <Testimonials />
+      <MobileAppCta />
+      <FaqSection />
+      <FinalCta />
 
       <Footer />
     </div>
