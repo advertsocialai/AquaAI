@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>      <string>$(DEVELOPMENT_LANGUAGE)</string>
+    <key>CFBundleDisplayName</key>            <string>Aqua AI</string>
+    <key>CFBundleName</key>                   <string>aquaai_mobile</string>
+    <key>CFBundleExecutable</key>             <string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundleIdentifier</key>             <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleInfoDictionaryVersion</key>  <string>6.0</string>
+    <key>CFBundlePackageType</key>            <string>APPL</string>
+    <key>CFBundleShortVersionString</key>     <string>$(FLUTTER_BUILD_NAME)</string>
+    <key>CFBundleSignature</key>              <string>????</string>
+    <key>CFBundleVersion</key>                <string>$(FLUTTER_BUILD_NUMBER)</string>
+    <key>LSRequiresIPhoneOS</key>             <true/>
+    <key>UILaunchStoryboardName</key>         <string>LaunchScreen</string>
+    <key>UIMainStoryboardFile</key>           <string>Main</string>
+    <key>UIRequiredDeviceCapabilities</key>
+    <array>
+        <string>arm64</string>
+    </array>
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationPortraitUpsideDown</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    <key>UIViewControllerBasedStatusBarAppearance</key> <false/>
+    <key>CADisableMinimumFrameDurationOnPhone</key>     <true/>
+    <key>UIApplicationSupportsIndirectInputEvents</key> <true/>
+
+    <!-- Permission rationale strings (App Store rejects builds without these). -->
+    <key>NSCameraUsageDescription</key>
+    <string>Aqua AI needs camera access to capture shrimp PL trays and microscope smears for AI diagnostics.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Aqua AI needs photo access to let you pick previously captured sample images.</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>Aqua AI saves QC certificates and annotated images to your photo library.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Aqua AI tags your pond's GPS to QC certificates and shows outbreak alerts within 5 km.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Aqua AI's voice assistant uses the microphone for hands-free queries in your language.</string>
+    <key>NSContactsUsageDescription</key>
+    <string>Aqua AI lets you share QC certificates with buyers and VLEs from your contacts.</string>
+    <key>NSUserActivityTypes</key>
+    <array>
+        <string>QCVerifyActivity</string>
+    </array>
+
+    <!-- Universal link: aquai.in/verify/{certId} → opens the app -->
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>aquai</string>
+            </array>
+        </dict>
+    </array>
+
+    <!-- Localisations match the .arb files. -->
+    <key>CFBundleLocalizations</key>
+    <array>
+        <string>en</string>
+        <string>te</string>
+        <string>ta</string>
+        <string>hi</string>
+        <string>or</string>
+        <string>bn</string>
+    </array>
+</dict>
+</plist>

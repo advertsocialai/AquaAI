@@ -1,0 +1,20 @@
+{
+  "project_info": {
+    "project_number":   "REPLACE_ME",
+    "firebase_url":     "https://aquai-prod.firebaseio.com",
+    "project_id":       "aquai-prod",
+    "storage_bucket":   "aquai-prod.appspot.com"
+  },
+  "client": [{
+    "client_info": {
+      "mobilesdk_app_id": "REPLACE_ME",
+      "android_client_info": { "package_name": "in.aquai.mobile" }
+    },
+    "oauth_client": [],
+    "api_key": [{ "current_key": "REPLACE_ME" }],
+    "services": {
+      "appinvite_service": { "other_platform_oauth_client": [] }
+    }
+  }],
+  "configuration_version": "1"
+}
