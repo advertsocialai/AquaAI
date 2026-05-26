@@ -11,6 +11,9 @@ import '../chat/chat_screen.dart';
 import '../settings/settings_screen.dart';
 import '../profile/profile_screen.dart';
 import '../kyc/kyc_screen.dart';
+import '../diagnostics/server_diagnostics_screen.dart';
+import '../about/about_screen.dart';
+import '../help/help_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -69,14 +72,17 @@ class _MoreTab extends StatelessWidget {
   const _MoreTab();
 
   static const _items = [
-    _MoreItem('Seed Counter', Icons.numbers, 'YOLOv8n PL counting', 0),
+    _MoreItem('AI Diagnostics (server)', Icons.auto_awesome, 'Backend inference · all models', 8),
+    _MoreItem('Seed Counter', Icons.numbers, 'YOLOv8n PL counting · on-device', 0),
     _MoreItem('Disease Detector', Icons.biotech, 'EHP / WSSV / AHPND', 1),
     _MoreItem('Quality Grader', Icons.stars, 'Composite QS score', 2),
     _MoreItem('Reports', Icons.description, 'QC cert archive', 3),
-    _MoreItem('AquaI Chat', Icons.chat_bubble_outline, 'Multilingual assistant', 4),
+    _MoreItem('Aqua AI Chat', Icons.chat_bubble_outline, 'Multilingual assistant', 4),
     _MoreItem('Profile', Icons.person_outline, 'Role + farm details', 5),
     _MoreItem('KYC', Icons.security_outlined, 'Aadhaar · PAN · GST · Bank', 6),
     _MoreItem('Settings', Icons.settings_outlined, 'Language, theme, alerts', 7),
+    _MoreItem('Help & FAQ', Icons.help_outline, 'Questions, support contact', 9),
+    _MoreItem('About', Icons.info_outline, 'App info, contact, version', 10),
   ];
 
   @override
@@ -114,8 +120,11 @@ class _MoreTab extends StatelessWidget {
                   case 4: screen = const ChatScreen(); break;
                   case 5: screen = const ProfileScreen(); break;
                   case 6: screen = const KycScreen(); break;
-                  case 7:
-                  default: screen = const SettingsScreen();
+                  case 7: screen = const SettingsScreen(); break;
+                  case 8: screen = const ServerDiagnosticsScreen(); break;
+                  case 9: screen = const HelpScreen(); break;
+                  case 10:
+                  default: screen = const AboutScreen();
                 }
                 Navigator.push(
                     context, MaterialPageRoute(builder: (_) => screen));

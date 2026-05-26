@@ -232,6 +232,88 @@ class ApiService {
     });
     return resp.data;
   }
+
+  // ── Aqua AI unified models API (server-side inference) ────────────────────
+
+  Future<List<Map<String, dynamic>>> listModels() async {
+    final resp = await _dio.get('/models');
+    return List<Map<String, dynamic>>.from(resp.data as List);
+  }
+
+  Future<Map<String, dynamic>> getModelCard(String modelId) async {
+    final resp = await _dio.get('/models/$modelId');
+    return Map<String, dynamic>.from(resp.data as Map);
+  }
+
+  Future<Map<String, dynamic>> inferSeedCount(File image, {double trayAreaCm2 = 400}) async {
+    final form = FormData.fromMap({
+      'image': await MultipartFile.fromFile(image.path, filename: 'tray.jpg'),
+      'tray_area_cm2': trayAreaCm2,
+    });
+    final resp = await _dio.post('/models/seed-counter/infer', data: form);
+    return Map<String, dynamic>.from(resp.data as Map);
+  }
+
+  Future<Map<String, dynamic>> inferDisease(File image) async {
+    final form = FormData.fromMap({
+      'image': await MultipartFile.fromFile(image.path, filename: 'smear.jpg'),
+    });
+    final resp = await _dio.post('/models/disease-detector/infer', data: form);
+    return Map<String, dynamic>.from(resp.data as Map);
+  }
+
+  Future<Map<String, dynamic>> inferQuality(
+    File image, {
+    int? invoiceCount,
+    int? counted,
+  }) async {
+    final form = FormData.fromMap({
+      'image': await MultipartFile.fromFile(image.path, filename: 'pl.jpg'),
+      if (invoiceCount != null) 'invoice_count': invoiceCount,
+      if (counted != null) 'counted': counted,
+    });
+    final resp = await _dio.post('/models/quality-grader/infer', data: form);
+    return Map<String, dynamic>.from(resp.data as Map);
+  }
+
+  Future<Map<String, dynamic>> inferPlStage(File image) async {
+    final form = FormData.fromMap({
+      'image': await MultipartFile.fromFile(image.path, filename: 'pl-side.jpg'),
+    });
+    final resp = await _dio.post('/models/pl-stage-classifier/infer', data: form);
+    return Map<String, dynamic>.from(resp.data as Map);
+  }
+
+  Future<Map<String, dynamic>> inferStress({
+    required double doMgL,
+    required double ph,
+    required double salinityPpt,
+    required double tempC,
+    required double nh3MgL,
+    required double rain24hMm,
+    required double densityPlM2,
+  }) async {
+    final resp = await _dio.post('/models/stress-forecaster/infer', data: {
+      'do_mg_l': doMgL,
+      'ph': ph,
+      'salinity_ppt': salinityPpt,
+      'temp_c': tempC,
+      'nh3_mg_l': nh3MgL,
+      'rain_24h_mm': rain24hMm,
+      'density_pl_m2': densityPlM2,
+    });
+    return Map<String, dynamic>.from(resp.data as Map);
+  }
+
+  // Download an OTA model artifact (placeholder bytes from the backend
+  // until a real .tflite is published).
+  Future<List<int>> downloadModel(String modelId) async {
+    final resp = await _dio.get<List<int>>(
+      '/models/$modelId/download',
+      options: Options(responseType: ResponseType.bytes),
+    );
+    return resp.data ?? const [];
+  }
 }
 
 final apiService = ApiService();

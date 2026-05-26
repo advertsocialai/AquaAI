@@ -1,8 +1,17 @@
-class ApiConfig {
-  static const String baseUrl = 'http://10.0.2.2:8000/api/v1'; // Android emulator → localhost
-  // For real device on same WiFi: use your Mac's IP, e.g. http://192.168.1.x:8000/api/v1
+/// Aqua AI mobile app constants.
 
-  // AI model file names (in assets/models/)
+class ApiConfig {
+  /// Base URL for the Aqua AI backend.
+  ///   - Android emulator → 10.0.2.2 maps to host localhost
+  ///   - iOS simulator → localhost works directly
+  ///   - Real device on WiFi → set Mac/laptop IP here
+  /// Override at build with --dart-define=API_BASE=https://api.aquai.in/api/v1
+  static const String baseUrl = String.fromEnvironment(
+    'API_BASE',
+    defaultValue: 'http://10.0.2.2:8000/api/v1',
+  );
+
+  // Local TFLite asset paths (bundled with the app for offline inference).
   static const String seedCounterModel = 'seed_counter.tflite';
   static const String ehpClassifierModel = 'ehp_classifier.tflite';
   static const String sporeDetectorModel = 'spore_detector.tflite';
@@ -10,13 +19,23 @@ class ApiConfig {
   static const String visualHealthModel = 'visual_health.tflite';
 }
 
+/// Aqua AI brand colors — matches the web dashboard.
 class AppColors {
-  static const int primary = 0xFF1e3a5f;
-  static const int accent = 0xFF0ea5e9;
-  static const int green = 0xFF22c55e;
-  static const int yellow = 0xFFf59e0b;
-  static const int red = 0xFFef4444;
-  static const int grey = 0xFF94a3b8;
+  static const int primary       = 0xFF0B5394;  // deep blue
+  static const int primarySoft   = 0xFF2E75B6;  // primary lighter
+  static const int accentCyan    = 0xFF38BDF8;
+  static const int accentViolet  = 0xFFA78BFA;
+  static const int accentOrange  = 0xFFFB923C;
+  static const int success       = 0xFF22C55E;
+  static const int warning       = 0xFFF59E0B;
+  static const int danger        = 0xFFEF4444;
+  static const int grey          = 0xFF94A3B8;
+
+  // legacy aliases used by existing screens — keep working
+  static const int accent = accentCyan;
+  static const int green  = success;
+  static const int yellow = warning;
+  static const int red    = danger;
 }
 
 class MortalityThresholds {
@@ -40,4 +59,13 @@ class QualityGradeThresholds {
   static const double good = 70.0;
   static const double conditional = 55.0;
   static const double caution = 40.0;
+}
+
+class AppInfo {
+  static const String appName = 'Aqua AI';
+  static const String tagline = 'Decoding aquaculture, one pond at a time';
+  static const String supportEmail = 'support@aquai.in';
+  static const String supportPhone = '+91 90000 00000';
+  static const String websiteUrl = 'https://aquai.in';
+  static const String version = '1.0.0';
 }
