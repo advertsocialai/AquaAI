@@ -17,6 +17,7 @@ from app.api.v1 import pricing, marketplace, logistics
 from app.api.v1 import advisory, knowledge, community, surveillance
 from app.api.v1 import pricing_ws
 from app.api.v1 import kyc, payments, metrics as metrics_router
+from app.api.v1 import models as models_router
 
 app = FastAPI(
     title=settings.app_name,
@@ -64,6 +65,7 @@ app.include_router(surveillance.router, prefix=PREFIX)     # M9 Govt surveillanc
 app.include_router(pricing_ws.router, prefix=PREFIX)       # WebSocket price ticker
 app.include_router(kyc.router, prefix=PREFIX)               # NSDL e-KYC + PAN + GST + bank
 app.include_router(payments.router, prefix=PREFIX)          # Razorpay orders + webhook + payouts
+app.include_router(models_router.router, prefix=PREFIX)     # Unified AI models — list, infer, OTA
 app.include_router(metrics_router.router)                   # /metrics for Prometheus
 
 
