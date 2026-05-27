@@ -54,7 +54,7 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="relative pt-32 pb-12 overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-black to-emerald-500/10" />
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-black to-violet-500/10" />
         </div>
         <div className="container mx-auto px-6 lg:px-8 relative z-10 text-center">
           <motion.div

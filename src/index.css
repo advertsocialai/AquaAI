@@ -33,8 +33,7 @@
   }
 
   body {
-    @apply bg-black text-white antialiased;
-    font-family: system-ui, -apple-system, sans-serif;
+    @apply bg-black text-white antialiased font-sans;
   }
 
   html {

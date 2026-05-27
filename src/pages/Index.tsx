@@ -37,9 +37,7 @@ const Index = () => {
       {/* Hero */}
       <section className="relative min-h-[92svh] flex items-center overflow-hidden pt-20">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0ea5e9]/15 via-black to-[#a78bfa]/15" />
-          <div className="absolute top-1/4 left-1/3 w-[500px] h-[500px] bg-cyan-500/15 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-violet-500/15 rounded-full blur-3xl" />
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-black to-violet-500/10" />
         </div>
 
         <div className="container mx-auto px-6 lg:px-8 relative z-10">

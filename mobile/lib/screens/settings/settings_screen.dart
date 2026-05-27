@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../utils/constants.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -15,6 +16,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool _email = false;
   String _language = 'తెలుగు (Telugu)';
   String _theme = 'System';
+  bool _ready = false;
 
   static const _languages = [
     'English',
@@ -24,6 +26,53 @@ class _SettingsScreenState extends State<SettingsScreen> {
     'ଓଡ଼ିଆ (Odia)',
     'বাংলা (Bengali)',
   ];
+
+  static const _kPush = 'settings.push';
+  static const _kSms = 'settings.sms';
+  static const _kWa = 'settings.whatsapp';
+  static const _kEmail = 'settings.email';
+  static const _kLang = 'settings.language';
+  static const _kTheme = 'settings.theme';
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final p = await SharedPreferences.getInstance();
+    if (!mounted) return;
+    setState(() {
+      _push = p.getBool(_kPush) ?? true;
+      _sms = p.getBool(_kSms) ?? true;
+      _whatsapp = p.getBool(_kWa) ?? true;
+      _email = p.getBool(_kEmail) ?? false;
+      final savedLang = p.getString(_kLang);
+      _language = (savedLang != null && _languages.contains(savedLang))
+          ? savedLang
+          : _language;
+      final savedTheme = p.getString(_kTheme);
+      _theme = (savedTheme != null && const ['System', 'Light', 'Dark'].contains(savedTheme))
+          ? savedTheme
+          : _theme;
+      _ready = true;
+    });
+  }
+
+  Future<void> _setBool(String key, bool value, void Function(bool) apply) async {
+    apply(value);
+    setState(() {});
+    final p = await SharedPreferences.getInstance();
+    await p.setBool(key, value);
+  }
+
+  Future<void> _setString(String key, String value, void Function(String) apply) async {
+    apply(value);
+    setState(() {});
+    final p = await SharedPreferences.getInstance();
+    await p.setString(key, value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,25 +97,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const _SectionHeader(label: 'Notifications'),
           SwitchListTile(
             value: _push,
-            onChanged: (v) => setState(() => _push = v),
+            onChanged: (v) => _setBool(_kPush, v, (b) => _push = b),
             secondary: const Icon(Icons.notifications_outlined),
             title: const Text('Push notifications'),
           ),
           SwitchListTile(
             value: _sms,
-            onChanged: (v) => setState(() => _sms = v),
+            onChanged: (v) => _setBool(_kSms, v, (b) => _sms = b),
             secondary: const Icon(Icons.sms_outlined),
             title: const Text('SMS alerts'),
           ),
           SwitchListTile(
             value: _whatsapp,
-            onChanged: (v) => setState(() => _whatsapp = v),
+            onChanged: (v) => _setBool(_kWa, v, (b) => _whatsapp = b),
             secondary: const Icon(Icons.chat_outlined),
             title: const Text('WhatsApp updates'),
           ),
           SwitchListTile(
             value: _email,
-            onChanged: (v) => setState(() => _email = v),
+            onChanged: (v) => _setBool(_kEmail, v, (b) => _email = b),
             secondary: const Icon(Icons.email_outlined),
             title: const Text('Email digest'),
           ),
@@ -131,7 +180,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     groupValue: _language,
                     title: Text(l),
                     onChanged: (v) {
-                      setState(() => _language = v ?? _language);
+                      if (v != null) {
+                        _setString(_kLang, v, (s) => _language = s);
+                      }
                       Navigator.pop(context);
                     },
                   ))
@@ -153,7 +204,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     groupValue: _theme,
                     title: Text(t),
                     onChanged: (v) {
-                      setState(() => _theme = v ?? _theme);
+                      if (v != null) {
+                        _setString(_kTheme, v, (s) => _theme = s);
+                      }
                       Navigator.pop(context);
                     },
                   ))

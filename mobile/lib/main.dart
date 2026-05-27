@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'l10n/app_localizations.dart';
 import 'services/api_service.dart';
 import 'services/ai_service.dart';
@@ -143,11 +144,14 @@ class _AuthGateState extends State<AuthGate> {
   Future<void> _bootstrap() async {
     final prefs = await SharedPreferences.getInstance();
     final seenOnboarding = prefs.getBool('aquaai.onboarding.seen') ?? false;
+    // Restore session if a JWT lives in the keychain. ApiService's request
+    // interceptor will attach it, so authenticated calls work straight away.
+    final token = await const FlutterSecureStorage().read(key: 'access_token');
     await Future.delayed(const Duration(milliseconds: 600));
     if (!mounted) return;
     setState(() {
       _needsOnboarding = !seenOnboarding;
-      _isLoggedIn = false;
+      _isLoggedIn = token != null && token.isNotEmpty;
       _checking = false;
     });
   }

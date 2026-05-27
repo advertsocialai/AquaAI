@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../services/api_service.dart';
 import '../../utils/constants.dart';
 import '../../widgets/voice_fab.dart';
 
@@ -35,12 +36,29 @@ class _ContactScreenState extends State<ContactScreen>
     super.dispose();
   }
 
-  void _submit() {
+  Future<void> _submit() async {
     if (!_form.currentState!.validate()) return;
     setState(() => _sent = true);
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Message sent — we\'ll reply within 24 h')),
-    );
+    try {
+      await apiService.submitContactForm(
+        name: _name.text,
+        email: _email.text,
+        phone: _phone.text,
+        message: _msg.text,
+        source: 'mobile',
+      );
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Message sent — we\'ll reply within 24 h')),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Could not send: ${e.toString().split(":").last.trim()}')),
+      );
+      setState(() => _sent = false);
+      return;
+    }
     Future.delayed(const Duration(seconds: 3), () {
       if (!mounted) return;
       _name.clear(); _email.clear(); _phone.clear(); _msg.clear();

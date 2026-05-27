@@ -18,9 +18,7 @@ const NotFound = () => {
     <div className="relative min-h-screen flex items-center justify-center bg-background text-white overflow-hidden">
       {/* Same hero ambience as the homepage */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0ea5e9]/15 via-black to-[#a78bfa]/15" />
-        <div className="absolute top-1/3 left-1/3 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-violet-500/10 rounded-full blur-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-black to-violet-500/10" />
       </div>
 
       <motion.div

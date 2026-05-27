@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../services/api_service.dart';
+import 'cart_screen.dart';
 
 class MarketplaceScreen extends StatefulWidget {
   const MarketplaceScreen({super.key});
@@ -9,107 +11,210 @@ class MarketplaceScreen extends StatefulWidget {
 
 class _MarketplaceScreenState extends State<MarketplaceScreen> {
   int _catIdx = 0;
+  bool _loading = true;
+  String? _error;
+  List<_Category> _categories = const [];
 
-  final List<_Category> _categories = const [
-    _Category('Seed & Feed', Icons.eco, Color(0xFF34D399)),
-    _Category('Aeration & O₂', Icons.air, Color(0xFF38BDF8)),
-    _Category('Ice & Cold Chain', Icons.ac_unit, Color(0xFF60A5FA)),
-    _Category('Diagnostic Kits', Icons.science, Color(0xFFA78BFA)),
-    _Category('Pond Infra', Icons.construction, Color(0xFFFB923C)),
-  ];
+  // Cart lives on the screen (single-page lifetime). For persistence across
+  // app restarts, lift this to a Riverpod provider backed by SharedPreferences.
+  final List<CartLine> _cart = [];
 
-  final Map<int, List<_Item>> _items = const {
-    0: [
-      _Item('PL Seed (MPEDA)', 'L. vannamei · AI-QC linked', '₹0.30 – 0.55/PL'),
-      _Item('Starter Feed CP', '40% protein, crumble', '₹95 – 130/kg'),
-      _Item('Grower Feed', '36-38% protein, pellet', '₹80 – 110/kg'),
-      _Item('Probiotic', 'water + gut blend', '₹350 – 800/kg'),
-      _Item('Test Kits — full set', 'pH, DO, NH3, NO2, salinity', '₹1,200 – 3,500'),
-      _Item('Quicklime (CaO)', 'EHP eradication grade', '₹8 – 14/kg'),
-    ],
-    1: [
-      _Item('Paddle wheel 1 HP', '0.5 acre coverage', '₹18,000 – 28,000'),
-      _Item('Paddle wheel 2 HP', '1 acre coverage', '₹32,000 – 45,000'),
-      _Item('Aspirator aerator', 'submersible / per HP', '₹12,000 – 25,000'),
-      _Item('Liquid O₂ tank 250L', '', '₹35,000 – 55,000'),
-      _Item('PSA O₂ generator 10 LPM', '', '₹1.8 L – 2.8 L'),
-      _Item('Emergency O₂ kit', 'transport · 1-2 hr', '₹4,500 – 8,000'),
-    ],
-    2: [
-      _Item('Block Ice (bulk)', 'delivered', '₹3 – 6/kg'),
-      _Item('Flake Ice (hatchery)', 'hatchery grade', '₹5 – 9/kg'),
-      _Item('Insulated Fish Box 200L', '', '₹4,500 – 8,000'),
-      _Item('Reefer 20ft rental', 'per day', '₹2,500 – 4,500'),
-      _Item('Cold Storage', 'per kg / day', '₹1.5 – 4'),
-    ],
-    3: [
-      _Item('USB Pen Microscope', '400-1000x · LED', '₹1,500 – 5,000'),
-      _Item('IntensLight LED ring', '5 brightness levels', '₹500 – 1,500'),
-      _Item('Counting Tray (white)', '20×20 cm acrylic', '₹200 – 500'),
-      _Item('Phone Stand Clip', '20-25 cm height', '₹150 – 400'),
-      _Item('Clip-on Macro Lens', '20-40× magnification', '₹500 – 1,500'),
-      _Item('VLE Bundle Kit', 'complete diagnostic set', '₹3,000 – 9,150'),
-    ],
-    4: [
-      _Item('HDPE Pond Liner', 'per sqm', '₹45 – 120'),
-      _Item('Sluice Gate / Monk', 'standard pond', '₹8,000 – 25,000'),
-      _Item('Bird Net', 'per acre', '₹12,000 – 30,000'),
-      _Item('Genset 5-25 kVA', '', '₹35,000 – 2,50,000'),
-      _Item('Solar Pump + Panel', 'off-grid pond', '₹65,000 – 2,20,000'),
-      _Item('IoT Sensor Pack', 'pH/DO/Temp/Salin.', '₹12,000 – 45,000'),
-    ],
+  // Visual sugar — colors+icons keyed by backend category id; falls back to
+  // a neutral palette for unknown categories.
+  static const _palette = {
+    'seed-feed': (Icons.eco, Color(0xFF34D399)),
+    'aeration': (Icons.air, Color(0xFF38BDF8)),
+    'cold-chain': (Icons.ac_unit, Color(0xFF60A5FA)),
+    'diagnostic': (Icons.science, Color(0xFFA78BFA)),
+    'infra': (Icons.construction, Color(0xFFFB923C)),
   };
 
   @override
+  void initState() {
+    super.initState();
+    _loadCatalogue();
+  }
+
+  Future<void> _loadCatalogue() async {
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
+    try {
+      final raw = await apiService.getMarketplaceCategories();
+      if (!mounted) return;
+      setState(() {
+        _categories = raw.map((c) {
+          final id = (c['id'] ?? '').toString();
+          final palette = _palette[id] ?? (Icons.shopping_bag, const Color(0xFF94A3B8));
+          final items = (c['items'] as List? ?? [])
+              .map((raw) => _Item(
+                    sku: (raw['sku'] ?? '').toString(),
+                    name: (raw['name'] ?? '').toString(),
+                    spec: (raw['spec'] ?? '').toString(),
+                    low: (raw['low'] as num? ?? 0).toDouble(),
+                    high: (raw['high'] as num? ?? 0).toDouble(),
+                    unit: (raw['unit'] as String?) ?? '₹',
+                  ))
+              .toList();
+          return _Category(
+            id: id,
+            label: (c['label'] ?? id).toString(),
+            icon: palette.$1,
+            color: palette.$2,
+            items: items,
+          );
+        }).toList();
+        _loading = false;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _error = 'Could not load marketplace';
+        _loading = false;
+      });
+    }
+  }
+
+  int get _cartCount => _cart.fold(0, (s, l) => s + l.qty);
+
+  void _addToCart(_Item it) {
+    // Use the midpoint of low/high as the order price. Replace with the live
+    // price once a supplier-side pricing API exists; for now this matches
+    // what the catalogue tile shows.
+    final price = (it.low + it.high) / 2;
+    setState(() {
+      final existing = _cart.where((l) => l.sku == it.sku).cast<CartLine?>().firstWhere(
+            (_) => true,
+            orElse: () => null,
+          );
+      if (existing != null) {
+        existing.qty++;
+      } else {
+        _cart.add(CartLine(
+          sku: it.sku,
+          name: it.name,
+          spec: it.spec,
+          unitPrice: price,
+          qty: 1,
+        ));
+      }
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('${it.name} added to cart'),
+        duration: const Duration(seconds: 1),
+      ),
+    );
+  }
+
+  Future<void> _openCart() async {
+    final cleared = await Navigator.of(context).push<bool>(
+      MaterialPageRoute(builder: (_) => CartScreen(cart: _cart)),
+    );
+    if (cleared == true && mounted) {
+      setState(() => _cart.clear());
+    } else {
+      setState(() {}); // qty might have changed in cart screen
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final list = _items[_catIdx] ?? const <_Item>[];
     return Scaffold(
-      appBar: AppBar(title: const Text('Marketplace')),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 100,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              itemCount: _categories.length,
-              itemBuilder: (_, i) {
-                final c = _categories[i];
-                final selected = i == _catIdx;
-                return GestureDetector(
-                  onTap: () => setState(() => _catIdx = i),
+      appBar: AppBar(
+        title: const Text('Marketplace'),
+        actions: [
+          Stack(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.shopping_cart_outlined),
+                onPressed: _openCart,
+              ),
+              if (_cartCount > 0)
+                Positioned(
+                  right: 4,
+                  top: 4,
                   child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
-                    padding: const EdgeInsets.all(12),
-                    width: 110,
-                    decoration: BoxDecoration(
-                      color: selected ? c.color.withOpacity(0.15) : Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                          color: selected ? c.color : Colors.grey.shade300),
+                    padding: const EdgeInsets.all(4),
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(c.icon, color: c.color, size: 20),
-                        const Spacer(),
-                        Text(c.label,
-                            style: const TextStyle(
-                                fontSize: 12, fontWeight: FontWeight.w600)),
-                      ],
+                    constraints: const BoxConstraints(minWidth: 18, minHeight: 18),
+                    child: Text(
+                      _cartCount > 99 ? '99+' : '$_cartCount',
+                      style: const TextStyle(
+                          color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
                     ),
                   ),
-                );
-              },
-            ),
+                ),
+            ],
           ),
-          Expanded(
+        ],
+      ),
+      body: _loading
+          ? const Center(child: CircularProgressIndicator())
+          : _error != null
+              ? _ErrorView(message: _error!, onRetry: _loadCatalogue)
+              : _categories.isEmpty
+                  ? const Center(child: Text('No categories available'))
+                  : _buildContent(),
+    );
+  }
+
+  Widget _buildContent() {
+    final list = _categories[_catIdx].items;
+    return Column(
+      children: [
+        SizedBox(
+          height: 100,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            itemCount: _categories.length,
+            itemBuilder: (_, i) {
+              final c = _categories[i];
+              final selected = i == _catIdx;
+              return GestureDetector(
+                onTap: () => setState(() => _catIdx = i),
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
+                  padding: const EdgeInsets.all(12),
+                  width: 110,
+                  decoration: BoxDecoration(
+                    color: selected ? c.color.withOpacity(0.15) : Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                        color: selected ? c.color : Colors.grey.shade300),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(c.icon, color: c.color, size: 20),
+                      const Spacer(),
+                      Text(c.label,
+                          style: const TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.w600)),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+        Expanded(
+          child: RefreshIndicator(
+            onRefresh: _loadCatalogue,
             child: ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
               itemCount: list.length,
               separatorBuilder: (_, __) => const SizedBox(height: 8),
               itemBuilder: (_, i) {
                 final it = list[i];
+                final mid = ((it.low + it.high) / 2);
+                final inCart = _cart.any((l) => l.sku == it.sku);
                 return Container(
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
@@ -131,18 +236,19 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
                                   style: TextStyle(
                                       color: Colors.grey.shade600, fontSize: 12)),
                             const SizedBox(height: 6),
-                            Text(it.price,
-                                style: const TextStyle(
-                                    color: Color(0xFF0B5394),
-                                    fontWeight: FontWeight.bold)),
+                            Text(
+                              '${it.unit}${it.low.toStringAsFixed(0)} – ${it.high.toStringAsFixed(0)}',
+                              style: const TextStyle(
+                                  color: Color(0xFF0B5394),
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ],
                         ),
                       ),
-                      OutlinedButton(
-                        onPressed: () {},
-                        style: OutlinedButton.styleFrom(
-                            foregroundColor: const Color(0xFF0B5394)),
-                        child: const Text('Quote'),
+                      FilledButton.tonalIcon(
+                        onPressed: () => _addToCart(it),
+                        icon: Icon(inCart ? Icons.check : Icons.add_shopping_cart, size: 16),
+                        label: Text(inCart ? 'Added' : '₹${mid.toStringAsFixed(0)}'),
                       ),
                     ],
                   ),
@@ -150,6 +256,28 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
               },
             ),
           ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ErrorView extends StatelessWidget {
+  final String message;
+  final VoidCallback onRetry;
+  const _ErrorView({required this.message, required this.onRetry});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.cloud_off, size: 48, color: Colors.grey),
+          const SizedBox(height: 12),
+          Text(message),
+          const SizedBox(height: 12),
+          FilledButton.tonal(onPressed: onRetry, child: const Text('Retry')),
         ],
       ),
     );
@@ -157,15 +285,33 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
 }
 
 class _Category {
+  final String id;
   final String label;
   final IconData icon;
   final Color color;
-  const _Category(this.label, this.icon, this.color);
+  final List<_Item> items;
+  const _Category({
+    required this.id,
+    required this.label,
+    required this.icon,
+    required this.color,
+    required this.items,
+  });
 }
 
 class _Item {
+  final String sku;
   final String name;
   final String spec;
-  final String price;
-  const _Item(this.name, this.spec, this.price);
+  final double low;
+  final double high;
+  final String unit;
+  const _Item({
+    required this.sku,
+    required this.name,
+    required this.spec,
+    required this.low,
+    required this.high,
+    required this.unit,
+  });
 }

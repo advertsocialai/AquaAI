@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../services/api_service.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -13,32 +14,48 @@ class _ChatScreenState extends State<ChatScreen> {
   final List<_Msg> _msgs = [
     _Msg(role: 'bot', text: 'Hi! I\'m the Aqua AI assistant. How can I help your farm today?'),
   ];
+  bool _waiting = false;
 
-  String _answer(String q) {
-    final t = q.toLowerCase();
-    if (t.contains('price') || t.contains('vannamei')) {
-      return 'Vannamei 40-count is ₹420/kg today in your district. Check the Pricing tab.';
-    }
-    if (t.contains('ehp') || t.contains('outbreak')) {
-      return '2 EHP-confirmed farms within 5 km in 48h. Run a QC scan and exchange 30% water.';
-    }
-    if (t.contains('feed') || t.contains('biomass')) {
-      return 'For 500 kg biomass at 4% body weight: 20 kg/day starter feed.';
-    }
-    if (t.contains('weather') || t.contains('cyclone')) {
-      return 'IMD forecast: 65mm rain tonight. Lower water level by 4 inches.';
-    }
-    return 'I can help with pricing, disease alerts, calculators, QC certificates and weather. Try one of the quick options.';
-  }
-
-  void _send(String text) {
-    if (text.trim().isEmpty) return;
+  Future<void> _send(String text) async {
+    final q = text.trim();
+    if (q.isEmpty || _waiting) return;
     setState(() {
-      _msgs.add(_Msg(role: 'user', text: text));
-      _msgs.add(_Msg(role: 'bot', text: _answer(text)));
+      _msgs.add(_Msg(role: 'user', text: q));
+      _waiting = true;
     });
     _controller.clear();
-    Future.delayed(const Duration(milliseconds: 50), () {
+    _scrollToEnd();
+
+    // Build the full message history so the model has conversation context.
+    // Drop the seeded greeting (role='bot') from the wire payload — only
+    // user turns and prior assistant replies should round-trip.
+    final history = _msgs
+        .where((m) => m.role == 'user' || _msgs.indexOf(m) > 0)
+        .map((m) => {
+              'role': m.role == 'user' ? 'user' : 'assistant',
+              'content': m.text,
+            })
+        .toList();
+
+    String reply;
+    try {
+      final res = await apiService.agentPublicChat(history);
+      reply = (res['reply'] ?? '').toString().trim();
+      if (reply.isEmpty) reply = "(no reply)";
+    } catch (e) {
+      reply = "I couldn't reach the AI service. Check your connection and try again.";
+    }
+
+    if (!mounted) return;
+    setState(() {
+      _msgs.add(_Msg(role: 'bot', text: reply));
+      _waiting = false;
+    });
+    _scrollToEnd();
+  }
+
+  void _scrollToEnd() {
+    Future.delayed(const Duration(milliseconds: 80), () {
       if (_scroll.hasClients) {
         _scroll.animateTo(
           _scroll.position.maxScrollExtent,

@@ -54,6 +54,11 @@ mobile/.flutter-plugins
 mobile/.flutter-plugins-dependencies
 mobile/ios/Pods/
 mobile/android/.gradle/
+mobile/ios/Flutter/ephemeral/
+mobile/macos/Flutter/ephemeral/
+
+# ── Claude Code local settings (user-specific) ──────────────────────
+.claude/settings.local.json
 
 # ── Playwright (regenerated each run) ───────────────────────────────
 test-results/

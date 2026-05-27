@@ -295,15 +295,13 @@ export default function KnowledgePage() {
       {/* Hero — warm, inviting, illustration on the right */}
       <section className="relative pt-32 pb-16 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-br from-orange-300/[0.15] via-amber-200/[0.05] to-rose-300/[0.12]" />
-          <div className="absolute top-1/4 -left-20 w-[500px] h-[500px] rounded-full bg-orange-300/10 blur-3xl" />
-          <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-rose-300/10 blur-3xl" />
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-black to-violet-500/10" />
         </div>
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-2 gap-10 items-center max-w-6xl mx-auto">
             <div>
               <motion.div
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-amber-300/30 bg-amber-300/10 text-amber-200 text-sm tracking-widest uppercase mb-6"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 text-cyan-300 text-sm tracking-widest uppercase mb-6"
                 initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
               >
                 <BookOpen className="w-4 h-4" />
@@ -313,7 +311,7 @@ export default function KnowledgePage() {
                 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
                 className="text-4xl md:text-6xl font-bold leading-[1.05] mb-5"
               >
-                Unlocking <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-300 to-rose-300">Boundless</span> Aquatic Wisdom
+                Unlocking <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-300 to-violet-300">Boundless</span> Aquatic Wisdom
               </motion.h1>
               <motion.p
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
@@ -326,7 +324,7 @@ export default function KnowledgePage() {
 
               <form
                 onSubmit={(e) => { e.preventDefault(); setPage(1); }}
-                className="max-w-xl flex items-center gap-2 px-4 py-3.5 rounded-xl border border-white/10 bg-white/[0.04] focus-within:border-amber-300/40"
+                className="max-w-xl flex items-center gap-2 px-4 py-3.5 rounded-xl border border-white/10 bg-white/[0.04] focus-within:border-cyan-400/40"
               >
                 <Search className="w-5 h-5 text-white/40" />
                 <input

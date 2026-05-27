@@ -29,6 +29,18 @@ class Settings(BaseSettings):
     certificate_expiry_days: int = 90
     hmac_secret: str = "dev-hmac-secret-change-in-production"
 
+    # Supabase — REST / Storage / Auth admin calls go through these.
+    # The DATABASE_URL above handles direct SQL; these are for the supabase-py client.
+    supabase_url: Optional[str] = None
+    supabase_publishable_key: Optional[str] = None
+    supabase_service_role_key: Optional[str] = None
+
+    # SendGrid — transactional email (newsletter welcome, password reset, etc.)
+    # Adapter falls back to stub mode if api_key or from_email is unset.
+    sendgrid_api_key: Optional[str] = None
+    sendgrid_from_email: Optional[str] = None
+    sendgrid_from_name: str = "Aqua AI"
+
     class Config:
         env_file = ".env"
         case_sensitive = False

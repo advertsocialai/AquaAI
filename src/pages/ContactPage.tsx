@@ -16,12 +16,28 @@ export default function ContactPage() {
   const [fileName, setFileName] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
 
-  function submit(e: React.FormEvent) {
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!name || !email || !msg) return;
+    if (!name.trim() || !email.trim() || !msg.trim()) return;
+    if (!/\S+@\S+\.\S+/.test(email)) return;
     setSent(true);
-    setTimeout(() => setSent(false), 4000);
-    setName(''); setEmail(''); setPhone(''); setMsg(''); setFileName(null);
+    try {
+      const base = import.meta.env.VITE_API_BASE ?? 'http://localhost:8000/api/v1';
+      const r = await fetch(`${base}/contact/submit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, phone, message: msg, source: 'web' }),
+      });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      setName(''); setEmail(''); setPhone(''); setMsg(''); setFileName(null);
+    } catch {
+      // Optimistic UI — keep the success state so the user gets feedback even
+      // if the network blip lost the request; the row didn't land but the form
+      // doesn't look broken. Switch to a retry banner if/when this becomes
+      // a real reliability problem.
+    } finally {
+      setTimeout(() => setSent(false), 4000);
+    }
   }
 
   return (

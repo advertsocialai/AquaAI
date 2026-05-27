@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'dart:math' as math;
+import '../../services/api_service.dart';
 
 class PricingScreen extends StatefulWidget {
   const PricingScreen({super.key});
@@ -15,37 +16,13 @@ class _PricingScreenState extends State<PricingScreen>
   int _speciesIdx = 0;
   String _range = '30d';
 
-  final List<_PriceRow> _prawn = const [
-    _PriceRow('L. vannamei', '30 ct', 480, 550, 'up'),
-    _PriceRow('L. vannamei', '40 ct', 380, 450, 'up'),
-    _PriceRow('L. vannamei', '50 ct', 320, 380, 'flat'),
-    _PriceRow('L. vannamei', '60 ct', 280, 330, 'flat'),
-    _PriceRow('L. vannamei', '70 ct', 240, 290, 'down'),
-    _PriceRow('L. vannamei', '80 ct', 210, 260, 'down'),
-    _PriceRow('L. vannamei', '100 ct', 180, 220, 'down'),
-    _PriceRow('P. monodon (Tiger)', '20 ct', 750, 900, 'up'),
-    _PriceRow('P. monodon (Tiger)', '30 ct', 600, 720, 'up'),
-    _PriceRow('Scampi', '6-10 ct', 550, 700, 'up'),
-  ];
-
-  final List<_PriceRow> _fresh = const [
-    _PriceRow('Rohu', '1-2 kg', 140, 180, 'flat'),
-    _PriceRow('Catla', '1.5-3 kg', 130, 170, 'flat'),
-    _PriceRow('Mrigal', '1-2 kg', 110, 150, 'down'),
-    _PriceRow('Pangasius', '1-2 kg', 110, 140, 'flat'),
-    _PriceRow('Tilapia (GIFT)', '500g-1 kg', 120, 160, 'up'),
-    _PriceRow('Murrel', '500g-1 kg', 350, 500, 'up'),
-    _PriceRow('Pearl Spot', '200-400 g', 280, 400, 'up'),
-  ];
-
-  final List<_PriceRow> _marine = const [
-    _PriceRow('Asian Seabass', '1-2 kg', 350, 450, 'up'),
-    _PriceRow('Milkfish', '500g-1 kg', 180, 240, 'flat'),
-    _PriceRow('Pompano', '400-600 g', 300, 400, 'up'),
-    _PriceRow('Cobia', '2-5 kg', 350, 500, 'up'),
-    _PriceRow('Grouper', '1-3 kg', 550, 800, 'up'),
-    _PriceRow('Mud Crab', '300g-1.5 kg', 450, 1200, 'up'),
-  ];
+  // Loaded live from /api/v1/pricing/{category}. Empty until first fetch
+  // completes; the table shows a skeleton instead of bogus hardcoded values.
+  List<_PriceRow> _prawn = const [];
+  List<_PriceRow> _fresh = const [];
+  List<_PriceRow> _marine = const [];
+  bool _loading = true;
+  String? _error;
 
   final List<_Species> _featured = const [
     _Species('Vannamei 40-ct', 420, Color(0xFF38BDF8)),
@@ -58,6 +35,49 @@ class _PricingScreenState extends State<PricingScreen>
   void initState() {
     super.initState();
     _tab = TabController(length: 3, vsync: this);
+    _loadPrices();
+  }
+
+  Future<void> _loadPrices() async {
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
+    try {
+      // Fetch all three categories in parallel.
+      final results = await Future.wait([
+        apiService.getPricing('prawn'),
+        apiService.getPricing('freshwater'),
+        apiService.getPricing('marine'),
+      ]);
+      if (!mounted) return;
+      setState(() {
+        _prawn = results[0].map(_rowFromJson).toList();
+        _fresh = results[1].map(_rowFromJson).toList();
+        _marine = results[2].map(_rowFromJson).toList();
+        _loading = false;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _error = 'Could not load live prices. Pull down to retry.';
+        _loading = false;
+      });
+    }
+  }
+
+  _PriceRow _rowFromJson(Map<String, dynamic> j) => _PriceRow(
+        (j['species'] ?? '').toString(),
+        (j['size'] ?? '').toString(),
+        _asInt(j['low']),
+        _asInt(j['high']),
+        (j['trend'] ?? 'flat').toString(),
+      );
+
+  int _asInt(dynamic v) {
+    if (v is int) return v;
+    if (v is num) return v.toInt();
+    return int.tryParse(v?.toString() ?? '') ?? 0;
   }
 
   @override
@@ -223,16 +243,50 @@ class _PricingScreenState extends State<PricingScreen>
               ],
             ),
           ),
-          // Tables
+          // Tables — show spinner while loading; error tile if fetch failed.
           Expanded(
-            child: TabBarView(
-              controller: _tab,
-              children: [
-                _PriceList(rows: _prawn),
-                _PriceList(rows: _fresh),
-                _PriceList(rows: _marine),
-              ],
-            ),
+            child: _loading
+                ? const Center(child: CircularProgressIndicator())
+                : _error != null
+                    ? RefreshIndicator(
+                        onRefresh: _loadPrices,
+                        child: ListView(
+                          children: [
+                            const SizedBox(height: 60),
+                            Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(24),
+                                child: Column(
+                                  children: [
+                                    const Icon(Icons.cloud_off,
+                                        size: 48, color: Colors.grey),
+                                    const SizedBox(height: 12),
+                                    Text(_error!,
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(color: Colors.grey)),
+                                    const SizedBox(height: 12),
+                                    FilledButton.tonal(
+                                      onPressed: _loadPrices,
+                                      child: const Text('Retry'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : RefreshIndicator(
+                        onRefresh: _loadPrices,
+                        child: TabBarView(
+                          controller: _tab,
+                          children: [
+                            _PriceList(rows: _prawn),
+                            _PriceList(rows: _fresh),
+                            _PriceList(rows: _marine),
+                          ],
+                        ),
+                      ),
           ),
         ],
       ),

@@ -1,8 +1,17 @@
-"""Marketplace stubs — catalogues for seed/feed, aeration, ice, diagnostic kits, infra."""
+"""Marketplace — catalogues + orders.
+
+Catalogue stays hardcoded for now (CATEGORIES below). Orders are persisted
+to `marketplace_orders` in Supabase via /cart/checkout. Payment integration
+is a separate step — orders land with status='new'.
+"""
 from __future__ import annotations
-from typing import Literal
-from fastapi import APIRouter
-from pydantic import BaseModel
+import json
+from fastapi import APIRouter, HTTPException, Request, Depends
+from pydantic import BaseModel, EmailStr, Field
+from sqlalchemy import text
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.database import get_db
 
 router = APIRouter(prefix="/marketplace", tags=["marketplace"])
 
@@ -84,11 +93,82 @@ def post_rfq(payload: dict):
     return {"ok": True, "rfq_id": "rfq_stub_001", "expected_quotes_by": "24h"}
 
 
-@router.post("/cart/checkout")
-def checkout(payload: dict):
-    return {
-        "ok": True,
-        "order_id": "ord_stub_001",
-        "payment_provider": "razorpay",
-        "next_action": "redirect_to_payment",
-    }
+class CartItem(BaseModel):
+    sku: str
+    name: str
+    qty: int = Field(gt=0, le=999)
+    unit_price: float = Field(ge=0)
+
+
+class CheckoutRequest(BaseModel):
+    items: list[CartItem]
+    contact_name: str = Field(min_length=1, max_length=255)
+    contact_phone: str = Field(min_length=7, max_length=50)
+    contact_email: EmailStr | None = None
+    delivery_pin: str | None = Field(default=None, max_length=10)
+    delivery_address: str | None = None
+    notes: str | None = None
+    source: str = "mobile"
+
+
+class CheckoutResponse(BaseModel):
+    ok: bool
+    order_id: int
+    subtotal_inr: float
+    item_count: int
+    status: str
+
+
+@router.post("/cart/checkout", response_model=CheckoutResponse)
+async def checkout(
+    payload: CheckoutRequest,
+    request: Request,
+    db: AsyncSession = Depends(get_db),
+):
+    if not payload.items:
+        raise HTTPException(status_code=400, detail="Cart is empty")
+
+    items_payload = [
+        {
+            "sku": it.sku,
+            "name": it.name,
+            "qty": it.qty,
+            "unit_price": it.unit_price,
+            "line_total": round(it.qty * it.unit_price, 2),
+        }
+        for it in payload.items
+    ]
+    subtotal = round(sum(i["line_total"] for i in items_payload), 2)
+    ip = request.client.host if request.client else None
+
+    result = await db.execute(
+        text(
+            "INSERT INTO marketplace_orders "
+            "(contact_name, contact_phone, contact_email, delivery_pin, "
+            " delivery_address, items, subtotal_inr, notes, ip_address, source) "
+            "VALUES (:name, :phone, :email, :pin, :addr, CAST(:items AS JSONB), "
+            "        :subtotal, :notes, :ip, :source) "
+            "RETURNING id, status"
+        ),
+        {
+            "name": payload.contact_name.strip(),
+            "phone": payload.contact_phone.strip(),
+            "email": payload.contact_email,
+            "pin": (payload.delivery_pin or "").strip() or None,
+            "addr": payload.delivery_address,
+            "items": json.dumps(items_payload),
+            "subtotal": subtotal,
+            "notes": payload.notes,
+            "ip": ip,
+            "source": payload.source,
+        },
+    )
+    row = result.first()
+    await db.commit()
+    return CheckoutResponse(
+        ok=True,
+        order_id=row[0],
+        subtotal_inr=subtotal,
+        item_count=sum(i["qty"] for i in items_payload),
+        status=row[1],
+    )

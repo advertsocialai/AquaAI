@@ -46,9 +46,7 @@ export default function LoginPage() {
       {/* Left brand panel */}
       <div className="hidden lg:flex lg:col-span-3 relative overflow-hidden p-12 flex-col">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0B5394]/30 via-black to-[#2E75B6]/20" />
-          <div className="absolute top-1/3 left-1/3 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-violet-500/10 rounded-full blur-3xl" />
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-black to-violet-500/10" />
         </div>
 
         <Link to="/" className="relative z-10 inline-flex items-center gap-2 text-white/80 hover:text-white text-sm">

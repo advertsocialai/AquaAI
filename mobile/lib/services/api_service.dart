@@ -55,6 +55,20 @@ class ApiService {
     await _storage.deleteAll();
   }
 
+  Future<Map> forgotPassword(String email) async {
+    final resp = await _dio.post('/auth/forgot-password', data: {'email': email});
+    return resp.data as Map;
+  }
+
+  Future<Map> resetPassword(String email, String otp, String newPassword) async {
+    final resp = await _dio.post('/auth/reset-password', data: {
+      'email': email,
+      'otp': otp,
+      'new_password': newPassword,
+    });
+    return resp.data as Map;
+  }
+
   // Farms & Batches
   Future<List> getFarms() async => (await _dio.get('/farms/')).data;
   Future<Map> createFarm(Map payload) async =>
@@ -179,6 +193,109 @@ class ApiService {
   /// Check whether Claude Opus is configured on the backend.
   Future<Map> getAgentStatus() async =>
       (await _dio.get('/ai-agent/status')).data;
+
+  // ── Pricing — public endpoints ────────────────────────────────────────────
+
+  /// Live mandi prices. `category` is 'prawn', 'freshwater', or 'marine'.
+  /// Returns rows like {species, size, low, high, trend}.
+  Future<List<Map<String, dynamic>>> getPricing(String category) async {
+    final resp = await _dio.get('/pricing/$category');
+    return List<Map<String, dynamic>>.from(resp.data as List);
+  }
+
+  /// Weather + cyclone alert for a district. Public endpoint.
+  Future<Map<String, dynamic>> getWeather(String district) async {
+    final resp = await _dio.get('/advisory/weather',
+        queryParameters: {'district': district});
+    return Map<String, dynamic>.from(resp.data as Map);
+  }
+
+  /// Public chatbot endpoint — no auth required. Used by the in-app assistant
+  /// drawer. Pass the full message history each turn (the backend is stateless
+  /// for this route). Returns {"reply": "...", "mode": "claude" | "offline"}.
+  Future<Map> agentPublicChat(List<Map<String, String>> messages) async {
+    final resp = await _dio.post('/ai-agent/public-chat', data: {
+      'messages': messages,
+    });
+    return resp.data as Map;
+  }
+
+  // ── Marketplace ───────────────────────────────────────────────────────────
+
+  Future<List<Map<String, dynamic>>> getMarketplaceCategories() async {
+    final resp = await _dio.get('/marketplace/categories');
+    return List<Map<String, dynamic>>.from(resp.data as List);
+  }
+
+  Future<Map<String, dynamic>> checkoutCart({
+    required List<Map<String, dynamic>> items,
+    required String contactName,
+    required String contactPhone,
+    String? contactEmail,
+    String? deliveryPin,
+    String? deliveryAddress,
+    String? notes,
+  }) async {
+    final resp = await _dio.post('/marketplace/cart/checkout', data: {
+      'items': items,
+      'contact_name': contactName,
+      'contact_phone': contactPhone,
+      if (contactEmail != null && contactEmail.isNotEmpty) 'contact_email': contactEmail,
+      if (deliveryPin != null && deliveryPin.isNotEmpty) 'delivery_pin': deliveryPin,
+      if (deliveryAddress != null && deliveryAddress.isNotEmpty) 'delivery_address': deliveryAddress,
+      if (notes != null && notes.isNotEmpty) 'notes': notes,
+      'source': 'mobile',
+    });
+    return Map<String, dynamic>.from(resp.data as Map);
+  }
+
+  // ── KYC — Aadhaar / PAN / GST / Bank ──────────────────────────────────────
+
+  Future<Map> sendAadhaarOtp(String aadhaar) async {
+    final resp = await _dio.post('/kyc/aadhaar/send-otp', data: {'aadhaar': aadhaar});
+    return resp.data as Map;
+  }
+
+  Future<Map> verifyAadhaarOtp(String aadhaarLast4, String otp) async {
+    final resp = await _dio.post('/kyc/aadhaar/verify-otp',
+        data: {'aadhaar_last4': aadhaarLast4, 'otp': otp});
+    return resp.data as Map;
+  }
+
+  Future<Map> verifyPan(String pan) async {
+    final resp = await _dio.post('/kyc/pan/verify', data: {'pan': pan});
+    return resp.data as Map;
+  }
+
+  Future<Map> verifyGst(String gstin) async {
+    final resp = await _dio.post('/kyc/gst/verify', data: {'gstin': gstin});
+    return resp.data as Map;
+  }
+
+  Future<Map> pennyDropBank(String accountNumber, String ifsc) async {
+    final resp = await _dio.post('/kyc/bank/penny-drop',
+        data: {'account_number': accountNumber, 'ifsc': ifsc});
+    return resp.data as Map;
+  }
+
+  /// Public contact form — no auth required. Persists to contact_submissions
+  /// and fires a notification email to the support inbox.
+  Future<Map> submitContactForm({
+    required String name,
+    required String email,
+    String? phone,
+    required String message,
+    String source = 'mobile',
+  }) async {
+    final resp = await _dio.post('/contact/submit', data: {
+      'name': name,
+      'email': email,
+      if (phone != null && phone.isNotEmpty) 'phone': phone,
+      'message': message,
+      'source': source,
+    });
+    return resp.data as Map;
+  }
 
   /// Send a message to the Claude Opus diagnostic agent.
   /// Pass [sessionId] to continue an existing conversation.

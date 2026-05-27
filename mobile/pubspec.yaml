@@ -64,7 +64,7 @@ dependencies:
   # Localisation
   flutter_localizations:
     sdk: flutter
-  intl: ^0.19.0
+  intl: ^0.20.2
 
   # File
   open_filex: ^4.5.1
@@ -94,3 +94,8 @@ flutter:
     - assets/images/
     - assets/lottie/
   generate: true
+
+# Dart 3.12 (Flutter 3.44) tightened dart:ffi typing — sqlite3 < 3.0 has
+# Int/int assignment errors. Pinning to the newer line fixes compile.
+dependency_overrides:
+  sqlite3: ^2.7.5

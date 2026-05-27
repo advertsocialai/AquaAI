@@ -1,7 +1,22 @@
 import 'package:flutter/material.dart';
+import '../../services/api_service.dart';
 
-class AdvisoryScreen extends StatelessWidget {
+class AdvisoryScreen extends StatefulWidget {
   const AdvisoryScreen({super.key});
+
+  @override
+  State<AdvisoryScreen> createState() => _AdvisoryScreenState();
+}
+
+class _AdvisoryScreenState extends State<AdvisoryScreen> {
+  // District comes from the logged-in user's profile in a future iteration;
+  // hardcoded to a common AP shrimp belt district for now. Stays small —
+  // change with one constant edit when the user-profile flow lands.
+  static const _district = 'Nellore';
+
+  Map<String, dynamic>? _weather;
+  bool _weatherLoading = true;
+  String? _weatherError;
 
   static const _calendar = [
     _CalStage('D-0', 'Pond Prep', 'Lime, dry, fill, fertilise'),
@@ -22,52 +37,75 @@ class AdvisoryScreen extends StatelessWidget {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _loadWeather();
+  }
+
+  Future<void> _loadWeather() async {
+    setState(() {
+      _weatherLoading = true;
+      _weatherError = null;
+    });
+    try {
+      final w = await apiService.getWeather(_district);
+      if (!mounted) return;
+      setState(() {
+        _weather = w;
+        _weatherLoading = false;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _weatherError = 'Could not load weather';
+        _weatherLoading = false;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Advisory')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          // Weather card
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: const Color(0xFF38BDF8).withOpacity(0.1),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0xFF38BDF8).withOpacity(0.3)),
-            ),
-            child: Row(
-              children: [
-                const Icon(Icons.cloud, size: 36, color: Color(0xFF38BDF8)),
-                const SizedBox(width: 12),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('29°',
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                    Text('Bhimavaram · partly cloudy',
-                        style: TextStyle(color: Colors.grey.shade700, fontSize: 12)),
-                  ],
-                ),
-                const Spacer(),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: const [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
+          // Weather card — live from /advisory/weather
+          GestureDetector(
+            onTap: _loadWeather,
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: const Color(0xFF38BDF8).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: const Color(0xFF38BDF8).withOpacity(0.3)),
+              ),
+              child: _weatherLoading
+                  ? const Row(
                       children: [
-                        Icon(Icons.warning_amber, color: Colors.orange, size: 14),
-                        SizedBox(width: 4),
-                        Text('heavy rain 65mm',
-                            style: TextStyle(color: Colors.orange, fontSize: 12)),
+                        SizedBox(
+                          width: 36,
+                          height: 36,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        ),
+                        SizedBox(width: 12),
+                        Text('Loading weather…'),
                       ],
-                    ),
-                    SizedBox(height: 2),
-                    Text('DO drop risk',
-                        style: TextStyle(color: Colors.grey, fontSize: 11)),
-                  ],
-                ),
-              ],
+                    )
+                  : _weatherError != null
+                      ? Row(
+                          children: [
+                            const Icon(Icons.cloud_off,
+                                size: 36, color: Colors.grey),
+                            const SizedBox(width: 12),
+                            Text(_weatherError!,
+                                style: TextStyle(color: Colors.grey.shade700)),
+                            const Spacer(),
+                            const Icon(Icons.refresh,
+                                size: 18, color: Colors.grey),
+                          ],
+                        )
+                      : _buildWeatherRow(),
             ),
           ),
           const SizedBox(height: 16),
@@ -181,6 +219,62 @@ class AdvisoryScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildWeatherRow() {
+    final temp = _weather?['temp_c'];
+    final cond = (_weather?['condition'] ?? 'unknown').toString();
+    final rain = _weather?['rain_mm'];
+    final cyclone = _weather?['cyclone_alert'] == true;
+    final hasRain = rain != null && (rain is num) && rain.toDouble() > 0;
+    return Row(
+      children: [
+        const Icon(Icons.cloud, size: 36, color: Color(0xFF38BDF8)),
+        const SizedBox(width: 12),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('${temp?.toString() ?? "--"}°',
+                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            Text('$_district · $cond',
+                style: TextStyle(color: Colors.grey.shade700, fontSize: 12)),
+          ],
+        ),
+        const Spacer(),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            if (cyclone)
+              const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.warning, color: Colors.red, size: 14),
+                  SizedBox(width: 4),
+                  Text('cyclone alert',
+                      style: TextStyle(color: Colors.red, fontSize: 12, fontWeight: FontWeight.w600)),
+                ],
+              )
+            else if (hasRain)
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.warning_amber, color: Colors.orange, size: 14),
+                  const SizedBox(width: 4),
+                  Text('heavy rain ${rain}mm',
+                      style: const TextStyle(color: Colors.orange, fontSize: 12)),
+                ],
+              )
+            else
+              const Text('all clear',
+                  style: TextStyle(color: Colors.green, fontSize: 12)),
+            const SizedBox(height: 2),
+            if (hasRain)
+              const Text('DO drop risk',
+                  style: TextStyle(color: Colors.grey, fontSize: 11)),
+          ],
+        ),
+      ],
     );
   }
 }

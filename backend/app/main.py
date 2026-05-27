@@ -19,6 +19,8 @@ from app.api.v1 import pricing_ws
 from app.api.v1 import kyc, payments, metrics as metrics_router
 from app.api.v1 import models as models_router
 from app.api.v1 import risk
+from app.api.v1 import newsletter
+from app.api.v1 import contact
 
 app = FastAPI(
     title=settings.app_name,
@@ -68,6 +70,8 @@ app.include_router(kyc.router, prefix=PREFIX)               # NSDL e-KYC + PAN +
 app.include_router(payments.router, prefix=PREFIX)          # Razorpay orders + webhook + payouts
 app.include_router(models_router.router, prefix=PREFIX)     # Unified AI models — list, infer, OTA
 app.include_router(risk.router, prefix=PREFIX)              # Bank/insurer risk scoring
+app.include_router(newsletter.router, prefix=PREFIX)        # Footer newsletter subscribe
+app.include_router(contact.router, prefix=PREFIX)           # Contact form (web + mobile)
 app.include_router(metrics_router.router)                   # /metrics for Prometheus
 
 

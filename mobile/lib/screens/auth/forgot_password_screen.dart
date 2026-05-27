@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../services/api_service.dart';
 import '../../utils/constants.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -10,31 +11,104 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   int _step = 0;
-  final _mobile = TextEditingController();
+  bool _busy = false;
+  final _email = TextEditingController();
   final _otp = TextEditingController();
   final _pw = TextEditingController();
   final _pw2 = TextEditingController();
 
-  static const _labels = ['Mobile', 'OTP', 'New password', 'Done'];
+  static const _labels = ['Email', 'Code', 'New password', 'Done'];
 
   @override
   void dispose() {
-    _mobile.dispose();
+    _email.dispose();
     _otp.dispose();
     _pw.dispose();
     _pw2.dispose();
     super.dispose();
   }
 
+  bool _emailValid(String s) => RegExp(r'^\S+@\S+\.\S+$').hasMatch(s.trim());
   bool get _pwOk =>
       _pw.text.length >= 8 && _pw.text.contains(RegExp(r'[A-Z]')) && _pw.text.contains(RegExp(r'\d'));
   bool get _pwMatch => _pw.text == _pw2.text;
 
-  void _next() {
-    if (_step == 0 && _mobile.text.replaceAll(RegExp(r'\D'), '').length != 10) return;
-    if (_step == 1 && _otp.text.length != 6) return;
-    if (_step == 2 && (!_pwOk || !_pwMatch)) return;
-    setState(() => _step = (_step + 1).clamp(0, _labels.length - 1));
+  void _snack(String msg) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+  }
+
+  Future<void> _next() async {
+    if (_busy) return;
+
+    // Step 0 — request OTP via email
+    if (_step == 0) {
+      if (!_emailValid(_email.text)) {
+        _snack('Enter a valid email address');
+        return;
+      }
+      setState(() => _busy = true);
+      try {
+        await apiService.forgotPassword(_email.text.trim().toLowerCase());
+        if (!mounted) return;
+        _snack('Code sent — check your inbox (and spam)');
+        setState(() {
+          _step = 1;
+          _busy = false;
+        });
+      } catch (e) {
+        if (!mounted) return;
+        setState(() => _busy = false);
+        _snack('Could not send code: ${e.toString().split(":").last.trim()}');
+      }
+      return;
+    }
+
+    // Step 1 — local-only OTP length check; verification happens with the password.
+    if (_step == 1) {
+      if (_otp.text.length != 6 || !RegExp(r'^[0-9]{6}$').hasMatch(_otp.text)) {
+        _snack('Enter the 6-digit code');
+        return;
+      }
+      setState(() => _step = 2);
+      return;
+    }
+
+    // Step 2 — verify OTP and update password in one backend call.
+    if (_step == 2) {
+      if (!_pwOk) {
+        _snack('Password needs 8+ chars, 1 capital, 1 digit');
+        return;
+      }
+      if (!_pwMatch) {
+        _snack('Passwords don\'t match');
+        return;
+      }
+      setState(() => _busy = true);
+      try {
+        await apiService.resetPassword(
+          _email.text.trim().toLowerCase(),
+          _otp.text.trim(),
+          _pw.text,
+        );
+        if (!mounted) return;
+        setState(() {
+          _step = 3;
+          _busy = false;
+        });
+      } catch (e) {
+        if (!mounted) return;
+        setState(() => _busy = false);
+        // Common case: invalid OTP — bounce back to step 1 so they re-enter it.
+        final msg = e.toString();
+        if (msg.contains('Invalid code') || msg.contains('No active reset')) {
+          _snack('That code didn\'t work. Re-check the email.');
+          setState(() => _step = 1);
+        } else {
+          _snack('Reset failed: ${msg.split(":").last.trim()}');
+        }
+      }
+    }
   }
 
   @override
@@ -81,9 +155,20 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               SizedBox(
                 width: double.infinity,
                 child: FilledButton.icon(
-                  onPressed: _next,
-                  icon: const Icon(Icons.arrow_forward),
-                  label: Text(_step == _labels.length - 2 ? 'Reset password' : 'Continue'),
+                  onPressed: _busy ? null : _next,
+                  icon: _busy
+                      ? const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(
+                              strokeWidth: 2, color: Colors.white),
+                        )
+                      : const Icon(Icons.arrow_forward),
+                  label: Text(_busy
+                      ? 'Working…'
+                      : _step == _labels.length - 2
+                          ? 'Reset password'
+                          : 'Continue'),
                 ),
               )
             else
@@ -105,13 +190,16 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     switch (_step) {
       case 0:
         return _wrap([
+          const Text(
+            'Enter the email you used to sign up. We\'ll send a 6-digit code to reset your password.',
+            style: TextStyle(fontSize: 13),
+          ),
+          const SizedBox(height: 12),
           TextField(
-            controller: _mobile,
-            keyboardType: TextInputType.phone,
-            maxLength: 10,
+            controller: _email,
+            keyboardType: TextInputType.emailAddress,
             decoration: const InputDecoration(
-              labelText: 'Mobile number',
-              prefixText: '+91 ',
+              labelText: 'Email address',
               border: OutlineInputBorder(),
             ),
             onChanged: (_) => setState(() {}),
@@ -119,7 +207,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         ]);
       case 1:
         return _wrap([
-          Text('Code sent to +91 ${_mobile.text}', style: TextStyle(color: Colors.grey.shade700)),
+          Text('Code sent to ${_email.text.trim()}',
+              style: TextStyle(color: Colors.grey.shade700)),
           const SizedBox(height: 12),
           TextField(
             controller: _otp,
