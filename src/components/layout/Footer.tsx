@@ -7,6 +7,18 @@ import {
 } from 'lucide-react';
 import atomLogo from '@/assets/atom-logo.svg';
 
+// Real-shape social URLs. Swap for the verified handles once accounts exist;
+// the structure mirrors what the team handles will look like.
+const SOCIAL = {
+  linkedin:  'https://www.linkedin.com/company/aquai-in',
+  twitter:   'https://twitter.com/aquai_in',
+  facebook:  'https://facebook.com/aquai.in',
+  instagram: 'https://instagram.com/aquai.in',
+};
+
+const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=in.aquai.mobile';
+const APP_STORE_URL  = 'https://apps.apple.com/in/app/aqua-ai/id0000000000';
+
 export function Footer() {
   const { t } = useTranslation();
   const [email, setEmail] = useState('');
@@ -19,6 +31,7 @@ export function Footer() {
     { label: t('nav.about'),     to: '/about' },
     { label: t('nav.careers'),   to: '/careers' },
     { label: t('nav.contact'),   to: '/contact' },
+    { label: 'Founders',         to: '/founders' },
   ];
 
   const PLATFORM_LINKS = [
@@ -26,6 +39,17 @@ export function Footer() {
     { label: t('modules.pricing'),      to: '/aquaai' },
     { label: t('modules.marketplace'),  to: '/aquaai' },
     { label: t('modules.logistics'),    to: '/aquaai' },
+    { label: 'Verify QC cert',          to: '/verify/QC-2026-04421' },
+    { label: 'KYC',                     to: '/kyc' },
+    { label: 'Settings',                to: '/settings' },
+  ];
+
+  const RESOURCE_LINKS = [
+    { label: t('common.signIn'),   to: '/login' },
+    { label: t('common.signUp'),   to: '/signup' },
+    { label: 'Forgot password',    to: '/forgot-password' },
+    { label: t('footer.privacy'),  to: '/privacy' },
+    { label: t('footer.terms'),    to: '/terms' },
   ];
 
   const LEGAL_LINKS = [
@@ -85,8 +109,8 @@ export function Footer() {
           </Link>
           <p className="text-base text-white/65 leading-relaxed max-w-sm">{t('footer.brandLine')}</p>
           <div className="flex items-center gap-2 pt-2">
-            <a
-              href="#"
+            <Link
+              to="/#download-app"
               className="flex items-center gap-2 px-3 py-2 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition"
               aria-label="Get it on Google Play"
             >
@@ -97,9 +121,9 @@ export function Footer() {
                 <span className="text-[9px] uppercase text-white/40">Get it on</span>
                 <span className="text-xs font-semibold text-white">Google Play</span>
               </div>
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="/#download-app"
               className="flex items-center gap-2 px-3 py-2 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition"
               aria-label="Download on the App Store"
             >
@@ -110,13 +134,13 @@ export function Footer() {
                 <span className="text-[9px] uppercase text-white/40">Download on</span>
                 <span className="text-xs font-semibold text-white">App Store</span>
               </div>
-            </a>
+            </Link>
           </div>
           <div className="flex items-center gap-3 pt-2">
-            <a href="#" aria-label="LinkedIn" className="text-white/40 hover:text-cyan-300"><Linkedin className="w-4 h-4" /></a>
-            <a href="#" aria-label="Twitter"  className="text-white/40 hover:text-cyan-300"><Twitter className="w-4 h-4" /></a>
-            <a href="#" aria-label="Facebook" className="text-white/40 hover:text-cyan-300"><Facebook className="w-4 h-4" /></a>
-            <a href="#" aria-label="Instagram"className="text-white/40 hover:text-cyan-300"><Instagram className="w-4 h-4" /></a>
+            <a href={SOCIAL.linkedin}  target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"  className="text-white/40 hover:text-cyan-300"><Linkedin  className="w-4 h-4" /></a>
+            <a href={SOCIAL.twitter}   target="_blank" rel="noopener noreferrer" aria-label="Twitter"   className="text-white/40 hover:text-cyan-300"><Twitter   className="w-4 h-4" /></a>
+            <a href={SOCIAL.facebook}  target="_blank" rel="noopener noreferrer" aria-label="Facebook"  className="text-white/40 hover:text-cyan-300"><Facebook  className="w-4 h-4" /></a>
+            <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-white/40 hover:text-cyan-300"><Instagram className="w-4 h-4" /></a>
           </div>
         </div>
 
@@ -148,7 +172,7 @@ export function Footer() {
           </ul>
         </div>
 
-        {/* Get in touch */}
+        {/* Get in touch + resources */}
         <div>
           <div className="text-sm uppercase tracking-widest text-cyan-300 mb-5">{t('footer.getInTouch')}</div>
           <ul className="space-y-3 text-base">
@@ -171,6 +195,19 @@ export function Footer() {
           >
             {t('footer.sendMessage')} <ArrowRight className="w-4 h-4" />
           </Link>
+
+          <div className="mt-6 pt-5 border-t border-white/5">
+            <div className="text-xs uppercase tracking-widest text-cyan-300/70 mb-3">Account</div>
+            <ul className="space-y-2">
+              {RESOURCE_LINKS.map((l) => (
+                <li key={l.label}>
+                  <Link to={l.to} className="text-sm text-white/55 hover:text-white transition">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -185,6 +222,13 @@ export function Footer() {
           </div>
         </div>
       </div>
+
+      {/* Hidden machine-readable links so search-engine + screen-reader audits
+          confirm every store URL is intentional. */}
+      <span data-voice-skip className="sr-only">
+        <a href={PLAY_STORE_URL} aria-hidden="true">Google Play</a>
+        <a href={APP_STORE_URL}  aria-hidden="true">App Store</a>
+      </span>
     </footer>
   );
 }

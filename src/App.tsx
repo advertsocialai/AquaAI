@@ -48,10 +48,25 @@ function RouteFallback() {
 }
 
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   useEffect(() => {
+    // Hash links (e.g. /#download-app) should jump to the anchor, not the top.
+    if (hash) {
+      const id = hash.slice(1);
+      // Wait for the target page's lazy chunk + layout to settle.
+      const attempt = (tries: number) => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else if (tries > 0) {
+          setTimeout(() => attempt(tries - 1), 120);
+        }
+      };
+      attempt(8);
+      return;
+    }
     window.scrollTo(0, 0);
-  }, [pathname]);
+  }, [pathname, hash]);
   return null;
 }
 
