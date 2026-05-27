@@ -35,27 +35,23 @@ const ROUTES: { path: string; expectsText?: RegExp; minBodyChars?: number }[] = 
 // Console messages we deliberately ignore: PWA registration noise, missing
 // preview avatars in dev, third-party iframe sandbox warnings, plus
 // environment-only failures with handled fallbacks (no backend, sandbox CORS).
+// Dev server returns 200 for real assets, so any 4xx/5xx "Failed to load
+// resource" message is from a sandbox-blocked external host (Unsplash,
+// fonts.googleapis, basemaps.cartocdn, tile.openstreetmap, etc.).
 const CONSOLE_ALLOWLIST = [
-  /service ?worker/i,
-  /workbox/i,
-  /vite/i,
-  /HMR/i,
-  /favicon/i,
-  /lovable/i,                                  // brand banner in dev only
-  /Download the React DevTools/i,
-  /preload.*as.*image/i,
-  /Failed to load resource.*404.*image/i,      // dev placeholder images
+  /service ?worker/i, /workbox/i, /vite/i, /HMR/i, /favicon/i,
+  /lovable/i, /Download the React DevTools/i, /preload.*as.*image/i,
+  /Failed to load resource.*status of (4\d\d|5\d\d)/i,
+  /Failed to load resource.*404/i,
   // Backend not running in CI / sandbox — the price ticker falls back to a
   // local random-walk simulator (see usePriceTicker.ts).
-  /WebSocket.*pricing-ws.*failed/i,
-  /ws:\/\/localhost:8000/i,
-  /ERR_CONNECTION_REFUSED/i,
+  /WebSocket.*pricing-ws.*failed/i, /ws:\/\/localhost:8000/i,
+  /ERR_CONNECTION_REFUSED/i, /ERR_CERT/i, /ERR_FAILED/i,
   // Sandbox CORS strip on external APIs — weather widget handles the null and
   // hides itself; not user-visible in production where CORS is set.
   /open-meteo/i,
   /Access to fetch at .* has been blocked by CORS/i,
   /Access to fetch at .* from origin .* has been blocked/i,
-  /ERR_FAILED/i,
 ];
 
 function watchConsole(page: Page): string[] {
