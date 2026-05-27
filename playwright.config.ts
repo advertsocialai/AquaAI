@@ -20,6 +20,19 @@ export default defineConfig({
     baseURL: process.env.E2E_BASE_URL ?? "http://localhost:8080",
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
+    // PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH lets sandboxed environments point at
+    // an already-installed chromium when cdn.playwright.dev is firewalled.
+    launchOptions: {
+      ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH && {
+        executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH,
+      }),
+      // Sandbox proxies (CI containers, corporate MITM) re-sign HTTPS with
+      // a cert the browser doesn't trust, producing spurious console
+      // ERR_CERT_AUTHORITY_INVALID noise. Ignoring at the browser level
+      // keeps the per-page console-error assertion meaningful for real bugs.
+      args: ["--ignore-certificate-errors"],
+    },
+    ignoreHTTPSErrors: true,
   },
   projects: [
     { name: "chromium", use: { ...devices["Desktop Chrome"] } },

@@ -5,7 +5,9 @@ import path from "path";
 
 export default defineConfig(() => ({
   server: {
-    host: "::",
+    // 0.0.0.0 works on both IPv4-only and dual-stack hosts; "::" breaks
+    // sandboxes/containers without IPv6 (EAFNOSUPPORT). Override with VITE_HOST.
+    host: process.env.VITE_HOST ?? "0.0.0.0",
     port: 8080,
   },
   plugins: [

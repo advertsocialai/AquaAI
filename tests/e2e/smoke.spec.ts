@@ -44,5 +44,7 @@ test("ChatBot floating button opens the chat panel", async ({ page }) => {
   await page.goto("/aquaai");
   await page.waitForLoadState("networkidle");
   await page.getByRole("button", { name: /open chat/i }).click();
-  await expect(page.getByText(/AquaI Assistant/i)).toBeVisible();
+  // The panel header reads "AquaI Assistant"; the welcome message also
+  // contains the phrase, so match the header exactly to avoid strict-mode hits.
+  await expect(page.getByText(/^AquaI Assistant$/i).first()).toBeVisible();
 });

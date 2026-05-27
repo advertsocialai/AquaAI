@@ -54,3 +54,8 @@ mobile/.flutter-plugins
 mobile/.flutter-plugins-dependencies
 mobile/ios/Pods/
 mobile/android/.gradle/
+
+# ── Playwright (regenerated each run) ───────────────────────────────
+test-results/
+playwright-report/
+playwright/.cache/
