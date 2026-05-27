@@ -34,10 +34,7 @@ export class ErrorBoundary extends Component<Props, State> {
           <div className="text-center">
             <h1 className="text-2xl font-bold text-white mb-4">Something went wrong</h1>
             <button
-              onClick={() => {
-                sessionStorage.removeItem('aquaai-entered');
-                window.location.reload();
-              }}
+              onClick={() => window.location.reload()}
               className="px-6 py-3 border border-white/30 text-white/70 text-sm tracking-widest uppercase hover:bg-white/10 transition-colors"
             >
               Reload

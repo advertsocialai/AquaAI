@@ -116,7 +116,7 @@ export function VoiceReader() {
   return (
     <div
       data-voice-skip
-      className="fixed bottom-6 right-6 z-40 flex items-center gap-2"
+      className="fixed bottom-6 left-6 z-40 flex items-center gap-2"
     >
       {state === 'idle' ? (
         <button

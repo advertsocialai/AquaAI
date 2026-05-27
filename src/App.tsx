@@ -1,14 +1,11 @@
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import { CustomCursor } from "@/components/ui/custom-cursor";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
-import { NoiseTexture } from "@/components/ui/noise-texture";
-import { SplashScreen } from "@/components/SplashScreen";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ChatBot } from "@/components/ChatBot";
 import { VoiceReader } from "@/components/VoiceReader";
@@ -103,28 +100,13 @@ function AnimatedRoutes() {
 }
 
 const App = () => {
-  const [showSplash, setShowSplash] = useState(
-    () => !sessionStorage.getItem("aquaai-entered")
-  );
-
-  const handleEnter = () => {
-    sessionStorage.setItem("aquaai-entered", "true");
-    setShowSplash(false);
-  };
-
-  if (showSplash) {
-    return <SplashScreen onEnter={handleEnter} />;
-  }
-
   return (
     <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <CustomCursor />
         <ScrollProgress />
-        <NoiseTexture />
         <BrowserRouter>
           <ScrollToTop />
           <AnimatedRoutes />

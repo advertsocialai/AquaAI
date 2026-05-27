@@ -1,6 +1,14 @@
 import "@testing-library/jest-dom";
 import "@/lib/i18n";
 
+// Force the services/api.ts stub mode during tests — jsdom can't reach the
+// FastAPI backend at localhost:8000, so the real-HTTP path would throw.
+try {
+  window.localStorage.setItem("aquai-stubs", "1");
+} catch {
+  /* noop — some test environments lack localStorage */
+}
+
 // jsdom doesn't implement matchMedia by default; provide a noop.
 Object.defineProperty(window, "matchMedia", {
   writable: true,
