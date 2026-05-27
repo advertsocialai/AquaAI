@@ -1,10 +1,13 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import type { Database } from './supabase-types';
 
 /**
  * Supabase client for the Aqua AI web app.
  *
  * Project: aqua-ai (rjhysiqqwgptqiwsonvd, us-east-1)
  * Schema:  backend/migrations/001_init.sql (22 tables, RLS enabled).
+ * Types:   supabase-types.ts (generated; regenerate via the Supabase MCP
+ *          `generate_typescript_types` tool after schema changes).
  *
  * Both URL and publishable key are safe to ship to the browser — they only
  * grant the anon role's RLS-allowed surface. The service_role secret is
@@ -17,8 +20,8 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
 const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined;
 
-export const supabase: SupabaseClient | null =
-  url && key ? createClient(url, key, {
+export const supabase: SupabaseClient<Database> | null =
+  url && key ? createClient<Database>(url, key, {
     auth: {
       persistSession: true,
       autoRefreshToken: true,
@@ -27,7 +30,7 @@ export const supabase: SupabaseClient | null =
   }) : null;
 
 /** Throws if the client isn't configured — use in code paths that require auth. */
-export function requireSupabase(): SupabaseClient {
+export function requireSupabase(): SupabaseClient<Database> {
   if (!supabase) {
     throw new Error(
       'Supabase env not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY.',
@@ -35,3 +38,5 @@ export function requireSupabase(): SupabaseClient {
   }
   return supabase;
 }
+
+export type { Database } from './supabase-types';
