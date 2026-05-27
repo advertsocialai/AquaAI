@@ -14,6 +14,14 @@ import '../kyc/kyc_screen.dart';
 import '../diagnostics/server_diagnostics_screen.dart';
 import '../about/about_screen.dart';
 import '../help/help_screen.dart';
+import '../knowledge/knowledge_screen.dart';
+import '../careers/careers_screen.dart';
+import '../contact/contact_screen.dart';
+import '../founders/founders_screen.dart';
+import '../legal/legal_screen.dart';
+import '../verify/verify_screen.dart';
+import '../calculators/calculators_screen.dart';
+import '../weather/weather_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -77,10 +85,19 @@ class _MoreTab extends StatelessWidget {
     _MoreItem('Disease Detector', Icons.biotech, 'EHP / WSSV / AHPND', 1),
     _MoreItem('Quality Grader', Icons.stars, 'Composite QS score', 2),
     _MoreItem('Reports', Icons.description, 'QC cert archive', 3),
+    _MoreItem('Knowledge Hub', Icons.menu_book, 'Articles, guides, case studies', 11),
+    _MoreItem('Calculators', Icons.calculate, 'Feed · aeration · pond volume · P&L', 12),
+    _MoreItem('Verify QC Cert', Icons.qr_code_scanner, 'Scan certificate QR codes', 13),
+    _MoreItem('Live Weather', Icons.wb_cloudy_outlined, 'IMD + Open-Meteo · 16 districts', 14),
     _MoreItem('Aqua AI Chat', Icons.chat_bubble_outline, 'Multilingual assistant', 4),
     _MoreItem('Profile', Icons.person_outline, 'Role + farm details', 5),
     _MoreItem('KYC', Icons.security_outlined, 'Aadhaar · PAN · GST · Bank', 6),
     _MoreItem('Settings', Icons.settings_outlined, 'Language, theme, alerts', 7),
+    _MoreItem('Careers', Icons.work_outline, 'Open roles, perks, why Aqua AI', 15),
+    _MoreItem('Contact', Icons.mail_outline, 'Get in touch · response in 24h', 16),
+    _MoreItem('Founders', Icons.groups_outlined, 'Team behind Aqua AI', 17),
+    _MoreItem('Privacy', Icons.privacy_tip_outlined, 'How we handle your data', 18),
+    _MoreItem('Terms', Icons.gavel_outlined, 'Terms of service', 19),
     _MoreItem('Help & FAQ', Icons.help_outline, 'Questions, support contact', 9),
     _MoreItem('About', Icons.info_outline, 'App info, contact, version', 10),
   ];
@@ -113,18 +130,27 @@ class _MoreTab extends StatelessWidget {
               onTap: () {
                 Widget screen;
                 switch (it.target) {
-                  case 0: screen = const SeedCounterScreen(); break;
-                  case 1: screen = const DiseaseDetectorScreen(); break;
-                  case 2: screen = const QualityGraderScreen(); break;
-                  case 3: screen = const ReportsScreen(); break;
-                  case 4: screen = const ChatScreen(); break;
-                  case 5: screen = const ProfileScreen(); break;
-                  case 6: screen = const KycScreen(); break;
-                  case 7: screen = const SettingsScreen(); break;
-                  case 8: screen = const ServerDiagnosticsScreen(); break;
-                  case 9: screen = const HelpScreen(); break;
-                  case 10:
-                  default: screen = const AboutScreen();
+                  case 0:  screen = const SeedCounterScreen();        break;
+                  case 1:  screen = const DiseaseDetectorScreen();    break;
+                  case 2:  screen = const QualityGraderScreen();      break;
+                  case 3:  screen = const ReportsScreen();            break;
+                  case 4:  screen = const ChatScreen();               break;
+                  case 5:  screen = const ProfileScreen();            break;
+                  case 6:  screen = const KycScreen();                break;
+                  case 7:  screen = const SettingsScreen();           break;
+                  case 8:  screen = const ServerDiagnosticsScreen();  break;
+                  case 9:  screen = const HelpScreen();               break;
+                  case 10: screen = const AboutScreen();              break;
+                  case 11: screen = const KnowledgeScreen();          break;
+                  case 12: screen = const CalculatorsScreen();        break;
+                  case 13: screen = const VerifyScreen();             break;
+                  case 14: screen = const WeatherScreen();            break;
+                  case 15: screen = const CareersScreen();            break;
+                  case 16: screen = const ContactScreen();            break;
+                  case 17: screen = const FoundersScreen();           break;
+                  case 18: screen = const PrivacyScreen();            break;
+                  case 19:
+                  default: screen = const TermsScreen();
                 }
                 Navigator.push(
                     context, MaterialPageRoute(builder: (_) => screen));

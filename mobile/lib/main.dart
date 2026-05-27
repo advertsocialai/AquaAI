@@ -10,6 +10,7 @@ import 'screens/home/home_screen.dart';
 import 'screens/splash/splash_screen.dart';
 import 'screens/onboarding/onboarding_screen.dart';
 import 'utils/constants.dart';
+import 'widgets/voice_fab.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,6 +46,21 @@ class AquaAIApp extends StatelessWidget {
         Locale('or'),
         Locale('bn'),
       ],
+      // Wrap every route with a Stack that includes the global VoiceFab.
+      // The FAB hides itself when no screen has registered any readable
+      // text, so the seed-counter capture screen stays clean.
+      builder: (context, child) {
+        return Stack(
+          children: [
+            child ?? const SizedBox.shrink(),
+            const Positioned(
+              right: 16,
+              bottom: 88,           // sits above the bottom navigation bar
+              child: VoiceFab(),
+            ),
+          ],
+        );
+      },
       home: const AuthGate(),
     );
   }

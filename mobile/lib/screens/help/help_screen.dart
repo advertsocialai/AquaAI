@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import '../../utils/constants.dart';
+import '../../widgets/voice_fab.dart';
 
-class HelpScreen extends StatelessWidget {
+class HelpScreen extends StatefulWidget {
   const HelpScreen({super.key});
 
+  @override
+  State<HelpScreen> createState() => _HelpScreenState();
+}
+
+class _HelpScreenState extends State<HelpScreen> with VoiceReadableScreen {
   static const _faqs = [
     _Faq(
       q: 'Does Aqua AI work without internet?',
@@ -28,7 +34,7 @@ class HelpScreen extends StatelessWidget {
     _Faq(
       q: 'Which languages does the app support?',
       a: 'English, Telugu, Tamil, Hindi, Odia, Bengali. Voice replies in your chosen '
-          'language using the phone\'s built-in speech engine.',
+          "language using the phone's built-in speech engine.",
     ),
     _Faq(
       q: 'How do I report an outbreak?',
@@ -36,6 +42,13 @@ class HelpScreen extends StatelessWidget {
           'severity flags trigger 5 km radius alerts to nearby farmers.',
     ),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    final text = _faqs.map((f) => 'Question: ${f.q} Answer: ${f.a}').join(' ');
+    registerReadable('Help and FAQ. $text');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +74,8 @@ class HelpScreen extends StatelessWidget {
                     children: [
                       Text('Talk to us', style: TextStyle(fontWeight: FontWeight.bold)),
                       SizedBox(height: 2),
-                      Text(AppInfo.supportEmail, style: TextStyle(fontSize: 12, color: Colors.black54)),
+                      Text(AppInfo.supportEmail,
+                          style: TextStyle(fontSize: 12, color: Colors.black54)),
                     ],
                   ),
                 ),
@@ -89,7 +103,8 @@ class HelpScreen extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(f.a,
-                          style: TextStyle(color: Colors.grey.shade700, fontSize: 13, height: 1.5)),
+                          style: TextStyle(
+                              color: Colors.grey.shade700, fontSize: 13, height: 1.5)),
                     ),
                   ],
                 ),

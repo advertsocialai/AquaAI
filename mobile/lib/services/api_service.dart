@@ -305,6 +305,18 @@ class ApiService {
     return Map<String, dynamic>.from(resp.data as Map);
   }
 
+  // ── Risk scoring API (banks + insurers) ───────────────────────────────────
+
+  Future<List<Map<String, dynamic>>> getFarmRiskBook() async {
+    final resp = await _dio.get('/risk/farms');
+    return List<Map<String, dynamic>>.from(resp.data as List);
+  }
+
+  Future<Map<String, dynamic>> getFarmRiskDetail(String farmId) async {
+    final resp = await _dio.get('/risk/farms/$farmId');
+    return Map<String, dynamic>.from(resp.data as Map);
+  }
+
   // Download an OTA model artifact (placeholder bytes from the backend
   // until a real .tflite is published).
   Future<List<int>> downloadModel(String modelId) async {

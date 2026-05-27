@@ -1,8 +1,30 @@
 import 'package:flutter/material.dart';
 import '../../utils/constants.dart';
+import '../../widgets/voice_fab.dart';
 
-class AboutScreen extends StatelessWidget {
+class AboutScreen extends StatefulWidget {
   const AboutScreen({super.key});
+
+  @override
+  State<AboutScreen> createState() => _AboutScreenState();
+}
+
+class _AboutScreenState extends State<AboutScreen> with VoiceReadableScreen {
+  @override
+  void initState() {
+    super.initState();
+    registerReadable(
+      'About ${AppInfo.appName}. ${AppInfo.tagline}. '
+      "${AppInfo.appName} is India's AI-powered aquaculture intelligence "
+      'platform. PCR-grade AI diagnostics, live mandi pricing, verified '
+      'marketplace, logistics and government surveillance — for every '
+      'stakeholder in the prawn and fish supply chain, in six Indian '
+      'languages, on a low-cost Android phone. '
+      'Five on-device TFLite AI models. Six diseases covered: EHP, WSSV, '
+      'AHPND, BGD, HPV, WFS. Inference under five hundred milliseconds. '
+      'Full offline mode. MPEDA, NSPAAD, DPDPA 2023 compliant.',
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
