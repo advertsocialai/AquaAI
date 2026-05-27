@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  User, UserCheck, Factory, Truck, Snowflake, Briefcase, Landmark, ShieldCheck,
-  Camera, Sparkles, Send, BadgeCheck, ArrowRight, ChevronDown,
+  User, UserCheck, Factory, Truck, Snowflake, Briefcase,
+  ArrowRight, ChevronDown,
   Star, Smartphone, QrCode, BookOpen, Apple, Play,
 } from 'lucide-react';
 
@@ -45,49 +45,6 @@ export function BuiltForRoles() {
               </div>
               <div className="text-base font-semibold text-white mb-2">{t(`roles.${id}`)}</div>
               <div className="text-sm text-white/65 leading-relaxed">{t(`roleDesc.${id}`)}</div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── How it works ──────────────────────────────────────────────────────────────
-
-const STEPS = [
-  { n: '01', icon: Camera,    title: 'Capture',  desc: 'Photo on a ₹500 USB microscope or your phone camera. 3-frame burst with quality gate.' },
-  { n: '02', icon: Sparkles,  title: 'Diagnose', desc: 'On-device TFLite AI runs in <500ms. EHP / WSSV / AHPND screen with confidence and Grad-CAM heatmap.' },
-  { n: '03', icon: Send,      title: 'Decide',   desc: 'Composite QS score 0-100 + grade. Live mandi price tells you when to harvest or hold.' },
-  { n: '04', icon: BadgeCheck,title: 'Certify',  desc: 'HMAC-signed QC certificate. QR code verifies at /verify/{id} — banks and buyers trust it.' },
-];
-
-export function HowItWorks() {
-  return (
-    <section className="py-20 border-t border-white/5 bg-white/[0.02]">
-      <div className="container mx-auto px-6 lg:px-8 max-w-6xl">
-        <div className="text-center mb-12">
-          <div className="text-xs text-cyan-300 uppercase tracking-widest mb-3">How it works</div>
-          <h2 className="text-3xl md:text-4xl font-bold">From sample to certificate in 90 seconds</h2>
-        </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {STEPS.map(({ n, icon: Icon, title, desc }, i) => (
-            <motion.div
-              key={n}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.06 }}
-              className="relative p-5 rounded-2xl border border-white/10 bg-white/[0.03]"
-            >
-              <div className="text-5xl font-bold text-white/[0.06] absolute top-2 right-3 font-mono pointer-events-none">
-                {n}
-              </div>
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3 bg-cyan-400/10 border border-cyan-400/20">
-                <Icon className="w-5 h-5 text-cyan-300" />
-              </div>
-              <div className="text-lg font-bold text-white mb-2">{title}</div>
-              <p className="text-sm text-white/55 leading-relaxed">{desc}</p>
             </motion.div>
           ))}
         </div>
