@@ -25,6 +25,13 @@ class _QualityGraderScreenState extends State<QualityGraderScreen> {
     'Step 4: Side-view macro (PL stage)',
   ];
 
+  @override
+  void dispose() {
+    _batchIdCtrl.dispose();
+    _densityCtrl.dispose();
+    super.dispose();
+  }
+
   Future<void> _runGrading() async {
     setState(() { _loading = true; });
     try {
@@ -33,11 +40,14 @@ class _QualityGraderScreenState extends State<QualityGraderScreen> {
         'planned_density_per_sqm': double.tryParse(_densityCtrl.text),
         'image_paths': [],
       });
+      if (!mounted) return;
       setState(() { _result = session; });
     } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(e.toString()), backgroundColor: Colors.red));
     } finally {
+      if (!mounted) return;
       setState(() { _loading = false; });
     }
   }
@@ -127,7 +137,7 @@ class _QualityGraderScreenState extends State<QualityGraderScreen> {
 
   Widget _buildResults() {
     if (_result == null) return const SizedBox();
-    final score = (_result!['composite_score'] ?? 0.0) as double;
+    final score = (_result!['composite_score'] as num?)?.toDouble() ?? 0.0;
     final grade = _result!['composite_grade'] ?? 'REJECT';
     final isHardFail = _result!['is_hard_fail'] == true;
 
@@ -171,7 +181,7 @@ class _QualityGraderScreenState extends State<QualityGraderScreen> {
               const Row(children: [
                 Icon(Icons.warning, color: Colors.red),
                 SizedBox(width: 8),
-                Text('Quantity Mismatch Alert (F22)', fontWeight: FontWeight.bold),
+                Text('Quantity Mismatch Alert (F22)', style: TextStyle(fontWeight: FontWeight.bold)),
               ]),
               const SizedBox(height: 4),
               Text('Actual count differs ${_result!['count_discrepancy_pct']?.toStringAsFixed(1)}% from invoice.',
@@ -241,7 +251,7 @@ class _QualityGraderScreenState extends State<QualityGraderScreen> {
   }
 
   Widget _buildScoreBar(String label, dynamic score, int maxScore, Color color) {
-    final s = (score as double? ?? 0.0);
+    final s = (score as num?)?.toDouble() ?? 0.0;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(children: [
@@ -269,7 +279,7 @@ class _QualityGraderScreenState extends State<QualityGraderScreen> {
           Icon(stageMismatch ? Icons.warning_amber : Icons.check_circle,
               color: stageMismatch ? Colors.orange : Colors.blue),
           const SizedBox(width: 8),
-          const Text('PL Stage (F19)', fontWeight: FontWeight.bold),
+          const Text('PL Stage (F19)', style: TextStyle(fontWeight: FontWeight.bold)),
         ]),
         const SizedBox(height: 8),
         Text('Detected: ${_result!['detected_pl_stage']}',
@@ -284,7 +294,7 @@ class _QualityGraderScreenState extends State<QualityGraderScreen> {
 
   Widget _buildStockingCard(double score, String grade) {
     final rec = _result!['stocking_recommendation'] ?? '';
-    final densityPct = (_result!['recommended_density_pct'] ?? 0.0) as double;
+    final densityPct = (_result!['recommended_density_pct'] as num?)?.toDouble() ?? 0.0;
     final densityPerSqm = _result!['recommended_density_per_sqm'];
 
     return Container(
@@ -297,7 +307,7 @@ class _QualityGraderScreenState extends State<QualityGraderScreen> {
         const Row(children: [
           Icon(Icons.water, color: Colors.green),
           SizedBox(width: 8),
-          Text('Stocking Recommendation (F21)', fontWeight: FontWeight.bold),
+          Text('Stocking Recommendation (F21)', style: TextStyle(fontWeight: FontWeight.bold)),
         ]),
         const SizedBox(height: 8),
         if (densityPerSqm != null)

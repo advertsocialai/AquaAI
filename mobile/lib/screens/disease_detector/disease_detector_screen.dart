@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../services/api_service.dart';
-import '../../services/ai_service.dart';
 import '../../utils/constants.dart';
 
 /// M2 — Disease Detector (F09-F16): All 8 features
@@ -16,30 +15,37 @@ class _DiseaseDetectorScreenState extends State<DiseaseDetectorScreen> {
   bool _loading = false;
   String _cameraMode = 'software_mono'; // F09
   Map? _result;
-  DiseaseResult? _aiResult;
 
   final _batchIdCtrl = TextEditingController(text: '1');
   final _pcrResultCtrl = TextEditingController();
   final _labNameCtrl = TextEditingController();
   bool _showPCRFeedback = false;
 
+  @override
+  void dispose() {
+    _batchIdCtrl.dispose();
+    _pcrResultCtrl.dispose();
+    _labNameCtrl.dispose();
+    super.dispose();
+  }
+
   Future<void> _runDetection() async {
     setState(() { _loading = true; });
     try {
-      // Run on-device AI (F10-F12)
-      // _aiResult = await aiService.runEHPDetection(imageFile, monochrome: true);
-
-      // Submit to backend
+      // Submit to backend (on-device EHP inference runs at capture time)
       final session = await apiService.createDiagnosisSession({
         'batch_id': int.parse(_batchIdCtrl.text),
         'camera_mode': _cameraMode,
         'image_paths': [],
       });
+      if (!mounted) return;
       setState(() { _result = session; _step = 2; });
     } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(e.toString()), backgroundColor: Colors.red));
     } finally {
+      if (!mounted) return;
       setState(() { _loading = false; });
     }
   }
@@ -52,6 +58,7 @@ class _DiseaseDetectorScreenState extends State<DiseaseDetectorScreen> {
         _pcrResultCtrl.text.toLowerCase(),
         labName: _labNameCtrl.text.isEmpty ? null : _labNameCtrl.text,
       );
+      if (!mounted) return;
       setState(() => _showPCRFeedback = false);
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('PCR feedback submitted. Thank you!')));
@@ -90,7 +97,7 @@ class _DiseaseDetectorScreenState extends State<DiseaseDetectorScreen> {
             border: Border.all(color: Colors.blue.shade200),
           ),
           child: const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text('Disease Detection — Preparation', fontWeight: FontWeight.bold),
+            Text('Disease Detection — Preparation', style: TextStyle(fontWeight: FontWeight.bold)),
             SizedBox(height: 8),
             Text('• Dissect shrimp and prepare HP smear on glass slide\n'
                 '• Attach clip-on microscope lens + IntensLight LED\n'
@@ -186,8 +193,6 @@ class _DiseaseDetectorScreenState extends State<DiseaseDetectorScreen> {
     if (_result == null) return const SizedBox();
     final isHardFail = _result!['is_hard_fail'] == true;
     final riskLevel = _result!['risk_level'] ?? 'green';
-    final ehpProb = (_result!['ehp_positive_prob'] ?? 0.0) as double;
-    final wssv = _result!['wssv_positive'] == true;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -309,7 +314,7 @@ class _DiseaseDetectorScreenState extends State<DiseaseDetectorScreen> {
         const Text('Disease Screening (F12)', style: TextStyle(fontWeight: FontWeight.bold)),
         const SizedBox(height: 8),
         ...diseases.entries.map((e) {
-          final prob = e.value as double;
+          final prob = (e.value as num).toDouble();
           final color = prob > 0.85 ? Colors.red : prob > 0.55 ? Colors.orange : Colors.green;
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 3),
@@ -340,7 +345,7 @@ class _DiseaseDetectorScreenState extends State<DiseaseDetectorScreen> {
         const Row(children: [
           Icon(Icons.visibility, color: Colors.orange),
           SizedBox(width: 8),
-          Text('EHP Spores Detected (F11)', fontWeight: FontWeight.bold),
+          Text('EHP Spores Detected (F11)', style: TextStyle(fontWeight: FontWeight.bold)),
         ]),
         const SizedBox(height: 8),
         Text('Spore Count: ${_result!['spore_count'] ?? 0}'),

@@ -88,7 +88,7 @@ class ProfileScreen extends StatelessWidget {
           _statRow('Species', 'L. vannamei'),
           _statRow('Avg QS (5 cycles)', '86 / 100'),
           _statRow('Avg yield', '4.8 t/acre'),
-          _statRow('Years on AquaI', '2'),
+          _statRow('Years on Aqua AI', '2'),
           const SizedBox(height: 20),
           _section('Linked partners'),
           ListTile(

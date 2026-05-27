@@ -42,7 +42,7 @@ class WeatherService {
 
     final r = await http.get(uri);
     if (r.statusCode != 200) {
-      throw HttpException('Open-Meteo ${r.statusCode}: ${r.body}');
+      throw WeatherException('Open-Meteo ${r.statusCode}: ${r.body}');
     }
     final j = jsonDecode(r.body) as Map<String, dynamic>;
     final cur = j['current'] as Map<String, dynamic>;
@@ -104,11 +104,11 @@ class WeatherSnapshot {
   }
 }
 
-class HttpException implements Exception {
+class WeatherException implements Exception {
   final String message;
-  HttpException(this.message);
+  WeatherException(this.message);
   @override
-  String toString() => 'HttpException: $message';
+  String toString() => 'WeatherException: $message';
 }
 
 final weatherService = WeatherService();

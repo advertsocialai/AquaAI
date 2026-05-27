@@ -20,6 +20,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _loading = false;
   String? _error;
 
+  @override
+  void dispose() {
+    _nameCtrl.dispose();
+    _emailCtrl.dispose();
+    _phoneCtrl.dispose();
+    _passCtrl.dispose();
+    super.dispose();
+  }
+
   Future<void> _register() async {
     setState(() { _loading = true; _error = null; });
     try {
@@ -40,8 +49,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
         );
       }
     } catch (e) {
+      if (!mounted) return;
       setState(() { _error = 'Registration failed. Email may already be in use.'; });
     } finally {
+      if (!mounted) return;
       setState(() { _loading = false; });
     }
   }

@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         backgroundColor: const Color(0xFF2E75B6),
         icon: const Icon(Icons.chat_bubble_outline),
-        label: const Text('Ask AquaI'),
+        label: const Text('Ask Aqua AI'),
       ),
     );
   }
@@ -178,7 +178,7 @@ class _HomeTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AquaAI'),
+        title: const Text(AppInfo.appName),
         actions: [
           IconButton(icon: const Icon(Icons.sync), onPressed: () {}),
           IconButton(icon: const Icon(Icons.person_outline), onPressed: () {}),
@@ -201,10 +201,10 @@ class _HomeTab extends StatelessWidget {
               child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Shrimp Seed Detect & Counter',
+                  Text('Aqua AI',
                       style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
                   SizedBox(height: 4),
-                  Text('AI-Powered PL Diagnostics Platform',
+                  Text('Decoding aquaculture, one pond at a time',
                       style: TextStyle(color: Colors.white70, fontSize: 13)),
                   SizedBox(height: 12),
                   Row(children: [

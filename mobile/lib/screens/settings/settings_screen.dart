@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../utils/constants.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -94,7 +95,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ListTile(
             leading: const Icon(Icons.info_outline),
             title: const Text('Version'),
-            subtitle: const Text('AquaI 1.0.0 (build 142)'),
+            subtitle: const Text('${AppInfo.appName} ${AppInfo.version} (build 142)'),
           ),
           ListTile(
             leading: const Icon(Icons.privacy_tip_outlined),

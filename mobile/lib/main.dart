@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'l10n/app_localizations.dart';
 import 'services/api_service.dart';
 import 'services/ai_service.dart';
 import 'services/sync_service.dart';
@@ -42,8 +43,9 @@ class AquaAIApp extends StatelessWidget {
       darkTheme: _buildTheme(Brightness.dark),
       themeMode: ThemeMode.system,
       // Localisation — language strings live in lib/l10n/app_*.arb.
-      // gen-l10n synthesises the delegate when `flutter pub get` runs.
+      // gen-l10n synthesises AppL10n when `flutter pub get` runs.
       localizationsDelegates: const [
+        AppL10n.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,

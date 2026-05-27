@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../services/api_service.dart';
 import '../../utils/constants.dart';
 import '../home/home_screen.dart';
+import 'forgot_password_screen.dart';
 import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -17,6 +18,13 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _loading = false;
   String? _error;
 
+  @override
+  void dispose() {
+    _emailCtrl.dispose();
+    _passCtrl.dispose();
+    super.dispose();
+  }
+
   Future<void> _login() async {
     setState(() { _loading = true; _error = null; });
     try {
@@ -27,8 +35,10 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       }
     } catch (e) {
+      if (!mounted) return;
       setState(() { _error = 'Invalid credentials. Please try again.'; });
     } finally {
+      if (!mounted) return;
       setState(() { _loading = false; });
     }
   }
@@ -57,10 +67,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: const Icon(Icons.water, color: Colors.white, size: 48),
                     ),
                     const SizedBox(height: 16),
-                    const Text('AquaAI',
+                    const Text(AppInfo.appName,
                         style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold,
                             color: Color(AppColors.primary))),
-                    const Text('Shrimp Seed Detect & Counter',
+                    const Text(AppInfo.tagline,
+                        textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 14, color: Colors.grey)),
                   ],
                 ),
@@ -110,7 +121,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
                     : const Text('Login', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 8),
+              TextButton(
+                onPressed: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const ForgotPasswordScreen())),
+                child: const Text('Forgot password?'),
+              ),
+              const SizedBox(height: 8),
               TextButton(
                 onPressed: () => Navigator.push(context,
                     MaterialPageRoute(builder: (_) => const RegisterScreen())),

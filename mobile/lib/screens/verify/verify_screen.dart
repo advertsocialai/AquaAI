@@ -20,6 +20,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
   }
 
   void _onDetect(BarcodeCapture capture) {
+    if (capture.barcodes.isEmpty) return;
     final raw = capture.barcodes.first.rawValue;
     if (raw == null || raw == _scanned) return;
     setState(() => _scanned = raw);

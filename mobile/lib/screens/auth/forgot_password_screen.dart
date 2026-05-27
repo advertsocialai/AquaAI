@@ -17,6 +17,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   static const _labels = ['Mobile', 'OTP', 'New password', 'Done'];
 
+  @override
+  void dispose() {
+    _mobile.dispose();
+    _otp.dispose();
+    _pw.dispose();
+    _pw2.dispose();
+    super.dispose();
+  }
+
   bool get _pwOk =>
       _pw.text.length >= 8 && _pw.text.contains(RegExp(r'[A-Z]')) && _pw.text.contains(RegExp(r'\d'));
   bool get _pwMatch => _pw.text == _pw2.text;

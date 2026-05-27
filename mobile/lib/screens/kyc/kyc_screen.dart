@@ -18,6 +18,17 @@ class _KycScreenState extends State<KycScreen> {
 
   static const _labels = ['Aadhaar', 'OTP', 'PAN', 'GST', 'Bank', 'Done'];
 
+  @override
+  void dispose() {
+    _aadhaar.dispose();
+    _otp.dispose();
+    _pan.dispose();
+    _gst.dispose();
+    _account.dispose();
+    _ifsc.dispose();
+    super.dispose();
+  }
+
   String _maskAadhaar(String raw) {
     final d = raw.replaceAll(RegExp(r'\D'), '');
     if (d.length <= 8) return d;
@@ -202,7 +213,7 @@ class _KycScreenState extends State<KycScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 32),
                 child: Text(
-                  'Your identity is now linked to every AquaI transaction — hatchery contracts, bank underwriting and Razorpay payouts.',
+                  'Your identity is now linked to every Aqua AI transaction — hatchery contracts, bank underwriting and Razorpay payouts.',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 12),
                 ),

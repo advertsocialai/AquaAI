@@ -61,6 +61,14 @@ class _CalcDetailState extends State<_CalcDetail> {
   final _b = TextEditingController();
   final _c = TextEditingController();
 
+  @override
+  void dispose() {
+    _a.dispose();
+    _b.dispose();
+    _c.dispose();
+    super.dispose();
+  }
+
   double _toD(TextEditingController c) => double.tryParse(c.text) ?? 0;
 
   String _output() {

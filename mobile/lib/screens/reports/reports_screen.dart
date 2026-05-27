@@ -24,6 +24,12 @@ class _ReportsScreenState extends State<ReportsScreen> with SingleTickerProvider
     _loadData();
   }
 
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
   Future<void> _loadData() async {
     setState(() => _loading = true);
     try {
@@ -32,12 +38,14 @@ class _ReportsScreenState extends State<ReportsScreen> with SingleTickerProvider
         apiService.getDashboard(),
         apiService.getLatestModels(),
       ]);
+      if (!mounted) return;
       setState(() {
         _certificates = results[0] as List;
         _dashboard = results[1] as Map;
         _models = results[2] as List;
       });
     } catch (_) {}
+    if (!mounted) return;
     setState(() => _loading = false);
   }
 
@@ -111,7 +119,7 @@ class _ReportsScreenState extends State<ReportsScreen> with SingleTickerProvider
               subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text('${cert['session_type']} · ${cert['farm_name'] ?? 'Unknown'}'),
                 if (cert['composite_score'] != null)
-                  Text('Score: ${(cert['composite_score'] as double).toStringAsFixed(1)}/100'),
+                  Text('Score: ${(cert['composite_score'] as num).toDouble().toStringAsFixed(1)}/100'),
               ]),
               trailing: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Container(

@@ -11,7 +11,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final _controller = TextEditingController();
   final _scroll = ScrollController();
   final List<_Msg> _msgs = [
-    _Msg(role: 'bot', text: 'Hi! I\'m AquaI assistant. How can I help your farm today?'),
+    _Msg(role: 'bot', text: 'Hi! I\'m the Aqua AI assistant. How can I help your farm today?'),
   ];
 
   String _answer(String q) {
@@ -84,7 +84,7 @@ class _ChatScreenState extends State<ChatScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: const [
-                Text('AquaI Assistant', style: TextStyle(fontSize: 15)),
+                Text('Aqua AI Assistant', style: TextStyle(fontSize: 15)),
                 Text('Online · multilingual',
                     style: TextStyle(fontSize: 11, color: Colors.greenAccent)),
               ],

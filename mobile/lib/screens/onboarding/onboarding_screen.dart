@@ -13,6 +13,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final _ctrl = PageController();
   int _i = 0;
 
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
+
   final _pages = const [
     _Slide(
       icon: Icons.biotech,

@@ -24,11 +24,20 @@ class _SeedCounterScreenState extends State<SeedCounterScreen> {
   final _totalVolCtrl = TextEditingController(text: '5000');
   final _invoiceQtyCtrl = TextEditingController(text: '100000');
 
+  @override
+  void dispose() {
+    _batchIdCtrl.dispose();
+    _sampleVolCtrl.dispose();
+    _totalVolCtrl.dispose();
+    _invoiceQtyCtrl.dispose();
+    super.dispose();
+  }
+
   Future<void> _runCounting() async {
     setState(() { _loading = true; });
     try {
       // F02: 3-Frame burst capture (simulated with AI service)
-      final aiResult = await aiService.runSeedCounter([], _ledBrightness);
+      await aiService.runSeedCounter([], _ledBrightness);
 
       // Submit to backend
       final session = await apiService.createCountingSession({
@@ -37,13 +46,16 @@ class _SeedCounterScreenState extends State<SeedCounterScreen> {
         'image_paths': [],
       });
 
+      if (!mounted) return;
       setState(() {
         _result = session;
         _step = 2;
       });
     } catch (e) {
+      if (!mounted) return;
       _showError(e.toString());
     } finally {
+      if (!mounted) return;
       setState(() { _loading = false; });
     }
   }
@@ -58,15 +70,19 @@ class _SeedCounterScreenState extends State<SeedCounterScreen> {
         double.parse(_totalVolCtrl.text),
         int.tryParse(_invoiceQtyCtrl.text),
       );
+      if (!mounted) return;
       setState(() { _extrapolation = ext; _step = 3; });
     } catch (e) {
+      if (!mounted) return;
       _showError(e.toString());
     } finally {
+      if (!mounted) return;
       setState(() { _loading = false; });
     }
   }
 
   void _showError(String msg) {
+    if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg), backgroundColor: Colors.red));
   }
 
@@ -197,9 +213,9 @@ class _SeedCounterScreenState extends State<SeedCounterScreen> {
 
   Widget _buildResults() {
     if (_result == null) return const SizedBox();
-    final mortality = (_result!['mortality_pct'] ?? 0.0) as double;
+    final mortality = (_result!['mortality_pct'] as num?)?.toDouble() ?? 0.0;
     final mortalityAlert = _result!['mortality_alert'] ?? 'green';
-    final cvPct = (_result!['cv_pct'] ?? 0.0) as double;
+    final cvPct = (_result!['cv_pct'] as num?)?.toDouble() ?? 0.0;
     final cvFlag = _result!['cv_flag'] ?? 'green';
 
     return SingleChildScrollView(
