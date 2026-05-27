@@ -2,6 +2,100 @@
 
 Android-first, iOS-ready Flutter app for India's aquaculture intelligence platform.
 
+> **Looking to install on your phone right now?** Skip this README and read
+> [Install on iPhone or Android](#install-on-iphone-or-android) below — the
+> Aqua AI PWA works on both today, no developer setup needed.
+
+---
+
+## Install on iPhone or Android
+
+You have three ways to get Aqua AI on a phone today. Pick what fits.
+
+### Option A — Install the PWA (free, works on iOS + Android, no App Store)
+
+This is the recommended path for farmers, VLEs and field staff. No Apple
+Developer fee, no Play Console listing, no waiting for review. Works offline
+once installed.
+
+**On iPhone (Safari only — Chrome and Firefox on iOS do not support PWA install):**
+
+1. Open <https://aquaai.in> in Safari
+2. Tap the Share button at the bottom (the square with the up arrow)
+3. Scroll down and tap **Add to Home Screen**
+4. Tap **Add** in the top-right corner
+5. The Aqua AI icon appears on your home screen — tap to launch full-screen
+
+The site auto-shows a banner with these steps the first time you visit on
+iOS Safari. Dismiss it with the × — it stays hidden for 30 days.
+
+**On Android (Chrome, Edge, Brave, Samsung Internet):**
+
+1. Open <https://aquaai.in> in your browser
+2. The browser shows an "Install Aqua AI" banner — tap **Install**
+3. Or use the browser menu → **Add to Home Screen** / **Install app**
+4. The icon appears in your app drawer
+
+**What works once installed:**
+
+- Full offline mode (the service worker caches articles, pricing, marketplace,
+  diagnostics outputs)
+- Camera access for QC sample capture
+- Push notifications (iOS 16.4+ / Android 5+)
+- Voice reader in 6 Indian languages
+- Home-screen icon + splash, runs full-screen like a native app
+- Cert-verify QR scanner
+
+**What doesn't:**
+
+- Background sync (foreground only on iOS Safari)
+- Apple Sign-in (use mobile OTP instead — it's the primary path anyway)
+
+### Option B — Sideload the Flutter build to your own iPhone (free, 7 days)
+
+For internal demos. Needs a Mac with Xcode + a free Apple ID.
+
+```bash
+cd mobile
+./scripts/bootstrap.sh     # materialises ios/ + android/ folders
+cd ios
+open Runner.xcworkspace    # opens Xcode
+```
+
+In Xcode:
+1. Click the **Runner** target → **Signing & Capabilities**
+2. Set **Team** to your free Apple ID (Personal Team)
+3. Set **Bundle Identifier** to something unique e.g. `in.aquai.mobile.dev`
+4. Plug in your iPhone, select it from the device list
+5. Click ▶ **Run**
+
+Limitations of a free Apple ID:
+- Certificate expires after 7 days — reinstall via Xcode to refresh
+- Maximum 3 sideloaded apps per Apple ID
+- One device per dev account
+- IPA cannot be shared with other devices
+
+### Option C — Sign + publish to the App Store / Play Store
+
+This is the long-term distribution path. Costs:
+
+- **Apple Developer Program**: $99 / year — required for TestFlight + App Store
+- **Google Play Console**: $25 one-time — required for Play Store
+
+With those accounts in place:
+
+```bash
+cd mobile
+./scripts/release.sh android   # → build/app/outputs/bundle/release/app-release.aab
+./scripts/release.sh ios       # → build/ios/ipa/aquaai_mobile.ipa
+```
+
+Upload the AAB to Play Console → Internal Testing track first, then
+production. Upload the IPA to App Store Connect via Transporter → TestFlight,
+then submit for review.
+
+---
+
 ## Quick start
 
 ```bash

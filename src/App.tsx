@@ -9,6 +9,7 @@ import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ChatBot } from "@/components/ChatBot";
 import { VoiceReader } from "@/components/VoiceReader";
+import { IosInstallPrompt } from "@/components/IosInstallPrompt";
 import { PageTransition } from "@/components/layout/PageTransition";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -112,6 +113,7 @@ const App = () => {
           <AnimatedRoutes />
           <ChatBot />
           <VoiceReader />
+          <IosInstallPrompt />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
