@@ -1,4 +1,4 @@
-# AquaI (BohrX.ai)
+# Aqua AI
 
 India's AI-powered aquaculture intelligence platform. Web app (Vite + React + Tailwind + shadcn/ui), Flutter mobile app (Android-first, iOS-ready), and FastAPI backend with PostGIS / Redis.
 

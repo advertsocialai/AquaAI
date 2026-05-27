@@ -1,7 +1,10 @@
 {
   "common": {
-    "signIn": "Sign in",
-    "signUp": "Create account",
+    "signIn": "SIGN IN",
+    "signUp": "SIGN UP",
+    "downloadApp": "DOWNLOAD APP",
+    "getStarted": "GET STARTED",
+    "alreadyHaveAccount": "Already have an account?",
     "signOut": "Sign out",
     "continue": "Continue",
     "back": "Back",
@@ -15,20 +18,26 @@
   },
   "nav": {
     "home": "Home",
-    "aquaai": "AquaAI",
+    "aquaai": "AQUA AI",
     "technology": "Technology",
     "founders": "Founders",
-    "collaborate": "Collaborate"
+    "collaborate": "Collaborate",
+    "knowledge": "KNOWLEDGE",
+    "about": "ABOUT",
+    "careers": "CAREERS",
+    "contact": "CONTACT"
   },
   "roles": {
     "farmer": "Farmer",
-    "vle": "VLE / Agent",
+    "vle": "Agent",
     "hatchery": "Hatchery",
     "transporter": "Transporter",
     "supplier": "Ice / O₂ Supply",
     "trader": "Trader / Export",
     "bank": "Bank / Insurer",
-    "govt": "MPEDA / Govt"
+    "govt": "MPEDA / Govt",
+    "ice": "Ice Equipment",
+    "oxygen": "Oxygen Supply"
   },
   "tabs": {
     "onboarding": "Onboarding",
@@ -92,5 +101,133 @@
     "valueProp2Desc": "Live mandi + export rates, 31+ species",
     "valueProp3Title": "Verified Marketplace",
     "valueProp3Desc": "KYC-checked suppliers, escrow payments"
+  },
+  "home": {
+    "tagline": "India's Aquaculture Intelligence Platform",
+    "hero1": "Decoding aquaculture,",
+    "hero2": "one pond at a time.",
+    "subtitle": "PCR-grade AI diagnostics. Live mandi pricing. Verified marketplace. Logistics. Crop advisory. Government surveillance. In 6 Indian languages — on a ₹8,000 Android phone, fully offline.",
+    "ctaStart": "Get started free",
+    "ctaSee": "See the platform",
+    "tagOffline": "Works fully offline",
+    "tagFree": "Free for farmers",
+    "modulesHead": "One platform",
+    "modulesTitle": "Everything from pond to port",
+    "modulesSub": "Eight modules connect every stakeholder in Indian aquaculture — from the farmer with a basic Android in West Godavari to the bank officer underwriting their loan in Mumbai."
+  },
+  "modules": {
+    "diagnostics": "AI Diagnostics",
+    "diagnosticsD": "PCR-grade EHP / WSSV / AHPND detection in 30 seconds. On-device TFLite.",
+    "pricing": "Live Pricing",
+    "pricingD": "Live mandi + export FOB rates across 31+ species and 9 coastal states.",
+    "marketplace": "Marketplace",
+    "marketplaceD": "KYC-verified seed, feed, aeration, ice, diagnostic kit suppliers.",
+    "logistics": "Logistics",
+    "logisticsD": "Load matching, GPS tracking, cold-chain compliance, e-way bills.",
+    "advisory": "Crop Advisory",
+    "advisoryD": "Crop calendar, alerts within 5 km, voice assistant in 6 languages.",
+    "b2b": "B2B Portal",
+    "b2bD": "Hatchery dispatch, dispute resolution, HMAC-signed QC certs + QR.",
+    "surveillance": "Surveillance",
+    "surveillanceD": "MPEDA / NSPAAD outbreak heatmap, compliance dashboard for officers.",
+    "risk": "Risk Scoring",
+    "riskD": "Farm-risk Band A-D API for bank underwriting + insurance claims."
+  },
+  "stats": {
+    "aiModels": "AI Models",
+    "aiModelsSub": "On-device TFLite",
+    "diseases": "Diseases",
+    "inference": "Inference time",
+    "inferenceSub": "Mid-range Android",
+    "pcr": "PCR agreement",
+    "pcrSub": "Sensitivity vs lab"
+  },
+  "footer": {
+    "tagline": "AI for India's Aquaculture",
+    "rights": "All rights reserved",
+    "linkedin": "LinkedIn",
+    "twitter": "Twitter",
+    "github": "GitHub",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "brandLine": "India's AI-powered aquaculture intelligence platform. Live pricing, PCR-grade diagnostics, verified marketplace, logistics and government surveillance — in 6 Indian languages.",
+    "quickLinks": "Quick Links",
+    "platform": "Platform",
+    "getInTouch": "Get in touch",
+    "sendMessage": "Send a message",
+    "copyright": "Aqua AI — Innovative aquaculture solutions for sustainable farming practices.",
+    "subscribe": "Subscribe to stay updated",
+    "subscribeSub": "Disease alerts, pricing trends, new articles — in your language. Unsubscribe anytime."
+  },
+  "builtFor": {
+    "head": "Built for",
+    "title": "One platform. Six livelihoods.",
+    "sub": "From the pond to the port — every link in the aquaculture chain, in your language, on your phone."
+  },
+  "roles_ext": {
+    "ice": "Ice Equipment",
+    "oxygen": "Oxygen Supply"
+  },
+  "roleDesc": {
+    "farmer": "Live pond pricing, crop calendar, disease alerts within 5 km, voice assistant in your language.",
+    "vle": "On-device AI diagnostics, manage a farmer cluster, commissions for every QC certificate issued.",
+    "transporter": "Load board, GPS tracking, cold-chain temperature logs, e-way bills auto-generated.",
+    "ice": "Ice orders, harvest-day routing, capacity planning across pond clusters.",
+    "oxygen": "Aerator, diffuser and emergency O₂ supply with same-day pond delivery.",
+    "trader": "Bulk procurement, lot-level quality verification, export FOB linkage."
+  },
+  "testimonials": {
+    "head": "Field results",
+    "title": "What the platform is changing"
+  },
+  "mobileApp": {
+    "head": "On your phone",
+    "title": "Carry the platform to the pond.",
+    "body": "The Aqua AI Android app works fully offline on a ₹8,000 phone. Sync when you have signal. All 5 AI models on-device. 6 Indian languages. iOS coming soon.",
+    "getItOn": "Get it on",
+    "downloadOn": "Download on",
+    "comingOn": "Coming on",
+    "scanQr": "Scan QR"
+  },
+  "faq": {
+    "head": "FAQ",
+    "title": "Things people ask"
+  },
+  "finalCta": {
+    "title": "Get started in 5 minutes",
+    "body": "Create an account, pick your role, complete KYC, and you're in the dashboard. Free for farmers — paid tiers for hatcheries, banks, traders and government bodies.",
+    "createAccount": "Create account",
+    "readArticles": "Read articles first"
+  },
+  "voice": {
+    "readPage": "Read page",
+    "pause": "Pause",
+    "resume": "Resume",
+    "stop": "Stop",
+    "reading": "Reading…",
+    "paused": "Paused"
+  },
+  "weather": {
+    "districtPlaceholder": "Your district",
+    "update": "Update",
+    "rain": "Rain",
+    "loading": "loading…",
+    "cycloneAlert": "Cyclone alert active for {{district}}. Check IMD advisory.",
+    "next7Days": "Next 7 days",
+    "today": "Today"
+  },
+  "aquaai_page": {
+    "pill": "Aquaculture AI Platform",
+    "title1": "Aqua AI",
+    "title2": "Shrimp Seed",
+    "title3": "Diagnostics",
+    "subtitle": "Catch disease before it spreads. Score every batch. Price every harvest. A full aquaculture intelligence platform — in your pocket, in your language, even when the network drops.",
+    "dashboardHead": "Try it",
+    "dashboardTitle": "Pick your role",
+    "dashboardModules": "8 roles · 6 modules",
+    "dashboardSub": "Each role opens its own dashboard.",
+    "perfHead": "Performance",
+    "perfTitle": "Model Accuracy Targets",
+    "perfSub": "Validated against PCR-confirmed test sets and manual count ground truth."
   }
 }

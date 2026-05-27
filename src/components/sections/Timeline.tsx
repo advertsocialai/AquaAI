@@ -2,8 +2,8 @@ import { motion } from 'framer-motion';
 
 const milestones = [
   { year: '2023', title: 'Founded', description: 'Aqua AI incorporated with a vision to decode biological aging using AI.', upcoming: false },
-  { year: '2023', title: 'First AI Model', description: 'Developed initial deep learning models for biological age prediction from blood biomarkers.', upcoming: false },
-  { year: '2024', title: 'Bio-Age Platform', description: 'Released production-grade biological age scoring platform for research partners.', upcoming: false },
+  { year: '2023', title: 'First AI Model', description: 'Developed initial deep-learning models for shrimp seed disease detection and post-larva counting from pond-side images.', upcoming: false },
+  { year: '2024', title: 'AquaAI Platform', description: 'Released production-grade on-device diagnostics platform for VLEs and hatcheries.', upcoming: false },
   { year: '2025', title: 'Clinical Validation', description: 'Partnering with clinical institutions to validate models in real-world settings.', upcoming: true },
   { year: '2026', title: 'Clinical Trials', description: 'Initiating clinical trials for AI-driven early intervention protocols.', upcoming: true },
 ];

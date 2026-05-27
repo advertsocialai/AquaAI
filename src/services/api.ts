@@ -1,11 +1,21 @@
 /**
- * AquaI service layer. Frontend talks ONLY to these functions — never to
- * a hard-coded backend URL. To swap mocks for real data, change
- * USE_STUBS to false and implement the real-backend branches.
+ * AquaAI service layer.
+ *
+ * Frontend talks ONLY to these functions — never to a hard-coded backend URL.
+ * Real backend wired by default; pass ?stubs in the URL (or set localStorage
+ * `aquai-stubs=1`) to force offline mock data for design/dev work.
+ *
+ * Adapters live here so every UI consumer keeps the same shape regardless of
+ * what the API returns.
  */
 
-const USE_STUBS = true;
 const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:8000/api/v1';
+
+function stubsMode(): boolean {
+  if (typeof window === 'undefined') return false;
+  if (new URLSearchParams(window.location.search).has('stubs')) return true;
+  return window.localStorage?.getItem('aquai-stubs') === '1';
+}
 
 async function realGet<T>(path: string): Promise<T | null> {
   try {
@@ -21,7 +31,7 @@ function delay<T>(value: T, ms = 250): Promise<T> {
   return new Promise((r) => setTimeout(() => r(value), ms));
 }
 
-// ── Types ──────────────────────────────────────────────────────────────────────
+// ── Types (the UI's expected shapes) ─────────────────────────────────────────
 
 export type PriceRow = {
   species: string;
@@ -60,39 +70,44 @@ export type WeatherSnapshot = {
   cycloneAlert: boolean;
 };
 
-// ── Pricing ────────────────────────────────────────────────────────────────────
+// ── Pricing — wraps /pricing/{category} and /pricing/history ─────────────────
 
 const PRAWN_PRICES: PriceRow[] = [
-  { species: 'L. vannamei',          size: '30 count',    low: 480, high: 550, trend: 'up' },
-  { species: 'L. vannamei',          size: '40 count',    low: 380, high: 450, trend: 'up' },
-  { species: 'L. vannamei',          size: '50 count',    low: 320, high: 380, trend: 'flat' },
-  { species: 'L. vannamei',          size: '60 count',    low: 280, high: 330, trend: 'flat' },
-  { species: 'L. vannamei',          size: '70 count',    low: 240, high: 290, trend: 'down' },
-  { species: 'L. vannamei',          size: '80 count',    low: 210, high: 260, trend: 'down' },
-  { species: 'L. vannamei',          size: '100 count',   low: 180, high: 220, trend: 'down' },
-  { species: 'P. monodon (Tiger)',   size: '20 count',    low: 750, high: 900, trend: 'up' },
-  { species: 'P. monodon (Tiger)',   size: '30 count',    low: 600, high: 720, trend: 'up' },
-  { species: 'Scampi',               size: '6-10 count',  low: 550, high: 700, trend: 'up' },
+  { species: 'L. vannamei',        size: '30 count',    low: 480, high: 550, trend: 'up'   },
+  { species: 'L. vannamei',        size: '40 count',    low: 380, high: 450, trend: 'up'   },
+  { species: 'L. vannamei',        size: '50 count',    low: 320, high: 380, trend: 'flat' },
+  { species: 'L. vannamei',        size: '60 count',    low: 280, high: 330, trend: 'flat' },
+  { species: 'L. vannamei',        size: '70 count',    low: 240, high: 290, trend: 'down' },
+  { species: 'L. vannamei',        size: '80 count',    low: 210, high: 260, trend: 'down' },
+  { species: 'L. vannamei',        size: '100 count',   low: 180, high: 220, trend: 'down' },
+  { species: 'P. monodon (Tiger)', size: '20 count',    low: 750, high: 900, trend: 'up'   },
+  { species: 'P. monodon (Tiger)', size: '30 count',    low: 600, high: 720, trend: 'up'   },
+  { species: 'Scampi',             size: '6-10 count',  low: 550, high: 700, trend: 'up'   },
 ];
 
-export async function getPrices(category: 'prawn' | 'freshwater' | 'marine'): Promise<PriceRow[]> {
-  if (USE_STUBS) {
-    if (category === 'prawn') return delay(PRAWN_PRICES);
-    if (category === 'freshwater') return delay([] as PriceRow[]);
-    return delay([] as PriceRow[]);
+export async function getPrices(
+  category: 'prawn' | 'freshwater' | 'marine',
+): Promise<PriceRow[]> {
+  if (stubsMode()) {
+    return delay(category === 'prawn' ? PRAWN_PRICES : []);
   }
   return (await realGet<PriceRow[]>(`/pricing/${category}`)) ?? [];
 }
 
-export async function getPriceHistory(speciesId: string, range: '7d' | '30d' | '90d' | '1y'): Promise<{ x: string; price: number }[]> {
-  if (USE_STUBS) {
-    // History is generated client-side in PriceHistoryChart; service exists so it can be swapped later.
-    return delay([]);
-  }
-  return (await realGet(`/pricing/history?species=${speciesId}&range=${range}`)) ?? [];
+export async function getPriceHistory(
+  speciesId: string,
+  range: '7d' | '30d' | '90d' | '1y',
+): Promise<{ x: string; price: number }[]> {
+  if (stubsMode()) return delay([]);
+
+  // Backend returns [{ date, price }]; UI consumes [{ x, price }].
+  const points = await realGet<Array<{ date: string; price: number }>>(
+    `/pricing/history?species=${encodeURIComponent(speciesId)}&range=${range}`,
+  );
+  return (points ?? []).map((p) => ({ x: p.date, price: p.price }));
 }
 
-// ── Outbreaks & Surveillance ───────────────────────────────────────────────────
+// ── Outbreaks ────────────────────────────────────────────────────────────────
 
 const OUTBREAKS: Outbreak[] = [
   { district: 'West Godavari', state: 'AP', species: 'L. vannamei', disease: 'EHP',   farms: 14, severity: 'high'   },
@@ -103,11 +118,11 @@ const OUTBREAKS: Outbreak[] = [
 ];
 
 export async function getOutbreaks(): Promise<Outbreak[]> {
-  if (USE_STUBS) return delay(OUTBREAKS);
+  if (stubsMode()) return delay(OUTBREAKS);
   return (await realGet<Outbreak[]>('/surveillance/outbreaks')) ?? [];
 }
 
-// ── Risk scoring (for banks/insurers) ──────────────────────────────────────────
+// ── Risk scoring (banks / insurers) ──────────────────────────────────────────
 
 const FARM_RISK: FarmRisk[] = [
   { id: 'F-1142', farmer: 'V. Ramana',     district: 'Bhimavaram', acres: 4.5, qsAvg: 91, outbreakRisk: 12, band: 'A', loanReq:  800000, recommended:  800000 },
@@ -118,21 +133,43 @@ const FARM_RISK: FarmRisk[] = [
 ];
 
 export async function getFarmRiskBook(): Promise<FarmRisk[]> {
-  if (USE_STUBS) return delay(FARM_RISK);
+  if (stubsMode()) return delay(FARM_RISK);
   return (await realGet<FarmRisk[]>('/risk/farms')) ?? [];
 }
 
-// ── Weather ────────────────────────────────────────────────────────────────────
+// ── Weather (snake_case → camelCase adapter) ─────────────────────────────────
+
+type WeatherBackend = {
+  district: string;
+  temp_c: number;
+  condition: string;
+  rain_mm: number;
+  cyclone_alert: boolean;
+};
 
 export async function getWeather(district: string): Promise<WeatherSnapshot> {
-  if (USE_STUBS) {
-    return delay({ district, tempC: 29, condition: 'partly cloudy', rainMm: 65, cycloneAlert: false });
+  const fallback: WeatherSnapshot = {
+    district, tempC: 0, condition: 'unknown', rainMm: 0, cycloneAlert: false,
+  };
+  if (stubsMode()) {
+    return delay({
+      district, tempC: 29, condition: 'partly cloudy', rainMm: 65, cycloneAlert: false,
+    });
   }
-  const r = await realGet<WeatherSnapshot>(`/weather?district=${encodeURIComponent(district)}`);
-  return r ?? { district, tempC: 0, condition: 'unknown', rainMm: 0, cycloneAlert: false };
+  const r = await realGet<WeatherBackend>(
+    `/advisory/weather?district=${encodeURIComponent(district)}`,
+  );
+  if (!r) return fallback;
+  return {
+    district: r.district,
+    tempC: r.temp_c,
+    condition: r.condition,
+    rainMm: r.rain_mm,
+    cycloneAlert: r.cyclone_alert,
+  };
 }
 
-// ── Auth (stubs only — real auth via Firebase / Supabase / Aadhaar e-KYC) ──────
+// ── Auth (stubs until SMS gateway is contracted) ─────────────────────────────
 
 export async function requestOtp(_mobile: string): Promise<{ ok: boolean; otpHint?: string }> {
   return delay({ ok: true, otpHint: '••••42' });
@@ -142,7 +179,7 @@ export async function verifyOtp(_mobile: string, otp: string): Promise<{ ok: boo
   return delay({ ok: otp.length === 6, token: otp.length === 6 ? 'stub-jwt-token' : undefined });
 }
 
-export async function signup(payload: {
+export async function signup(_payload: {
   mobile: string;
   role: string;
   name: string;
@@ -152,25 +189,29 @@ export async function signup(payload: {
   return delay({ ok: true, userId: `usr_${Date.now()}` });
 }
 
-// ── Chat (stub — wire to Claude API or Anthropic SDK later) ────────────────────
+// ── Assistant (real Claude Opus via /advisory/assistant) ─────────────────────
 
 export async function askAssistant(question: string, lang: string = 'en'): Promise<string> {
-  if (USE_STUBS) {
-    // Mirrors ChatBot rules so the surface is identical.
+  if (stubsMode()) {
     const t = question.toLowerCase();
-    if (t.includes('price'))     return 'Vannamei 40-count is ₹420/kg today.';
-    if (t.includes('ehp'))       return '2 EHP-confirmed farms within 5 km in 48h.';
-    if (t.includes('feed'))      return 'For 500 kg biomass at 4% body weight: 20 kg/day starter feed.';
-    if (t.includes('weather'))   return 'IMD forecast: 65mm rain tonight.';
+    if (t.includes('price'))   return 'Vannamei 40-count is ₹420/kg today.';
+    if (t.includes('ehp'))     return '2 EHP-confirmed farms within 5 km in 48h.';
+    if (t.includes('feed'))    return 'For 500 kg biomass at 4% body weight: 20 kg/day starter feed.';
+    if (t.includes('weather')) return 'IMD forecast: 65mm rain tonight.';
     return 'I can help with pricing, disease alerts, feeding and weather.';
   }
-  const res = await fetch(`${API_BASE}/assistant`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ question, lang }),
-  });
-  const data = await res.json();
-  return data.reply ?? '';
+  try {
+    const res = await fetch(`${API_BASE}/advisory/assistant`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question, lang }),
+    });
+    if (!res.ok) return 'Service temporarily unavailable.';
+    const data = await res.json();
+    return data.reply ?? data.answer ?? data.message ?? '';
+  } catch {
+    return 'Service temporarily unavailable.';
+  }
 }
 
-export const __config = { USE_STUBS, API_BASE };
+export const __config = { API_BASE };

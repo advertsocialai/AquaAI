@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Fish, ArrowRight, ArrowLeft, Check, Smartphone, KeyRound,
@@ -23,8 +24,9 @@ const KYC_FIELDS: Record<Role, { label: string; hint: string }> = {
 };
 
 export default function SignupPage() {
-  useEffect(() => { document.title = 'Create account — AquaI'; }, []);
+  useEffect(() => { document.title = 'Get started — Aqua AI'; }, []);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [step, setStep] = useState<StepId>('Role');
   const [role, setRole] = useState<Role | null>(null);
@@ -42,12 +44,17 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen bg-background text-white">
       <div className="container mx-auto px-6 lg:px-8 py-8 max-w-3xl">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-8 gap-4">
           <Link to="/" className="inline-flex items-center gap-2 text-white">
-            <Fish className="w-4 h-4 text-cyan-400" />
-            <span className="font-semibold">AquaI</span>
+            <Fish className="w-5 h-5 text-cyan-400" />
+            <span className="font-semibold text-base">Aqua AI</span>
           </Link>
-          <Link to="/login" className="text-sm text-white/50 hover:text-white">Sign in instead</Link>
+          <div className="text-sm text-white/55">
+            {t('common.alreadyHaveAccount')}{' '}
+            <Link to="/login" className="text-cyan-300 hover:text-cyan-200 font-semibold underline-offset-4 hover:underline">
+              {t('common.signIn')}
+            </Link>
+          </div>
         </div>
 
         {/* progress */}

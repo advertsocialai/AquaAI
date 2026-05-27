@@ -13,7 +13,7 @@ test("home page renders the brand", async ({ page }) => {
   if (await enterBtn.isVisible().catch(() => false)) {
     await enterBtn.click();
   }
-  await expect(page).toHaveTitle(/BohrX|AquaI/i);
+  await expect(page).toHaveTitle(/Aqua\s*AI/i);
 });
 
 test("AquaAI dashboard is reachable and shows the role selector", async ({ page }) => {

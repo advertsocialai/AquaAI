@@ -1,38 +1,39 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Instagram,
   Send, Check, ArrowRight,
 } from 'lucide-react';
 import atomLogo from '@/assets/atom-logo.svg';
 
-const QUICK_LINKS = [
-  { label: 'Home',          to: '/' },
-  { label: 'Aqua AI',       to: '/aquaai' },
-  { label: 'Knowledge Hub', to: '/knowledge' },
-  { label: 'About',         to: '/about' },
-  { label: 'Careers',       to: '/careers' },
-  { label: 'Contact',       to: '/contact' },
-];
-
-const PLATFORM_LINKS = [
-  { label: 'Diagnostics',  to: '/aquaai' },
-  { label: 'Pricing',      to: '/aquaai' },
-  { label: 'Marketplace',  to: '/aquaai' },
-  { label: 'Logistics',    to: '/aquaai' },
-  { label: 'Verify cert',  to: '/verify/QC-2026-04421' },
-];
-
-const LEGAL_LINKS = [
-  { label: 'Privacy',  to: '/privacy' },
-  { label: 'Terms',    to: '/terms' },
-  { label: 'Sign in',  to: '/login' },
-  { label: 'Sign up',  to: '/signup' },
-];
-
 export function Footer() {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+
+  const QUICK_LINKS = [
+    { label: t('nav.home'),      to: '/' },
+    { label: t('nav.aquaai'),    to: '/aquaai' },
+    { label: t('nav.knowledge'), to: '/knowledge' },
+    { label: t('nav.about'),     to: '/about' },
+    { label: t('nav.careers'),   to: '/careers' },
+    { label: t('nav.contact'),   to: '/contact' },
+  ];
+
+  const PLATFORM_LINKS = [
+    { label: t('modules.diagnostics'),  to: '/aquaai' },
+    { label: t('modules.pricing'),      to: '/aquaai' },
+    { label: t('modules.marketplace'),  to: '/aquaai' },
+    { label: t('modules.logistics'),    to: '/aquaai' },
+  ];
+
+  const LEGAL_LINKS = [
+    { label: t('footer.privacy'),  to: '/privacy' },
+    { label: t('footer.terms'),    to: '/terms' },
+    { label: t('common.signIn'),   to: '/login' },
+    { label: t('common.signUp'),   to: '/signup' },
+  ];
 
   function subscribe(e: React.FormEvent) {
     e.preventDefault();
@@ -48,11 +49,9 @@ export function Footer() {
       <div className="border-b border-white/5">
         <div className="container mx-auto px-6 lg:px-8 py-12 grid md:grid-cols-2 gap-8 items-center">
           <div>
-            <div className="text-[11px] uppercase tracking-widest text-cyan-300 mb-2">Subscribe to stay updated</div>
-            <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">Trends, innovations and more — weekly</h3>
-            <p className="text-sm text-white/50">
-              Disease alerts, pricing trends, new articles. In your language. Unsubscribe anytime.
-            </p>
+            <div className="text-sm uppercase tracking-widest text-cyan-300 mb-2">{t('footer.subscribe')}</div>
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">{t('footer.tagline')}</h3>
+            <p className="text-base text-white/55">{t('footer.subscribeSub')}</p>
           </div>
           <form onSubmit={subscribe} className="flex items-center gap-2">
             <div className="flex items-center gap-2 flex-1 px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03] focus-within:border-cyan-400/40">
@@ -82,13 +81,9 @@ export function Footer() {
         <div className="col-span-2 md:col-span-2 space-y-4">
           <Link to="/" className="inline-flex items-center gap-3">
             <img src={atomLogo} alt="Aqua AI" className="w-9 h-9 object-contain" />
-            <span className="text-lg font-bold text-white tracking-wider">AQUA<span className="font-light"> AI</span></span>
+            <span className="text-xl font-bold text-white tracking-wider">AQUA<span className="font-light"> AI</span></span>
           </Link>
-          <p className="text-sm text-white/55 leading-relaxed max-w-sm">
-            India's AI-powered aquaculture intelligence platform. Live pricing, PCR-grade
-            diagnostics, verified marketplace, logistics and government surveillance — in 6
-            Indian languages.
-          </p>
+          <p className="text-base text-white/65 leading-relaxed max-w-sm">{t('footer.brandLine')}</p>
           <div className="flex items-center gap-2 pt-2">
             <a
               href="#"
@@ -127,11 +122,11 @@ export function Footer() {
 
         {/* Quick links */}
         <div>
-          <div className="text-xs uppercase tracking-widest text-cyan-300 mb-4">Quick Links</div>
+          <div className="text-sm uppercase tracking-widest text-cyan-300 mb-5">{t('footer.quickLinks')}</div>
           <ul className="space-y-2">
             {QUICK_LINKS.map((l) => (
               <li key={l.label}>
-                <Link to={l.to} className="text-sm text-white/60 hover:text-white transition">
+                <Link to={l.to} className="text-base text-white/65 hover:text-white transition">
                   {l.label}
                 </Link>
               </li>
@@ -141,11 +136,11 @@ export function Footer() {
 
         {/* Platform */}
         <div>
-          <div className="text-xs uppercase tracking-widest text-cyan-300 mb-4">Platform</div>
+          <div className="text-sm uppercase tracking-widest text-cyan-300 mb-5">{t('footer.platform')}</div>
           <ul className="space-y-2">
             {PLATFORM_LINKS.map((l) => (
               <li key={l.label}>
-                <Link to={l.to} className="text-sm text-white/60 hover:text-white transition">
+                <Link to={l.to} className="text-base text-white/65 hover:text-white transition">
                   {l.label}
                 </Link>
               </li>
@@ -155,34 +150,34 @@ export function Footer() {
 
         {/* Get in touch */}
         <div>
-          <div className="text-xs uppercase tracking-widest text-cyan-300 mb-4">Get in touch</div>
-          <ul className="space-y-3 text-sm">
-            <li className="flex items-start gap-2 text-white/60">
-              <Phone className="w-3.5 h-3.5 mt-0.5 text-cyan-400 shrink-0" />
+          <div className="text-sm uppercase tracking-widest text-cyan-300 mb-5">{t('footer.getInTouch')}</div>
+          <ul className="space-y-3 text-base">
+            <li className="flex items-start gap-2.5 text-white/65">
+              <Phone className="w-4 h-4 mt-1 text-cyan-400 shrink-0" />
               <a href="tel:+919000000000" className="hover:text-white">+91 90000 00000</a>
             </li>
-            <li className="flex items-start gap-2 text-white/60">
-              <Mail className="w-3.5 h-3.5 mt-0.5 text-cyan-400 shrink-0" />
+            <li className="flex items-start gap-2.5 text-white/65">
+              <Mail className="w-4 h-4 mt-1 text-cyan-400 shrink-0" />
               <a href="mailto:support@aquai.in" className="hover:text-white">support@aquai.in</a>
             </li>
-            <li className="flex items-start gap-2 text-white/60">
-              <MapPin className="w-3.5 h-3.5 mt-0.5 text-cyan-400 shrink-0" />
+            <li className="flex items-start gap-2.5 text-white/65">
+              <MapPin className="w-4 h-4 mt-1 text-cyan-400 shrink-0" />
               <span>Andhra Pradesh, India</span>
             </li>
           </ul>
           <Link
             to="/contact"
-            className="inline-flex items-center gap-1.5 mt-4 text-xs text-cyan-400 hover:underline"
+            className="inline-flex items-center gap-1.5 mt-5 text-sm text-cyan-400 hover:underline"
           >
-            Send a message <ArrowRight className="w-3 h-3" />
+            {t('footer.sendMessage')} <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </div>
 
       {/* Bottom strip */}
       <div className="border-t border-white/5">
-        <div className="container mx-auto px-6 lg:px-8 py-5 flex flex-wrap items-center justify-between gap-3 text-[11px] text-white/35">
-          <div>© {new Date().getFullYear()} Aqua AI — Innovative aquaculture solutions for sustainable farming practices.</div>
+        <div className="container mx-auto px-6 lg:px-8 py-6 flex flex-wrap items-center justify-between gap-3 text-sm text-white/45">
+          <div>© {new Date().getFullYear()} {t('footer.copyright')}</div>
           <div className="flex items-center gap-4">
             {LEGAL_LINKS.map((l) => (
               <Link key={l.label} to={l.to} className="hover:text-white/70 transition">{l.label}</Link>

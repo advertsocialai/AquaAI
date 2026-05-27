@@ -1,10 +1,219 @@
 {
-  "common": { "signIn": "साइन इन", "signUp": "खाता बनाएं", "signOut": "साइन आउट", "continue": "जारी रखें", "back": "वापस", "next": "अगला", "finish": "समाप्त", "search": "खोजें", "save": "सहेजें", "cancel": "रद्द", "loading": "लोड हो रहा है…", "language": "भाषा" },
-  "nav": { "home": "होम", "aquaai": "AquaAI", "technology": "तकनीक", "founders": "संस्थापक", "collaborate": "सहयोग" },
-  "roles": { "farmer": "किसान", "vle": "VLE / एजेंट", "hatchery": "हैचरी", "transporter": "ट्रांसपोर्टर", "supplier": "बर्फ / O₂", "trader": "व्यापारी / निर्यात", "bank": "बैंक / बीमा", "govt": "MPEDA / सरकार" },
-  "tabs": { "onboarding": "ऑनबोर्डिंग", "diagnostics": "डायग्नोस्टिक्स", "pricing": "मूल्य निर्धारण", "marketplace": "मार्केटप्लेस", "logistics": "लॉजिस्टिक्स", "advisory": "सलाह", "calculators": "कैलकुलेटर", "knowledge": "ज्ञान केंद्र", "community": "समुदाय", "reports": "रिपोर्ट्स", "b2b": "B2B पोर्टल", "surveillance": "निगरानी", "risk": "जोखिम स्कोरिंग", "admin": "एडमिन" },
-  "dashboard": { "viewAs": "के रूप में देखें", "modulesAvailable": "{{count}} मॉड्यूल उपलब्ध", "default": "डिफ़ॉल्ट", "title": "एकीकृत डैशबोर्ड", "subtitle": "6 मॉड्यूल · 8 भूमिकाएं" },
-  "pricing": { "title": "लाइव मूल्य निर्धारण", "tabPrawn": "झींगा", "tabFreshwater": "मीठे पानी की मछली", "tabMarine": "खारे पानी / समुद्री", "searchPlaceholder": "प्रजाति खोजें…", "marketFarmgate": "खेत द्वार", "marketMandi": "मंडी", "marketExportFob": "निर्यात FOB", "species": "प्रजाति", "size": "आकार", "low": "कम ₹/kg", "high": "अधिक ₹/kg", "mid": "मध्य", "trend": "रुझान", "noMatches": "कोई प्रजाति नहीं मिली" },
-  "advisory": { "cropCalendar": "फसल कैलेंडर", "liveAlerts": "लाइव अलर्ट", "weather": "मौसम (IMD)", "voiceAssistant": "वॉयस असिस्टेंट", "schemes": "सरकारी योजनाएं", "community": "समुदाय" },
-  "login": { "welcomeBack": "वापसी पर स्वागत है", "subtitle": "अपने मोबाइल नंबर से साइन इन करें", "mobileLabel": "मोबाइल नंबर", "sendOtp": "OTP भेजें", "otpLabel": "6-अंकीय OTP", "newUser": "AquaAI में नए हैं?", "createAccount": "खाता बनाएं", "valueProp1Title": "लाइव AI डायग्नोस्टिक्स", "valueProp1Desc": "30 सेकंड में PCR-सत्यापित पहचान", "valueProp2Title": "बेहतरीन कीमतें", "valueProp2Desc": "लाइव मंडी + निर्यात दर, 31+ प्रजातियां", "valueProp3Title": "सत्यापित मार्केटप्लेस", "valueProp3Desc": "KYC-सत्यापित सप्लायर, एस्क्रो भुगतान" }
+  "common": {
+    "signIn": "साइन इन",
+    "signUp": "साइन अप",
+    "downloadApp": "ऐप डाउनलोड",
+    "getStarted": "शुरू करें",
+    "alreadyHaveAccount": "पहले से खाता है?",
+    "signOut": "साइन आउट",
+    "continue": "जारी रखें",
+    "back": "वापस",
+    "next": "अगला",
+    "finish": "समाप्त",
+    "search": "खोजें",
+    "save": "सहेजें",
+    "cancel": "रद्द",
+    "loading": "लोड हो रहा है…",
+    "language": "भाषा"
+  },
+  "nav": {
+    "home": "होम",
+    "aquaai": "एक्वा AI",
+    "technology": "तकनीक",
+    "founders": "संस्थापक",
+    "collaborate": "सहयोग",
+    "knowledge": "ज्ञान",
+    "about": "हमारे बारे में",
+    "careers": "करियर",
+    "contact": "संपर्क"
+  },
+  "roles": {
+    "farmer": "किसान",
+    "vle": "VLE / एजेंट",
+    "hatchery": "हैचरी",
+    "transporter": "ट्रांसपोर्टर",
+    "supplier": "बर्फ / O₂",
+    "trader": "व्यापारी / निर्यात",
+    "bank": "बैंक / बीमा",
+    "govt": "MPEDA / सरकार"
+  },
+  "tabs": {
+    "onboarding": "ऑनबोर्डिंग",
+    "diagnostics": "डायग्नोस्टिक्स",
+    "pricing": "मूल्य निर्धारण",
+    "marketplace": "मार्केटप्लेस",
+    "logistics": "लॉजिस्टिक्स",
+    "advisory": "सलाह",
+    "calculators": "कैलकुलेटर",
+    "knowledge": "ज्ञान केंद्र",
+    "community": "समुदाय",
+    "reports": "रिपोर्ट्स",
+    "b2b": "B2B पोर्टल",
+    "surveillance": "निगरानी",
+    "risk": "जोखिम स्कोरिंग",
+    "admin": "एडमिन"
+  },
+  "dashboard": {
+    "viewAs": "के रूप में देखें",
+    "modulesAvailable": "{{count}} मॉड्यूल उपलब्ध",
+    "default": "डिफ़ॉल्ट",
+    "title": "एकीकृत डैशबोर्ड",
+    "subtitle": "6 मॉड्यूल · 8 भूमिकाएं"
+  },
+  "pricing": {
+    "title": "लाइव मूल्य निर्धारण",
+    "tabPrawn": "झींगा",
+    "tabFreshwater": "मीठे पानी की मछली",
+    "tabMarine": "खारे पानी / समुद्री",
+    "searchPlaceholder": "प्रजाति खोजें…",
+    "marketFarmgate": "खेत द्वार",
+    "marketMandi": "मंडी",
+    "marketExportFob": "निर्यात FOB",
+    "species": "प्रजाति",
+    "size": "आकार",
+    "low": "कम ₹/kg",
+    "high": "अधिक ₹/kg",
+    "mid": "मध्य",
+    "trend": "रुझान",
+    "noMatches": "कोई प्रजाति नहीं मिली"
+  },
+  "advisory": {
+    "cropCalendar": "फसल कैलेंडर",
+    "liveAlerts": "लाइव अलर्ट",
+    "weather": "मौसम (IMD)",
+    "voiceAssistant": "वॉयस असिस्टेंट",
+    "schemes": "सरकारी योजनाएं",
+    "community": "समुदाय"
+  },
+  "login": {
+    "welcomeBack": "वापसी पर स्वागत है",
+    "subtitle": "अपने मोबाइल नंबर से साइन इन करें",
+    "mobileLabel": "मोबाइल नंबर",
+    "sendOtp": "OTP भेजें",
+    "otpLabel": "6-अंकीय OTP",
+    "newUser": "AquaAI में नए हैं?",
+    "createAccount": "खाता बनाएं",
+    "valueProp1Title": "लाइव AI डायग्नोस्टिक्स",
+    "valueProp1Desc": "30 सेकंड में PCR-सत्यापित पहचान",
+    "valueProp2Title": "बेहतरीन कीमतें",
+    "valueProp2Desc": "लाइव मंडी + निर्यात दर, 31+ प्रजातियां",
+    "valueProp3Title": "सत्यापित मार्केटप्लेस",
+    "valueProp3Desc": "KYC-सत्यापित सप्लायर, एस्क्रो भुगतान"
+  },
+  "home": {
+    "tagline": "भारत का जलकृषि बुद्धिमत्ता मंच",
+    "hero1": "जलकृषि को डिकोड कर रहे हैं,",
+    "hero2": "एक तालाब के समय में.",
+    "subtitle": "PCR-स्तरीय AI निदान। लाइव मंडी मूल्य। सत्यापित बाज़ार। लॉजिस्टिक्स। फसल सलाह। सरकारी निगरानी। 6 भारतीय भाषाओं में — ₹8,000 के Android फोन पर, पूरी तरह ऑफ़लाइन।",
+    "ctaStart": "मुफ़्त शुरू करें",
+    "ctaSee": "प्लेटफ़ॉर्म देखें",
+    "tagOffline": "पूरी तरह ऑफ़लाइन काम करता है",
+    "tagFree": "किसानों के लिए मुफ़्त",
+    "modulesHead": "एक मंच",
+    "modulesTitle": "तालाब से बंदरगाह तक सब कुछ",
+    "modulesSub": "आठ मॉड्यूल भारतीय जलकृषि के हर हितधारक को जोड़ते हैं — पश्चिम गोदावरी में बेसिक Android वाले किसान से लेकर मुंबई में लोन देने वाले बैंक अधिकारी तक."
+  },
+  "modules": {
+    "diagnostics": "AI निदान",
+    "diagnosticsD": "30 सेकंड में PCR-स्तरीय EHP / WSSV / AHPND डिटेक्शन. ऑन-डिवाइस TFLite.",
+    "pricing": "लाइव कीमतें",
+    "pricingD": "31+ प्रजातियाँ और 9 तटीय राज्यों में लाइव मंडी + निर्यात FOB दरें.",
+    "marketplace": "बाज़ार",
+    "marketplaceD": "KYC-सत्यापित बीज, फ़ीड, एयरेशन, बर्फ, डायग्नोस्टिक किट आपूर्तिकर्ता.",
+    "logistics": "लॉजिस्टिक्स",
+    "logisticsD": "लोड मैचिंग, GPS ट्रैकिंग, कोल्ड-चेन अनुपालन, ई-वे बिल.",
+    "advisory": "फसल सलाह",
+    "advisoryD": "फसल कैलेंडर, 5 कि.मी. के भीतर अलर्ट, 6 भाषाओं में आवाज़ सहायक.",
+    "b2b": "B2B पोर्टल",
+    "b2bD": "हैचरी डिस्पैच, विवाद समाधान, HMAC-हस्ताक्षरित QC सर्ट + QR.",
+    "surveillance": "निगरानी",
+    "surveillanceD": "MPEDA / NSPAAD प्रकोप हीटमैप, अधिकारियों के लिए अनुपालन डैशबोर्ड.",
+    "risk": "जोखिम स्कोरिंग",
+    "riskD": "बैंक अंडरराइटिंग + बीमा दावों के लिए फ़ार्म-रिस्क Band A-D API."
+  },
+  "stats": {
+    "aiModels": "AI मॉडल",
+    "aiModelsSub": "ऑन-डिवाइस TFLite",
+    "diseases": "रोग",
+    "inference": "अनुमान समय",
+    "inferenceSub": "मिड-रेंज Android",
+    "pcr": "PCR सहमति",
+    "pcrSub": "लैब vs संवेदनशीलता"
+  },
+  "footer": {
+    "tagline": "भारत की जलकृषि के लिए AI",
+    "rights": "सर्वाधिकार सुरक्षित",
+    "linkedin": "LinkedIn",
+    "twitter": "ट्विटर",
+    "github": "GitHub",
+    "privacy": "गोपनीयता",
+    "terms": "नियम",
+    "brandLine": "भारत का AI-संचालित जलकृषि इंटेलिजेंस प्लेटफ़ॉर्म। लाइव कीमतें, PCR-ग्रेड डायग्नोस्टिक्स, सत्यापित मार्केटप्लेस, लॉजिस्टिक्स और सरकारी निगरानी — 6 भारतीय भाषाओं में।",
+    "quickLinks": "त्वरित लिंक",
+    "platform": "प्लेटफ़ॉर्म",
+    "getInTouch": "संपर्क करें",
+    "sendMessage": "संदेश भेजें",
+    "copyright": "Aqua AI — टिकाऊ कृषि के लिए नवीन जलकृषि समाधान।",
+    "subscribe": "अपडेट के लिए सब्सक्राइब करें",
+    "subscribeSub": "रोग अलर्ट, मूल्य रुझान, नए लेख — आपकी भाषा में। कभी भी अनसब्सक्राइब करें।"
+  },
+  "builtFor": {
+    "head": "के लिए बनाया गया",
+    "title": "जलकृषि में हर कोई",
+    "sub": "एक ही डेटा रीढ़ से आठ भूमिका-विशिष्ट डैशबोर्ड। पश्चिम गोदावरी का किसान और विशाखापत्तनम का निर्यातक एक ही सत्य देख रहे हैं।"
+  },
+  "testimonials": {
+    "head": "क्षेत्र परिणाम",
+    "title": "प्लेटफ़ॉर्म क्या बदल रहा है"
+  },
+  "mobileApp": {
+    "head": "आपके फ़ोन पर",
+    "title": "प्लेटफ़ॉर्म को तालाब तक ले जाएं।",
+    "body": "Aqua AI Android ऐप ₹8,000 के फ़ोन पर पूरी तरह ऑफ़लाइन काम करता है। सिग्नल मिलने पर सिंक करें। सभी 5 AI मॉडल डिवाइस पर। 6 भारतीय भाषाएं। iOS जल्द आ रहा है।",
+    "getItOn": "यहाँ से प्राप्त करें",
+    "downloadOn": "डाउनलोड करें",
+    "comingOn": "जल्द आ रहा है",
+    "scanQr": "QR स्कैन करें"
+  },
+  "faq": {
+    "head": "FAQ",
+    "title": "लोग क्या पूछते हैं"
+  },
+  "finalCta": {
+    "title": "5 मिनट में शुरू करें",
+    "body": "खाता बनाएं, अपनी भूमिका चुनें, KYC पूरा करें, और आप डैशबोर्ड में हैं। किसानों के लिए मुफ़्त — हैचरी, बैंक, व्यापारी और सरकारी निकायों के लिए सशुल्क।",
+    "createAccount": "खाता बनाएं",
+    "readArticles": "पहले लेख पढ़ें"
+  },
+  "voice": {
+    "readPage": "पृष्ठ पढ़ें",
+    "pause": "रोकें",
+    "resume": "जारी रखें",
+    "stop": "बंद करें",
+    "reading": "पढ़ रहा है…",
+    "paused": "रुका हुआ"
+  },
+  "weather": {
+    "districtPlaceholder": "आपका जिला",
+    "update": "अपडेट करें",
+    "rain": "वर्षा",
+    "loading": "लोड हो रहा है…",
+    "cycloneAlert": "{{district}} के लिए चक्रवात चेतावनी सक्रिय है। IMD सलाह देखें।",
+    "next7Days": "अगले 7 दिन",
+    "today": "आज"
+  },
+  "aquaai_page": {
+    "pill": "जलकृषि AI प्लेटफ़ॉर्म",
+    "title1": "Aqua AI",
+    "title2": "झींगा बीज",
+    "title3": "डायग्नोस्टिक्स",
+    "subtitle": "बीमारी फैलने से पहले पकड़ें। हर बैच को स्कोर करें। हर फसल की कीमत लगाएं। एक संपूर्ण जलकृषि इंटेलिजेंस प्लेटफ़ॉर्म — आपकी जेब में, आपकी भाषा में, नेटवर्क न होने पर भी।",
+    "dashboardHead": "आज़माएं",
+    "dashboardTitle": "अपनी भूमिका चुनें",
+    "dashboardModules": "8 भूमिकाएं · 6 मॉड्यूल",
+    "dashboardSub": "हर भूमिका का अपना डैशबोर्ड।",
+    "perfHead": "प्रदर्शन",
+    "perfTitle": "मॉडल सटीकता लक्ष्य",
+    "perfSub": "PCR-पुष्ट परीक्षण सेट और मैनुअल गणना ग्राउंड ट्रुथ के विरुद्ध मान्य।"
+  }
 }

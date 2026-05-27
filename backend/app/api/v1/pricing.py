@@ -58,11 +58,6 @@ MARINE: list[PriceRow] = [
 CATEGORIES = {"prawn": PRAWN, "freshwater": FRESHWATER, "marine": MARINE}
 
 
-@router.get("/{category}", response_model=list[PriceRow])
-def list_prices(category: Literal["prawn", "freshwater", "marine"]):
-    return CATEGORIES[category]
-
-
 @router.get("/history", response_model=list[PricePoint])
 def price_history(
     species: str = Query(...),
@@ -81,6 +76,11 @@ def price_history(
 
 def range_iter(n: int):
     return list(range(n))
+
+
+@router.get("/{category}", response_model=list[PriceRow])
+def list_prices(category: Literal["prawn", "freshwater", "marine"]):
+    return CATEGORIES[category]
 
 
 @router.get("/alerts/configured")

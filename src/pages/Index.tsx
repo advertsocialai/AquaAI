@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { WeatherTimeWidget } from '@/components/WeatherTimeWidget';
 import {
-  TrustStrip, BuiltForRoles, HowItWorks, Testimonials,
+  BuiltForRoles, Testimonials,
   MobileAppCta, FaqSection, FinalCta,
 } from '@/components/aquaai-sections';
 import {
@@ -13,18 +15,19 @@ import {
   Languages, WifiOff, Sparkles,
 } from 'lucide-react';
 
-const MODULE_HIGHLIGHTS = [
-  { icon: BrainCircuit,  title: 'AI Diagnostics',  desc: 'PCR-grade EHP / WSSV / AHPND detection in 30 seconds. On-device TFLite.', accent: '#a78bfa' },
-  { icon: IndianRupee,   title: 'Live Pricing',    desc: 'Live mandi + export FOB rates across 31+ species and 9 coastal states.', accent: '#34d399' },
-  { icon: ShoppingCart,  title: 'Marketplace',     desc: 'KYC-verified seed, feed, aeration, ice, diagnostic kit suppliers.',     accent: '#fb923c' },
-  { icon: Truck,         title: 'Logistics',       desc: 'Load matching, GPS tracking, cold-chain compliance, e-way bills.',      accent: '#f472b6' },
-  { icon: LifeBuoy,      title: 'Crop Advisory',   desc: 'Crop calendar, alerts within 5 km, voice assistant in 6 languages.',     accent: '#facc15' },
-  { icon: Building2,     title: 'B2B Portal',      desc: 'Hatchery dispatch, dispute resolution, HMAC-signed QC certs + QR.',     accent: '#a78bfa' },
-  { icon: Shield,        title: 'Surveillance',    desc: 'MPEDA / NSPAAD outbreak heatmap, compliance dashboard for officers.',    accent: '#f87171' },
-  { icon: Landmark,      title: 'Risk Scoring',    desc: 'Farm-risk Band A-D API for bank underwriting + insurance claims.',      accent: '#facc15' },
+const MODULES = [
+  { icon: BrainCircuit, key: 'diagnostics',  accent: '#a78bfa' },
+  { icon: IndianRupee,  key: 'pricing',      accent: '#34d399' },
+  { icon: ShoppingCart, key: 'marketplace',  accent: '#fb923c' },
+  { icon: Truck,        key: 'logistics',    accent: '#f472b6' },
+  { icon: LifeBuoy,     key: 'advisory',     accent: '#facc15' },
+  { icon: Building2,    key: 'b2b',          accent: '#a78bfa' },
+  { icon: Shield,       key: 'surveillance', accent: '#f87171' },
+  { icon: Landmark,     key: 'risk',         accent: '#facc15' },
 ];
 
 const Index = () => {
+  const { t } = useTranslation();
   useEffect(() => { document.title = 'Aqua AI — Aquaculture Intelligence'; }, []);
 
   return (
@@ -42,13 +45,13 @@ const Index = () => {
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl">
             <motion.div
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 text-cyan-300 text-xs tracking-widest uppercase mb-8"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-cyan-400/30 bg-cyan-400/10 text-cyan-300 text-sm tracking-widest uppercase mb-8"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <Fish className="w-3.5 h-3.5" />
-              India's Aquaculture Intelligence Platform
+              <Fish className="w-4 h-4" />
+              {t('home.tagline')}
             </motion.div>
 
             <motion.h1
@@ -57,10 +60,10 @@ const Index = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
             >
-              Decoding aquaculture,
+              {t('home.hero1')}
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-400">
-                one pond at a time.
+                {t('home.hero2')}
               </span>
             </motion.h1>
 
@@ -70,9 +73,7 @@ const Index = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
             >
-              PCR-grade AI diagnostics. Live mandi pricing. Verified marketplace. Logistics.
-              Crop advisory. Government surveillance. In 6 Indian languages — on a ₹8,000
-              Android phone, fully offline.
+              {t('home.subtitle')}
             </motion.p>
 
             <motion.div
@@ -83,115 +84,80 @@ const Index = () => {
             >
               <Link
                 to="/signup"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-black font-semibold text-sm transition"
+                className="inline-flex items-center gap-2 px-7 py-4 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-black font-semibold text-base transition"
               >
-                Get started free <ArrowRight className="w-4 h-4" />
+                {t('home.ctaStart')} <ArrowRight className="w-5 h-5" />
               </Link>
               <Link
                 to="/aquaai"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-white/15 text-white/90 hover:bg-white/[0.06] text-sm transition"
+                className="inline-flex items-center gap-2 px-7 py-4 rounded-xl border border-white/15 text-white/90 hover:bg-white/[0.06] text-base transition"
               >
-                <PlayCircle className="w-4 h-4" /> See the platform
+                <PlayCircle className="w-5 h-5" /> {t('home.ctaSee')}
               </Link>
             </motion.div>
 
             <motion.div
-              className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-white/45"
+              className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-white/55"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
             >
-              <span className="inline-flex items-center gap-1.5">
-                <WifiOff className="w-3 h-3 text-emerald-400" /> Works fully offline
+              <span className="inline-flex items-center gap-2">
+                <WifiOff className="w-4 h-4 text-emerald-400" /> {t('home.tagOffline')}
               </span>
               <span className="text-white/15">·</span>
-              <span className="inline-flex items-center gap-1.5">
-                <Languages className="w-3 h-3 text-violet-400" /> Telugu · Tamil · Hindi · Odia · Bengali · English
+              <span className="inline-flex items-center gap-2">
+                <Languages className="w-4 h-4 text-violet-400" /> తెలుగు · தமிழ் · हिन्दी · ଓଡ଼ିଆ · বাংলা · English
               </span>
               <span className="text-white/15">·</span>
-              <span className="inline-flex items-center gap-1.5">
-                <Sparkles className="w-3 h-3 text-cyan-400" /> Free for farmers
+              <span className="inline-flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-cyan-400" /> {t('home.tagFree')}
               </span>
             </motion.div>
           </div>
         </div>
       </section>
 
-      <TrustStrip />
+      {/* Live time + weather */}
+      <section className="border-t border-white/5 py-10">
+        <div className="container mx-auto px-6 lg:px-8 max-w-5xl">
+          <WeatherTimeWidget />
+        </div>
+      </section>
 
       {/* Module highlights grid */}
       <section className="py-20 border-t border-white/5">
         <div className="container mx-auto px-6 lg:px-8 max-w-6xl">
-          <div className="text-center mb-12">
-            <div className="text-xs text-cyan-300 uppercase tracking-widest mb-3">One platform</div>
-            <h2 className="text-3xl md:text-5xl font-bold">Everything from pond to port</h2>
-            <p className="text-sm text-white/60 max-w-2xl mx-auto mt-3">
-              Eight modules connect every stakeholder in Indian aquaculture — from the farmer
-              with a basic Android in West Godavari to the bank officer underwriting their loan
-              in Mumbai.
-            </p>
+          <div className="text-center mb-14">
+            <div className="text-sm text-cyan-300 uppercase tracking-widest mb-4">{t('home.modulesHead')}</div>
+            <h2 className="text-4xl md:text-5xl font-bold leading-tight">{t('home.modulesTitle')}</h2>
+            <p className="text-base md:text-lg text-white/65 max-w-2xl mx-auto mt-4 leading-relaxed">{t('home.modulesSub')}</p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            {MODULE_HIGHLIGHTS.map((m, i) => (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {MODULES.map((m, i) => (
               <motion.div
-                key={m.title}
+                key={m.key}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="p-5 rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition"
+                className="p-6 rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition"
               >
                 <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
                   style={{ background: `${m.accent}22`, border: `1px solid ${m.accent}55` }}
                 >
-                  <m.icon className="w-5 h-5" style={{ color: m.accent }} />
+                  <m.icon className="w-6 h-6" style={{ color: m.accent }} />
                 </div>
-                <div className="text-base font-semibold text-white mb-2">{m.title}</div>
-                <p className="text-xs text-white/55 leading-relaxed">{m.desc}</p>
+                <div className="text-lg font-semibold text-white mb-2">{t(`modules.${m.key}`)}</div>
+                <p className="text-sm text-white/65 leading-relaxed">{t(`modules.${m.key}D`)}</p>
               </motion.div>
             ))}
-          </div>
-          <div className="text-center mt-10">
-            <Link
-              to="/aquaai"
-              className="inline-flex items-center gap-2 text-sm text-cyan-300 hover:text-cyan-200"
-            >
-              Explore all 14 modules <ArrowRight className="w-4 h-4" />
-            </Link>
           </div>
         </div>
       </section>
 
       <BuiltForRoles />
-      <HowItWorks />
-
-      {/* Numbers */}
-      <section className="py-20 border-t border-white/5">
-        <div className="container mx-auto px-6 lg:px-8 max-w-5xl">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { label: 'AI Models',       value: '5',      sub: 'On-device TFLite' },
-              { label: 'Diseases',        value: '6',      sub: 'EHP · WSSV · AHPND +3' },
-              { label: 'Inference time',  value: '<500ms', sub: 'Mid-range Android' },
-              { label: 'PCR agreement',   value: '92%+',   sub: 'Sensitivity vs lab' },
-            ].map((s, i) => (
-              <motion.div
-                key={s.label}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-                className="p-5 rounded-2xl border border-white/10 bg-white/[0.03] text-center md:text-left"
-              >
-                <div className="text-4xl md:text-5xl font-bold text-white tabular-nums mb-1">{s.value}</div>
-                <div className="text-sm text-white/60">{s.label}</div>
-                <div className="text-[11px] text-white/30 mt-1">{s.sub}</div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       <Testimonials />
       <MobileAppCta />

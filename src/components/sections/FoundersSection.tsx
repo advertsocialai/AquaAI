@@ -27,7 +27,7 @@ export function FoundersSection() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="text-base md:text-lg text-white/70 mb-8 max-w-lg leading-relaxed"
           >
-            A team of researchers, engineers, and visionaries united by a single mission — to extend healthy human lifespan through AI.
+            A team of researchers, engineers, and visionaries united by a single mission — to bring AI-grade diagnostics and a fair marketplace to every shrimp farmer in India.
           </motion.p>
           <motion.div
             initial={{ opacity: 0 }}

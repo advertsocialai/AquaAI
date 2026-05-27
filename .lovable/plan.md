@@ -28,7 +28,7 @@ Make the `bg-gradient-to-t` overlay darker to guarantee text readability regardl
 ### 3. Boost header logo & nav visibility
 - Change the atom logo SVG to render with a subtle glow/brightness filter so it pops on any background
 - Change nav link color from `text-white/70` to `text-white/80` for better contrast
-- Add a subtle text shadow or drop-shadow to the BOHRX.AI text
+- Add a subtle text shadow or drop-shadow to the AQUA AI text
 
 **File:** `src/components/layout/Header.tsx` — add drop-shadow filter to logo image, boost nav text opacity
 

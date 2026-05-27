@@ -20,7 +20,7 @@ const steps = [
   {
     icon: BarChart3,
     label: 'Insight Delivery',
-    description: 'Actionable biological age scores and risk assessments for clinicians and patients.',
+    description: 'Actionable shrimp seed quality scores and disease risk assessments for VLEs, hatcheries and farmers.',
   },
 ];
 

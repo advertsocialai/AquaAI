@@ -53,7 +53,7 @@ export function SplashScreen({ onEnter }: SplashScreenProps) {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 1.2, ease: 'easeOut' }}
                 >
-                  Bohr<span className="font-black italic">X</span>
+                  Aqua<span className="font-light"> AI</span>
                 </motion.h1>
               )}
             </AnimatePresence>

@@ -11,13 +11,13 @@ import { NoiseTexture } from "@/components/ui/noise-texture";
 import { SplashScreen } from "@/components/SplashScreen";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ChatBot } from "@/components/ChatBot";
+import { VoiceReader } from "@/components/VoiceReader";
 import { PageTransition } from "@/components/layout/PageTransition";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
 // Lazy-load every heavy route — keeps the first JS payload small and
 // the splash-to-interactive time on slow networks low.
-const BioAgePage      = lazy(() => import("./pages/BioAgePage"));
 const FoundersPage    = lazy(() => import("./pages/FoundersPage"));
 const PrivacyPage     = lazy(() => import("./pages/PrivacyPage"));
 const TermsPage       = lazy(() => import("./pages/TermsPage"));
@@ -63,7 +63,7 @@ function AnimatedRoutes() {
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<PageTransition><Index /></PageTransition>} />
           <Route path="/technology" element={<Navigate to="/aquaai" replace />} />
-          <Route path="/bioage" element={<PageTransition><BioAgePage /></PageTransition>} />
+          <Route path="/bioage" element={<Navigate to="/aquaai" replace />} />
           <Route path="/founders" element={<PageTransition><FoundersPage /></PageTransition>} />
           <Route path="/privacy" element={<PageTransition><PrivacyPage /></PageTransition>} />
           <Route path="/terms" element={<PageTransition><TermsPage /></PageTransition>} />
@@ -89,11 +89,11 @@ function AnimatedRoutes() {
 
 const App = () => {
   const [showSplash, setShowSplash] = useState(
-    () => !sessionStorage.getItem("bohrx-entered")
+    () => !sessionStorage.getItem("aquaai-entered")
   );
 
   const handleEnter = () => {
-    sessionStorage.setItem("bohrx-entered", "true");
+    sessionStorage.setItem("aquaai-entered", "true");
     setShowSplash(false);
   };
 
@@ -114,6 +114,7 @@ const App = () => {
           <ScrollToTop />
           <AnimatedRoutes />
           <ChatBot />
+          <VoiceReader />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

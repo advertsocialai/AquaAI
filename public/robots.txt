@@ -8,4 +8,4 @@ Disallow: /kyc
 Disallow: /settings
 Disallow: /forgot-password
 
-Sitemap: https://bohrx.ai/sitemap.xml
+Sitemap: https://aquaai.in/sitemap.xml

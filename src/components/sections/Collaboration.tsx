@@ -38,7 +38,7 @@ export function Collaboration() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-base md:text-lg text-white/60 mb-12 max-w-xl mx-auto leading-relaxed"
         >
-          Whether you're a researcher, institution, or investor—we're looking for partners who share our vision of extending healthy human lifespan through AI.
+          Whether you're a researcher, institution, or investor—we're looking for partners who share our vision of transforming India's aquaculture with on-pond AI.
         </motion.p>
 
         <motion.div
