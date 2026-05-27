@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'services/api_service.dart';
 import 'services/ai_service.dart';
@@ -14,6 +16,14 @@ import 'widgets/voice_fab.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Firebase: tolerates missing google-services.json / GoogleService-Info.plist
+  // so the app still boots on a clean checkout. Push + analytics activate
+  // automatically once the platform config files are dropped in.
+  try {
+    await Firebase.initializeApp();
+  } catch (e) {
+    debugPrint('Firebase init skipped (no platform config): $e');
+  }
   apiService.init();
   await aiService.loadModels();
   syncService.startAutoSync();
