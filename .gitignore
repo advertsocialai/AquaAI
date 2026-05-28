@@ -64,3 +64,4 @@ mobile/macos/Flutter/ephemeral/
 test-results/
 playwright-report/
 playwright/.cache/
+.vercel

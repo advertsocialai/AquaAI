@@ -9,6 +9,7 @@ import {
 import { RoleSelector, type Role } from './RoleSelector';
 import { KpiDashboard } from './KpiDashboard';
 import { LivePriceTicker } from './LivePriceTicker';
+import { WeatherForecast } from './WeatherForecast';
 
 // Lazy-load every heavy tab body. Each becomes its own chunk so the
 // AquaAIPage initial download stays small. Tab payloads (charts, maps,
@@ -95,6 +96,9 @@ export function AquaDashboard() {
       </div>
 
       <LivePriceTicker />
+
+      {/* 7-day weather forecast with rain alarm */}
+      <WeatherForecast />
 
       {/* Role-specific KPI summary (Module 01 — Dashboard) */}
       <KpiDashboard role={role} />
