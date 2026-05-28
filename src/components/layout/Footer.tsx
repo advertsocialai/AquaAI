@@ -35,28 +35,24 @@ export function Footer() {
   ];
 
   const PLATFORM_LINKS = [
-    { label: t('modules.diagnostics'),  to: '/aquaai' },
-    { label: t('modules.pricing'),      to: '/aquaai' },
-    { label: t('modules.marketplace'),  to: '/aquaai' },
-    { label: t('modules.logistics'),    to: '/aquaai' },
+    { label: t('modules.diagnostics'),  to: '/aquaai#dashboard' },
+    { label: t('modules.pricing'),      to: '/aquaai#dashboard' },
+    { label: t('modules.marketplace'),  to: '/aquaai#dashboard' },
+    { label: t('modules.logistics'),    to: '/aquaai#dashboard' },
     { label: 'Verify QC cert',          to: '/verify/QC-2026-04421' },
     { label: 'KYC',                     to: '/kyc' },
     { label: 'Settings',                to: '/settings' },
   ];
 
-  const RESOURCE_LINKS = [
+  const ACCOUNT_LINKS = [
     { label: t('common.signIn'),   to: '/login' },
     { label: t('common.signUp'),   to: '/signup' },
     { label: 'Forgot password',    to: '/forgot-password' },
-    { label: t('footer.privacy'),  to: '/privacy' },
-    { label: t('footer.terms'),    to: '/terms' },
   ];
 
   const LEGAL_LINKS = [
     { label: t('footer.privacy'),  to: '/privacy' },
     { label: t('footer.terms'),    to: '/terms' },
-    { label: t('common.signIn'),   to: '/login' },
-    { label: t('common.signUp'),   to: '/signup' },
   ];
 
   async function subscribe(e: React.FormEvent) {
@@ -86,27 +82,27 @@ export function Footer() {
     <footer className="border-t border-white/10 bg-black">
       {/* Top: newsletter */}
       <div className="border-b border-white/5">
-        <div className="container mx-auto px-6 lg:px-8 py-12 grid md:grid-cols-2 gap-8 items-center">
+        <div className="mx-auto w-full max-w-5xl px-5 sm:px-6 lg:px-8 py-8 md:py-10 grid md:grid-cols-2 gap-6 md:gap-8 items-center">
           <div>
-            <div className="text-sm uppercase tracking-widest text-cyan-300 mb-2">{t('footer.subscribe')}</div>
-            <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">{t('footer.tagline')}</h3>
-            <p className="text-base text-white/75">{t('footer.subscribeSub')}</p>
+            <div className="text-xs uppercase tracking-widest text-cyan-300 mb-2">{t('footer.subscribe')}</div>
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 leading-tight">{t('footer.tagline')}</h3>
+            <p className="text-sm sm:text-base text-white/70">{t('footer.subscribeSub')}</p>
           </div>
-          <form onSubmit={subscribe} className="flex items-center gap-2">
-            <div className="flex items-center gap-2 flex-1 px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03] focus-within:border-cyan-400/40">
-              <Mail className="w-4 h-4 text-cyan-400" />
+          <form onSubmit={subscribe} className="flex items-center gap-2 w-full md:max-w-md md:ml-auto">
+            <div className="flex items-center gap-2 flex-1 min-w-0 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-white/10 bg-white/[0.03] focus-within:border-cyan-400/40">
+              <Mail className="w-4 h-4 text-cyan-400 shrink-0" />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.in"
-                className="bg-transparent outline-none text-white text-sm flex-1 placeholder:text-white/30"
+                className="bg-transparent outline-none text-white text-sm flex-1 min-w-0 placeholder:text-white/30"
               />
             </div>
             <button
               type="submit"
               disabled={subscribed}
-              className="inline-flex items-center gap-1.5 px-4 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-60 text-black font-semibold text-sm"
+              className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-60 text-black font-semibold text-sm shrink-0"
             >
               {subscribed ? <><Check className="w-4 h-4" /> Subscribed</> : <><Send className="w-4 h-4" /> Subscribe</>}
             </button>
@@ -114,19 +110,21 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Main footer grid */}
-      <div className="container mx-auto px-6 lg:px-8 py-12 grid grid-cols-2 md:grid-cols-5 gap-8">
-        {/* Brand + apps */}
-        <div className="col-span-2 md:col-span-2 space-y-4">
+      {/* Main footer grid — clean 4 columns on lg, 2 on sm, 1 on xs */}
+      <div className="mx-auto w-full max-w-5xl px-5 sm:px-6 lg:px-8 py-10 md:py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-6 md:gap-x-8">
+        {/* Brand + apps + social */}
+        <div className="space-y-4 sm:col-span-2 lg:col-span-1">
           <Link to="/" className="inline-flex items-center gap-3">
-            <img src={atomLogo} alt="Aqua AI" className="w-9 h-9 object-contain" />
-            <span className="text-xl font-bold text-white tracking-wider">AQUA<span className="font-light"> AI</span></span>
+            <img src={atomLogo} alt="Aqua AI" className="w-8 h-8 object-contain" />
+            <span className="text-lg font-bold text-white tracking-wider">AQUA<span className="font-light"> AI</span></span>
           </Link>
-          <p className="text-base text-white/80 leading-relaxed max-w-sm">{t('footer.brandLine')}</p>
-          <div className="flex items-center gap-2 pt-2">
-            <Link
-              to="/#download-app"
-              className="flex items-center gap-2 px-3 py-2 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition"
+          <p className="text-sm text-white/70 leading-relaxed max-w-sm">{t('footer.brandLine')}</p>
+          <div className="flex items-center gap-2 pt-1">
+            <a
+              href={PLAY_STORE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition"
               aria-label="Get it on Google Play"
             >
               <svg viewBox="0 0 24 24" className="w-4 h-4 text-white" fill="currentColor">
@@ -136,10 +134,12 @@ export function Footer() {
                 <span className="text-[9px] uppercase text-white/60">Get it on</span>
                 <span className="text-xs font-semibold text-white">Google Play</span>
               </div>
-            </Link>
-            <Link
-              to="/#download-app"
-              className="flex items-center gap-2 px-3 py-2 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition"
+            </a>
+            <a
+              href={APP_STORE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition"
               aria-label="Download on the App Store"
             >
               <svg viewBox="0 0 24 24" className="w-4 h-4 text-white" fill="currentColor">
@@ -149,23 +149,23 @@ export function Footer() {
                 <span className="text-[9px] uppercase text-white/60">Download on</span>
                 <span className="text-xs font-semibold text-white">App Store</span>
               </div>
-            </Link>
+            </a>
           </div>
-          <div className="flex items-center gap-3 pt-2">
-            <a href={SOCIAL.linkedin}  target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"  className="text-white/60 hover:text-cyan-300"><Linkedin  className="w-4 h-4" /></a>
-            <a href={SOCIAL.twitter}   target="_blank" rel="noopener noreferrer" aria-label="Twitter"   className="text-white/60 hover:text-cyan-300"><Twitter   className="w-4 h-4" /></a>
-            <a href={SOCIAL.facebook}  target="_blank" rel="noopener noreferrer" aria-label="Facebook"  className="text-white/60 hover:text-cyan-300"><Facebook  className="w-4 h-4" /></a>
-            <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-white/60 hover:text-cyan-300"><Instagram className="w-4 h-4" /></a>
+          <div className="flex items-center gap-4 pt-2">
+            <a href={SOCIAL.linkedin}  target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"  className="text-white/60 hover:text-cyan-300 transition"><Linkedin  className="w-4 h-4" /></a>
+            <a href={SOCIAL.twitter}   target="_blank" rel="noopener noreferrer" aria-label="Twitter"   className="text-white/60 hover:text-cyan-300 transition"><Twitter   className="w-4 h-4" /></a>
+            <a href={SOCIAL.facebook}  target="_blank" rel="noopener noreferrer" aria-label="Facebook"  className="text-white/60 hover:text-cyan-300 transition"><Facebook  className="w-4 h-4" /></a>
+            <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-white/60 hover:text-cyan-300 transition"><Instagram className="w-4 h-4" /></a>
           </div>
         </div>
 
         {/* Quick links */}
         <div>
-          <div className="text-sm uppercase tracking-widest text-cyan-300 mb-5">{t('footer.quickLinks')}</div>
-          <ul className="space-y-2">
+          <div className="text-xs uppercase tracking-widest text-cyan-300 mb-4">{t('footer.quickLinks')}</div>
+          <ul className="space-y-2.5">
             {QUICK_LINKS.map((l) => (
               <li key={l.label}>
-                <Link to={l.to} className="text-base text-white/80 hover:text-white transition">
+                <Link to={l.to} className="text-sm text-white/75 hover:text-white transition">
                   {l.label}
                 </Link>
               </li>
@@ -175,11 +175,11 @@ export function Footer() {
 
         {/* Platform */}
         <div>
-          <div className="text-sm uppercase tracking-widest text-cyan-300 mb-5">{t('footer.platform')}</div>
-          <ul className="space-y-2">
+          <div className="text-xs uppercase tracking-widest text-cyan-300 mb-4">{t('footer.platform')}</div>
+          <ul className="space-y-2.5">
             {PLATFORM_LINKS.map((l) => (
               <li key={l.label}>
-                <Link to={l.to} className="text-base text-white/80 hover:text-white transition">
+                <Link to={l.to} className="text-sm text-white/75 hover:text-white transition">
                   {l.label}
                 </Link>
               </li>
@@ -187,50 +187,41 @@ export function Footer() {
           </ul>
         </div>
 
-        {/* Get in touch + resources */}
+        {/* Get in touch */}
         <div>
-          <div className="text-sm uppercase tracking-widest text-cyan-300 mb-5">{t('footer.getInTouch')}</div>
-          <ul className="space-y-3 text-base">
-            <li className="flex items-start gap-2.5 text-white/80">
-              <Phone className="w-4 h-4 mt-1 text-cyan-400 shrink-0" />
-              <a href="tel:+919000000000" className="hover:text-white">+91 90000 00000</a>
+          <div className="text-xs uppercase tracking-widest text-cyan-300 mb-4">{t('footer.getInTouch')}</div>
+          <ul className="space-y-2.5 text-sm">
+            <li className="flex items-start gap-2.5 text-white/75">
+              <Phone className="w-4 h-4 mt-0.5 text-cyan-400 shrink-0" />
+              <a href="tel:+919000000000" className="hover:text-white transition">+91 90000 00000</a>
             </li>
-            <li className="flex items-start gap-2.5 text-white/80">
-              <Mail className="w-4 h-4 mt-1 text-cyan-400 shrink-0" />
-              <a href="mailto:support@aquai.in" className="hover:text-white">support@aquai.in</a>
+            <li className="flex items-start gap-2.5 text-white/75">
+              <Mail className="w-4 h-4 mt-0.5 text-cyan-400 shrink-0" />
+              <a href="mailto:support@aquai.in" className="hover:text-white transition break-all">support@aquai.in</a>
             </li>
-            <li className="flex items-start gap-2.5 text-white/80">
-              <MapPin className="w-4 h-4 mt-1 text-cyan-400 shrink-0" />
+            <li className="flex items-start gap-2.5 text-white/75">
+              <MapPin className="w-4 h-4 mt-0.5 text-cyan-400 shrink-0" />
               <span>Andhra Pradesh, India</span>
             </li>
           </ul>
           <Link
             to="/contact"
-            className="inline-flex items-center gap-1.5 mt-5 text-sm text-cyan-400 hover:underline"
+            className="inline-flex items-center gap-1.5 mt-4 text-sm text-cyan-400 hover:underline"
           >
-            {t('footer.sendMessage')} <ArrowRight className="w-4 h-4" />
+            {t('footer.sendMessage')} <ArrowRight className="w-3.5 h-3.5" />
           </Link>
-
-          <div className="mt-6 pt-5 border-t border-white/5">
-            <div className="text-xs uppercase tracking-widest text-cyan-300 mb-3">Account</div>
-            <ul className="space-y-2">
-              {RESOURCE_LINKS.map((l) => (
-                <li key={l.label}>
-                  <Link to={l.to} className="text-sm text-white/75 hover:text-white transition">
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
       </div>
 
       {/* Bottom strip */}
       <div className="border-t border-white/5">
-        <div className="container mx-auto px-6 lg:px-8 py-6 flex flex-wrap items-center justify-between gap-3 text-sm text-white/70">
+        <div className="mx-auto w-full max-w-5xl px-5 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs sm:text-sm text-white/60">
           <div>© {new Date().getFullYear()} {t('footer.copyright')}</div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            {ACCOUNT_LINKS.map((l) => (
+              <Link key={l.label} to={l.to} className="hover:text-white transition">{l.label}</Link>
+            ))}
+            <span className="text-white/20" aria-hidden>•</span>
             {LEGAL_LINKS.map((l) => (
               <Link key={l.label} to={l.to} className="hover:text-white transition">{l.label}</Link>
             ))}
