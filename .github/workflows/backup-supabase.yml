@@ -1,0 +1,72 @@
+name: Nightly Supabase backup → S3
+
+on:
+  schedule:
+    - cron: '30 18 * * *'   # 18:30 UTC = 00:00 IST every day
+  workflow_dispatch:
+
+env:
+  AWS_REGION: ap-south-1
+  S3_BUCKET: aquaai-prod-uploads-868896905029
+  PROD_HOST: aws-1-ap-south-1.pooler.supabase.com
+  PROD_USER: postgres.wkvldstkmodpfdjhkyou
+  DEV_HOST:  aws-1-ap-south-1.pooler.supabase.com
+  DEV_USER:  postgres.sinovixeslctxeubiany
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Install postgresql-client (matching Supabase v17)
+        run: |
+          sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt jammy-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+          curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
+          sudo apt-get update -qq
+          sudo apt-get install -y postgresql-client-17
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Dump prod schema + data
+        env:
+          PGPASSWORD: ${{ secrets.SUPABASE_PROD_DB_PASSWORD }}
+        run: |
+          STAMP=$(date -u +%Y%m%d-%H%M)
+          pg_dump --no-owner --no-acl --clean --if-exists \
+            -h "$PROD_HOST" -p 6543 -U "$PROD_USER" -d postgres \
+            | gzip > "prod-$STAMP.sql.gz"
+          ls -lh "prod-$STAMP.sql.gz"
+          aws s3 cp "prod-$STAMP.sql.gz" "s3://$S3_BUCKET/backups/prod/prod-$STAMP.sql.gz" \
+            --storage-class STANDARD_IA
+
+      - name: Dump dev schema + data
+        env:
+          PGPASSWORD: ${{ secrets.SUPABASE_DEV_DB_PASSWORD }}
+        run: |
+          STAMP=$(date -u +%Y%m%d-%H%M)
+          pg_dump --no-owner --no-acl --clean --if-exists \
+            -h "$DEV_HOST" -p 6543 -U "$DEV_USER" -d postgres \
+            | gzip > "dev-$STAMP.sql.gz"
+          ls -lh "dev-$STAMP.sql.gz"
+          aws s3 cp "dev-$STAMP.sql.gz" "s3://$S3_BUCKET/backups/dev/dev-$STAMP.sql.gz" \
+            --storage-class STANDARD_IA
+
+      - name: Prune backups older than 30 days
+        run: |
+          for prefix in prod dev; do
+            aws s3api list-objects-v2 --bucket "$S3_BUCKET" --prefix "backups/$prefix/" \
+              --query "Contents[?LastModified<='$(date -d '30 days ago' -u +%Y-%m-%dT%H:%M:%SZ)'].Key" \
+              --output text 2>/dev/null \
+              | tr '\t' '\n' | while read key; do
+                if [ -n "$key" ] && [ "$key" != "None" ]; then
+                  aws s3 rm "s3://$S3_BUCKET/$key"
+                fi
+              done
+          done
