@@ -5,6 +5,7 @@ import { Menu, X, Download, Rocket, LogIn, UserPlus, ChevronDown } from 'lucide-
 import { motion, AnimatePresence } from 'framer-motion';
 import atomLogo from '@/assets/atom-logo.svg';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
 const NAV = [
   { key: 'aquaai',    to: '/aquaai' },
@@ -80,6 +81,7 @@ export function Header() {
           </nav>
 
           <div className="hidden md:flex items-center gap-3">
+            <ThemeToggle />
             <LanguageSwitcher />
             <button
               type="button"
