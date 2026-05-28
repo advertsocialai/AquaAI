@@ -65,3 +65,8 @@ test-results/
 playwright-report/
 playwright/.cache/
 .vercel
+
+# Local-only files that shouldn't be in git
+backend/aquaai_dev.db
+backend/*.db
+supabase/.temp/
