@@ -2,13 +2,13 @@
 
 class ApiConfig {
   /// Base URL for the Aqua AI backend.
-  ///   - Android emulator → 10.0.2.2 maps to host localhost
-  ///   - iOS simulator → localhost works directly
-  ///   - Real device on WiFi → set Mac/laptop IP here
-  /// Override at build with --dart-define=API_BASE=https://api.aquai.in/api/v1
+  /// Default points at the live prod backend so any APK works out of the box.
+  /// Local dev override:
+  ///   --dart-define=API_BASE=http://10.0.2.2:8000/api/v1     (Android emulator)
+  ///   --dart-define=API_BASE=http://192.168.x.y:8000/api/v1  (real device on Wi-Fi)
   static const String baseUrl = String.fromEnvironment(
     'API_BASE',
-    defaultValue: 'http://10.0.2.2:8000/api/v1',
+    defaultValue: 'https://api.aquarudra.com/api/v1',
   );
 
   // Local TFLite asset paths (bundled with the app for offline inference).

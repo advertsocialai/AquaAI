@@ -38,7 +38,7 @@ android {
 
     defaultConfig {
         applicationId "in.aquai.mobile"
-        minSdk 23           // Android 6.0 — covers ₹6,000 phones from 2018+
+        minSdkVersion flutter.minSdkVersion           // Android 6.0 — covers ₹6,000 phones from 2018+
         targetSdk 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

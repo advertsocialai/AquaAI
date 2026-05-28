@@ -59,14 +59,16 @@ class VoiceFab extends StatelessWidget {
 
   Widget _bubble(BuildContext context, VoiceState state) {
     if (state == VoiceState.idle) {
-      return FloatingActionButton.extended(
-        heroTag: 'voice-fab',
-        backgroundColor: const Color(AppColors.accentCyan),
-        foregroundColor: Colors.black,
-        onPressed: voiceReader.start,
+      return GestureDetector(
         onLongPress: () => _pickLanguage(context),
-        icon: const Icon(Icons.volume_up),
-        label: const Text('Read aloud'),
+        child: FloatingActionButton.extended(
+          heroTag: 'voice-fab',
+          backgroundColor: const Color(AppColors.accentCyan),
+          foregroundColor: Colors.black,
+          onPressed: voiceReader.start,
+          icon: const Icon(Icons.volume_up),
+          label: const Text('Read aloud'),
+        ),
       );
     }
     return Material(
