@@ -17,8 +17,10 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-MODEL_DIR = "uploads/models"
-os.makedirs(MODEL_DIR, exist_ok=True)
+MODEL_DIR = os.path.join(os.environ.get("UPLOAD_DIR", "uploads"), "models")
+
+def _ensure_model_dir() -> None:
+    os.makedirs(MODEL_DIR, exist_ok=True)
 
 _MODELS: dict = {}
 
@@ -204,6 +206,7 @@ def _train_and_save_all():
 
     print("[AquaAI ML] Generating synthetic training images and training classifiers...")
 
+    _ensure_model_dir()
     print("[AquaAI ML]  1/4 EHP classifier...")
     X, y = _generate_ehp_training_data(n_per_class=250)
     ehp_model = Pipeline([
