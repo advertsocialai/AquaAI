@@ -6,6 +6,7 @@ import {
   Send, Check, ArrowRight,
 } from 'lucide-react';
 import atomLogo from '@/assets/atom-logo.svg';
+import { supabase } from '@/lib/supabase';
 
 // Real-shape social URLs. Swap for the verified handles once accounts exist;
 // the structure mirrors what the team handles will look like.
@@ -57,25 +58,23 @@ export function Footer() {
 
   async function subscribe(e: React.FormEvent) {
     e.preventDefault();
-    if (!/\S+@\S+\.\S+/.test(email)) return;
-    try {
-      const base = import.meta.env.VITE_API_BASE ?? 'http://localhost:8000/api/v1';
-      const r = await fetch(`${base}/newsletter/subscribe`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, source: 'footer' }),
-      });
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      setSubscribed(true);
-      setEmail('');
-      setTimeout(() => setSubscribed(false), 4000);
-    } catch {
-      // Fall back to the optimistic local state so the user still sees feedback;
-      // the row didn't land but the form doesn't look broken.
-      setSubscribed(true);
-      setEmail('');
-      setTimeout(() => setSubscribed(false), 4000);
+    const clean = email.trim().toLowerCase();
+    if (!/\S+@\S+\.\S+/.test(clean)) return;
+
+    // Direct insert into Supabase (anon role + INSERT RLS policy).
+    // No backend hop — fewer moving parts in prod.
+    if (supabase) {
+      const { error } = await supabase
+        .from('newsletter_subscribers')
+        .insert({ email: clean, source: 'footer' });
+      // Duplicate email returns 23505 — treat as success (idempotent).
+      if (error && error.code !== '23505') {
+        console.warn('newsletter subscribe failed', error);
+      }
     }
+    setSubscribed(true);
+    setEmail('');
+    setTimeout(() => setSubscribed(false), 4000);
   }
 
   return (

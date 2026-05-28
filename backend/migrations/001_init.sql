@@ -505,3 +505,20 @@ CREATE POLICY "Public can list current AI models"
   ON ai_model_versions FOR SELECT
   TO anon
   USING (is_current = TRUE);
+
+-- ── Newsletter subscribers ───────────────────────────────────────────────
+-- Footer subscribe form writes here directly via the Supabase JS client.
+CREATE TABLE newsletter_subscribers (
+  id          SERIAL PRIMARY KEY,
+  email       VARCHAR(255) NOT NULL UNIQUE,
+  source      VARCHAR(50)  DEFAULT 'footer',
+  ip_address  VARCHAR(45),
+  user_agent  VARCHAR(500),
+  created_at  TIMESTAMPTZ  DEFAULT NOW()
+);
+ALTER TABLE newsletter_subscribers ENABLE ROW LEVEL SECURITY;
+GRANT INSERT, SELECT ON newsletter_subscribers TO anon, authenticated;
+GRANT USAGE, SELECT ON SEQUENCE newsletter_subscribers_id_seq TO anon, authenticated;
+CREATE POLICY "newsletter_anon_all" ON newsletter_subscribers
+  FOR ALL TO anon, authenticated
+  USING (TRUE) WITH CHECK (TRUE);
