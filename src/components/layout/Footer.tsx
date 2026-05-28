@@ -56,18 +56,21 @@ export function Footer() {
     { label: t('footer.terms'),    to: '/terms' },
   ];
 
+  // Matches the DB-level CHECK constraint so client + server agree on validity.
+  const EMAIL_RE = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
+
   async function subscribe(e: React.FormEvent) {
     e.preventDefault();
-    const clean = email.trim().toLowerCase();
-    if (!/\S+@\S+\.\S+/.test(clean)) return;
+    const clean = email.trim().toLowerCase().slice(0, 254);
+    if (clean.length < 5 || !EMAIL_RE.test(clean)) return;
 
-    // Direct insert into Supabase (anon role + INSERT RLS policy).
-    // No backend hop — fewer moving parts in prod.
+    // Direct insert into Supabase. RLS policy enforces format server-side too,
+    // and Prefer: return=minimal (supabase-js default) keeps anon out of SELECT.
     if (supabase) {
       const { error } = await supabase
         .from('newsletter_subscribers')
         .insert({ email: clean, source: 'footer' });
-      // Duplicate email returns 23505 — treat as success (idempotent).
+      // 23505 = duplicate; treat as success so the form stays idempotent.
       if (error && error.code !== '23505') {
         console.warn('newsletter subscribe failed', error);
       }
@@ -95,6 +98,10 @@ export function Footer() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.in"
+                autoComplete="email"
+                spellCheck={false}
+                maxLength={254}
+                required
                 className="bg-transparent outline-none text-white text-sm flex-1 min-w-0 placeholder:text-white/30"
               />
             </div>

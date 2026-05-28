@@ -508,17 +508,32 @@ CREATE POLICY "Public can list current AI models"
 
 -- ── Newsletter subscribers ───────────────────────────────────────────────
 -- Footer subscribe form writes here directly via the Supabase JS client.
+-- Defense in depth: GRANTs limit which verbs anon can attempt, RLS policy
+-- adds row-level checks, DB CHECK constraint guards backend writes too.
 CREATE TABLE newsletter_subscribers (
   id          SERIAL PRIMARY KEY,
   email       VARCHAR(255) NOT NULL UNIQUE,
   source      VARCHAR(50)  DEFAULT 'footer',
   ip_address  VARCHAR(45),
   user_agent  VARCHAR(500),
-  created_at  TIMESTAMPTZ  DEFAULT NOW()
+  created_at  TIMESTAMPTZ  DEFAULT NOW(),
+  CONSTRAINT newsletter_email_format CHECK (
+    email ~* '^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$'
+    AND length(email) BETWEEN 5 AND 254
+  )
 );
 ALTER TABLE newsletter_subscribers ENABLE ROW LEVEL SECURITY;
-GRANT INSERT, SELECT ON newsletter_subscribers TO anon, authenticated;
-GRANT USAGE, SELECT ON SEQUENCE newsletter_subscribers_id_seq TO anon, authenticated;
-CREATE POLICY "newsletter_anon_all" ON newsletter_subscribers
-  FOR ALL TO anon, authenticated
-  USING (TRUE) WITH CHECK (TRUE);
+
+-- INSERT only — no SELECT/UPDATE/DELETE for public roles. The sequence is
+-- still needed for the SERIAL id default.
+GRANT INSERT ON newsletter_subscribers TO anon, authenticated;
+GRANT USAGE ON SEQUENCE newsletter_subscribers_id_seq TO anon, authenticated;
+
+CREATE POLICY newsletter_insert_only ON newsletter_subscribers
+  FOR INSERT TO anon, authenticated
+  WITH CHECK (
+    length(email) BETWEEN 5 AND 254
+    AND email ~* '^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$'
+    AND length(COALESCE(source, '')) <= 50
+    AND length(COALESCE(user_agent, '')) <= 500
+  );
