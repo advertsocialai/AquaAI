@@ -22,3 +22,12 @@
 
 # Reflection used by Riverpod codegen
 -keepattributes *Annotation*, Signature, Exceptions
+
+# Play Core (deferred components) — Flutter references these defensively
+# but we don't ship as a split-install app, so silence R8.
+-dontwarn com.google.android.play.core.**
+-keep class com.google.android.play.core.** { *; }
+
+# TFLite GPU delegate — referenced by tflite_flutter but we don't bundle
+# the GPU delegate AAR (CPU-only inference).
+-dontwarn org.tensorflow.lite.gpu.**
