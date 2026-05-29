@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- White water-drop centered inside the 72dp safe zone (adaptive icons reserve the outer 18dp on each side for system masking). -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,30 C72,52 80,64 80,74 C80,86 68,94 54,94 C40,94 28,86 28,74 C28,64 36,52 54,30 Z"/>
+</vector>
