@@ -38,7 +38,9 @@ android {
 
     defaultConfig {
         applicationId "in.aquai.mobile"
-        minSdkVersion flutter.minSdkVersion           // Android 6.0 — covers ₹6,000 phones from 2018+
+        // Android 8.0 — required by tflite_flutter. Still covers ~95% of
+        // active Indian Android devices in 2026.
+        minSdkVersion 26
         targetSdk 36
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
