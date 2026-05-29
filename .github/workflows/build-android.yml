@@ -1,4 +1,4 @@
-name: Build Android APK
+name: Build Android APK + AAB
 
 on:
   push:
@@ -8,8 +8,12 @@ on:
       - '.github/workflows/build-android.yml'
   workflow_dispatch:
     inputs:
-      api_base:
-        description: 'API base URL the APK should call'
+      api_base_prod:
+        description: 'PROD API base URL (release APK + AAB)'
+        required: false
+        default: 'https://api.aquarudra.com/api/v1'
+      api_base_dev:
+        description: 'DEV API base URL (preprod APK)'
         required: false
         default: 'https://api.aquarudra.com/api/v1'
 
@@ -41,35 +45,98 @@ jobs:
         working-directory: mobile
         run: flutter pub get
 
-      - name: Build release APK (prod)
-        working-directory: mobile
+      # ── Release signing ────────────────────────────────────────────────
+      # When the 4 ANDROID_* secrets are set, materialise the keystore +
+      # key.properties so the release APK / AAB get signed with the real
+      # upload key. When they aren't set (first-time setup, forks), the
+      # build falls back to debug-signing (configured in app/build.gradle).
+      - name: Materialise release keystore
+        if: ${{ env.HAS_KEYSTORE == 'true' }}
+        env:
+          HAS_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
         run: |
-          API_BASE="${{ github.event.inputs.api_base || 'https://api.aquarudra.com/api/v1' }}"
-          echo "Building APK with API_BASE=$API_BASE"
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > mobile/android/aquaai-release.jks
+          cat > mobile/android/key.properties <<EOF
+          storeFile=aquaai-release.jks
+          storePassword=$ANDROID_KEYSTORE_PASSWORD
+          keyPassword=$ANDROID_KEY_PASSWORD
+          keyAlias=$ANDROID_KEY_ALIAS
+          EOF
+          echo "Release keystore materialised (size: $(wc -c < mobile/android/aquaai-release.jks) bytes)"
+
+      - name: Detect keystore presence
+        id: keystore
+        run: |
+          if [ -f mobile/android/aquaai-release.jks ]; then
+            echo "signed=true" >> "$GITHUB_OUTPUT"
+            echo "Build will produce SIGNED release artifacts"
+          else
+            echo "signed=false" >> "$GITHUB_OUTPUT"
+            echo "Build will produce debug-signed release artifacts (no upload key configured)"
+          fi
+
+      # ── PROD release builds ────────────────────────────────────────────
+      - name: Build PROD release APK (split per ABI)
+        working-directory: mobile
+        env:
+          API_BASE: ${{ github.event.inputs.api_base_prod || 'https://api.aquarudra.com/api/v1' }}
+        run: |
+          echo "Building PROD APK with API_BASE=$API_BASE"
           flutter build apk --release \
             --dart-define=API_BASE="$API_BASE" \
+            --dart-define=APP_ENV=prod \
             --split-per-abi
 
-      - name: Build debug APK (dev — talks to localhost:8000)
+      - name: Build PROD release AAB (Play Store)
+        if: steps.keystore.outputs.signed == 'true'
+        working-directory: mobile
+        env:
+          API_BASE: ${{ github.event.inputs.api_base_prod || 'https://api.aquarudra.com/api/v1' }}
+        run: |
+          echo "Building PROD AAB with API_BASE=$API_BASE"
+          flutter build appbundle --release \
+            --dart-define=API_BASE="$API_BASE" \
+            --dart-define=APP_ENV=prod
+
+      # ── DEV / debug build (talks to local FastAPI on emulator host) ─────
+      - name: Build DEV debug APK
         working-directory: mobile
         run: |
           flutter build apk --debug \
-            --dart-define=API_BASE=http://10.0.2.2:8000/api/v1
+            --dart-define=API_BASE=http://10.0.2.2:8000/api/v1 \
+            --dart-define=APP_ENV=dev
 
-      - name: List built APKs
+      - name: List built artifacts
         working-directory: mobile
-        run: ls -lh build/app/outputs/flutter-apk/
+        run: |
+          echo "── APKs ──"
+          ls -lh build/app/outputs/flutter-apk/ || true
+          echo "── AAB ──"
+          ls -lh build/app/outputs/bundle/release/ 2>/dev/null || echo "(no AAB — keystore not configured)"
 
-      - name: Upload release APKs (prod, split per ABI)
+      # ── Upload artifacts ───────────────────────────────────────────────
+      - name: Upload PROD release APKs (split per ABI)
         uses: actions/upload-artifact@v4
         with:
-          name: aquaai-android-release
+          name: aquaai-android-prod-apk
           path: mobile/build/app/outputs/flutter-apk/app-*-release.apk
           retention-days: 30
 
-      - name: Upload debug APK (dev)
+      - name: Upload PROD release AAB (Play Store)
+        if: steps.keystore.outputs.signed == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: aquaai-android-debug
+          name: aquaai-android-prod-aab
+          path: mobile/build/app/outputs/bundle/release/app-release.aab
+          retention-days: 90
+
+      - name: Upload DEV debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: aquaai-android-dev-debug
           path: mobile/build/app/outputs/flutter-apk/app-debug.apk
           retention-days: 30

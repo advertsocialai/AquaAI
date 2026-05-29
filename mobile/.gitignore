@@ -15,6 +15,9 @@ android/.gradle/
 android/key.properties
 **/google-services.json
 android/app/release/
+# Never commit signing material
+**/*.jks
+**/*.keystore
 
 # iOS
 ios/Pods/
