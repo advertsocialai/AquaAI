@@ -83,6 +83,18 @@ jobs:
             echo "Build will produce debug-signed release artifacts (no upload key configured)"
           fi
 
+      # ── Firebase config (PROD) ─────────────────────────────────────────
+      - name: Materialise PROD google-services.json
+        env:
+          GOOGLE_SERVICES_JSON_PROD_BASE64: ${{ secrets.GOOGLE_SERVICES_JSON_PROD_BASE64 }}
+        run: |
+          if [ -z "$GOOGLE_SERVICES_JSON_PROD_BASE64" ]; then
+            echo "GOOGLE_SERVICES_JSON_PROD_BASE64 not set — Firebase plugin will be skipped, FCM disabled in PROD APK/AAB."
+            exit 0
+          fi
+          echo "$GOOGLE_SERVICES_JSON_PROD_BASE64" | base64 -d > mobile/android/app/google-services.json
+          echo "PROD google-services.json materialised ($(wc -c < mobile/android/app/google-services.json) bytes, project: $(grep -o 'aqua-ai-[a-z]*' mobile/android/app/google-services.json | head -1))"
+
       # ── PROD release builds ────────────────────────────────────────────
       - name: Build PROD release APK (split per ABI)
         working-directory: mobile
@@ -105,6 +117,19 @@ jobs:
           flutter build appbundle --release \
             --dart-define=API_BASE="$API_BASE" \
             --dart-define=APP_ENV=prod
+
+      # ── Firebase config (DEV) ──────────────────────────────────────────
+      - name: Swap to DEV google-services.json
+        env:
+          GOOGLE_SERVICES_JSON_DEV_BASE64: ${{ secrets.GOOGLE_SERVICES_JSON_DEV_BASE64 }}
+        run: |
+          if [ -z "$GOOGLE_SERVICES_JSON_DEV_BASE64" ]; then
+            rm -f mobile/android/app/google-services.json
+            echo "GOOGLE_SERVICES_JSON_DEV_BASE64 not set — Firebase plugin will be skipped, FCM disabled in DEV APK."
+            exit 0
+          fi
+          echo "$GOOGLE_SERVICES_JSON_DEV_BASE64" | base64 -d > mobile/android/app/google-services.json
+          echo "DEV google-services.json swapped in ($(wc -c < mobile/android/app/google-services.json) bytes, project: $(grep -o 'aqua-ai-[a-z]*' mobile/android/app/google-services.json | head -1))"
 
       # ── DEV / debug build (talks to local FastAPI on emulator host) ─────
       - name: Build DEV debug APK

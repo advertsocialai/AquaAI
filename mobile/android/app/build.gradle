@@ -3,8 +3,13 @@ plugins {
     id "com.android.application"
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
-    // Uncomment when google-services.json is dropped in:
-    // id "com.google.gms.google-services"
+}
+
+// Apply the Google Services plugin only when a google-services.json is
+// present — keeps local builds working without Firebase config and lets
+// CI inject the file from a secret at build time.
+if (file('google-services.json').exists()) {
+    apply plugin: 'com.google.gms.google-services'
 }
 
 def localProperties = new Properties()
