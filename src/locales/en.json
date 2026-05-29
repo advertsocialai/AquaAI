@@ -37,7 +37,12 @@
     "bank": "Bank / Insurer",
     "govt": "MPEDA / Govt",
     "ice": "Ice Equipment",
-    "oxygen": "Oxygen Supply"
+    "oxygen": "Oxygen Supply",
+    "resources": "Resources"
+  },
+  "aquaServices": {
+    "head": "Aqua Services",
+    "title": "Service providers that keep the chain moving"
   },
   "tabs": {
     "onboarding": "Onboarding",
@@ -174,7 +179,8 @@
     "transporter": "Load board, GPS tracking, cold-chain temperature logs, e-way bills auto-generated.",
     "ice": "Ice orders, harvest-day routing, capacity planning across pond clusters.",
     "oxygen": "Aerator, diffuser and emergency O₂ supply with same-day pond delivery.",
-    "trader": "Bulk procurement, lot-level quality verification, export FOB linkage."
+    "trader": "Bulk procurement, lot-level quality verification, export FOB linkage.",
+    "resources": "Knowledge hub, government schemes, technical guides and expert advisories — at your fingertips."
   },
   "testimonials": {
     "head": "Field results",

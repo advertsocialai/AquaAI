@@ -3,21 +3,53 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  User, UserCheck, Factory, Truck, Snowflake, Briefcase,
+  User, Factory, Truck, Snowflake, Briefcase,
   ArrowRight, ChevronDown,
   Star, Smartphone, QrCode, BookOpen, Apple, Play,
 } from 'lucide-react';
 
 // ─── Built-for roles ───────────────────────────────────────────────────────────
 
-const ROLES = [
-  { id: 'farmer',      icon: User,      accent: '#34d399' },
-  { id: 'vle',         icon: UserCheck, accent: '#38bdf8' },
+const MAIN_ROLES = [
+  { id: 'farmer', icon: User,      accent: '#34d399' },
+  { id: 'trader', icon: Briefcase, accent: '#f472b6' },
+];
+
+const SERVICE_ROLES = [
   { id: 'transporter', icon: Truck,     accent: '#fb923c' },
   { id: 'ice',         icon: Snowflake, accent: '#60a5fa' },
   { id: 'oxygen',      icon: Factory,   accent: '#a78bfa' },
-  { id: 'trader',      icon: Briefcase, accent: '#f472b6' },
+  { id: 'resources',   icon: BookOpen,  accent: '#facc15' },
 ];
+
+type RoleCard = { id: string; icon: React.ElementType; accent: string };
+
+function RoleGrid({ items, cols }: { items: RoleCard[]; cols: string }) {
+  const { t } = useTranslation();
+  return (
+    <div className={`grid gap-5 max-w-4xl mx-auto ${cols}`}>
+      {items.map(({ id, icon: Icon, accent }, i) => (
+        <motion.div
+          key={id}
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: i * 0.04 }}
+          className="p-6 rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition"
+        >
+          <div
+            className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+            style={{ background: `${accent}22`, border: `1px solid ${accent}44` }}
+          >
+            <Icon className="w-6 h-6" style={{ color: accent }} />
+          </div>
+          <div className="text-base font-semibold text-white mb-2">{t(`roles.${id}`)}</div>
+          <div className="text-sm text-white/65 leading-relaxed">{t(`roleDesc.${id}`)}</div>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
 
 export function BuiltForRoles() {
   const { t } = useTranslation();
@@ -29,24 +61,15 @@ export function BuiltForRoles() {
           <h2 className="text-4xl md:text-5xl font-bold leading-tight">{t('builtFor.title')}</h2>
           <p className="text-base md:text-lg text-white/65 max-w-2xl mx-auto mt-4 leading-relaxed">{t('builtFor.sub')}</p>
         </div>
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5 max-w-4xl mx-auto">
-          {ROLES.map(({ id, icon: Icon, accent }, i) => (
-            <motion.div
-              key={id}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.04 }}
-              className="p-6 rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition"
-            >
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-                   style={{ background: `${accent}22`, border: `1px solid ${accent}44` }}>
-                <Icon className="w-6 h-6" style={{ color: accent }} />
-              </div>
-              <div className="text-base font-semibold text-white mb-2">{t(`roles.${id}`)}</div>
-              <div className="text-sm text-white/65 leading-relaxed">{t(`roleDesc.${id}`)}</div>
-            </motion.div>
-          ))}
+
+        <RoleGrid items={MAIN_ROLES} cols="sm:grid-cols-2 max-w-2xl" />
+
+        <div className="mt-20">
+          <div className="text-center mb-10">
+            <div className="text-sm text-cyan-300 uppercase tracking-widest mb-3">{t('aquaServices.head')}</div>
+            <h3 className="text-2xl md:text-3xl font-bold leading-tight">{t('aquaServices.title')}</h3>
+          </div>
+          <RoleGrid items={SERVICE_ROLES} cols="sm:grid-cols-2 md:grid-cols-4" />
         </div>
       </div>
     </section>
