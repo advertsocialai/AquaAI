@@ -4,7 +4,7 @@ import type { Database } from './supabase-types';
 /**
  * Supabase client for the Aqua AI web app.
  *
- * Project: aquaai3366's Project (oopipjgmweibqyvjzpzi, us-west-1)
+ * Project: aqua-ai (rjhysiqqwgptqiwsonvd, us-east-1, org lziyuuljgoeapcddzosm)
  * Schema:  backend/migrations/001_init.sql (22 tables, RLS enabled).
  * Types:   supabase-types.ts (generated; regenerate via the Supabase MCP
  *          `generate_typescript_types` tool after schema changes).
