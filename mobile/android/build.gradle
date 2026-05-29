@@ -14,15 +14,29 @@ subprojects { project.evaluationDependsOn(":app") }
 
 // Force every plugin subproject (flutter_tts, tflite_flutter, etc.) to JVM 17.
 // Kotlin 2.x rejects mixing Java 1.8 / Kotlin 17 targets in the same module.
+// We have to set this via the AGP `android.compileOptions` extension because
+// AGP overrides plain JavaCompile task settings after our subprojects {} runs.
 subprojects {
-    tasks.withType(JavaCompile).configureEach {
-        sourceCompatibility = JavaVersion.VERSION_17.toString()
-        targetCompatibility = JavaVersion.VERSION_17.toString()
+    plugins.withId("com.android.library") {
+        project.extensions.getByName("android").compileOptions {
+            sourceCompatibility = JavaVersion.VERSION_17
+            targetCompatibility = JavaVersion.VERSION_17
+        }
+    }
+    plugins.withId("com.android.application") {
+        project.extensions.getByName("android").compileOptions {
+            sourceCompatibility = JavaVersion.VERSION_17
+            targetCompatibility = JavaVersion.VERSION_17
+        }
     }
     plugins.withId("org.jetbrains.kotlin.android") {
         tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
             kotlinOptions { jvmTarget = "17" }
         }
+    }
+    tasks.withType(JavaCompile).configureEach {
+        sourceCompatibility = JavaVersion.VERSION_17.toString()
+        targetCompatibility = JavaVersion.VERSION_17.toString()
     }
 }
 
