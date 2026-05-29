@@ -61,7 +61,10 @@ android {
 
     buildTypes {
         release {
-            signingConfig signingConfigs.release
+            // Fall back to the debug signing config in CI when no release
+            // keystore is wired up. Real release builds (Play Store) drop
+            // a key.properties into android/ and the release config kicks in.
+            signingConfig = keystorePropertiesFile.exists() ? signingConfigs.release : signingConfigs.debug
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
