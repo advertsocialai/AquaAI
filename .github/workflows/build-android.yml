@@ -61,19 +61,21 @@ jobs:
             echo "ANDROID_KEYSTORE_BASE64 secret is empty — release will be debug-signed."
             exit 0
           fi
-          echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > mobile/android/aquaai-release.jks
+          # Put the .jks inside app/ because `file('aquaai-release.jks')`
+          # in build.gradle resolves relative to the :app subproject.
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > mobile/android/app/aquaai-release.jks
           cat > mobile/android/key.properties <<EOF
           storeFile=aquaai-release.jks
           storePassword=$ANDROID_KEYSTORE_PASSWORD
           keyPassword=$ANDROID_KEY_PASSWORD
           keyAlias=$ANDROID_KEY_ALIAS
           EOF
-          echo "Release keystore materialised (size: $(wc -c < mobile/android/aquaai-release.jks) bytes)"
+          echo "Release keystore materialised (size: $(wc -c < mobile/android/app/aquaai-release.jks) bytes)"
 
       - name: Detect keystore presence
         id: keystore
         run: |
-          if [ -f mobile/android/aquaai-release.jks ]; then
+          if [ -f mobile/android/app/aquaai-release.jks ]; then
             echo "signed=true" >> "$GITHUB_OUTPUT"
             echo "Build will produce SIGNED release artifacts"
           else
