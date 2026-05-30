@@ -24,7 +24,7 @@ const KYC_FIELDS: Record<Role, { label: string; hint: string }> = {
 };
 
 export default function SignupPage() {
-  useEffect(() => { document.title = 'Get started — Aqua AI'; }, []);
+  useEffect(() => { document.title = 'Get started — AquaRudra'; }, []);
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -47,7 +47,7 @@ export default function SignupPage() {
         <div className="flex items-center justify-between mb-8 gap-4">
           <Link to="/" className="inline-flex items-center gap-2 text-white">
             <Fish className="w-5 h-5 text-cyan-400" />
-            <span className="font-semibold text-base">Aqua AI</span>
+            <span className="font-semibold text-base">AquaRudra</span>
           </Link>
           <div className="text-sm text-white/55">
             {t('common.alreadyHaveAccount')}{' '}

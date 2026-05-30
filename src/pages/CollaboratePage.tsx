@@ -8,7 +8,7 @@ const CollaboratePage = () => {
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', organization: '', message: '' });
 
-  useEffect(() => { document.title = "Collaborate — Aqua AI"; }, []);
+  useEffect(() => { document.title = "Collaborate — AquaRudra"; }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

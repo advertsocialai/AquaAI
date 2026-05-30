@@ -26,7 +26,7 @@ const ITEMS: Item[] = [
   { kind: 'article', title: 'Cyclone season SOP: protecting your pond',            meta: '8 min read · IMD advisory',        tag: 'Weather',       lang: ['EN', 'TE', 'OD'] },
 
   // Videos
-  { kind: 'video', title: 'How to count PLs on a tray — IntensLight technique',    meta: '3:42 · Aqua AI Labs',                tag: 'Diagnostics',   lang: ['TE', 'EN'] },
+  { kind: 'video', title: 'How to count PLs on a tray — IntensLight technique',    meta: '3:42 · AquaRudra Labs',                tag: 'Diagnostics',   lang: ['TE', 'EN'] },
   { kind: 'video', title: 'Spotting EHP under a USB microscope',                   meta: '5:18 · ICAR-CIBA',                 tag: 'Disease ID',    lang: ['TE', 'EN'] },
   { kind: 'video', title: 'Hatchery PCR sample collection walkthrough',            meta: '7:01',                             tag: 'Hatchery',      lang: ['EN'] },
   { kind: 'video', title: 'Setting up a 1-acre vannamei pond from scratch',        meta: '14:33',                            tag: 'Setup',         lang: ['TE', 'TA'] },

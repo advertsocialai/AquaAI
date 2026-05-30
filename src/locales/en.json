@@ -98,7 +98,7 @@
     "mobileLabel": "Mobile number",
     "sendOtp": "Send OTP",
     "otpLabel": "6-digit OTP",
-    "newUser": "New to AquaI?",
+    "newUser": "New to AquaRudra?",
     "createAccount": "Create an account",
     "valueProp1Title": "Live AI Diagnostics",
     "valueProp1Desc": "PCR-validated detection in 30 seconds",
@@ -160,7 +160,7 @@
     "platform": "Platform",
     "getInTouch": "Get in touch",
     "sendMessage": "Send a message",
-    "copyright": "Aqua AI — Innovative aquaculture solutions for sustainable farming practices.",
+    "copyright": "AquaRudra — Innovative aquaculture solutions for sustainable farming practices.",
     "subscribe": "Subscribe to stay updated",
     "subscribeSub": "Disease alerts, pricing trends, new articles — in your language. Unsubscribe anytime."
   },
@@ -189,7 +189,7 @@
   "mobileApp": {
     "head": "On your phone",
     "title": "Carry the platform to the pond.",
-    "body": "The Aqua AI Android app works fully offline on a ₹8,000 phone. Sync when you have signal. All 5 AI models on-device. 6 Indian languages. iOS coming soon.",
+    "body": "The AquaRudra Android app works fully offline on a ₹8,000 phone. Sync when you have signal. All 5 AI models on-device. 6 Indian languages. iOS coming soon.",
     "getItOn": "Get it on",
     "downloadOn": "Download on",
     "comingOn": "Coming on",
@@ -224,7 +224,7 @@
   },
   "aquaai_page": {
     "pill": "Aquaculture AI Platform",
-    "title1": "Aqua AI",
+    "title1": "AquaRudra",
     "title2": "Shrimp Seed",
     "title3": "Diagnostics",
     "subtitle": "Catch disease before it spreads. Score every batch. Price every harvest. A full aquaculture intelligence platform — in your pocket, in your language, even when the network drops.",

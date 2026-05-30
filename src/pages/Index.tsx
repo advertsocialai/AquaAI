@@ -28,7 +28,7 @@ const MODULES = [
 
 const Index = () => {
   const { t } = useTranslation();
-  useEffect(() => { document.title = 'Aqua AI — Aquaculture Intelligence'; }, []);
+  useEffect(() => { document.title = 'AquaRudra — Aquaculture Intelligence'; }, []);
 
   return (
     <div className="min-h-screen bg-background text-white">

@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 
 export default function ContactPage() {
-  useEffect(() => { document.title = 'Contact — Aqua AI'; }, []);
+  useEffect(() => { document.title = 'Contact — AquaRudra'; }, []);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -137,7 +137,7 @@ export default function ContactPage() {
                   <div className="text-sm font-semibold text-white">Office</div>
                 </div>
                 <p className="text-sm text-white/70 leading-relaxed">
-                  Aqua AI<br />
+                  AquaRudra<br />
                   Andhra Pradesh, India<br />
                   <span className="text-white/40 text-xs">Field offices in Bhimavaram, Nellore, Vizag</span>
                 </p>

@@ -22,30 +22,30 @@ const CHALLENGES = [
     challenge: 'Limited Input Access',
     challengeBody: 'Farmers face challenges in accessing quality inputs for aquaculture production.',
     solution: 'Streamlined Input Chain',
-    solutionBody: 'Aqua AI builds an integrated supply chain for reliable access to quality feed, seed and other inputs from MPEDA-certified hatcheries.',
+    solutionBody: 'AquaRudra builds an integrated supply chain for reliable access to quality feed, seed and other inputs from MPEDA-certified hatcheries.',
   },
   {
     challenge: 'Disease Outbreaks & Management',
     challengeBody: 'Disease outbreaks (EHP / WSSV / AHPND) in ponds can lead to significant losses for farmers, impacting their livelihoods.',
     solution: 'Effective Disease Management',
-    solutionBody: 'Aqua AI implements disease surveillance, diagnosis tools and effective treatments with early warnings and management systems — PCR-grade AI in 30 seconds.',
+    solutionBody: 'AquaRudra implements disease surveillance, diagnosis tools and effective treatments with early warnings and management systems — PCR-grade AI in 30 seconds.',
   },
   {
     challenge: 'Environmental Sustainability',
     challengeBody: 'Unsustainable farming practices harm the environment through water pollution and habitat degradation.',
     solution: 'Sustainable Farming Practices',
-    solutionBody: 'Aqua AI supports sustainable farming with efficient resource utilisation, water management, and OIE/WOAH-aligned disease standards.',
+    solutionBody: 'AquaRudra supports sustainable farming with efficient resource utilisation, water management, and OIE/WOAH-aligned disease standards.',
   },
   {
     challenge: 'Limited Technical Expertise',
     challengeBody: 'Many farmers lack technical expertise to adopt modern aquaculture practices.',
     solution: 'Technical and Knowledge Sharing',
-    solutionBody: 'Aqua AI shares expertise, offers technical support and fosters skill development, empowering farmers to excel in aquaculture practices.',
+    solutionBody: 'AquaRudra shares expertise, offers technical support and fosters skill development, empowering farmers to excel in aquaculture practices.',
   },
 ];
 
 export default function AboutPage() {
-  useEffect(() => { document.title = 'About — Aqua AI'; }, []);
+  useEffect(() => { document.title = 'About — AquaRudra'; }, []);
 
   return (
     <div className="min-h-screen bg-background text-white">
@@ -65,7 +65,7 @@ export default function AboutPage() {
           </motion.div>
           <h1 className="text-4xl md:text-6xl font-bold mb-4">Empowering farmers,<br />transforming aquaculture</h1>
           <p className="text-base text-white/60 max-w-3xl mx-auto leading-relaxed">
-            Aqua AI's journey is rooted in our unwavering commitment to aquaculture excellence.
+            AquaRudra's journey is rooted in our unwavering commitment to aquaculture excellence.
             Through rigorous research and AI engineering, we've crafted solutions tailored to
             address farmers' unique challenges — from PCR-validated AI diagnostics to live mandi
             pricing to a verified marketplace.
@@ -95,7 +95,7 @@ export default function AboutPage() {
             <div className="text-xs text-cyan-300 uppercase tracking-widest mb-3">Our Impact</div>
             <h2 className="text-3xl md:text-4xl font-bold mb-3">Driving progress in aquaculture</h2>
             <p className="text-sm text-white/60 max-w-2xl mx-auto">
-              Over time, Aqua AI has made a measurable impact in aquaculture — helping farmers
+              Over time, AquaRudra has made a measurable impact in aquaculture — helping farmers
               and changing the way they work. We operate in many languages, breaking barriers
               and transforming aquaculture nationwide. Here are some pivotal milestones:
             </p>
@@ -125,7 +125,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-6 lg:px-8 max-w-5xl">
           <div className="text-center mb-12">
             <div className="text-xs text-cyan-300 uppercase tracking-widest mb-3">Our Change in Industry</div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-3">Aquaculture challenges & Aqua AI's solutions</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-3">Aquaculture challenges & AquaRudra's solutions</h2>
             <p className="text-sm text-white/60 max-w-2xl mx-auto">
               Tackling obstacles — our journey of incremental solutions.
             </p>
@@ -151,7 +151,7 @@ export default function AboutPage() {
                   </div>
                   <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-cyan-400 ring-4 ring-cyan-400/20" />
                   <div className="md:pl-6">
-                    <div className="text-[11px] uppercase tracking-widest text-emerald-300 mb-2">Aqua AI's Solution</div>
+                    <div className="text-[11px] uppercase tracking-widest text-emerald-300 mb-2">AquaRudra's Solution</div>
                     <div className="text-lg font-bold text-white mb-2">{c.solution}</div>
                     <p className="text-sm text-white/60 leading-relaxed">{c.solutionBody}</p>
                   </div>
@@ -170,7 +170,7 @@ export default function AboutPage() {
           </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Breaking barriers, connecting communities</h2>
           <p className="text-base text-white/70 leading-relaxed mb-4">
-            At Aqua AI, we are dismantling language barriers and empowering Indian farmers
+            At AquaRudra, we are dismantling language barriers and empowering Indian farmers
             through our multilingual platform. India's diversity boasts a vibrant tapestry of
             languages and we recognise the significance of offering accessible resources to
             farmers from various linguistic backgrounds.
@@ -195,7 +195,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-6 lg:px-8 max-w-3xl text-center">
           <h2 className="text-3xl font-bold mb-4">Be part of the journey</h2>
           <p className="text-white/60 mb-8">
-            Join 50,000+ farmers, hatcheries, transporters, banks and government bodies on Aqua AI.
+            Join 50,000+ farmers, hatcheries, transporters, banks and government bodies on AquaRudra.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link

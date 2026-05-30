@@ -1,14 +1,14 @@
-# Aqua AI — Play Store listing copy
+# AquaRudra — Play Store listing copy
 
 ## App name (≤30 chars)
-Aqua AI: Aquaculture Helper
+AquaRudra: Aquaculture Helper
 
 ## Short description (≤80 chars)
 Disease, water, yield & certificate tools for India's shrimp and fish farmers.
 
 ## Full description (≤4000 chars)
 
-Aqua AI is an aquaculture intelligence app built for India's shrimp and fish farmers, hatcheries, processors, and village-level entrepreneurs (VLEs). Run on-device AI diagnostics, get water-quality alerts, calculate feed and stocking, browse the input marketplace, and generate verifiable digital certificates — all in 6 Indian languages, online or offline.
+AquaRudra is an aquaculture intelligence app built for India's shrimp and fish farmers, hatcheries, processors, and village-level entrepreneurs (VLEs). Run on-device AI diagnostics, get water-quality alerts, calculate feed and stocking, browse the input marketplace, and generate verifiable digital certificates — all in 6 Indian languages, online or offline.
 
 **What you can do**
 
@@ -58,4 +58,4 @@ Have feedback or a bug to report? support@aquaai.in
 
 —
 
-Aqua AI is in active development. New crops, more local languages and government scheme integrations are added every month.
+AquaRudra is in active development. New crops, more local languages and government scheme integrations are added every month.

@@ -9,7 +9,7 @@ const NotFound = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    document.title = "404 — Aqua AI";
+    document.title = "404 — AquaRudra";
     // Help the team diagnose dead inbound links without crashing the browser.
     console.error("404 — non-existent route:", location.pathname);
   }, [location.pathname]);
@@ -29,7 +29,7 @@ const NotFound = () => {
       >
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-400/30 bg-cyan-400/10 text-cyan-300 text-xs tracking-widest uppercase mb-8">
           <Fish className="w-3.5 h-3.5" />
-          Aqua AI
+          AquaRudra
         </div>
 
         <h1 className="text-7xl md:text-9xl font-bold tracking-tight mb-4 bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-400 bg-clip-text text-transparent">
@@ -52,7 +52,7 @@ const NotFound = () => {
           Or try one of these
         </div>
         <div className="grid grid-cols-3 gap-3 max-w-md mx-auto">
-          <SuggestLink to="/aquaai"    icon={Compass}   label="Aqua AI" />
+          <SuggestLink to="/aquaai"    icon={Compass}   label="AquaRudra" />
           <SuggestLink to="/knowledge" icon={BookOpen}  label="Knowledge" />
           <SuggestLink to="/contact"   icon={Mail}      label="Contact" />
         </div>

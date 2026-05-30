@@ -121,7 +121,7 @@ export function Footer() {
         {/* Brand + apps + social */}
         <div className="space-y-4 sm:col-span-2 lg:col-span-1">
           <Link to="/" className="inline-flex items-center gap-3">
-            <img src={atomLogo} alt="Aqua AI" className="w-8 h-8 object-contain" />
+            <img src={atomLogo} alt="AquaRudra" className="w-8 h-8 object-contain" />
             <span className="text-lg font-bold text-white tracking-wider">AQUA<span className="font-light"> AI</span></span>
           </Link>
           <p className="text-sm text-white/70 leading-relaxed max-w-sm">{t('footer.brandLine')}</p>

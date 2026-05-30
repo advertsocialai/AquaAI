@@ -9,20 +9,20 @@ import {
 } from 'lucide-react';
 
 const PERKS = [
-  { icon: Clock,     title: 'Flexible Hours',       desc: 'Aqua AI offers flexible hours, empowering employees to tailor their work schedules for optimal work-life balance, making it easier to manage personal and professional commitments.' },
-  { icon: Wallet,    title: 'Competitive Salaries', desc: 'Aqua AI values its employees by providing competitive salaries, recognizing their contributions and ensuring fair compensation within the aquaculture sector — supporting financial well-being and job satisfaction.' },
-  { icon: TrendingUp,title: 'Career Growth',        desc: 'At Aqua AI, we foster career growth through continuous learning, mentoring and opportunities for advancement, enabling our team to achieve their professional aspirations within the dynamic aquaculture industry.' },
-  { icon: Smile,     title: 'Fun Environment',      desc: 'Aqua AI cultivates a dynamic and enjoyable workplace culture, encouraging a sense of unity and providing enjoyable experiences that boost job satisfaction and employee well-being.' },
-  { icon: Heart,     title: 'Meaningful Projects',  desc: 'Aqua AI offers employees the chance to engage in meaningful projects that impact the aquaculture industry, fostering a sense of purpose and contribution to sustainable farming practices.' },
-  { icon: Lightbulb, title: 'Innovative Culture',   desc: 'Aqua AI nurtures an innovative culture that fuels creative thinking and encourages the development of cutting-edge solutions, fostering a dynamic environment that drives progress within aquaculture.' },
+  { icon: Clock,     title: 'Flexible Hours',       desc: 'AquaRudra offers flexible hours, empowering employees to tailor their work schedules for optimal work-life balance, making it easier to manage personal and professional commitments.' },
+  { icon: Wallet,    title: 'Competitive Salaries', desc: 'AquaRudra values its employees by providing competitive salaries, recognizing their contributions and ensuring fair compensation within the aquaculture sector — supporting financial well-being and job satisfaction.' },
+  { icon: TrendingUp,title: 'Career Growth',        desc: 'At AquaRudra, we foster career growth through continuous learning, mentoring and opportunities for advancement, enabling our team to achieve their professional aspirations within the dynamic aquaculture industry.' },
+  { icon: Smile,     title: 'Fun Environment',      desc: 'AquaRudra cultivates a dynamic and enjoyable workplace culture, encouraging a sense of unity and providing enjoyable experiences that boost job satisfaction and employee well-being.' },
+  { icon: Heart,     title: 'Meaningful Projects',  desc: 'AquaRudra offers employees the chance to engage in meaningful projects that impact the aquaculture industry, fostering a sense of purpose and contribution to sustainable farming practices.' },
+  { icon: Lightbulb, title: 'Innovative Culture',   desc: 'AquaRudra nurtures an innovative culture that fuels creative thinking and encourages the development of cutting-edge solutions, fostering a dynamic environment that drives progress within aquaculture.' },
   { icon: MapPin,    title: 'Easy Location',        desc: 'We provide the flexibility to work remotely, whether it be from the convenience of your home or a location of your preference. Our remote work policy promotes a harmonious work-life equilibrium.' },
 ];
 
 const WHY = [
   { icon: Sparkles, title: 'Innovation',  body: 'Join a team at the forefront of innovation in aquaculture technology. We are constantly exploring new ways to empower shrimp farmers with cutting-edge solutions — PCR-validated AI diagnostics, live mandi pricing, verified marketplaces.' },
-  { icon: Target,   title: 'Impact',      body: "At Aqua AI, your work directly contributes to the growth and success of shrimp and fish farmers across India. We're not just building a company — we're building a brighter future for an entire industry." },
-  { icon: Users,    title: 'Collaboration',body: 'Work alongside a diverse and passionate team dedicated to making a difference. Aqua AI fosters a culture of collaboration and learning, where your ideas and contributions are valued.' },
-  { icon: BookOpen, title: 'Learning',    body: 'Aqua AI is dedicated to fostering a culture of perpetual learning and advancement. We offer extensive avenues for professional development, comprehensive training initiatives and direct access to leading industry authorities.' },
+  { icon: Target,   title: 'Impact',      body: "At AquaRudra, your work directly contributes to the growth and success of shrimp and fish farmers across India. We're not just building a company — we're building a brighter future for an entire industry." },
+  { icon: Users,    title: 'Collaboration',body: 'Work alongside a diverse and passionate team dedicated to making a difference. AquaRudra fosters a culture of collaboration and learning, where your ideas and contributions are valued.' },
+  { icon: BookOpen, title: 'Learning',    body: 'AquaRudra is dedicated to fostering a culture of perpetual learning and advancement. We offer extensive avenues for professional development, comprehensive training initiatives and direct access to leading industry authorities.' },
 ];
 
 const OPENINGS = [
@@ -35,7 +35,7 @@ const OPENINGS = [
 ];
 
 export default function CareersPage() {
-  useEffect(() => { document.title = 'Careers — Aqua AI'; }, []);
+  useEffect(() => { document.title = 'Careers — AquaRudra'; }, []);
 
   return (
     <div className="min-h-screen bg-background text-white">
@@ -98,14 +98,14 @@ export default function CareersPage() {
         </div>
       </section>
 
-      {/* Why Aqua AI */}
+      {/* Why AquaRudra */}
       <section className="py-20 border-t border-white/5 bg-white/[0.02]">
         <div className="container mx-auto px-6 lg:px-8 max-w-5xl">
           <div className="text-center mb-12">
-            <div className="text-xs text-cyan-300 uppercase tracking-widest mb-3">Aqua AI Kingship</div>
-            <h2 className="text-3xl md:text-4xl font-bold">Why Aqua AI?</h2>
+            <div className="text-xs text-cyan-300 uppercase tracking-widest mb-3">AquaRudra Kingship</div>
+            <h2 className="text-3xl md:text-4xl font-bold">Why AquaRudra?</h2>
             <p className="text-white/60 mt-4 max-w-2xl mx-auto text-sm">
-              At Aqua AI we are driven by innovation, collaboration and the pursuit of excellence.
+              At AquaRudra we are driven by innovation, collaboration and the pursuit of excellence.
               When you join our team, you become an integral part of an organisation dedicated to
               supporting shrimp and fish farmers and ensuring their success.
             </p>
@@ -172,8 +172,8 @@ export default function CareersPage() {
           </h2>
           <p className="text-white/60 mb-8 leading-relaxed">
             If you're passionate about making a meaningful impact on India's aquaculture industry
-            and want to be part of a team shaping the future of farming, Aqua AI is the place
-            for you. Your career at Aqua AI begins here.
+            and want to be part of a team shaping the future of farming, AquaRudra is the place
+            for you. Your career at AquaRudra begins here.
           </p>
           <Link
             to="/contact"

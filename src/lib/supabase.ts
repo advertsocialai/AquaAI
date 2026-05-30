@@ -2,7 +2,7 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import type { Database } from './supabase-types';
 
 /**
- * Supabase client for the Aqua AI web app.
+ * Supabase client for the AquaRudra web app.
  *
  * Project: aqua-ai (rjhysiqqwgptqiwsonvd, us-east-1, org lziyuuljgoeapcddzosm)
  * Schema:  backend/migrations/001_init.sql (22 tables, RLS enabled).
