@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
-  Mail, MapPin, Facebook, Instagram, Youtube,
+  Mail, MapPin, Phone, Facebook, Instagram, Youtube,
   Send, Check, ArrowRight,
 } from 'lucide-react';
 import atomLogo from '@/assets/atom-logo.svg';
@@ -17,6 +17,7 @@ const SOCIAL = {
 
 const PRIMARY_EMAIL   = 'info@aquarudra.com';
 const SUPPORT_EMAIL   = 'aquaai3366@gmail.com';
+const PRIMARY_PHONE   = '+91 95532 82325';
 
 const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=in.aquai.mobile';
 const APP_STORE_URL  = 'https://apps.apple.com/in/app/aqua-rudra/id0000000000';
@@ -173,6 +174,10 @@ export function Footer() {
         <div>
           <div className="text-xs uppercase tracking-widest text-cyan-300 mb-4">{t('footer.getInTouch')}</div>
           <ul className="space-y-2.5 text-sm">
+            <li className="flex items-start gap-2.5 text-white/75">
+              <Phone className="w-4 h-4 mt-0.5 text-cyan-400 shrink-0" />
+              <a href={`tel:${PRIMARY_PHONE.replace(/\s/g, '')}`} className="hover:text-white transition">{PRIMARY_PHONE}</a>
+            </li>
             <li className="flex items-start gap-2.5 text-white/75">
               <Mail className="w-4 h-4 mt-0.5 text-cyan-400 shrink-0" />
               <a href={`mailto:${PRIMARY_EMAIL}`} className="hover:text-white transition break-all">{PRIMARY_EMAIL}</a>
