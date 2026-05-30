@@ -89,7 +89,7 @@ export function VoiceAssistant() {
         </div>
         <div>
           <div className="text-sm font-semibold text-white">Voice Assistant</div>
-          <div className="text-[11px] text-white/40">Speak to AquaRudra in your language</div>
+          <div className="text-[11px] text-white/40">Speak to Aqua Rudra in your language</div>
         </div>
         <div className="ml-auto flex items-center gap-2">
           <Languages className="w-3.5 h-3.5 text-white/40" />

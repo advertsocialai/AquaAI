@@ -17,7 +17,7 @@ const founders = [
 ];
 
 const FoundersPage = () => {
-  useEffect(() => { document.title = "Founders — AquaRudra"; }, []);
+  useEffect(() => { document.title = "Founders — Aqua Rudra"; }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -43,7 +43,7 @@ const FoundersPage = () => {
               transition={{ duration: 1, delay: 0.5 }}
               className="text-base md:text-lg text-foreground/70 max-w-lg leading-relaxed"
             >
-              The team behind AquaRudra — engineers and researchers on a mission to decode aquaculture for India's farmers, hatcheries and government bodies.
+              The team behind Aqua Rudra — engineers and researchers on a mission to decode aquaculture for India's farmers, hatcheries and government bodies.
             </motion.p>
           </div>
         </div>
@@ -59,7 +59,7 @@ const FoundersPage = () => {
             transition={{ duration: 1 }}
             className="text-2xl md:text-3xl font-bold text-foreground uppercase tracking-tight leading-[1.2] mb-6"
           >
-            "We started AquaRudra because the biggest problems in Indian aquaculture won't be solved by incremental progress — they need a fundamentally different approach."
+            "We started Aqua Rudra because the biggest problems in Indian aquaculture won't be solved by incremental progress — they need a fundamentally different approach."
           </motion.blockquote>
           <motion.p
             initial={{ opacity: 0 }}

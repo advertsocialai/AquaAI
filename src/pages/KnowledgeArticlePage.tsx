@@ -37,10 +37,10 @@ const ARTICLES: Article[] = [
       ] },
       { kind: 'callout-tip', text: 'A 1°C drop at the bottom of the pond cuts oxygen demand ~10%. Run paddle wheels deeper at 30-45° pitch to push surface heat down.' },
       { kind: 'h2', text: 'DO crash protocol' },
-      { kind: 'p', text: 'When the pre-dawn DO meter reads below 3.5 mg/L, do not wait for the test kit. Turn on every aerator at full power, exchange 30% water immediately if salinity allows, and dose emergency oxygen if available. AquaRudra\'s pond advisory module will push a push notification within 5 minutes of the first sensor reading.' },
+      { kind: 'p', text: 'When the pre-dawn DO meter reads below 3.5 mg/L, do not wait for the test kit. Turn on every aerator at full power, exchange 30% water immediately if salinity allows, and dose emergency oxygen if available. Aqua Rudra\'s pond advisory module will push a push notification within 5 minutes of the first sensor reading.' },
       { kind: 'callout-warn', text: 'Never feed within 4 hours of an overnight DO crash — undigested feed becomes a second NH3 spike 24 hours later.' },
       { kind: 'h2', text: 'When to harvest early' },
-      { kind: 'p', text: 'If body weight is above 18 g and the 7-day NH3 trend is climbing past 1.5 mg/L, partial harvest is usually the right call. AquaRudra\'s harvest-timing recommender combines current body weight, mandi prices, and outbreak risk to flag the optimal window.' },
+      { kind: 'p', text: 'If body weight is above 18 g and the 7-day NH3 trend is climbing past 1.5 mg/L, partial harvest is usually the right call. Aqua Rudra\'s harvest-timing recommender combines current body weight, mandi prices, and outbreak risk to flag the optimal window.' },
       { kind: 'callout-do', text: 'Run a checktray once every 4 hours during a heat wave. The 2-hour leftover signal tells you to skip the next meal faster than any chart.' },
     ],
   },
@@ -91,7 +91,7 @@ const ARTICLES: Article[] = [
         'Place trays at four corners and one centre at the same time each feed.',
         'Pull after 90 minutes. Score on a 4-point scale: empty / dusty / partial / full.',
         'Adjust the next meal by ±10% based on the dustiest tray.',
-        'Photo the trays daily — AquaRudra\'s checktray module reads the score automatically.',
+        'Photo the trays daily — Aqua Rudra\'s checktray module reads the score automatically.',
       ] },
     ],
   },
@@ -107,7 +107,7 @@ const ARTICLES: Article[] = [
       { kind: 'ul', items: [
         'MPEDA-licensed hatchery with current QC tier (A++/A+).',
         'EHP / WSSV / AHPND PCR clear within last 7 days.',
-        'AquaRudra QC certificate with composite score ≥ 80.',
+        'Aqua Rudra QC certificate with composite score ≥ 80.',
         'Visual: uniform size, active swimming, transparent body.',
       ] },
     ],
@@ -129,7 +129,7 @@ const ARTICLES: Article[] = [
     category: 'Disease Management', readMin: 12, publishedAt: '2026-04-07',
     hero: 'https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=1600&q=70',
     body: [
-      { kind: 'p', text: 'PCR labs are the gold standard for EHP, but turn-around time is 36-72 hours. In a 120-day cycle that delay is the difference between salvaging a crop and losing it. The AquaRudra EHP detector closes that gap to 30 seconds with sensitivity > 92% vs PCR.' },
+      { kind: 'p', text: 'PCR labs are the gold standard for EHP, but turn-around time is 36-72 hours. In a 120-day cycle that delay is the difference between salvaging a crop and losing it. The Aqua Rudra EHP detector closes that gap to 30 seconds with sensitivity > 92% vs PCR.' },
     ],
   },
   {
@@ -153,7 +153,7 @@ export default function KnowledgeArticlePage() {
   );
 
   useEffect(() => {
-    document.title = article ? `${article.title} — AquaRudra` : 'Article not found — AquaRudra';
+    document.title = article ? `${article.title} — Aqua Rudra` : 'Article not found — Aqua Rudra';
   }, [article]);
 
   if (!article) {

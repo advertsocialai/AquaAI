@@ -18,7 +18,7 @@ function answer(q: string): string {
   if (t.includes('feed') || t.includes('biomass')) return 'For 500 kg biomass at 4% body weight: 20 kg/day starter feed. Use the Calculators tab for FCR-adjusted estimates.';
   if (t.includes('qc') || t.includes('certif')) return 'Open the Reports tab → QC Certificate Archive. Every certificate has a QR you can scan to verify the HMAC signature.';
   if (t.includes('weather') || t.includes('cyclone')) return 'IMD forecast: 65mm rain tonight. Pond overflow risk medium. Lower water level by 4 inches.';
-  if (t.includes('hello') || t.includes('hi ')) return 'Hi! I\'m your AquaRudra assistant. Ask about prices, diseases, water quality, feeding, or any farming question.';
+  if (t.includes('hello') || t.includes('hi ')) return 'Hi! I\'m your Aqua Rudra assistant. Ask about prices, diseases, water quality, feeding, or any farming question.';
   return 'I can help with pricing, disease alerts, calculators, QC certificates, weather, and government schemes. Try one of the quick options.';
 }
 

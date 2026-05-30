@@ -62,7 +62,7 @@ export function Header() {
       <div className="container mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center gap-3">
-            <img src={atomLogo} alt="AquaRudra" className="w-11 h-11 object-contain brightness-125 drop-shadow-[0_0_8px_rgba(56,189,248,0.4)]" />
+            <img src={atomLogo} alt="Aqua Rudra" className="w-11 h-11 object-contain brightness-125 drop-shadow-[0_0_8px_rgba(56,189,248,0.4)]" />
             <span className="text-xl font-bold text-white tracking-wider drop-shadow-[0_0_6px_rgba(255,255,255,0.2)]">
               AQUA<span className="font-light"> AI</span>
             </span>
@@ -116,7 +116,7 @@ export function Header() {
                       <UserPlus className="w-4 h-4 text-cyan-300" />
                       <div>
                         <div className="font-semibold">{t('common.signUp')}</div>
-                        <div className="text-xs text-white/45">New to AquaRudra</div>
+                        <div className="text-xs text-white/45">New to Aqua Rudra</div>
                       </div>
                     </Link>
                     <Link

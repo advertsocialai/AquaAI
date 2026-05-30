@@ -12,7 +12,7 @@ const TermsPage = () => {
         <div className="space-y-10 text-sm leading-relaxed text-foreground/80">
           <section>
             <h2 className="text-lg font-semibold text-foreground mb-3">1. Acceptance of Terms</h2>
-            <p>By accessing and using the AquaRudra website and services, you agree to be bound by these Terms of Service. If you do not agree, please do not use our services.</p>
+            <p>By accessing and using the Aqua Rudra website and services, you agree to be bound by these Terms of Service. If you do not agree, please do not use our services.</p>
           </section>
 
           <section>
@@ -22,7 +22,7 @@ const TermsPage = () => {
 
           <section>
             <h2 className="text-lg font-semibold text-foreground mb-3">3. Intellectual Property</h2>
-            <p>All content, research, data, and materials on this website are the property of AquaRudra or its licensors and are protected by intellectual property laws. You may not reproduce, distribute, or create derivative works without prior written consent.</p>
+            <p>All content, research, data, and materials on this website are the property of Aqua Rudra or its licensors and are protected by intellectual property laws. You may not reproduce, distribute, or create derivative works without prior written consent.</p>
           </section>
 
           <section>
@@ -32,7 +32,7 @@ const TermsPage = () => {
 
           <section>
             <h2 className="text-lg font-semibold text-foreground mb-3">5. Limitation of Liability</h2>
-            <p>AquaRudra shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of our website or services.</p>
+            <p>Aqua Rudra shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of our website or services.</p>
           </section>
 
           <section>

@@ -255,7 +255,7 @@ const POPULAR_SLUGS = [
 const PER_PAGE = 6;
 
 export default function KnowledgePage() {
-  useEffect(() => { document.title = 'Knowledge Hub — AquaRudra'; }, []);
+  useEffect(() => { document.title = 'Knowledge Hub — Aqua Rudra'; }, []);
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
   const [email, setEmail] = useState('');
@@ -318,7 +318,7 @@ export default function KnowledgePage() {
                 className="text-base md:text-lg text-white/70 max-w-xl leading-relaxed mb-8"
               >
                 Field-tested guides, disease playbooks and farmer case studies — sourced from
-                ICAR-CIBA, NSPAAD, MPEDA circulars and AquaRudra's own diagnostic dataset. Read
+                ICAR-CIBA, NSPAAD, MPEDA circulars and Aqua Rudra's own diagnostic dataset. Read
                 in your language. Learn at your pace.
               </motion.p>
 
@@ -345,7 +345,7 @@ export default function KnowledgePage() {
               </form>
             </div>
 
-            {/* Friendly illustration — farmer reading the AquaRudra handbook by his pond */}
+            {/* Friendly illustration — farmer reading the Aqua Rudra handbook by his pond */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.15 }}
               className="hidden lg:flex justify-center"

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Share, Plus, X, Smartphone, Download } from 'lucide-react';
 
 /**
- * "Install AquaRudra on your phone" prompt.
+ * "Install Aqua Rudra on your phone" prompt.
  *
  *  - iOS Safari → static banner explaining the Share → Add-to-Home-Screen
  *    flow (Apple doesn't expose a JS API for this; we have to instruct).
@@ -110,7 +110,7 @@ export function IosInstallPrompt() {
     <div
       data-voice-skip
       role="dialog"
-      aria-label="Install AquaRudra"
+      aria-label="Install Aqua Rudra"
       className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 w-[min(96vw,420px)] rounded-2xl border border-cyan-400/30 bg-black/95 backdrop-blur-xl shadow-2xl shadow-cyan-500/30 p-4"
     >
       <div className="flex items-start gap-3">
@@ -119,7 +119,7 @@ export function IosInstallPrompt() {
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between gap-2">
-            <h3 className="text-sm font-semibold text-white">Install AquaRudra</h3>
+            <h3 className="text-sm font-semibold text-white">Install Aqua Rudra</h3>
             <button
               aria-label="Dismiss"
               onClick={dismiss}
@@ -131,7 +131,7 @@ export function IosInstallPrompt() {
           {mode === 'android' ? (
             <>
               <p className="text-xs text-white/65 mt-1 leading-relaxed">
-                Add AquaRudra to your home screen for offline access, faster launch and push alerts.
+                Add Aqua Rudra to your home screen for offline access, faster launch and push alerts.
               </p>
               <div className="mt-3 flex items-center gap-2">
                 <button
@@ -151,7 +151,7 @@ export function IosInstallPrompt() {
           ) : (
             <>
               <p className="text-xs text-white/65 mt-1 leading-relaxed">
-                Get AquaRudra on your home screen — works offline and feels like a native app.
+                Get Aqua Rudra on your home screen — works offline and feels like a native app.
               </p>
               <ol className="mt-3 space-y-2 text-xs text-white/80">
                 <li className="flex items-center gap-2">

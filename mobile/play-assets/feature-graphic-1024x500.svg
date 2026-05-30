@@ -45,7 +45,7 @@
   <!-- Wordmark + tagline -->
   <g transform="translate(360, 200)">
     <text x="0" y="0" font-family="Helvetica, Arial, sans-serif" font-weight="700"
-          font-size="96" fill="#FFFFFF" letter-spacing="-2">AquaRudra</text>
+          font-size="96" fill="#FFFFFF" letter-spacing="-2">Aqua Rudra</text>
     <text x="0" y="62" font-family="Helvetica, Arial, sans-serif" font-weight="400"
           font-size="30" fill="#E0F2FE">India's aquaculture intelligence platform</text>
     <text x="0" y="108" font-family="Helvetica, Arial, sans-serif" font-weight="500"

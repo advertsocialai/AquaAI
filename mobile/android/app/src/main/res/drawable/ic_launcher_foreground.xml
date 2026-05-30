@@ -4,7 +4,7 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- AquaRudra Trishul: tapered spear blades + water-drop center +
+    <!-- Aqua Rudra Trishul: tapered spear blades + water-drop center +
          gold binding. Drawn inside the 72dp safe zone so adaptive
          system masks (circle / squircle / round square) never crop. -->
 

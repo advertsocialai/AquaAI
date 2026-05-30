@@ -80,13 +80,13 @@ export function BuiltForRoles() {
 
 const TESTIMONIALS = [
   {
-    quote: 'EHP wiped out my last crop. With AquaRudra I caught it on day 9 from a sample tray, restocked clean, and finished the cycle at 5.6 t/acre.',
+    quote: 'EHP wiped out my last crop. With Aqua Rudra I caught it on day 9 from a sample tray, restocked clean, and finished the cycle at 5.6 t/acre.',
     name: 'V. Ramana',
     role: 'Vannamei farmer · Bhimavaram, AP',
     metric: 'Crop loss · 18% → 4%',
   },
   {
-    quote: 'Banks asked for a third-party QC certificate before sanctioning loans. The HMAC-signed PDF from AquaRudra cleared underwriting on the first review.',
+    quote: 'Banks asked for a third-party QC certificate before sanctioning loans. The HMAC-signed PDF from Aqua Rudra cleared underwriting on the first review.',
     name: 'K. Srinivasan',
     role: 'Hatchery operator · Nellore, AP',
     metric: '5 lakh PLs · A++ tier',
@@ -182,7 +182,7 @@ export function MobileAppCta() {
               <div className="absolute top-3 left-1/2 -translate-x-1/2 w-20 h-4 rounded-full bg-black/80" />
               <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
                 <Smartphone className="w-10 h-10 text-cyan-300 mb-4" />
-                <div className="text-sm font-bold text-white mb-1">AquaRudra</div>
+                <div className="text-sm font-bold text-white mb-1">Aqua Rudra</div>
                 <div className="text-[11px] text-white/50 mb-6">Tap to count PLs</div>
                 <div className="w-full p-3 rounded-xl bg-white/[0.06] border border-white/10 mb-2">
                   <div className="text-[10px] text-white/40 uppercase tracking-widest">Count</div>
@@ -205,7 +205,7 @@ export function MobileAppCta() {
 // ─── FAQ ────────────────────────────────────────────────────────────────────────
 
 const FAQ = [
-  { q: 'Does AquaRudra work without internet?',
+  { q: 'Does Aqua Rudra work without internet?',
     a: 'Yes. All five diagnostic models run on-device via TFLite. The Android app stores results in encrypted SQLite and syncs opportunistically when signal returns.' },
   { q: 'How accurate is the EHP detection vs a PCR lab?',
     a: 'Sensitivity > 92%, specificity > 88%, AUC-ROC > 0.95 against PCR-confirmed test sets curated with ICAR-CIBA. Every positive result is shown with Grad-CAM heatmaps so a vet can audit the decision.' },

@@ -1,16 +1,16 @@
-# Privacy Policy — AquaRudra
+# Privacy Policy — Aqua Rudra
 
 _Last updated: 28 May 2026_
 
-This Privacy Policy explains how AquaRudra ("we", "us") collects, uses and protects your information when you use the AquaRudra mobile app and the website at https://aquaai.in.
+This Privacy Policy explains how Aqua Rudra ("we", "us") collects, uses and protects your information when you use the Aqua Rudra mobile app and the website at https://aquaai.in.
 
-AquaRudra is operated by the AquaRudra team. If you have questions, write to **support@aquaai.in**.
+Aqua Rudra is operated by the Aqua Rudra team. If you have questions, write to **support@aquaai.in**.
 
 ---
 
 ## 1. Who this policy applies to
 
-Anyone who downloads or uses the AquaRudra Android or iOS app, signs in to https://aquaai.in, or interacts with our APIs.
+Anyone who downloads or uses the Aqua Rudra Android or iOS app, signs in to https://aquaai.in, or interacts with our APIs.
 
 ---
 
@@ -102,7 +102,7 @@ If you are in the European Economic Area, the United Kingdom, or California, you
 
 ## 8. Children
 
-AquaRudra is intended for users aged 16 and above. We do not knowingly collect personal information from anyone under 16. If you believe a minor has registered, write to support@aquaai.in and we will delete the account.
+Aqua Rudra is intended for users aged 16 and above. We do not knowingly collect personal information from anyone under 16. If you believe a minor has registered, write to support@aquaai.in and we will delete the account.
 
 ---
 
@@ -114,7 +114,7 @@ We may update this policy when we add features or our processors change. The "La
 
 ## 10. Contact
 
-AquaRudra
+Aqua Rudra
 support@aquaai.in
 
 Grievance Officer (as required by India's Information Technology Rules, 2011): contact support@aquaai.in for the current named officer.

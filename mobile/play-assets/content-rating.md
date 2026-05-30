@@ -5,7 +5,7 @@ Reference doc for filling in the Play Console "App content" → "Content rating"
 ## Category
 **Utility, Productivity, Communication, or Other**
 
-(AquaRudra is a productivity / utility app for farmers — pick this category, not Games.)
+(Aqua Rudra is a productivity / utility app for farmers — pick this category, not Games.)
 
 ---
 

@@ -42,7 +42,7 @@ export function CertificateVerify() {
       <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/8 to-white/3 p-6">
         <div className="flex items-center justify-between mb-4">
           <span className="text-[10px] uppercase tracking-widest text-white/40">
-            AquaRudra · QC Certificate
+            Aqua Rudra · QC Certificate
           </span>
           <ShieldCheck className="w-5 h-5 text-emerald-400" />
         </div>

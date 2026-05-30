@@ -11,9 +11,9 @@ import {
 
 // ── Main page ──────────────────────────────────────────────────────────────────
 
-const AquaAIPage = () => {
+const Aqua RudraPage = () => {
   const { t } = useTranslation();
-  useEffect(() => { document.title = "AquaRudra — Aquaculture Intelligence"; }, []);
+  useEffect(() => { document.title = "Aqua Rudra — Aquaculture Intelligence"; }, []);
 
   return (
     <div className="min-h-screen bg-background text-white">
@@ -79,4 +79,4 @@ const AquaAIPage = () => {
   );
 };
 
-export default AquaAIPage;
+export default Aqua RudraPage;

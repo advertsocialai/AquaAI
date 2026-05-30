@@ -12,7 +12,7 @@ import { LivePriceTicker } from './LivePriceTicker';
 import { WeatherForecast } from './WeatherForecast';
 
 // Lazy-load every heavy tab body. Each becomes its own chunk so the
-// AquaAIPage initial download stays small. Tab payloads (charts, maps,
+// Aqua RudraPage initial download stays small. Tab payloads (charts, maps,
 // PDFs, leaflet) are only fetched when the user opens that tab.
 const OnboardingModule  = lazy(() => import('./OnboardingModule').then((m) => ({ default: m.OnboardingModule })));
 const PricingModule     = lazy(() => import('./PricingModule').then((m)    => ({ default: m.PricingModule })));

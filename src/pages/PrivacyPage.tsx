@@ -20,8 +20,8 @@ const PrivacyPage = () => {
         <p className="text-sm text-muted-foreground mb-12">Last updated: {LAST_UPDATED}</p>
 
         <p className="text-foreground/80 mb-12 leading-relaxed">
-          This Privacy Policy explains how AquaRudra (&ldquo;we&rdquo;, &ldquo;us&rdquo;) collects, uses
-          and protects your information when you use the AquaRudra mobile app and the
+          This Privacy Policy explains how Aqua Rudra (&ldquo;we&rdquo;, &ldquo;us&rdquo;) collects, uses
+          and protects your information when you use the Aqua Rudra mobile app and the
           website at <a href="https://aquaai.in" className="underline underline-offset-4 hover:text-foreground/70">aquaai.in</a>.
           {" "}If you have questions, write to{" "}
           <a href={`mailto:${CONTACT_EMAIL}`} className="underline underline-offset-4 hover:text-foreground/70">{CONTACT_EMAIL}</a>.
@@ -30,7 +30,7 @@ const PrivacyPage = () => {
         <div className="space-y-10 text-sm md:text-base leading-relaxed">
           <Section id="who" title="1. Who this policy applies to">
             <p>
-              Anyone who downloads or uses the AquaRudra Android or iOS app, signs in
+              Anyone who downloads or uses the Aqua Rudra Android or iOS app, signs in
               to aquaai.in, or interacts with our APIs.
             </p>
           </Section>
@@ -118,7 +118,7 @@ const PrivacyPage = () => {
 
           <Section id="children" title="8. Children">
             <p>
-              AquaRudra is intended for users aged 16 and above. We do not knowingly collect
+              Aqua Rudra is intended for users aged 16 and above. We do not knowingly collect
               personal information from anyone under 16. If you believe a minor has registered,
               write to {CONTACT_EMAIL} and we will delete the account.
             </p>
@@ -134,7 +134,7 @@ const PrivacyPage = () => {
           </Section>
 
           <Section id="contact" title="10. Contact">
-            <p>AquaRudra</p>
+            <p>Aqua Rudra</p>
             <p>
               <a href={`mailto:${CONTACT_EMAIL}`} className="underline underline-offset-4 hover:text-foreground/70">{CONTACT_EMAIL}</a>
             </p>
