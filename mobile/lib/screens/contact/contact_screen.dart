@@ -26,7 +26,7 @@ class _ContactScreenState extends State<ContactScreen>
       "We're here to help. Get in touch. Question, feedback or "
       'partnership — our team replies within 24 hours. '
       'Call us at ${AppInfo.supportPhone}. Email ${AppInfo.supportEmail}. '
-      'WhatsApp +91 90000 00000. Office: Andhra Pradesh, India.',
+      'WhatsApp +91 95532 82325. Office: Andhra Pradesh, India.',
     );
   }
 
@@ -113,7 +113,7 @@ class _ContactScreenState extends State<ContactScreen>
           const SizedBox(height: 24),
           _contactTile(Icons.phone, 'Call us', AppInfo.supportPhone),
           _contactTile(Icons.email, 'Email', AppInfo.supportEmail),
-          _contactTile(Icons.chat, 'WhatsApp', '+91 90000 00000'),
+          _contactTile(Icons.chat, 'WhatsApp', '+91 95532 82325'),
           _contactTile(Icons.location_on, 'Office', 'Andhra Pradesh, India'),
         ],
       ),

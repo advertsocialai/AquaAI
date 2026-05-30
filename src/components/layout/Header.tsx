@@ -64,7 +64,7 @@ export function Header() {
           <Link to="/" className="flex items-center gap-3">
             <img src={atomLogo} alt="Aqua Rudra" className="w-11 h-11 object-contain brightness-125 drop-shadow-[0_0_8px_rgba(56,189,248,0.4)]" />
             <span className="text-xl font-bold text-white tracking-wider drop-shadow-[0_0_6px_rgba(255,255,255,0.2)]">
-              AQUA<span className="font-light"> AI</span>
+              AQUA<span className="font-light"> RUDRA</span>
             </span>
           </Link>
 

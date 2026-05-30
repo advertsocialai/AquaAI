@@ -126,9 +126,9 @@ export default function ContactPage() {
 
             {/* Sidebar */}
             <aside className="lg:col-span-2 space-y-4">
-              <ContactBlock icon={Phone}  title="Call us"  value="+91 90000 00000"      href="tel:+919000000000" />
-              <ContactBlock icon={Mail}   title="Email"    value="support@aquai.in"     href="mailto:support@aquai.in" />
-              <ContactBlock icon={MessageCircle} title="WhatsApp" value="+91 90000 00000" href="https://wa.me/919000000000" />
+              <ContactBlock icon={Phone}  title="Call us"  value="+91 95532 82325"      href="tel:+919553282325" />
+              <ContactBlock icon={Mail}   title="Email"    value="info@aquarudra.com"   href="mailto:info@aquarudra.com" />
+              <ContactBlock icon={MessageCircle} title="WhatsApp" value="+91 95532 82325" href="https://wa.me/919553282325" />
               <div className="p-5 rounded-2xl border border-white/10 bg-white/[0.03]">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="p-2 rounded-lg bg-emerald-400/10 border border-emerald-400/20">

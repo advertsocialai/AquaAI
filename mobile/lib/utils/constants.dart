@@ -62,10 +62,10 @@ class QualityGradeThresholds {
 }
 
 class AppInfo {
-  static const String appName = 'Aqua AI';
+  static const String appName = 'Aqua Rudra';
   static const String tagline = 'Decoding aquaculture, one pond at a time';
-  static const String supportEmail = 'support@aquai.in';
-  static const String supportPhone = '+91 90000 00000';
-  static const String websiteUrl = 'https://aquai.in';
+  static const String supportEmail = 'info@aquarudra.com';
+  static const String supportPhone = '+91 95532 82325';
+  static const String websiteUrl = 'https://aquarudra.com';
   static const String version = '1.0.0';
 }
