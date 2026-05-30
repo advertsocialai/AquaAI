@@ -11,7 +11,7 @@ import {
 
 // ── Main page ──────────────────────────────────────────────────────────────────
 
-const Aqua RudraPage = () => {
+const AquaAIPage = () => {
   const { t } = useTranslation();
   useEffect(() => { document.title = "Aqua Rudra — Aquaculture Intelligence"; }, []);
 
@@ -22,7 +22,7 @@ const Aqua RudraPage = () => {
       {/* Hero */}
       <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-black to-violet-500/10" />
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-background to-violet-500/10" />
         </div>
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl">
@@ -79,4 +79,4 @@ const Aqua RudraPage = () => {
   );
 };
 
-export default Aqua RudraPage;
+export default AquaAIPage;
