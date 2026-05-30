@@ -2,23 +2,24 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
-  Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Instagram,
+  Mail, MapPin, Facebook, Instagram, Youtube,
   Send, Check, ArrowRight,
 } from 'lucide-react';
 import atomLogo from '@/assets/atom-logo.svg';
 import { supabase } from '@/lib/supabase';
 
-// Real-shape social URLs. Swap for the verified handles once accounts exist;
-// the structure mirrors what the team handles will look like.
+// Placeholder URLs until verified handles exist on each platform.
 const SOCIAL = {
-  linkedin:  'https://www.linkedin.com/company/aquai-in',
-  twitter:   'https://twitter.com/aquai_in',
-  facebook:  'https://facebook.com/aquai.in',
-  instagram: 'https://instagram.com/aquai.in',
+  facebook:  'https://facebook.com/aquarudra',
+  instagram: 'https://instagram.com/aquarudra',
+  youtube:   'https://youtube.com/@aquarudra',
 };
 
+const PRIMARY_EMAIL   = 'info@aquarudra.com';
+const SUPPORT_EMAIL   = 'aquaai3366@gmail.com';
+
 const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=in.aquai.mobile';
-const APP_STORE_URL  = 'https://apps.apple.com/in/app/aqua-ai/id0000000000';
+const APP_STORE_URL  = 'https://apps.apple.com/in/app/aqua-rudra/id0000000000';
 
 export function Footer() {
   const { t } = useTranslation();
@@ -35,25 +36,15 @@ export function Footer() {
     { label: 'Founders',         to: '/founders' },
   ];
 
-  const PLATFORM_LINKS = [
-    { label: t('modules.diagnostics'),  to: '/aquaai#dashboard' },
-    { label: t('modules.pricing'),      to: '/aquaai#dashboard' },
-    { label: t('modules.marketplace'),  to: '/aquaai#dashboard' },
-    { label: t('modules.logistics'),    to: '/aquaai#dashboard' },
-    { label: 'Verify QC cert',          to: '/verify/QC-2026-04421' },
-    { label: 'KYC',                     to: '/kyc' },
-    { label: 'Settings',                to: '/settings' },
-  ];
-
   const ACCOUNT_LINKS = [
-    { label: t('common.signIn'),   to: '/login' },
-    { label: t('common.signUp'),   to: '/signup' },
-    { label: 'Forgot password',    to: '/forgot-password' },
+    { label: t('common.signIn'), to: '/login' },
+    { label: t('common.signUp'), to: '/signup' },
+    { label: 'Forgot password',  to: '/forgot-password' },
   ];
 
   const LEGAL_LINKS = [
-    { label: t('footer.privacy'),  to: '/privacy' },
-    { label: t('footer.terms'),    to: '/terms' },
+    { label: t('footer.privacy'), to: '/privacy' },
+    { label: t('footer.terms'),   to: '/terms' },
   ];
 
   // Matches the DB-level CHECK constraint so client + server agree on validity.
@@ -81,7 +72,7 @@ export function Footer() {
   }
 
   return (
-    <footer className="border-t border-white/10 bg-black">
+    <footer className="border-t border-white/10 bg-background">
       {/* Top: newsletter */}
       <div className="border-b border-white/5">
         <div className="mx-auto w-full max-w-5xl px-5 sm:px-6 lg:px-8 py-8 md:py-10 grid md:grid-cols-2 gap-6 md:gap-8 items-center">
@@ -116,13 +107,13 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Main footer grid — clean 4 columns on lg, 2 on sm, 1 on xs */}
-      <div className="mx-auto w-full max-w-5xl px-5 sm:px-6 lg:px-8 py-10 md:py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-6 md:gap-x-8">
+      {/* Main footer grid — 3 columns on lg, 1 on mobile */}
+      <div className="mx-auto w-full max-w-5xl px-5 sm:px-6 lg:px-8 py-10 md:py-12 grid grid-cols-1 lg:grid-cols-3 gap-y-10 gap-x-8 md:gap-x-12">
         {/* Brand + apps + social */}
-        <div className="space-y-4 sm:col-span-2 lg:col-span-1">
+        <div className="space-y-4">
           <Link to="/" className="inline-flex items-center gap-3">
-            <img src={atomLogo} alt="Aqua Rudra" className="w-8 h-8 object-contain" />
-            <span className="text-lg font-bold text-white tracking-wider">AQUA<span className="font-light"> AI</span></span>
+            <img src={atomLogo} alt="Aqua Rudra" className="w-8 h-8 object-contain text-cyan-300" />
+            <span className="text-lg font-bold text-white tracking-wider">AQUA<span className="font-light"> RUDRA</span></span>
           </Link>
           <p className="text-sm text-white/70 leading-relaxed max-w-sm">{t('footer.brandLine')}</p>
           <div className="flex items-center gap-2 pt-1">
@@ -158,10 +149,9 @@ export function Footer() {
             </a>
           </div>
           <div className="flex items-center gap-4 pt-2">
-            <a href={SOCIAL.linkedin}  target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"  className="text-white/60 hover:text-cyan-300 transition"><Linkedin  className="w-4 h-4" /></a>
-            <a href={SOCIAL.twitter}   target="_blank" rel="noopener noreferrer" aria-label="Twitter"   className="text-white/60 hover:text-cyan-300 transition"><Twitter   className="w-4 h-4" /></a>
             <a href={SOCIAL.facebook}  target="_blank" rel="noopener noreferrer" aria-label="Facebook"  className="text-white/60 hover:text-cyan-300 transition"><Facebook  className="w-4 h-4" /></a>
             <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-white/60 hover:text-cyan-300 transition"><Instagram className="w-4 h-4" /></a>
+            <a href={SOCIAL.youtube}   target="_blank" rel="noopener noreferrer" aria-label="YouTube"   className="text-white/60 hover:text-cyan-300 transition"><Youtube   className="w-4 h-4" /></a>
           </div>
         </div>
 
@@ -179,31 +169,17 @@ export function Footer() {
           </ul>
         </div>
 
-        {/* Platform */}
-        <div>
-          <div className="text-xs uppercase tracking-widest text-cyan-300 mb-4">{t('footer.platform')}</div>
-          <ul className="space-y-2.5">
-            {PLATFORM_LINKS.map((l) => (
-              <li key={l.label}>
-                <Link to={l.to} className="text-sm text-white/75 hover:text-white transition">
-                  {l.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
         {/* Get in touch */}
         <div>
           <div className="text-xs uppercase tracking-widest text-cyan-300 mb-4">{t('footer.getInTouch')}</div>
           <ul className="space-y-2.5 text-sm">
             <li className="flex items-start gap-2.5 text-white/75">
-              <Phone className="w-4 h-4 mt-0.5 text-cyan-400 shrink-0" />
-              <a href="tel:+919000000000" className="hover:text-white transition">+91 90000 00000</a>
+              <Mail className="w-4 h-4 mt-0.5 text-cyan-400 shrink-0" />
+              <a href={`mailto:${PRIMARY_EMAIL}`} className="hover:text-white transition break-all">{PRIMARY_EMAIL}</a>
             </li>
             <li className="flex items-start gap-2.5 text-white/75">
               <Mail className="w-4 h-4 mt-0.5 text-cyan-400 shrink-0" />
-              <a href="mailto:support@aquai.in" className="hover:text-white transition break-all">support@aquai.in</a>
+              <a href={`mailto:${SUPPORT_EMAIL}`} className="hover:text-white transition break-all">{SUPPORT_EMAIL}</a>
             </li>
             <li className="flex items-start gap-2.5 text-white/75">
               <MapPin className="w-4 h-4 mt-0.5 text-cyan-400 shrink-0" />
