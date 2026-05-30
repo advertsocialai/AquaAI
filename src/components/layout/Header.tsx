@@ -9,6 +9,7 @@ import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
 const NAV = [
   { key: 'aquaai',    to: '/aquaai' },
+  { key: 'farmer',    to: '/farmer' },
   { key: 'knowledge', to: '/knowledge' },
   { key: 'about',     to: '/about' },
   { key: 'careers',   to: '/careers' },
