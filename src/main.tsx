@@ -8,7 +8,7 @@ import { initSentry } from "@/lib/sentry";
 initSentry();
 
 createRoot(document.getElementById("root")!).render(
-  <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} storageKey="aquai-theme">
+  <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} storageKey="aquai-theme-bw-blue">
     <App />
   </ThemeProvider>,
 );
