@@ -205,7 +205,7 @@ export function CertificateVerify() {
   );
 }
 
-function CertRow({ label, value, mono }: { label: string; value: string; mono?: boolean }) {
+function CertRow({ label, value, mono }: { label: string; value: string | number; mono?: boolean }) {
   return (
     <div className="flex justify-between gap-3 text-sm">
       <span className="text-foreground/35">{label}</span>

@@ -3,13 +3,17 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Mail, ShieldCheck, Lock, Activity, IndianRupee,
-  BadgeCheck, ArrowRight, Fish, AlertCircle, Loader2, KeyRound,
+  BadgeCheck, ArrowRight, Fish, AlertCircle, Loader2, KeyRound, Smartphone,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { DASHBOARD_ROUTE } from '@/pages/dashboards/configs';
 import type { Role } from '@/components/dashboard/RoleSelector';
 
 type Mode = 'password' | 'otp';
+type OtpChannel = 'phone' | 'email';
+
+// Indian 10-digit mobile (starts 6-9). We prepend +91 when sending.
+const PHONE_RE = /^[6-9]\d{9}$/;
 
 const VALUE_PROPS = [
   { icon: Activity,      title: 'Live AI Diagnostics',  desc: 'PCR-validated detection in 30 seconds' },
@@ -23,7 +27,9 @@ export default function LoginPage() {
   const location = useLocation();
   const from = (location.state as { from?: string } | null)?.from;
   const [mode, setMode] = useState<Mode>('password');
+  const [otpChannel, setOtpChannel] = useState<OtpChannel>('phone');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [otp, setOtp] = useState('');
   const [otpSent, setOtpSent] = useState(false);
@@ -39,6 +45,8 @@ export default function LoginPage() {
   const prop = VALUE_PROPS[propIdx];
   const PropIcon = prop.icon;
   const emailValid = /^\S+@\S+\.\S+$/.test(email.trim());
+  const phoneValid = PHONE_RE.test(phone.trim());
+  const otpTargetValid = otpChannel === 'phone' ? phoneValid : emailValid;
 
   function goToDashboard(user: { user_metadata?: Record<string, unknown> } | null) {
     const role = (user?.user_metadata?.role as Role | undefined) ?? null;
@@ -63,34 +71,45 @@ export default function LoginPage() {
     goToDashboard(data.user);
   }
 
-  // Email OTP: send a 6-digit code to the address.
+  // OTP: send a 6-digit code to phone (+91) or email.
   async function sendOtp(e: React.FormEvent) {
     e.preventDefault();
-    if (!emailValid) return;
+    if (!otpTargetValid) return;
     if (!supabase) { setError('Authentication is not configured.'); return; }
     setBusy(true);
     setError(null);
-    const { error: err } = await supabase.auth.signInWithOtp({
-      email: email.trim().toLowerCase(),
-      options: { shouldCreateUser: false },
-    });
+    const { error: err } = otpChannel === 'phone'
+      ? await supabase.auth.signInWithOtp({
+          phone: `+91${phone.trim()}`,
+          options: { shouldCreateUser: false },
+        })
+      : await supabase.auth.signInWithOtp({
+          email: email.trim().toLowerCase(),
+          options: { shouldCreateUser: false },
+        });
     setBusy(false);
     if (err) { setError(err.message); return; }
     setOtpSent(true);
   }
 
-  // Email OTP: verify the typed code and sign in.
+  // OTP: verify the typed code and sign in.
   async function verifyOtp(e: React.FormEvent) {
     e.preventDefault();
     if (otp.trim().length < 6) return;
     if (!supabase) { setError('Authentication is not configured.'); return; }
     setBusy(true);
     setError(null);
-    const { data, error: err } = await supabase.auth.verifyOtp({
-      email: email.trim().toLowerCase(),
-      token: otp.trim(),
-      type: 'email',
-    });
+    const { data, error: err } = otpChannel === 'phone'
+      ? await supabase.auth.verifyOtp({
+          phone: `+91${phone.trim()}`,
+          token: otp.trim(),
+          type: 'sms',
+        })
+      : await supabase.auth.verifyOtp({
+          email: email.trim().toLowerCase(),
+          token: otp.trim(),
+          type: 'email',
+        });
     setBusy(false);
     if (err) { setError(err.message === 'Token has expired or is invalid' ? 'That code is wrong or expired.' : err.message); return; }
     goToDashboard(data.user);
@@ -186,7 +205,7 @@ export default function LoginPage() {
                 mode === 'otp' ? 'bg-teal-500 text-black' : 'text-foreground/60 hover:text-foreground'
               }`}
             >
-              <KeyRound className="w-3.5 h-3.5" /> Email code
+              <KeyRound className="w-3.5 h-3.5" /> OTP code
             </button>
           </div>
 
@@ -249,30 +268,74 @@ export default function LoginPage() {
               onSubmit={sendOtp}
               className="space-y-4"
             >
-              <label className="block">
-                <span className="text-xs text-foreground/40 uppercase tracking-widest">Email</span>
-                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
-                  <Mail className="w-4 h-4 text-teal-400" />
-                  <input
-                    autoFocus
-                    type="email"
-                    autoComplete="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@example.com"
-                    className="bg-transparent outline-none text-foreground flex-1 text-sm"
-                  />
-                </div>
-              </label>
+              {/* Channel toggle — mobile (default) or email */}
+              <div className="flex items-center gap-1 p-1 rounded-xl border border-border bg-card text-sm">
+                <button
+                  type="button"
+                  onClick={() => { setOtpChannel('phone'); setError(null); }}
+                  className={`flex-1 py-2 rounded-lg font-medium transition inline-flex items-center justify-center gap-1.5 ${
+                    otpChannel === 'phone' ? 'bg-teal-500 text-black' : 'text-foreground/60 hover:text-foreground'
+                  }`}
+                >
+                  <Smartphone className="w-3.5 h-3.5" /> Mobile
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setOtpChannel('email'); setError(null); }}
+                  className={`flex-1 py-2 rounded-lg font-medium transition inline-flex items-center justify-center gap-1.5 ${
+                    otpChannel === 'email' ? 'bg-teal-500 text-black' : 'text-foreground/60 hover:text-foreground'
+                  }`}
+                >
+                  <Mail className="w-3.5 h-3.5" /> Email
+                </button>
+              </div>
+
+              {otpChannel === 'phone' ? (
+                <label className="block">
+                  <span className="text-xs text-foreground/40 uppercase tracking-widest">Mobile number</span>
+                  <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                    <Smartphone className="w-4 h-4 text-teal-400" />
+                    <span className="text-sm text-foreground/70 font-medium select-none">+91</span>
+                    <input
+                      autoFocus
+                      type="tel"
+                      inputMode="numeric"
+                      autoComplete="tel-national"
+                      maxLength={10}
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
+                      placeholder="98765 43210"
+                      className="bg-transparent outline-none text-foreground flex-1 text-sm"
+                    />
+                  </div>
+                </label>
+              ) : (
+                <label className="block">
+                  <span className="text-xs text-foreground/40 uppercase tracking-widest">Email</span>
+                  <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                    <Mail className="w-4 h-4 text-teal-400" />
+                    <input
+                      autoFocus
+                      type="email"
+                      autoComplete="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="you@example.com"
+                      className="bg-transparent outline-none text-foreground flex-1 text-sm"
+                    />
+                  </div>
+                </label>
+              )}
+
               <button
                 type="submit"
-                disabled={!emailValid || busy}
+                disabled={!otpTargetValid || busy}
                 className="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm transition flex items-center justify-center gap-2"
               >
-                {busy ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending code…</> : <>Email me a code <ArrowRight className="w-4 h-4" /></>}
+                {busy ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending code…</> : <>Send me a code <ArrowRight className="w-4 h-4" /></>}
               </button>
               <p className="text-[11px] text-foreground/40 text-center">
-                We'll send a 6-digit code to your email. No password needed.
+                We'll send a 6-digit code to your {otpChannel === 'phone' ? 'mobile by SMS' : 'email'}. No password needed.
               </p>
             </motion.form>
           )}
@@ -285,7 +348,7 @@ export default function LoginPage() {
               className="space-y-4"
             >
               <p className="text-sm text-foreground/60">
-                Enter the 6-digit code sent to <span className="text-foreground font-medium">{email}</span>.
+                Enter the 6-digit code sent to <span className="text-foreground font-medium">{otpChannel === 'phone' ? `+91 ${phone}` : email}</span>.
               </p>
               <label className="block">
                 <span className="text-xs text-foreground/40 uppercase tracking-widest">Verification code</span>
@@ -312,7 +375,7 @@ export default function LoginPage() {
               </button>
               <div className="flex items-center justify-between text-xs">
                 <button type="button" onClick={() => { setOtpSent(false); setOtp(''); setError(null); }} className="text-foreground/50 hover:text-foreground">
-                  Use a different email
+                  {otpChannel === 'phone' ? 'Use a different number' : 'Use a different email'}
                 </button>
                 <button type="button" onClick={sendOtp} disabled={busy} className="text-teal-400 hover:underline disabled:opacity-40">
                   Resend code
