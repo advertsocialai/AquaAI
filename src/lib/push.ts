@@ -8,7 +8,12 @@
  */
 import { supabase } from '@/lib/supabase';
 
-const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY as string | undefined;
+// Public VAPID key. Safe to ship to the browser — only the matching private
+// key (backend-only) can actually send pushes. Defaults to the aqua-ai project
+// key so push works out of the box; override via VITE_VAPID_PUBLIC_KEY.
+const VAPID_PUBLIC_KEY =
+  (import.meta.env.VITE_VAPID_PUBLIC_KEY as string | undefined) ||
+  'BFWRhIMUFbuaRcMc26y3fq5FfMZI6eZwGR3HH7IJrKY-ecze47VQkTWVcTzSq3YsO9q_Vi9DOiayCMU2DYRZO3k';
 
 export function pushSupported(): boolean {
   return (
@@ -76,6 +81,7 @@ export async function enablePush(): Promise<{ ok: boolean; reason?: string }> {
           endpoint: sub.endpoint,
           p256dh: json.keys?.p256dh ?? '',
           auth: json.keys?.auth ?? '',
+          user_agent: navigator.userAgent,
         },
         { onConflict: 'endpoint' },
       );
