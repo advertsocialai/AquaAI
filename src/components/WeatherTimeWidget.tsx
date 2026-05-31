@@ -257,7 +257,7 @@ export function WeatherTimeWidget() {
           <div className="text-xs text-foreground/40">Open-Meteo · {district}</div>
         </div>
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-3">
-          {(forecast?.daily ?? Array.from({ length: 7 })).slice(0, 7).map((d: any, i: number) => {
+          {(forecast?.daily ?? Array.from({ length: 7 })).slice(0, 7).map((d: Forecast['daily'][number] | undefined, i: number) => {
             if (!d) {
               return (
                 <div key={i} className="p-3 rounded-xl border border-border bg-card text-center animate-pulse">
@@ -331,7 +331,7 @@ function DayClimateModal({
   district: string;
   intlLocale: string;
   onClose: () => void;
-  t: (k: string, o?: any) => string;
+  t: (k: string, o?: Record<string, unknown>) => string;
 }) {
   const data = useMemo(() => hourly.map((h) => {
     const d = new Date(h.time);
@@ -474,7 +474,7 @@ function DayClimateModal({
                   contentStyle={{ background: '#0a0e14', border: '1px solid rgba(255,255,255,0.15)', borderRadius: 8, fontSize: 12 }}
                   labelStyle={{ color: '#fff' }}
                   labelFormatter={(h) => `${h}:00`}
-                  formatter={(value: any, name: string) => {
+                  formatter={(value: number | string, name: string) => {
                     if (name === 'Temperature') return [`${value}°C`, name];
                     if (name === 'Rain')        return [`${value} mm`, name];
                     if (name === 'Wind')        return [`${value} km/h`, name];

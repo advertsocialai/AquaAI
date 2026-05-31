@@ -4,6 +4,14 @@ import { MapPin, AlertTriangle, Radio } from 'lucide-react';
 
 const API_BASE = 'http://localhost:8000/api/v1';
 
+interface OutbreakRecord {
+  id: number | string;
+  disease?: string;
+  district?: string;
+  radius_km?: number;
+  notified_farms_count?: number;
+}
+
 // Andhra Pradesh coastal shrimp-farming districts, laid out roughly south→north.
 const DISTRICTS = [
   'Nellore', 'Prakasam', 'Bapatla', 'Guntur', 'Krishna',
@@ -32,12 +40,12 @@ function densityColor(n: number): string {
 export function OutbreakMap() {
   const [counts, setCounts] = useState<Record<string, number>>(BASELINE);
   const [live, setLive] = useState(false);
-  const [alerts, setAlerts] = useState<any[]>([]);
+  const [alerts, setAlerts] = useState<OutbreakRecord[]>([]);
 
   useEffect(() => {
     fetch(`${API_BASE}/disease/outbreaks`)
       .then((r) => (r.ok ? r.json() : []))
-      .then((data: any[]) => {
+      .then((data: OutbreakRecord[]) => {
         if (Array.isArray(data) && data.length > 0) {
           const map: Record<string, number> = {};
           for (const a of data) {

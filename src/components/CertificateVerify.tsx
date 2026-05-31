@@ -11,7 +11,12 @@ const API_BASE = 'http://localhost:8000/api/v1';
  */
 export function CertificateVerify() {
   const [certId, setCertId] = useState('');
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<{
+    ok: boolean;
+    code?: number;
+    notFound?: boolean;
+    data?: Record<string, string | number | null | undefined>;
+  } | null>(null);
   const [status, setStatus] = useState<'idle' | 'loading' | 'done'>('idle');
 
   const verify = async () => {
