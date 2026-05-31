@@ -105,7 +105,7 @@ const Index = () => {
               </span>
               <span className="text-foreground/15">·</span>
               <span className="inline-flex items-center gap-2">
-                <Languages className="w-4 h-4 text-violet-400" /> తెలుగు · தமிழ் · हिन्दी · ଓଡ଼ିଆ · বাংলা · English
+                <Languages className="w-4 h-4 text-violet-400" /> తెలుగు · हिन्दी · ଓଡ଼ିଆ · বাংলা · English
               </span>
               <span className="text-foreground/15">·</span>
               <span className="inline-flex items-center gap-2">

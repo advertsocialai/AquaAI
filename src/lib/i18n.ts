@@ -12,7 +12,6 @@ import bn from '@/locales/bn.json';
 export const LANGUAGES = [
   { code: 'en', name: 'English',  native: 'English'  },
   { code: 'te', name: 'Telugu',   native: 'తెలుగు'    },
-  { code: 'ta', name: 'Tamil',    native: 'தமிழ்'    },
   { code: 'hi', name: 'Hindi',    native: 'हिन्दी'    },
   { code: 'od', name: 'Odia',     native: 'ଓଡ଼ିଆ'    },
   { code: 'bn', name: 'Bengali',  native: 'বাংলা'    },
