@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Fish, ArrowRight, ArrowLeft, Check, Smartphone, KeyRound,
-  Languages, MapPin, BadgeCheck,
+  Fish, ArrowRight, ArrowLeft, Check, Mail, Lock,
+  Languages, MapPin, BadgeCheck, AlertCircle, Loader2,
 } from 'lucide-react';
 import { ROLES, type Role } from '@/components/dashboard/RoleSelector';
 import { DASHBOARD_ROUTE } from '@/pages/dashboards/configs';
+import { supabase } from '@/lib/supabase';
 
-const LANGUAGES = ['English', 'తెలుగు (Telugu)', 'தமிழ் (Tamil)', 'ଓଡ଼ିଆ (Odia)', 'বাংলা (Bengali)', 'हिन्दी (Hindi)'];
-const STEPS = ['Role', 'Mobile', 'OTP', 'Details', 'Done'] as const;
+const LANGUAGES = ['English', 'తెలుగు (Telugu)', 'ଓଡ଼ିଆ (Odia)', 'বাংলা (Bengali)', 'हिन्दी (Hindi)'];
+const STEPS = ['Role', 'Account', 'Details', 'Done'] as const;
 type StepId = typeof STEPS[number];
 
 const KYC_FIELDS: Record<Role, { label: string; hint: string }> = {
@@ -27,20 +27,45 @@ const KYC_FIELDS: Record<Role, { label: string; hint: string }> = {
 export default function SignupPage() {
   useEffect(() => { document.title = 'Get started — Aqua Rudra'; }, []);
   const navigate = useNavigate();
-  const { t } = useTranslation();
 
   const [step, setStep] = useState<StepId>('Role');
   const [role, setRole] = useState<Role | null>(null);
-  const [mobile, setMobile] = useState('');
-  const [otp, setOtp] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [lang, setLang] = useState(LANGUAGES[0]);
   const [kyc, setKyc] = useState('');
   const [location, setLocation] = useState('');
   const [name, setName] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const idx = STEPS.indexOf(step);
   const next = () => setStep(STEPS[Math.min(idx + 1, STEPS.length - 1)]);
   const prev = () => setStep(STEPS[Math.max(idx - 1, 0)]);
+
+  const emailValid = /^\S+@\S+\.\S+$/.test(email.trim());
+  const pwOk = password.length >= 8 && /[A-Z]/.test(password) && /\d/.test(password);
+
+  async function createAccount() {
+    if (!role) return;
+    if (!supabase) { setError('Authentication is not configured.'); return; }
+    setBusy(true);
+    setError(null);
+    const { error: err } = await supabase.auth.signUp({
+      email: email.trim().toLowerCase(),
+      password,
+      options: {
+        data: { name, role, lang, kyc_ref: kyc, location },
+      },
+    });
+    setBusy(false);
+    if (err) {
+      setError(err.message);
+      setStep('Account');
+      return;
+    }
+    setStep('Done');
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -51,9 +76,9 @@ export default function SignupPage() {
             <span className="font-semibold text-base">Aqua Rudra</span>
           </Link>
           <div className="text-sm text-foreground/55">
-            {t('common.alreadyHaveAccount')}{' '}
+            Already have an account?{' '}
             <Link to="/login" className="text-teal-300 hover:text-teal-200 font-semibold underline-offset-4 hover:underline">
-              {t('common.signIn')}
+              Sign in
             </Link>
           </div>
         </div>
@@ -82,6 +107,12 @@ export default function SignupPage() {
             );
           })}
         </div>
+
+        {error && (
+          <div className="mb-6 px-4 py-2.5 rounded-lg border border-red-400/30 bg-red-400/10 text-red-300 text-xs inline-flex items-center gap-2">
+            <AlertCircle className="w-3.5 h-3.5" /> {error}
+          </div>
+        )}
 
         <AnimatePresence mode="wait">
           {/* STEP 1: ROLE */}
@@ -122,27 +153,42 @@ export default function SignupPage() {
             </motion.div>
           )}
 
-          {/* STEP 2: MOBILE */}
-          {step === 'Mobile' && (
-            <motion.div key="mobile" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}>
-              <h1 className="text-2xl md:text-3xl font-bold mb-2">Your mobile number</h1>
-              <p className="text-sm text-foreground/50 mb-8">We'll send you a 6-digit code to confirm.</p>
+          {/* STEP 2: ACCOUNT (email + password) */}
+          {step === 'Account' && (
+            <motion.div key="account" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}>
+              <h1 className="text-2xl md:text-3xl font-bold mb-2">Create your account</h1>
+              <p className="text-sm text-foreground/50 mb-8">Use an email and password you'll remember.</p>
 
               <div className="space-y-4 max-w-md">
                 <div className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
-                  <Smartphone className="w-4 h-4 text-teal-400" />
-                  <span className="text-foreground/40 text-sm">+91</span>
+                  <Mail className="w-4 h-4 text-teal-400" />
                   <input
                     autoFocus
-                    type="tel"
-                    inputMode="numeric"
-                    maxLength={10}
-                    value={mobile}
-                    onChange={(e) => setMobile(e.target.value.replace(/\D/g, ''))}
-                    placeholder="98765 43210"
+                    type="email"
+                    autoComplete="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@example.com"
                     className="bg-transparent outline-none text-foreground flex-1 text-sm"
                   />
                 </div>
+
+                <div className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                  <Lock className="w-4 h-4 text-teal-400" />
+                  <input
+                    type="password"
+                    autoComplete="new-password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="At least 8 chars · 1 capital · 1 number"
+                    className="bg-transparent outline-none text-foreground flex-1 text-sm"
+                  />
+                </div>
+                {password && !pwOk && (
+                  <div className="flex items-center gap-2 text-xs text-amber-300">
+                    <AlertCircle className="w-3.5 h-3.5" /> Needs 8+ chars, one capital, one digit.
+                  </div>
+                )}
 
                 <div className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card">
                   <Languages className="w-4 h-4 text-violet-400" />
@@ -158,54 +204,16 @@ export default function SignupPage() {
                 </button>
                 <button
                   onClick={next}
-                  disabled={mobile.length < 10}
+                  disabled={!emailValid || !pwOk}
                   className="px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm inline-flex items-center gap-2"
                 >
-                  Send OTP <ArrowRight className="w-4 h-4" />
+                  Continue <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
             </motion.div>
           )}
 
-          {/* STEP 3: OTP */}
-          {step === 'OTP' && (
-            <motion.div key="otp" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}>
-              <h1 className="text-2xl md:text-3xl font-bold mb-2">Enter the 6-digit code</h1>
-              <p className="text-sm text-foreground/50 mb-8">Sent to <span className="font-mono text-foreground">+91 {mobile}</span></p>
-
-              <div className="max-w-md">
-                <div className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
-                  <KeyRound className="w-4 h-4 text-teal-400" />
-                  <input
-                    autoFocus
-                    type="text"
-                    inputMode="numeric"
-                    maxLength={6}
-                    value={otp}
-                    onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
-                    placeholder="••••••"
-                    className="bg-transparent outline-none text-foreground flex-1 tracking-[0.5em] font-mono text-lg"
-                  />
-                </div>
-                <button className="text-xs text-foreground/40 hover:text-foreground mt-3">Resend in 30s</button>
-              </div>
-
-              <div className="flex items-center gap-2 mt-8">
-                <button onClick={prev} className="px-5 py-3 rounded-xl border border-border bg-card hover:bg-muted text-sm text-foreground/70 inline-flex items-center gap-2">
-                  <ArrowLeft className="w-4 h-4" /> Back
-                </button>
-                <button
-                  onClick={next}
-                  disabled={otp.length !== 6}
-                  className="px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm inline-flex items-center gap-2"
-                >
-                  Verify <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
-            </motion.div>
-          )}
-
-          {/* STEP 4: KYC + DETAILS */}
+          {/* STEP 3: KYC + DETAILS */}
           {step === 'Details' && role && (
             <motion.div key="details" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}>
               <h1 className="text-2xl md:text-3xl font-bold mb-2">A few last details</h1>
@@ -254,25 +262,26 @@ export default function SignupPage() {
                   <ArrowLeft className="w-4 h-4" /> Back
                 </button>
                 <button
-                  onClick={next}
-                  disabled={!name || !kyc || !location}
+                  onClick={createAccount}
+                  disabled={!name || !kyc || !location || busy}
                   className="px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm inline-flex items-center gap-2"
                 >
-                  Finish <ArrowRight className="w-4 h-4" />
+                  {busy ? <><Loader2 className="w-4 h-4 animate-spin" /> Creating…</> : <>Finish <ArrowRight className="w-4 h-4" /></>}
                 </button>
               </div>
             </motion.div>
           )}
 
-          {/* STEP 5: DONE */}
+          {/* STEP 4: DONE */}
           {step === 'Done' && role && (
             <motion.div key="done" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="text-center py-12">
               <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald-400/10 border border-emerald-400/30 mb-6">
                 <Check className="w-10 h-10 text-emerald-400" />
               </div>
-              <h1 className="text-3xl font-bold mb-2">Welcome to AquaI, {name || 'there'}</h1>
+              <h1 className="text-3xl font-bold mb-2">Welcome to Aqua Rudra, {name || 'there'}</h1>
               <p className="text-foreground/50 mb-8 max-w-md mx-auto">
-                We're loading your <span className="text-foreground">{ROLES.find(r => r.id === role)?.label}</span> dashboard. KYC review usually takes under 24 hours.
+                Check your inbox to confirm your email, then open your{' '}
+                <span className="text-foreground">{ROLES.find(r => r.id === role)?.label}</span> dashboard.
               </p>
               <button
                 onClick={() => navigate(DASHBOARD_ROUTE[role] ?? '/aquaai#dashboard')}

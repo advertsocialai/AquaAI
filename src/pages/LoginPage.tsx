@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Smartphone, ShieldCheck, KeyRound, Activity, IndianRupee,
-  BadgeCheck, Languages, ArrowRight, Fish,
+  Mail, ShieldCheck, Lock, Activity, IndianRupee,
+  BadgeCheck, ArrowRight, Fish, AlertCircle, Loader2,
 } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
+import { DASHBOARD_ROUTE } from '@/pages/dashboards/configs';
+import type { Role } from '@/components/dashboard/RoleSelector';
 
 const VALUE_PROPS = [
   { icon: Activity,      title: 'Live AI Diagnostics',  desc: 'PCR-validated detection in 30 seconds' },
@@ -12,15 +15,13 @@ const VALUE_PROPS = [
   { icon: BadgeCheck,    title: 'Verified Marketplace', desc: 'KYC-checked suppliers, escrow payments' },
 ];
 
-const LANGUAGES = ['English', 'తెలుగు', 'தமிழ்', 'ଓଡ଼ିଆ', 'বাংলা', 'हिन्दी'];
-
 export default function LoginPage() {
-  useEffect(() => { document.title = 'Sign in — AquaI'; }, []);
+  useEffect(() => { document.title = 'Sign in — Aqua Rudra'; }, []);
   const navigate = useNavigate();
-  const [step, setStep] = useState<'mobile' | 'otp'>('mobile');
-  const [mobile, setMobile] = useState('');
-  const [otp, setOtp] = useState('');
-  const [lang, setLang] = useState('English');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [propIdx, setPropIdx] = useState(0);
 
   useEffect(() => {
@@ -30,15 +31,25 @@ export default function LoginPage() {
 
   const prop = VALUE_PROPS[propIdx];
   const PropIcon = prop.icon;
+  const emailValid = /^\S+@\S+\.\S+$/.test(email.trim());
 
-  function submitMobile(e: React.FormEvent) {
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (mobile.length >= 10) setStep('otp');
-  }
-
-  function submitOtp(e: React.FormEvent) {
-    e.preventDefault();
-    if (otp.length === 6) navigate('/aquaai#dashboard');
+    if (!emailValid || !password) return;
+    if (!supabase) { setError('Authentication is not configured.'); return; }
+    setBusy(true);
+    setError(null);
+    const { data, error: err } = await supabase.auth.signInWithPassword({
+      email: email.trim().toLowerCase(),
+      password,
+    });
+    setBusy(false);
+    if (err) {
+      setError(err.message === 'Invalid login credentials' ? 'Wrong email or password.' : err.message);
+      return;
+    }
+    const role = (data.user?.user_metadata?.role as Role | undefined) ?? null;
+    navigate(role ? DASHBOARD_ROUTE[role] : '/aquaai#dashboard');
   }
 
   return (
@@ -51,7 +62,7 @@ export default function LoginPage() {
 
         <Link to="/" className="relative z-10 inline-flex items-center gap-2 text-foreground/80 hover:text-foreground text-sm">
           <Fish className="w-4 h-4 text-teal-400" />
-          <span className="font-semibold">AquaI</span>
+          <span className="font-semibold">Aqua Rudra</span>
         </Link>
 
         <div className="relative z-10 mt-auto max-w-xl">
@@ -99,115 +110,78 @@ export default function LoginPage() {
       <div className="lg:col-span-2 flex flex-col p-6 lg:p-10 max-w-xl w-full mx-auto">
         <div className="flex items-center justify-between mb-12">
           <Link to="/" className="lg:hidden inline-flex items-center gap-2 text-foreground text-sm">
-            <Fish className="w-4 h-4 text-teal-400" /><span className="font-semibold">AquaI</span>
+            <Fish className="w-4 h-4 text-teal-400" /><span className="font-semibold">Aqua Rudra</span>
           </Link>
-          <div className="ml-auto flex items-center gap-2 text-xs">
-            <Languages className="w-3.5 h-3.5 text-foreground/40" />
-            <select
-              value={lang}
-              onChange={(e) => setLang(e.target.value)}
-              className="bg-transparent text-foreground/70 outline-none cursor-pointer"
-            >
-              {LANGUAGES.map((l) => <option key={l} value={l} className="bg-background">{l}</option>)}
-            </select>
-          </div>
         </div>
 
         <div className="my-auto">
           <h1 className="text-3xl font-bold mb-2">Welcome back</h1>
-          <p className="text-sm text-foreground/50 mb-8">Sign in with your mobile number</p>
+          <p className="text-sm text-foreground/50 mb-8">Sign in with your email and password</p>
 
-          {step === 'mobile' && (
-            <motion.form
-              key="mobile"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              onSubmit={submitMobile}
-              className="space-y-4"
-            >
-              <label className="block">
-                <span className="text-xs text-foreground/40 uppercase tracking-widest">Mobile number</span>
-                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
-                  <Smartphone className="w-4 h-4 text-teal-400" />
-                  <span className="text-foreground/40 text-sm">+91</span>
-                  <input
-                    autoFocus
-                    type="tel"
-                    inputMode="numeric"
-                    maxLength={10}
-                    value={mobile}
-                    onChange={(e) => setMobile(e.target.value.replace(/\D/g, ''))}
-                    placeholder="98765 43210"
-                    className="bg-transparent outline-none text-foreground flex-1 text-sm"
-                  />
-                </div>
-              </label>
-
-              <button
-                type="submit"
-                disabled={mobile.length < 10}
-                className="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm transition flex items-center justify-center gap-2"
-              >
-                Send OTP <ArrowRight className="w-4 h-4" />
-              </button>
-            </motion.form>
+          {error && (
+            <div className="mb-4 px-4 py-2.5 rounded-lg border border-red-400/30 bg-red-400/10 text-red-300 text-xs inline-flex items-center gap-2">
+              <AlertCircle className="w-3.5 h-3.5" /> {error}
+            </div>
           )}
 
-          {step === 'otp' && (
-            <motion.form
-              key="otp"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              onSubmit={submitOtp}
-              className="space-y-4"
+          <motion.form
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            onSubmit={submit}
+            className="space-y-4"
+          >
+            <label className="block">
+              <span className="text-xs text-foreground/40 uppercase tracking-widest">Email</span>
+              <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                <Mail className="w-4 h-4 text-teal-400" />
+                <input
+                  autoFocus
+                  type="email"
+                  autoComplete="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@example.com"
+                  className="bg-transparent outline-none text-foreground flex-1 text-sm"
+                />
+              </div>
+            </label>
+
+            <label className="block">
+              <span className="text-xs text-foreground/40 uppercase tracking-widest">Password</span>
+              <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                <Lock className="w-4 h-4 text-teal-400" />
+                <input
+                  type="password"
+                  autoComplete="current-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Your password"
+                  className="bg-transparent outline-none text-foreground flex-1 text-sm"
+                />
+              </div>
+            </label>
+
+            <button
+              type="submit"
+              disabled={!emailValid || !password || busy}
+              className="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm transition flex items-center justify-center gap-2"
             >
-              <div className="text-sm text-foreground/60">
-                OTP sent to <span className="font-mono text-foreground">+91 {mobile}</span>{' '}
-                <button type="button" onClick={() => setStep('mobile')} className="text-teal-400 hover:underline ml-2">change</button>
-              </div>
+              {busy ? <><Loader2 className="w-4 h-4 animate-spin" /> Signing in…</> : <>Sign in <ShieldCheck className="w-4 h-4" /></>}
+            </button>
 
-              <label className="block">
-                <span className="text-xs text-foreground/40 uppercase tracking-widest">6-digit OTP</span>
-                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
-                  <KeyRound className="w-4 h-4 text-teal-400" />
-                  <input
-                    autoFocus
-                    type="text"
-                    inputMode="numeric"
-                    maxLength={6}
-                    value={otp}
-                    onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
-                    placeholder="••••••"
-                    className="bg-transparent outline-none text-foreground flex-1 tracking-[0.5em] font-mono text-lg"
-                  />
-                </div>
-              </label>
-
-              <button
-                type="submit"
-                disabled={otp.length !== 6}
-                className="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm transition flex items-center justify-center gap-2"
-              >
-                Sign in <ShieldCheck className="w-4 h-4" />
-              </button>
-
-              <div className="flex items-center justify-between text-xs">
-                <button type="button" className="text-foreground/40 hover:text-foreground">
-                  Didn't get the code? Resend in 30s
-                </button>
-                <Link to="/forgot-password" className="text-teal-400 hover:underline">Forgot password</Link>
-              </div>
-            </motion.form>
-          )}
+            <div className="text-right text-xs">
+              <Link to="/forgot-password" className="text-teal-400 hover:underline">Forgot password?</Link>
+            </div>
+          </motion.form>
 
           <div className="mt-10 pt-6 border-t border-border text-sm text-foreground/50">
-            New to AquaI?{' '}
+            New to Aqua Rudra?{' '}
             <Link to="/signup" className="text-teal-400 hover:underline font-medium">Create an account</Link>
           </div>
 
           <div className="mt-4 text-[11px] text-foreground/30 leading-relaxed">
             By signing in you agree to our <Link to="/terms" className="underline hover:text-foreground/60">Terms</Link> and{' '}
-            <Link to="/privacy" className="underline hover:text-foreground/60">Privacy Policy</Link>. Aadhaar e-KYC handled per DPDPA 2023.
+            <Link to="/privacy" className="underline hover:text-foreground/60">Privacy Policy</Link>.
           </div>
         </div>
       </div>
