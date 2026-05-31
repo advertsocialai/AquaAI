@@ -38,7 +38,7 @@ function formatINR(n: number) {
 
 function RiskBar({ pct, color }: { pct: number; color: string }) {
   return (
-    <div className="w-20 h-1.5 rounded-full bg-white/10 overflow-hidden">
+    <div className="w-20 h-1.5 rounded-full bg-card overflow-hidden">
       <div className="h-full rounded-full" style={{ width: `${pct}%`, background: color }} />
     </div>
   );
@@ -60,27 +60,27 @@ export function RiskScoringModule() {
           { label: 'Band D (decline)',    value: d,                    icon: AlertTriangle, color: '#f87171' },
           { label: 'Sanctioned / requested', value: `${formatINR(sanctioned)} / ${formatINR(requested)}`, icon: IndianRupee, color: '#38bdf8' },
         ].map(({ label, value, icon: Icon, color }) => (
-          <div key={label} className="p-4 rounded-xl border border-white/10 bg-white/[0.03]">
+          <div key={label} className="p-4 rounded-xl border border-border bg-card">
             <Icon className="w-4 h-4 mb-2" style={{ color }} />
-            <div className="text-2xl font-bold text-white tabular-nums">{value}</div>
-            <div className="text-xs text-white/40">{label}</div>
+            <div className="text-2xl font-bold text-foreground tabular-nums">{value}</div>
+            <div className="text-xs text-foreground/40">{label}</div>
           </div>
         ))}
       </div>
 
       <div>
         <div className="flex items-center justify-between mb-3">
-          <div className="text-[11px] uppercase tracking-widest text-white/30">Farm Risk Book</div>
-          <button className="text-xs text-white/40 hover:text-white inline-flex items-center gap-1">
+          <div className="text-[11px] uppercase tracking-widest text-foreground/30">Farm Risk Book</div>
+          <button className="text-xs text-foreground/40 hover:text-foreground inline-flex items-center gap-1">
             <FileSpreadsheet className="w-3 h-3" /> Export CSV
           </button>
         </div>
-        <div className="overflow-x-auto rounded-2xl border border-white/10">
+        <div className="overflow-x-auto rounded-2xl border border-border">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-white/10 bg-white/5">
+              <tr className="border-b border-border bg-card">
                 {['Farm', 'Farmer', 'District', 'Acres', 'QS avg', 'Outbreak risk', 'Band', 'Requested', 'Recommended'].map((h) => (
-                  <th key={h} className="px-4 py-3 text-left text-xs font-medium text-white/40 uppercase tracking-widest">{h}</th>
+                  <th key={h} className="px-4 py-3 text-left text-xs font-medium text-foreground/40 uppercase tracking-widest">{h}</th>
                 ))}
               </tr>
             </thead>
@@ -88,16 +88,16 @@ export function RiskScoringModule() {
               {FARMS.map((f) => {
                 const color = BAND_COLORS[f.riskBand];
                 return (
-                  <motion.tr key={f.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="border-b border-white/5 hover:bg-white/5">
+                  <motion.tr key={f.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="border-b border-border hover:bg-muted">
                     <td className="px-4 py-3 font-mono text-xs text-amber-300">{f.id}</td>
-                    <td className="px-4 py-3 text-white/90">{f.farmer}</td>
-                    <td className="px-4 py-3 text-white/50 text-xs">{f.district}</td>
-                    <td className="px-4 py-3 text-white/70 tabular-nums">{f.acres}</td>
-                    <td className="px-4 py-3 text-white/90 tabular-nums">{f.qsAvg}</td>
+                    <td className="px-4 py-3 text-foreground/90">{f.farmer}</td>
+                    <td className="px-4 py-3 text-foreground/50 text-xs">{f.district}</td>
+                    <td className="px-4 py-3 text-foreground/70 tabular-nums">{f.acres}</td>
+                    <td className="px-4 py-3 text-foreground/90 tabular-nums">{f.qsAvg}</td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
                         <RiskBar pct={f.outbreakRisk} color={color} />
-                        <span className="text-xs tabular-nums text-white/60">{f.outbreakRisk}%</span>
+                        <span className="text-xs tabular-nums text-foreground/60">{f.outbreakRisk}%</span>
                       </div>
                     </td>
                     <td className="px-4 py-3">
@@ -105,7 +105,7 @@ export function RiskScoringModule() {
                         {f.riskBand}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-white/70 tabular-nums">{formatINR(f.loanReq)}</td>
+                    <td className="px-4 py-3 text-foreground/70 tabular-nums">{formatINR(f.loanReq)}</td>
                     <td className="px-4 py-3 font-bold tabular-nums" style={{ color: f.recommended === 0 ? '#f87171' : '#34d399' }}>
                       {formatINR(f.recommended)}
                     </td>
@@ -118,36 +118,36 @@ export function RiskScoringModule() {
       </div>
 
       <div className="grid lg:grid-cols-2 gap-4">
-        <div className="p-5 rounded-2xl border border-white/10 bg-white/[0.03]">
+        <div className="p-5 rounded-2xl border border-border bg-card">
           <div className="flex items-center gap-2 mb-4">
             <TrendingUp className="w-4 h-4 text-emerald-400" />
-            <span className="text-sm font-semibold text-white">Scoring Model Inputs</span>
+            <span className="text-sm font-semibold text-foreground">Scoring Model Inputs</span>
           </div>
-          <ul className="space-y-2 text-sm text-white/70">
-            <li className="flex justify-between"><span>QC Score history (5 cycles)</span><span className="text-white/40">40%</span></li>
-            <li className="flex justify-between"><span>Outbreak proximity (5km, 30d)</span><span className="text-white/40">25%</span></li>
-            <li className="flex justify-between"><span>Cycle yield consistency</span><span className="text-white/40">20%</span></li>
-            <li className="flex justify-between"><span>Hatchery source quality</span><span className="text-white/40">10%</span></li>
-            <li className="flex justify-between"><span>Water quality compliance</span><span className="text-white/40">5%</span></li>
+          <ul className="space-y-2 text-sm text-foreground/70">
+            <li className="flex justify-between"><span>QC Score history (5 cycles)</span><span className="text-foreground/40">40%</span></li>
+            <li className="flex justify-between"><span>Outbreak proximity (5km, 30d)</span><span className="text-foreground/40">25%</span></li>
+            <li className="flex justify-between"><span>Cycle yield consistency</span><span className="text-foreground/40">20%</span></li>
+            <li className="flex justify-between"><span>Hatchery source quality</span><span className="text-foreground/40">10%</span></li>
+            <li className="flex justify-between"><span>Water quality compliance</span><span className="text-foreground/40">5%</span></li>
           </ul>
         </div>
 
-        <div className="p-5 rounded-2xl border border-white/10 bg-white/[0.03]">
+        <div className="p-5 rounded-2xl border border-border bg-card">
           <div className="flex items-center gap-2 mb-4">
             <ShieldCheck className="w-4 h-4 text-violet-400" />
-            <span className="text-sm font-semibold text-white">Insurance Claims (this cycle)</span>
+            <span className="text-sm font-semibold text-foreground">Insurance Claims (this cycle)</span>
           </div>
           <div className="space-y-2 text-sm">
-            <div className="flex items-center justify-between"><span className="text-white/70">Claims filed</span><span className="font-bold text-white tabular-nums">24</span></div>
-            <div className="flex items-center justify-between"><span className="text-white/70">Auto-verified (HMAC certs)</span><span className="font-bold text-emerald-400 tabular-nums">19</span></div>
-            <div className="flex items-center justify-between"><span className="text-white/70">Pending field visit</span><span className="font-bold text-amber-400 tabular-nums">4</span></div>
-            <div className="flex items-center justify-between"><span className="text-white/70">Fraud flagged</span><span className="font-bold text-red-400 tabular-nums">1</span></div>
+            <div className="flex items-center justify-between"><span className="text-foreground/70">Claims filed</span><span className="font-bold text-foreground tabular-nums">24</span></div>
+            <div className="flex items-center justify-between"><span className="text-foreground/70">Auto-verified (HMAC certs)</span><span className="font-bold text-emerald-400 tabular-nums">19</span></div>
+            <div className="flex items-center justify-between"><span className="text-foreground/70">Pending field visit</span><span className="font-bold text-amber-400 tabular-nums">4</span></div>
+            <div className="flex items-center justify-between"><span className="text-foreground/70">Fraud flagged</span><span className="font-bold text-red-400 tabular-nums">1</span></div>
           </div>
         </div>
       </div>
 
       <div>
-        <div className="text-[11px] uppercase tracking-widest text-white/30 mb-3">New Loan Application</div>
+        <div className="text-[11px] uppercase tracking-widest text-foreground/30 mb-3">New Loan Application</div>
         <LoanApplication />
       </div>
     </div>

@@ -78,18 +78,18 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-white flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
       <header className="px-6 lg:px-8 py-6 flex items-center justify-between max-w-md mx-auto w-full">
         <Link to="/" className="inline-flex items-center gap-2">
           <Fish className="w-4 h-4 text-cyan-400" />
           <span className="font-semibold">AquaI</span>
         </Link>
-        <Link to="/login" className="text-xs text-white/50 hover:text-white">Back to sign in</Link>
+        <Link to="/login" className="text-xs text-foreground/50 hover:text-foreground">Back to sign in</Link>
       </header>
 
       <main className="container mx-auto px-6 lg:px-8 max-w-md flex-1 flex flex-col justify-center pb-20">
         <h1 className="text-2xl md:text-3xl font-bold mb-2">Reset your password</h1>
-        <p className="text-sm text-white/60 mb-8">We'll email a 6-digit code to the address you used to sign up.</p>
+        <p className="text-sm text-foreground/60 mb-8">We'll email a 6-digit code to the address you used to sign up.</p>
 
         {error && (
           <div className="mb-4 px-4 py-2.5 rounded-lg border border-red-400/30 bg-red-400/10 text-red-200 text-xs inline-flex items-center gap-2">
@@ -108,8 +108,8 @@ export default function ForgotPasswordPage() {
               className="space-y-4"
             >
               <label className="block">
-                <span className="text-[11px] uppercase tracking-widest text-white/60">Email address</span>
-                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03] focus-within:border-cyan-400/40">
+                <span className="text-[11px] uppercase tracking-widest text-foreground/60">Email address</span>
+                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
                   <Mail className="w-4 h-4 text-cyan-400" />
                   <input
                     autoFocus
@@ -118,7 +118,7 @@ export default function ForgotPasswordPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@example.com"
-                    className="bg-transparent outline-none text-white flex-1 text-sm"
+                    className="bg-transparent outline-none text-foreground flex-1 text-sm"
                   />
                 </div>
               </label>
@@ -141,13 +141,13 @@ export default function ForgotPasswordPage() {
               onSubmit={(e) => { e.preventDefault(); if (otp.length === 6) setStep('reset'); }}
               className="space-y-4"
             >
-              <div className="text-sm text-white/70">
-                Code sent to <span className="font-mono text-white">{email}</span>{' '}
+              <div className="text-sm text-foreground/70">
+                Code sent to <span className="font-mono text-foreground">{email}</span>{' '}
                 <button type="button" onClick={() => setStep('email')} className="text-cyan-400 hover:underline ml-2">change</button>
               </div>
               <label className="block">
-                <span className="text-[11px] uppercase tracking-widest text-white/40">6-digit code</span>
-                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03] focus-within:border-cyan-400/40">
+                <span className="text-[11px] uppercase tracking-widest text-foreground/40">6-digit code</span>
+                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
                   <KeyRound className="w-4 h-4 text-cyan-400" />
                   <input
                     autoFocus
@@ -157,7 +157,7 @@ export default function ForgotPasswordPage() {
                     value={otp}
                     onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
                     placeholder="••••••"
-                    className="bg-transparent outline-none text-white flex-1 tracking-[0.5em] font-mono text-lg"
+                    className="bg-transparent outline-none text-foreground flex-1 tracking-[0.5em] font-mono text-lg"
                   />
                 </div>
               </label>
@@ -181,8 +181,8 @@ export default function ForgotPasswordPage() {
               className="space-y-4"
             >
               <label className="block">
-                <span className="text-[11px] uppercase tracking-widest text-white/60">New password</span>
-                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03] focus-within:border-cyan-400/40">
+                <span className="text-[11px] uppercase tracking-widest text-foreground/60">New password</span>
+                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
                   <Lock className="w-4 h-4 text-cyan-400" />
                   <input
                     autoFocus
@@ -190,20 +190,20 @@ export default function ForgotPasswordPage() {
                     value={pw}
                     onChange={(e) => setPw(e.target.value)}
                     placeholder="At least 8 chars · 1 capital · 1 number"
-                    className="bg-transparent outline-none text-white flex-1 text-sm"
+                    className="bg-transparent outline-none text-foreground flex-1 text-sm"
                   />
                 </div>
               </label>
               <label className="block">
-                <span className="text-[11px] uppercase tracking-widest text-white/40">Confirm</span>
-                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03] focus-within:border-cyan-400/40">
+                <span className="text-[11px] uppercase tracking-widest text-foreground/40">Confirm</span>
+                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
                   <Lock className="w-4 h-4 text-cyan-400" />
                   <input
                     type="password"
                     value={pw2}
                     onChange={(e) => setPw2(e.target.value)}
                     placeholder="Re-enter"
-                    className="bg-transparent outline-none text-white flex-1 text-sm"
+                    className="bg-transparent outline-none text-foreground flex-1 text-sm"
                   />
                 </div>
               </label>
@@ -234,7 +234,7 @@ export default function ForgotPasswordPage() {
                 <Check className="w-8 h-8 text-emerald-400" />
               </div>
               <h2 className="text-xl font-bold mb-2">Password reset</h2>
-              <p className="text-white/50 mb-6 text-sm">You can now sign in with your new password.</p>
+              <p className="text-foreground/50 mb-6 text-sm">You can now sign in with your new password.</p>
               <Link
                 to="/login"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-semibold text-sm"

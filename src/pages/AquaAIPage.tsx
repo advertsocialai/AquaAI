@@ -16,7 +16,7 @@ const AquaAIPage = () => {
   useEffect(() => { document.title = "Aqua Rudra — Aquaculture Intelligence"; }, []);
 
   return (
-    <div className="min-h-screen bg-background text-white">
+    <div className="min-h-screen bg-background text-foreground">
       <Header />
 
       {/* Hero */}
@@ -40,7 +40,7 @@ const AquaAIPage = () => {
             </motion.h1>
 
             <motion.p
-              className="text-lg md:text-xl text-white/70 max-w-2xl mb-10 leading-relaxed"
+              className="text-lg md:text-xl text-foreground/70 max-w-2xl mb-10 leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
@@ -55,15 +55,15 @@ const AquaAIPage = () => {
       <BuiltForRoles />
 
       {/* Unified Dashboard — 6 modules × 8 roles */}
-      <section id="dashboard" className="py-24 border-t border-white/5">
+      <section id="dashboard" className="py-24 border-t border-border">
         <div className="container mx-auto px-6 lg:px-8">
           <motion.div className="mb-12"
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <div className="text-sm text-cyan-300 uppercase tracking-widest mb-4">{t('aquaai_page.dashboardHead')}</div>
             <h2 className="text-4xl md:text-5xl font-bold leading-tight">{t('aquaai_page.dashboardTitle')}<br />
-              <span className="text-white/40">{t('aquaai_page.dashboardModules')}</span>
+              <span className="text-foreground/40">{t('aquaai_page.dashboardModules')}</span>
             </h2>
-            <p className="text-base md:text-lg text-white/65 mt-4 max-w-2xl leading-relaxed">{t('aquaai_page.dashboardSub')}</p>
+            <p className="text-base md:text-lg text-foreground/65 mt-4 max-w-2xl leading-relaxed">{t('aquaai_page.dashboardSub')}</p>
           </motion.div>
           <AquaDashboard />
         </div>

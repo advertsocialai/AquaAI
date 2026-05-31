@@ -38,13 +38,13 @@ export default function CareersPage() {
   useEffect(() => { document.title = 'Careers — Aqua Rudra'; }, []);
 
   return (
-    <div className="min-h-screen bg-background text-white">
+    <div className="min-h-screen bg-background text-foreground">
       <Header />
 
       {/* Hero */}
       <section className="relative pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-black to-violet-500/10" />
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-background to-violet-500/10" />
           <div className="absolute top-0 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
         </div>
         <div className="container mx-auto px-6 lg:px-8 relative z-10 text-center">
@@ -61,7 +61,7 @@ export default function CareersPage() {
             Build the operating system<br />for Indian aquaculture
           </motion.h1>
           <motion.p
-            className="text-base md:text-lg text-white/60 max-w-2xl mx-auto"
+            className="text-base md:text-lg text-foreground/60 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
           >
             Join a small, focused team building AI diagnostics, live pricing, marketplace and
@@ -71,7 +71,7 @@ export default function CareersPage() {
       </section>
 
       {/* Career Perks */}
-      <section className="py-20 border-t border-white/5">
+      <section className="py-20 border-t border-border">
         <div className="container mx-auto px-6 lg:px-8 max-w-6xl">
           <div className="text-center mb-12">
             <div className="text-xs text-cyan-300 uppercase tracking-widest mb-3">Our Work Culture</div>
@@ -85,13 +85,13 @@ export default function CareersPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.05 }}
-                className="p-6 rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition"
+                className="p-6 rounded-2xl border border-border bg-card hover:bg-muted transition"
               >
                 <div className="w-10 h-10 rounded-xl bg-cyan-400/10 border border-cyan-400/20 flex items-center justify-center mb-4">
                   <Icon className="w-5 h-5 text-cyan-300" />
                 </div>
-                <div className="text-base font-semibold text-white mb-2">{title}</div>
-                <p className="text-sm text-white/60 leading-relaxed">{desc}</p>
+                <div className="text-base font-semibold text-foreground mb-2">{title}</div>
+                <p className="text-sm text-foreground/60 leading-relaxed">{desc}</p>
               </motion.div>
             ))}
           </div>
@@ -99,12 +99,12 @@ export default function CareersPage() {
       </section>
 
       {/* Why Aqua Rudra */}
-      <section className="py-20 border-t border-white/5 bg-white/[0.02]">
+      <section className="py-20 border-t border-border bg-card">
         <div className="container mx-auto px-6 lg:px-8 max-w-5xl">
           <div className="text-center mb-12">
             <div className="text-xs text-cyan-300 uppercase tracking-widest mb-3">Aqua Rudra Kingship</div>
             <h2 className="text-3xl md:text-4xl font-bold">Why Aqua Rudra?</h2>
-            <p className="text-white/60 mt-4 max-w-2xl mx-auto text-sm">
+            <p className="text-foreground/60 mt-4 max-w-2xl mx-auto text-sm">
               At Aqua Rudra we are driven by innovation, collaboration and the pursuit of excellence.
               When you join our team, you become an integral part of an organisation dedicated to
               supporting shrimp and fish farmers and ensuring their success.
@@ -117,15 +117,15 @@ export default function CareersPage() {
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="p-6 rounded-2xl border border-white/10 bg-white/[0.03]"
+                className="p-6 rounded-2xl border border-border bg-card"
               >
                 <div className="flex items-center gap-3 mb-3">
                   <div className="p-2 rounded-lg bg-violet-400/10 border border-violet-400/20">
                     <Icon className="w-5 h-5 text-violet-300" />
                   </div>
-                  <h3 className="text-xl font-bold text-white">{title}</h3>
+                  <h3 className="text-xl font-bold text-foreground">{title}</h3>
                 </div>
-                <p className="text-sm text-white/70 leading-relaxed">{body}</p>
+                <p className="text-sm text-foreground/70 leading-relaxed">{body}</p>
               </motion.div>
             ))}
           </div>
@@ -133,7 +133,7 @@ export default function CareersPage() {
       </section>
 
       {/* Open Roles */}
-      <section className="py-20 border-t border-white/5">
+      <section className="py-20 border-t border-border">
         <div className="container mx-auto px-6 lg:px-8 max-w-4xl">
           <div className="mb-10">
             <div className="text-xs text-cyan-300 uppercase tracking-widest mb-3">Open Roles</div>
@@ -146,15 +146,15 @@ export default function CareersPage() {
                 initial={{ opacity: 0, x: -10 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="flex flex-wrap items-center gap-4 p-4 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition group"
+                className="flex flex-wrap items-center gap-4 p-4 rounded-xl border border-border bg-card hover:bg-muted transition group"
               >
                 <div className="flex-1 min-w-0">
-                  <div className="text-base font-semibold text-white">{o.role}</div>
-                  <div className="text-xs text-white/40 mt-0.5">{o.location} · {o.type}</div>
+                  <div className="text-base font-semibold text-foreground">{o.role}</div>
+                  <div className="text-xs text-foreground/40 mt-0.5">{o.location} · {o.type}</div>
                 </div>
                 <Link
                   to="/contact"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-white/10 group-hover:border-cyan-400/40 group-hover:bg-cyan-400/10 text-xs text-white/80 group-hover:text-cyan-300 transition"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border group-hover:border-cyan-400/40 group-hover:bg-cyan-400/10 text-xs text-foreground/80 group-hover:text-cyan-300 transition"
                 >
                   Apply <ArrowRight className="w-3 h-3" />
                 </Link>
@@ -165,12 +165,12 @@ export default function CareersPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 border-t border-white/5 bg-white/[0.02]">
+      <section className="py-24 border-t border-border bg-card">
         <div className="container mx-auto px-6 lg:px-8 max-w-3xl text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Join us in transforming India's aquaculture industry
           </h2>
-          <p className="text-white/60 mb-8 leading-relaxed">
+          <p className="text-foreground/60 mb-8 leading-relaxed">
             If you're passionate about making a meaningful impact on India's aquaculture industry
             and want to be part of a team shaping the future of farming, Aqua Rudra is the place
             for you. Your career at Aqua Rudra begins here.

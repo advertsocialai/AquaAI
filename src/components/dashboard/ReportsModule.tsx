@@ -95,7 +95,7 @@ export function ReportsModule() {
               key={id}
               onClick={() => setKind(id)}
               className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs border transition ${
-                sel ? 'border-white/30 bg-white/10 text-white' : 'border-white/10 bg-white/[0.03] text-white/50 hover:text-white/80'
+                sel ? 'border-border bg-card text-foreground' : 'border-border bg-card text-foreground/50 hover:text-foreground/80'
               }`}
               style={sel ? { boxShadow: `0 0 24px ${accent}22` } : undefined}
             >
@@ -107,19 +107,19 @@ export function ReportsModule() {
       </div>
 
       <div className="flex flex-wrap items-center gap-3">
-        <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-white/10 bg-white/5 flex-1 min-w-[220px]">
-          <Search className="w-4 h-4 text-white/40" />
+        <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-border bg-card flex-1 min-w-[220px]">
+          <Search className="w-4 h-4 text-foreground/40" />
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search by ID or subject…"
-            className="bg-transparent outline-none text-sm text-white placeholder:text-white/30 flex-1"
+            className="bg-transparent outline-none text-sm text-foreground placeholder:text-foreground/30 flex-1"
           />
         </div>
-        <button className="flex items-center gap-2 px-3 py-2 rounded-xl border border-white/10 bg-white/5 text-xs text-white/60 hover:text-white">
+        <button className="flex items-center gap-2 px-3 py-2 rounded-xl border border-border bg-card text-xs text-foreground/60 hover:text-foreground">
           <Calendar className="w-3.5 h-3.5 text-violet-400" /> Date range
         </button>
-        <button className="flex items-center gap-2 px-3 py-2 rounded-xl border border-white/10 bg-white/5 text-xs text-white/60 hover:text-white">
+        <button className="flex items-center gap-2 px-3 py-2 rounded-xl border border-border bg-card text-xs text-foreground/60 hover:text-foreground">
           <Filter className="w-3.5 h-3.5 text-amber-400" /> Filters
         </button>
         <button className="flex items-center gap-2 px-3 py-2 rounded-xl bg-cyan-500/20 border border-cyan-400/30 text-xs text-cyan-300 hover:bg-cyan-500/30">
@@ -131,33 +131,33 @@ export function ReportsModule() {
         key={kind}
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        className="overflow-x-auto rounded-2xl border border-white/10"
+        className="overflow-x-auto rounded-2xl border border-border"
       >
-        <div className="px-4 py-3 border-b border-white/5 flex items-center justify-between">
+        <div className="px-4 py-3 border-b border-border flex items-center justify-between">
           <div className="flex items-center gap-2">
             <active.icon className="w-4 h-4" style={{ color: active.accent }} />
-            <span className="text-sm font-semibold text-white">{active.label}</span>
-            <span className="text-[11px] text-white/30">— {rows.length} record{rows.length === 1 ? '' : 's'}</span>
+            <span className="text-sm font-semibold text-foreground">{active.label}</span>
+            <span className="text-[11px] text-foreground/30">— {rows.length} record{rows.length === 1 ? '' : 's'}</span>
           </div>
         </div>
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-white/10 bg-white/5">
+            <tr className="border-b border-border bg-card">
               {['Report ID', 'Date', 'Subject', 'Score / Detail', 'Status', ''].map((h) => (
-                <th key={h} className="px-4 py-3 text-left text-xs font-medium text-white/40 uppercase tracking-widest">{h}</th>
+                <th key={h} className="px-4 py-3 text-left text-xs font-medium text-foreground/40 uppercase tracking-widest">{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {rows.map((r) => (
-              <tr key={r.id} className="border-b border-white/5 hover:bg-white/5 transition">
+              <tr key={r.id} className="border-b border-border hover:bg-muted transition">
                 <td className="px-4 py-3 font-mono text-xs text-violet-300">{r.id}</td>
-                <td className="px-4 py-3 text-white/50 text-xs">{r.date}</td>
-                <td className="px-4 py-3 text-white/90">{r.subject}</td>
-                <td className="px-4 py-3 text-white/60 text-xs">{r.score ?? '—'}</td>
+                <td className="px-4 py-3 text-foreground/50 text-xs">{r.date}</td>
+                <td className="px-4 py-3 text-foreground/90">{r.subject}</td>
+                <td className="px-4 py-3 text-foreground/60 text-xs">{r.score ?? '—'}</td>
                 <td className="px-4 py-3"><StatusBadge status={r.status} tone={r.tone} /></td>
                 <td className="px-4 py-3">
-                  <button className="text-xs text-white/40 hover:text-white inline-flex items-center gap-1">
+                  <button className="text-xs text-foreground/40 hover:text-foreground inline-flex items-center gap-1">
                     <Download className="w-3 h-3" /> PDF
                   </button>
                 </td>
@@ -169,14 +169,14 @@ export function ReportsModule() {
 
       {kind === 'qc-cert' && (
         <div>
-          <div className="text-[11px] uppercase tracking-widest text-white/30 mb-3">Sample certificate preview</div>
+          <div className="text-[11px] uppercase tracking-widest text-foreground/30 mb-3">Sample certificate preview</div>
           <QcCertificatePreview />
         </div>
       )}
 
-      <div className="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-white/[0.03]">
+      <div className="flex items-center gap-3 p-4 rounded-xl border border-border bg-card">
         <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-        <span className="text-xs text-white/50">
+        <span className="text-xs text-foreground/50">
           Every report is HMAC-signed · MPEDA-compliant format · DPDPA-compliant data residency in Mumbai
         </span>
       </div>

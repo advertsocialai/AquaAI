@@ -103,21 +103,21 @@ export default function KycPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-white">
+    <div className="min-h-screen bg-background text-foreground">
       <header className="px-6 lg:px-8 py-6 flex items-center justify-between max-w-4xl mx-auto">
         <Link to="/" className="inline-flex items-center gap-2">
           <Fish className="w-4 h-4 text-cyan-400" />
           <span className="font-semibold">AquaI</span>
         </Link>
-        <div className="text-[11px] text-white/30 inline-flex items-center gap-1.5">
+        <div className="text-[11px] text-foreground/30 inline-flex items-center gap-1.5">
           <Lock className="w-3 h-3" /> NSDL e-KYC · DPDPA compliant · India-hosted
         </div>
       </header>
 
       <main className="container mx-auto px-6 lg:px-8 max-w-3xl pb-16">
-        <div className="text-[11px] uppercase tracking-widest text-white/30 mb-2">Identity verification</div>
+        <div className="text-[11px] uppercase tracking-widest text-foreground/30 mb-2">Identity verification</div>
         <h1 className="text-2xl md:text-3xl font-bold mb-2">KYC verification</h1>
-        <p className="text-sm text-white/50 mb-8 max-w-xl">
+        <p className="text-sm text-foreground/50 mb-8 max-w-xl">
           We verify your identity once and re-use the result across the platform — for hatchery
           B2B contracts, bank underwriting, MPEDA license linking and Razorpay payouts.
         </p>
@@ -133,15 +133,15 @@ export default function KycPage() {
                   className={`shrink-0 w-7 h-7 rounded-full flex items-center justify-center border ${
                     done ? 'bg-emerald-400 text-black border-emerald-400'
                     : active ? 'bg-cyan-400 text-black border-cyan-400'
-                    : 'bg-white/[0.03] text-white/40 border-white/10'
+                    : 'bg-card text-foreground/40 border-border'
                   }`}
                 >
                   {done ? <Check className="w-3.5 h-3.5" /> : <Icon className="w-3.5 h-3.5" />}
                 </div>
-                <div className={`text-[10px] uppercase tracking-widest ${active ? 'text-white' : done ? 'text-white/50' : 'text-white/30'}`}>
+                <div className={`text-[10px] uppercase tracking-widest ${active ? 'text-foreground' : done ? 'text-foreground/50' : 'text-foreground/30'}`}>
                   {s.label}
                 </div>
-                {i < STEPS.length - 1 && <div className={`flex-1 h-px ${done ? 'bg-emerald-400/40' : 'bg-white/10'}`} />}
+                {i < STEPS.length - 1 && <div className={`flex-1 h-px ${done ? 'bg-emerald-400/40' : 'bg-card'}`} />}
               </div>
             );
           })}
@@ -158,8 +158,8 @@ export default function KycPage() {
               className="space-y-4"
             >
               <label className="block">
-                <span className="text-[11px] uppercase tracking-widest text-white/40">12-digit Aadhaar number</span>
-                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03] focus-within:border-cyan-400/40">
+                <span className="text-[11px] uppercase tracking-widest text-foreground/40">12-digit Aadhaar number</span>
+                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
                   <ShieldCheck className="w-4 h-4 text-cyan-400" />
                   <input
                     autoFocus
@@ -167,10 +167,10 @@ export default function KycPage() {
                     value={maskAadhaar(aadhaar)}
                     onChange={(e) => setAadhaar(e.target.value.replace(/\D/g, '').slice(0, 12))}
                     placeholder="XXXX XXXX XXXX"
-                    className="bg-transparent outline-none text-white flex-1 tracking-wider"
+                    className="bg-transparent outline-none text-foreground flex-1 tracking-wider"
                   />
                 </div>
-                <div className="text-[11px] text-white/30 mt-1">
+                <div className="text-[11px] text-foreground/30 mt-1">
                   We never display your full Aadhaar after entry. NSDL handles the e-KYC; we store only the last 4 digits.
                 </div>
               </label>
@@ -193,13 +193,13 @@ export default function KycPage() {
               onSubmit={submitOtp}
               className="space-y-4"
             >
-              <div className="text-sm text-white/70">
+              <div className="text-sm text-foreground/70">
                 OTP sent by NSDL to the mobile linked to your Aadhaar.{' '}
                 <button type="button" onClick={() => setStep('aadhaar')} className="text-cyan-400 hover:underline">change</button>
               </div>
               <label className="block">
-                <span className="text-[11px] uppercase tracking-widest text-white/40">6-digit OTP</span>
-                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03] focus-within:border-cyan-400/40">
+                <span className="text-[11px] uppercase tracking-widest text-foreground/40">6-digit OTP</span>
+                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
                   <KeyRound className="w-4 h-4 text-cyan-400" />
                   <input
                     autoFocus
@@ -208,7 +208,7 @@ export default function KycPage() {
                     value={otp}
                     onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
                     placeholder="••••••"
-                    className="bg-transparent outline-none text-white flex-1 tracking-[0.5em] font-mono text-lg"
+                    className="bg-transparent outline-none text-foreground flex-1 tracking-[0.5em] font-mono text-lg"
                   />
                   {otpVerifying && <Pending />}
                 </div>
@@ -234,15 +234,15 @@ export default function KycPage() {
               <VerifiedBadge value={`Aadhaar XXXX ${aadhaar.slice(-4)}`} />
               <form onSubmit={submitPan} className="space-y-4">
                 <label className="block">
-                  <span className="text-[11px] uppercase tracking-widest text-white/40">PAN (ABCDE1234F)</span>
-                  <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03] focus-within:border-cyan-400/40">
+                  <span className="text-[11px] uppercase tracking-widest text-foreground/40">PAN (ABCDE1234F)</span>
+                  <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
                     <BadgeCheck className="w-4 h-4 text-violet-400" />
                     <input
                       autoFocus
                       value={pan}
                       onChange={(e) => setPan(e.target.value.toUpperCase().slice(0, 10))}
                       placeholder="ABCDE1234F"
-                      className="bg-transparent outline-none text-white flex-1 font-mono tracking-widest"
+                      className="bg-transparent outline-none text-foreground flex-1 font-mono tracking-widest"
                     />
                   </div>
                 </label>
@@ -269,15 +269,15 @@ export default function KycPage() {
               <VerifiedBadge value={`PAN ${pan}`} />
               <form onSubmit={submitGst} className="space-y-4">
                 <label className="block">
-                  <span className="text-[11px] uppercase tracking-widest text-white/40">GSTIN (15 chars · skip if individual)</span>
-                  <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03] focus-within:border-cyan-400/40">
+                  <span className="text-[11px] uppercase tracking-widest text-foreground/40">GSTIN (15 chars · skip if individual)</span>
+                  <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
                     <Building2 className="w-4 h-4 text-amber-400" />
                     <input
                       autoFocus
                       value={gst}
                       onChange={(e) => setGst(e.target.value.toUpperCase().slice(0, 15))}
                       placeholder="22AAAAA0000A1Z5"
-                      className="bg-transparent outline-none text-white flex-1 font-mono tracking-wider"
+                      className="bg-transparent outline-none text-foreground flex-1 font-mono tracking-wider"
                     />
                   </div>
                 </label>
@@ -292,7 +292,7 @@ export default function KycPage() {
                   <button
                     type="button"
                     onClick={() => setStep('bank')}
-                    className="text-sm text-white/40 hover:text-white"
+                    className="text-sm text-foreground/40 hover:text-foreground"
                   >
                     Skip — individual
                   </button>
@@ -315,24 +315,24 @@ export default function KycPage() {
               <form onSubmit={runPennyDrop} className="space-y-4">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <label className="block">
-                    <span className="text-[11px] uppercase tracking-widest text-white/40">Account number</span>
-                    <div className="mt-2 px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03] focus-within:border-cyan-400/40">
+                    <span className="text-[11px] uppercase tracking-widest text-foreground/40">Account number</span>
+                    <div className="mt-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
                       <input
                         value={accountNo}
                         onChange={(e) => setAccountNo(e.target.value.replace(/\D/g, '').slice(0, 18))}
                         placeholder="0000 0000 0000 00"
-                        className="w-full bg-transparent outline-none text-white text-sm font-mono"
+                        className="w-full bg-transparent outline-none text-foreground text-sm font-mono"
                       />
                     </div>
                   </label>
                   <label className="block">
-                    <span className="text-[11px] uppercase tracking-widest text-white/40">IFSC</span>
-                    <div className="mt-2 px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03] focus-within:border-cyan-400/40">
+                    <span className="text-[11px] uppercase tracking-widest text-foreground/40">IFSC</span>
+                    <div className="mt-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
                       <input
                         value={ifsc}
                         onChange={(e) => setIfsc(e.target.value.toUpperCase().slice(0, 11))}
                         placeholder="SBIN0001234"
-                        className="w-full bg-transparent outline-none text-white text-sm font-mono"
+                        className="w-full bg-transparent outline-none text-foreground text-sm font-mono"
                       />
                     </div>
                   </label>
@@ -365,8 +365,8 @@ export default function KycPage() {
                 <ShieldCheck className="w-10 h-10 text-emerald-400" />
               </div>
               <h2 className="text-2xl font-bold mb-2">All verified</h2>
-              <p className="text-white/50 mb-6 max-w-md mx-auto">
-                Account holder confirmed as <span className="text-white">{accountHolder}</span>.
+              <p className="text-foreground/50 mb-6 max-w-md mx-auto">
+                Account holder confirmed as <span className="text-foreground">{accountHolder}</span>.
                 Your KYC is now linked to every transaction on AquaI.
               </p>
               <div className="grid sm:grid-cols-2 gap-3 max-w-md mx-auto text-left mb-8">

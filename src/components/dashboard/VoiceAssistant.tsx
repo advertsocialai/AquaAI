@@ -82,23 +82,23 @@ export function VoiceAssistant() {
   }
 
   return (
-    <div className="p-6 rounded-2xl border border-white/10 bg-white/[0.03]">
+    <div className="p-6 rounded-2xl border border-border bg-card">
       <div className="flex items-center gap-2 mb-4">
         <div className="p-2 rounded-lg bg-violet-400/10">
           <Mic className="w-4 h-4 text-violet-400" />
         </div>
         <div>
-          <div className="text-sm font-semibold text-white">Voice Assistant</div>
-          <div className="text-[11px] text-white/40">Speak to Aqua Rudra in your language</div>
+          <div className="text-sm font-semibold text-foreground">Voice Assistant</div>
+          <div className="text-[11px] text-foreground/40">Speak to Aqua Rudra in your language</div>
         </div>
         <div className="ml-auto flex items-center gap-2">
-          <Languages className="w-3.5 h-3.5 text-white/40" />
+          <Languages className="w-3.5 h-3.5 text-foreground/40" />
           <select
             value={lang}
             onChange={(e) => setLang(e.target.value)}
-            className="bg-transparent text-xs text-white outline-none cursor-pointer"
+            className="bg-transparent text-xs text-foreground outline-none cursor-pointer"
           >
-            {VOICE_LANGS.map((l) => <option key={l.code} value={l.code} className="bg-black">{l.label}</option>)}
+            {VOICE_LANGS.map((l) => <option key={l.code} value={l.code} className="bg-background">{l.label}</option>)}
           </select>
         </div>
       </div>
@@ -116,18 +116,18 @@ export function VoiceAssistant() {
           )}
           {listening ? <MicOff className="w-5 h-5 text-red-300" /> : <Mic className="w-5 h-5 text-violet-300" />}
         </button>
-        <div className="flex-1 text-xs text-white/50">
+        <div className="flex-1 text-xs text-foreground/50">
           {listening ? 'Listening…' : speaking ? 'Speaking…' : 'Tap to talk · responses spoken back via Web Speech API'}
         </div>
         {speaking && (
-          <button onClick={stopSpeak} className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white/70">
+          <button onClick={stopSpeak} className="p-2 rounded-lg bg-card hover:bg-muted text-foreground/70">
             <VolumeX className="w-4 h-4" />
           </button>
         )}
         {!speaking && history.length > 0 && (
           <button
             onClick={() => speak(history[history.length - 1].text, lang)}
-            className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white/70"
+            className="p-2 rounded-lg bg-card hover:bg-muted text-foreground/70"
           >
             <Volume2 className="w-4 h-4" />
           </button>
@@ -151,7 +151,7 @@ export function VoiceAssistant() {
                   className={`max-w-[80%] px-3 py-2 rounded-xl text-sm ${
                     m.role === 'user'
                       ? 'bg-violet-500/20 text-violet-100 rounded-br-sm'
-                      : 'bg-white/[0.05] text-white/90 rounded-bl-sm flex items-start gap-2'
+                      : 'bg-card text-foreground/90 rounded-bl-sm flex items-start gap-2'
                   }`}
                 >
                   {m.role === 'assistant' && <Sparkles className="w-3 h-3 text-cyan-400 shrink-0 mt-1" />}
@@ -164,7 +164,7 @@ export function VoiceAssistant() {
       </AnimatePresence>
 
       {history.length === 0 && (
-        <div className="text-[11px] text-white/30 mt-2 leading-relaxed">
+        <div className="text-[11px] text-foreground/30 mt-2 leading-relaxed">
           Tip: try "నేటి వన్నామేయ్ ధర ఎంత?" in Telugu, or any farming question in your language.
           Voice synthesis uses your browser's built-in speech engine.
         </div>

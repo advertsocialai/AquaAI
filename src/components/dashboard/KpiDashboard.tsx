@@ -67,7 +67,7 @@ const KPIS: Record<Role, Kpi[]> = {
 };
 
 function DeltaPill({ delta }: { delta: NonNullable<Kpi['delta']> }) {
-  const tone = delta.dir === 'up' ? 'text-emerald-400' : delta.dir === 'down' ? 'text-emerald-400' : 'text-white/40';
+  const tone = delta.dir === 'up' ? 'text-emerald-400' : delta.dir === 'down' ? 'text-emerald-400' : 'text-foreground/40';
   const Icon = delta.dir === 'up' ? TrendingUp : delta.dir === 'down' ? TrendingDown : Activity;
   return (
     <div className={`flex items-center gap-1 text-[11px] ${tone}`}>
@@ -89,17 +89,17 @@ export function KpiDashboard({ role }: { role: Role }) {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.05 }}
-            className="relative p-5 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm overflow-hidden"
+            className="relative p-5 rounded-2xl border border-border bg-card backdrop-blur-sm overflow-hidden"
           >
             <div
               className="absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl opacity-15 pointer-events-none"
               style={{ background: k.color }}
             />
             <Icon className="w-4 h-4 mb-3" style={{ color: k.color }} />
-            <div className="text-2xl md:text-3xl font-bold text-white mb-1 tabular-nums">{k.value}</div>
-            <div className="text-xs text-white/50 mb-2">{k.label}</div>
+            <div className="text-2xl md:text-3xl font-bold text-foreground mb-1 tabular-nums">{k.value}</div>
+            <div className="text-xs text-foreground/50 mb-2">{k.label}</div>
             {k.delta && <DeltaPill delta={k.delta} />}
-            {k.sub && !k.delta && <div className="text-[11px] text-white/30">{k.sub}</div>}
+            {k.sub && !k.delta && <div className="text-[11px] text-foreground/30">{k.sub}</div>}
           </motion.div>
         );
       })}

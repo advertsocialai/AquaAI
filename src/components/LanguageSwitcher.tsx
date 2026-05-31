@@ -24,8 +24,8 @@ export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
         onClick={() => setOpen((o) => !o)}
         className={`flex items-center gap-2 ${
           compact
-            ? 'px-2 py-1.5 text-xs text-white/70 hover:text-white'
-            : 'px-3 py-1.5 rounded-lg border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] text-sm text-white/80'
+            ? 'px-2 py-1.5 text-xs text-foreground/70 hover:text-foreground'
+            : 'px-3 py-1.5 rounded-lg border border-border bg-card hover:bg-muted text-sm text-foreground/80'
         }`}
         aria-label="Change language"
       >
@@ -40,7 +40,7 @@ export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.95 }}
             transition={{ duration: 0.15 }}
-            className="absolute right-0 mt-2 w-44 z-50 rounded-xl border border-white/10 bg-black/95 backdrop-blur-xl p-1 shadow-2xl"
+            className="absolute right-0 mt-2 w-44 z-50 rounded-xl border border-border bg-popover/95 backdrop-blur-xl p-1 shadow-2xl"
           >
             {LANGUAGES.map((l) => {
               const selected = l.code === i18n.resolvedLanguage;
@@ -52,12 +52,12 @@ export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
                     setOpen(false);
                   }}
                   className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition ${
-                    selected ? 'bg-white/10 text-white' : 'text-white/70 hover:bg-white/5 hover:text-white'
+                    selected ? 'bg-card text-foreground' : 'text-foreground/70 hover:bg-muted hover:text-foreground'
                   }`}
                 >
                   <div className="flex flex-col items-start">
                     <span className="font-medium">{l.native}</span>
-                    <span className="text-[10px] text-white/40">{l.name}</span>
+                    <span className="text-[10px] text-foreground/40">{l.name}</span>
                   </div>
                   {selected && <Check className="w-4 h-4 text-emerald-400" />}
                 </button>

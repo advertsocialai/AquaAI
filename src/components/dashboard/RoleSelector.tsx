@@ -31,8 +31,8 @@ export function RoleSelector({ role, onChange }: { role: Role; onChange: (r: Rol
             whileTap={{ scale: 0.96 }}
             className={`flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs transition ${
               active
-                ? 'border-white/30 bg-white/10 text-white'
-                : 'border-white/10 bg-white/[0.03] text-white/50 hover:text-white/80 hover:bg-white/[0.06]'
+                ? 'border-border bg-card text-foreground'
+                : 'border-border bg-card text-foreground/50 hover:text-foreground/80 hover:bg-muted'
             }`}
             style={active ? { boxShadow: `0 0 24px ${accent}33` } : undefined}
           >

@@ -190,19 +190,19 @@ export function WeatherTimeWidget() {
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:p-8 backdrop-blur-sm"
+      className="rounded-2xl border border-border bg-card p-6 md:p-8 backdrop-blur-sm"
     >
       {/* Top row — time · current weather · district input */}
       <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
         <div className="flex items-start gap-3 md:min-w-[200px]">
           <Clock className="w-5 h-5 text-cyan-300 mt-1.5 shrink-0" />
           <div>
-            <div className="text-3xl md:text-4xl font-bold text-white tabular-nums leading-tight">{timeStr}</div>
-            <div className="text-sm text-white/55 mt-1">{dateStr}</div>
+            <div className="text-3xl md:text-4xl font-bold text-foreground tabular-nums leading-tight">{timeStr}</div>
+            <div className="text-sm text-foreground/55 mt-1">{dateStr}</div>
           </div>
         </div>
 
-        <div className="hidden md:block w-px h-16 bg-white/10" />
+        <div className="hidden md:block w-px h-16 bg-card" />
 
         <div className="flex-1 flex items-center gap-4">
           <div className="w-14 h-14 rounded-xl bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center shrink-0">
@@ -212,28 +212,28 @@ export function WeatherTimeWidget() {
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-baseline gap-2">
-              <div className="text-3xl md:text-4xl font-bold text-white tabular-nums">
+              <div className="text-3xl md:text-4xl font-bold text-foreground tabular-nums">
                 {current ? `${Math.round(current.tempC)}°C` : '—'}
               </div>
-              <div className="text-base text-white/65 capitalize truncate">
+              <div className="text-base text-foreground/65 capitalize truncate">
                 {today?.label ?? t('weather.loading')}
               </div>
             </div>
-            <div className="text-sm text-white/55 mt-1">
+            <div className="text-sm text-foreground/55 mt-1">
               {t('weather.rain')} {current ? `${current.rainMm}mm` : '—'} · {district}
             </div>
           </div>
         </div>
 
         <form onSubmit={submit} className="flex items-center gap-2 md:min-w-[260px]">
-          <div className="flex items-center gap-2 flex-1 px-3 py-2.5 rounded-xl border border-white/10 bg-white/[0.04]">
-            <MapPin className="w-4 h-4 text-white/40 shrink-0" />
+          <div className="flex items-center gap-2 flex-1 px-3 py-2.5 rounded-xl border border-border bg-card">
+            <MapPin className="w-4 h-4 text-foreground/40 shrink-0" />
             <input
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               placeholder={t('weather.districtPlaceholder')}
               list="aquaai-districts"
-              className="bg-transparent outline-none text-sm text-white placeholder:text-white/35 flex-1 min-w-0"
+              className="bg-transparent outline-none text-sm text-foreground placeholder:text-foreground/35 flex-1 min-w-0"
             />
           </div>
           <button
@@ -249,23 +249,23 @@ export function WeatherTimeWidget() {
       </div>
 
       {/* 7-day forecast — always visible (skeleton while loading) */}
-      <div className="mt-6 pt-6 border-t border-white/5">
+      <div className="mt-6 pt-6 border-t border-border">
         <div className="flex items-baseline justify-between mb-4">
           <div className="text-sm uppercase tracking-widest text-cyan-300">
             {t('weather.next7Days')}
           </div>
-          <div className="text-xs text-white/40">Open-Meteo · {district}</div>
+          <div className="text-xs text-foreground/40">Open-Meteo · {district}</div>
         </div>
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-3">
           {(forecast?.daily ?? Array.from({ length: 7 })).slice(0, 7).map((d: any, i: number) => {
             if (!d) {
               return (
-                <div key={i} className="p-3 rounded-xl border border-white/10 bg-white/[0.03] text-center animate-pulse">
-                  <div className="h-3 bg-white/10 rounded w-2/3 mx-auto mb-2" />
-                  <div className="h-2 bg-white/5 rounded w-1/2 mx-auto mb-3" />
-                  <div className="w-6 h-6 bg-white/10 rounded-full mx-auto mb-2" />
-                  <div className="h-3 bg-white/10 rounded w-1/2 mx-auto mb-1" />
-                  <div className="h-2 bg-white/5 rounded w-1/3 mx-auto" />
+                <div key={i} className="p-3 rounded-xl border border-border bg-card text-center animate-pulse">
+                  <div className="h-3 bg-card rounded w-2/3 mx-auto mb-2" />
+                  <div className="h-2 bg-card rounded w-1/2 mx-auto mb-3" />
+                  <div className="w-6 h-6 bg-card rounded-full mx-auto mb-2" />
+                  <div className="h-3 bg-card rounded w-1/2 mx-auto mb-1" />
+                  <div className="h-2 bg-card rounded w-1/3 mx-auto" />
                 </div>
               );
             }
@@ -280,14 +280,14 @@ export function WeatherTimeWidget() {
                 type="button"
                 key={d.date}
                 onClick={() => setOpenDay(d.date)}
-                className="p-3 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-cyan-400/[0.08] hover:border-cyan-400/40 text-center transition cursor-pointer"
+                className="p-3 rounded-xl border border-border bg-card hover:bg-cyan-400/[0.08] hover:border-cyan-400/40 text-center transition cursor-pointer"
                 title={`${label} · ${Math.round(d.windMaxKmh)} km/h wind · ${d.rainProb}% rain prob — click for hourly chart`}
               >
                 <div className="text-xs uppercase tracking-widest text-cyan-300">{dayLabel}</div>
-                <div className="text-[11px] text-white/40 mb-2">{dateLabel}</div>
+                <div className="text-[11px] text-foreground/40 mb-2">{dateLabel}</div>
                 <Icon className="w-6 h-6 mx-auto text-cyan-300 mb-2" />
-                <div className="text-base font-bold text-white tabular-nums">{Math.round(d.max)}°</div>
-                <div className="text-xs text-white/45 tabular-nums">{Math.round(d.min)}°</div>
+                <div className="text-base font-bold text-foreground tabular-nums">{Math.round(d.max)}°</div>
+                <div className="text-xs text-foreground/45 tabular-nums">{Math.round(d.min)}°</div>
                 {d.rainMm > 0 && (
                   <div className="text-[10px] text-cyan-400 mt-1 tabular-nums">
                     {d.rainMm.toFixed(1)}mm · {d.rainProb}%
@@ -374,23 +374,23 @@ function DayClimateModal({
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.95, opacity: 0 }}
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-5xl rounded-2xl border border-white/10 bg-[#0a0e14] p-6 md:p-8 max-h-[90vh] overflow-y-auto"
+        className="w-full max-w-5xl rounded-2xl border border-border bg-card p-6 md:p-8 max-h-[90vh] overflow-y-auto"
       >
         {/* Header */}
         <div className="flex items-start justify-between gap-4 mb-6">
           <div>
             <div className="text-sm uppercase tracking-widest text-cyan-300 mb-1">{district}</div>
-            <h3 className="text-2xl md:text-3xl font-bold text-white">{dateLabel}</h3>
-            <div className="text-sm text-white/55 mt-1 capitalize">
+            <h3 className="text-2xl md:text-3xl font-bold text-foreground">{dateLabel}</h3>
+            <div className="text-sm text-foreground/55 mt-1 capitalize">
               {decodeWmo(day.code).label} · {Math.round(day.min)}° – {Math.round(day.max)}°C
             </div>
           </div>
           <button
             onClick={onClose}
             aria-label="Close"
-            className="p-2 rounded-lg border border-white/10 hover:bg-white/[0.06]"
+            className="p-2 rounded-lg border border-border hover:bg-muted"
           >
-            <X className="w-5 h-5 text-white/70" />
+            <X className="w-5 h-5 text-foreground/70" />
           </button>
         </div>
 
@@ -400,37 +400,37 @@ function DayClimateModal({
             <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-amber-300">
               <Sun className="w-3.5 h-3.5" /> Sunrise
             </div>
-            <div className="text-xl font-bold text-white tabular-nums mt-1">{fmtTime(day.sunrise)}</div>
+            <div className="text-xl font-bold text-foreground tabular-nums mt-1">{fmtTime(day.sunrise)}</div>
           </div>
           <div className="p-4 rounded-xl border border-violet-300/20 bg-violet-300/[0.04]">
             <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-violet-300">
               <Sun className="w-3.5 h-3.5" /> Sunset
             </div>
-            <div className="text-xl font-bold text-white tabular-nums mt-1">{fmtTime(day.sunset)}</div>
+            <div className="text-xl font-bold text-foreground tabular-nums mt-1">{fmtTime(day.sunset)}</div>
           </div>
           <div className="p-4 rounded-xl border border-blue-400/20 bg-blue-400/[0.04]">
             <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-blue-300">
               <Droplet className="w-3.5 h-3.5" /> {t('weather.rain')}
             </div>
-            <div className="text-xl font-bold text-white tabular-nums mt-1">{totalRain.toFixed(1)}mm</div>
-            <div className="text-[11px] text-white/45">peak {day.rainProb}%</div>
+            <div className="text-xl font-bold text-foreground tabular-nums mt-1">{totalRain.toFixed(1)}mm</div>
+            <div className="text-[11px] text-foreground/45">peak {day.rainProb}%</div>
           </div>
           <div className="p-4 rounded-xl border border-emerald-400/20 bg-emerald-400/[0.04]">
             <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-emerald-300">
               <Wind className="w-3.5 h-3.5" /> Wind
             </div>
-            <div className="text-xl font-bold text-white tabular-nums mt-1">{Math.round(peakWind)} km/h</div>
-            <div className="text-[11px] text-white/45">peak gust</div>
+            <div className="text-xl font-bold text-foreground tabular-nums mt-1">{Math.round(peakWind)} km/h</div>
+            <div className="text-[11px] text-foreground/45">peak gust</div>
           </div>
         </div>
 
         {/* ONE combined chart — temperature line, rain bars, wind line, day/night background */}
-        <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+        <div className="rounded-xl border border-border bg-card p-4">
           <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 mb-3 text-xs">
-            <span className="inline-flex items-center gap-1.5 text-white/55">
+            <span className="inline-flex items-center gap-1.5 text-foreground/55">
               <span className="inline-block w-3 h-3 rounded-sm bg-amber-300/30 border border-amber-300/40" /> Daylight
             </span>
-            <span className="inline-flex items-center gap-1.5 text-white/55">
+            <span className="inline-flex items-center gap-1.5 text-foreground/55">
               <span className="inline-block w-3 h-3 rounded-sm bg-slate-700/40 border border-slate-600/40" /> Night
             </span>
             <span className="inline-flex items-center gap-1.5 text-cyan-300">
@@ -488,13 +488,13 @@ function DayClimateModal({
               </ComposedChart>
             </ResponsiveContainer>
           </div>
-          <div className="text-[11px] text-white/35 mt-3">
+          <div className="text-[11px] text-foreground/35 mt-3">
             Amber tint = daylight ({fmtTime(day.sunrise)} – {fmtTime(day.sunset)}) · slate tint = night ·
             cyan line = °C · blue bars = rain · dashed violet = wind speed
           </div>
         </div>
 
-        <div className="text-xs text-white/35 mt-4 text-center">
+        <div className="text-xs text-foreground/35 mt-4 text-center">
           Source: Open-Meteo (ECMWF) · 1 km land-grid · sunrise/sunset for {district} in IST
         </div>
       </motion.div>

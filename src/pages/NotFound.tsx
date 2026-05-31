@@ -15,10 +15,10 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center bg-background text-white overflow-hidden">
+    <div className="relative min-h-screen flex items-center justify-center bg-background text-foreground overflow-hidden">
       {/* Same hero ambience as the homepage */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-black to-violet-500/10" />
+        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-background to-violet-500/10" />
       </div>
 
       <motion.div
@@ -35,8 +35,8 @@ const NotFound = () => {
         <h1 className="text-7xl md:text-9xl font-bold tracking-tight mb-4 bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-400 bg-clip-text text-transparent">
           404
         </h1>
-        <p className="text-base md:text-lg text-white/70 mb-2">This page slipped past the net.</p>
-        <p className="text-xs text-white/35 font-mono mb-10 break-all">
+        <p className="text-base md:text-lg text-foreground/70 mb-2">This page slipped past the net.</p>
+        <p className="text-xs text-foreground/35 font-mono mb-10 break-all">
           {location.pathname}
         </p>
 
@@ -48,7 +48,7 @@ const NotFound = () => {
           <ArrowRight className="w-4 h-4" />
         </Link>
 
-        <div className="text-[11px] uppercase tracking-widest text-white/30 mb-4">
+        <div className="text-[11px] uppercase tracking-widest text-foreground/30 mb-4">
           Or try one of these
         </div>
         <div className="grid grid-cols-3 gap-3 max-w-md mx-auto">
@@ -69,7 +69,7 @@ function SuggestLink({ to, icon: Icon, label }: {
   return (
     <Link
       to={to}
-      className="flex flex-col items-center gap-1 p-3 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-cyan-400/30 transition text-xs text-white/75"
+      className="flex flex-col items-center gap-1 p-3 rounded-xl border border-border bg-card hover:bg-muted hover:border-cyan-400/30 transition text-xs text-foreground/75"
     >
       <Icon className="w-4 h-4 text-cyan-300" />
       {label}

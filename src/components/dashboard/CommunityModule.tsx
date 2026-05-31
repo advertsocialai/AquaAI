@@ -74,7 +74,7 @@ export function CommunityModule() {
             className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs border transition ${
               section === id
                 ? 'border-pink-400/40 bg-pink-400/10 text-pink-300'
-                : 'border-white/10 bg-white/[0.03] text-white/50 hover:text-white/80'
+                : 'border-border bg-card text-foreground/50 hover:text-foreground/80'
             }`}
           >
             <Icon className="w-3.5 h-3.5" />
@@ -85,13 +85,13 @@ export function CommunityModule() {
 
       {section === 'forums' && (
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
-          <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-white/10 bg-white/5 max-w-md">
-            <Search className="w-4 h-4 text-white/40" />
+          <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-border bg-card max-w-md">
+            <Search className="w-4 h-4 text-foreground/40" />
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search districts…"
-              className="bg-transparent outline-none text-sm text-white placeholder:text-white/30 flex-1"
+              className="bg-transparent outline-none text-sm text-foreground placeholder:text-foreground/30 flex-1"
             />
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -99,13 +99,13 @@ export function CommunityModule() {
               <motion.button
                 key={d.name}
                 whileHover={{ y: -2 }}
-                className="p-4 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] text-left transition"
+                className="p-4 rounded-xl border border-border bg-card hover:bg-muted text-left transition"
               >
-                <div className="flex items-center gap-2 mb-2 text-[10px] uppercase tracking-widest text-white/30">
+                <div className="flex items-center gap-2 mb-2 text-[10px] uppercase tracking-widest text-foreground/30">
                   <MapPin className="w-3 h-3" /> {d.state}
                 </div>
-                <div className="text-sm font-semibold text-white mb-1">{d.name}</div>
-                <div className="flex items-center gap-3 text-[11px] text-white/40 mb-3">
+                <div className="text-sm font-semibold text-foreground mb-1">{d.name}</div>
+                <div className="flex items-center gap-3 text-[11px] text-foreground/40 mb-3">
                   <span>{d.members.toLocaleString('en-IN')} members</span>
                   <span>·</span>
                   <span>{d.threads} threads</span>
@@ -119,25 +119,25 @@ export function CommunityModule() {
 
       {section === 'leaderboard' && (
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
-          <div className="overflow-x-auto rounded-2xl border border-white/10">
+          <div className="overflow-x-auto rounded-2xl border border-border">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-white/10 bg-white/5">
+                <tr className="border-b border-border bg-card">
                   {['Rank', 'Hatchery', 'District', 'Avg QS', 'Batches', 'Rating', 'MPEDA Tier'].map((h) => (
-                    <th key={h} className="px-4 py-3 text-left text-xs font-medium text-white/40 uppercase tracking-widest">{h}</th>
+                    <th key={h} className="px-4 py-3 text-left text-xs font-medium text-foreground/40 uppercase tracking-widest">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {HATCHERY_RANK.map((h) => (
-                  <tr key={h.name} className="border-b border-white/5 hover:bg-white/5">
+                  <tr key={h.name} className="border-b border-border hover:bg-muted">
                     <td className="px-4 py-3"><MedalIcon rank={h.rank} /></td>
-                    <td className="px-4 py-3 text-white/90 font-semibold inline-flex items-center gap-2">
+                    <td className="px-4 py-3 text-foreground/90 font-semibold inline-flex items-center gap-2">
                       <BadgeCheck className="w-3.5 h-3.5 text-emerald-400" /> {h.name}
                     </td>
-                    <td className="px-4 py-3 text-white/50 text-xs">{h.district}</td>
+                    <td className="px-4 py-3 text-foreground/50 text-xs">{h.district}</td>
                     <td className="px-4 py-3 font-bold text-emerald-400 tabular-nums">{h.avgQS}</td>
-                    <td className="px-4 py-3 text-white/70 tabular-nums">{h.batches}</td>
+                    <td className="px-4 py-3 text-foreground/70 tabular-nums">{h.batches}</td>
                     <td className="px-4 py-3 inline-flex items-center gap-1 text-amber-300 text-xs">
                       <Star className="w-3 h-3 fill-amber-300" /> {h.rating}
                     </td>
@@ -147,7 +147,7 @@ export function CommunityModule() {
               </tbody>
             </table>
           </div>
-          <div className="text-[11px] text-white/30 mt-3 inline-flex items-center gap-2">
+          <div className="text-[11px] text-foreground/30 mt-3 inline-flex items-center gap-2">
             <TrendingUp className="w-3 h-3 text-emerald-400" /> Driven by aggregated AI QC scores — not paid placement.
           </div>
         </motion.div>
@@ -156,22 +156,22 @@ export function CommunityModule() {
       {section === 'stories' && (
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="grid lg:grid-cols-3 gap-4">
           {STORIES.map((s) => (
-            <div key={s.farmer} className="p-5 rounded-2xl border border-white/10 bg-white/[0.03]">
+            <div key={s.farmer} className="p-5 rounded-2xl border border-border bg-card">
               <div className="flex items-center justify-between mb-3">
-                <div className="text-sm font-semibold text-white">{s.farmer}</div>
+                <div className="text-sm font-semibold text-foreground">{s.farmer}</div>
                 <BadgeCheck className="w-4 h-4 text-emerald-400" />
               </div>
-              <div className="text-[11px] text-white/40 mb-3 inline-flex items-center gap-1">
+              <div className="text-[11px] text-foreground/40 mb-3 inline-flex items-center gap-1">
                 <MapPin className="w-3 h-3" /> {s.district}
               </div>
-              <p className="text-sm text-white/70 leading-relaxed mb-4">"{s.story}"</p>
-              <div className="flex items-center justify-between pt-3 border-t border-white/5">
+              <p className="text-sm text-foreground/70 leading-relaxed mb-4">"{s.story}"</p>
+              <div className="flex items-center justify-between pt-3 border-t border-border">
                 <div>
-                  <div className="text-[10px] uppercase tracking-widest text-white/30">Yield</div>
+                  <div className="text-[10px] uppercase tracking-widest text-foreground/30">Yield</div>
                   <div className="text-sm font-bold text-cyan-400 tabular-nums">{s.yield}</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-[10px] uppercase tracking-widest text-white/30">Cycle profit</div>
+                  <div className="text-[10px] uppercase tracking-widest text-foreground/30">Cycle profit</div>
                   <div className="text-sm font-bold text-emerald-400 tabular-nums">{s.profit}</div>
                 </div>
               </div>
@@ -183,19 +183,19 @@ export function CommunityModule() {
       {section === 'vle' && (
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {VLES.map((v) => (
-            <div key={v.name} className="p-4 rounded-xl border border-white/10 bg-white/[0.03]">
+            <div key={v.name} className="p-4 rounded-xl border border-border bg-card">
               <div className="flex items-center gap-2 mb-2">
                 <Users className="w-4 h-4 text-cyan-400" />
-                <div className="text-sm font-semibold text-white">{v.name}</div>
+                <div className="text-sm font-semibold text-foreground">{v.name}</div>
               </div>
-              <div className="text-[11px] text-white/40 mb-3">{v.district} · since {v.since}</div>
+              <div className="text-[11px] text-foreground/40 mb-3">{v.district} · since {v.since}</div>
               <div className="flex items-center justify-between text-xs">
-                <span className="text-white/60">{v.farms} farms</span>
+                <span className="text-foreground/60">{v.farms} farms</span>
                 <span className="inline-flex items-center gap-1 text-amber-300">
                   <Star className="w-3 h-3 fill-amber-300" /> {v.rating}
                 </span>
               </div>
-              <button className="w-full mt-3 py-1.5 text-[11px] rounded-lg border border-white/10 hover:bg-white/10 text-white/70 transition">
+              <button className="w-full mt-3 py-1.5 text-[11px] rounded-lg border border-border hover:bg-muted text-foreground/70 transition">
                 Book diagnostic visit
               </button>
             </div>

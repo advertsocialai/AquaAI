@@ -83,8 +83,8 @@ export function AdminModule({ role }: { role: Role }) {
             onClick={() => setSection(id)}
             className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs border transition ${
               section === id
-                ? 'border-white/30 bg-white/10 text-white'
-                : 'border-white/10 bg-white/[0.03] text-white/50 hover:text-white/80'
+                ? 'border-border bg-card text-foreground'
+                : 'border-border bg-card text-foreground/50 hover:text-foreground/80'
             }`}
           >
             <Icon className="w-3.5 h-3.5" />
@@ -95,22 +95,22 @@ export function AdminModule({ role }: { role: Role }) {
 
       {section === 'profile' && (
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="grid lg:grid-cols-2 gap-6">
-          <div className="p-6 rounded-2xl border border-white/10 bg-white/[0.03]">
+          <div className="p-6 rounded-2xl border border-border bg-card">
             <div className="flex items-center gap-4 mb-6">
               <div className="w-14 h-14 rounded-full bg-cyan-400/20 border border-cyan-400/30 flex items-center justify-center text-2xl font-bold text-cyan-300">
                 V
               </div>
               <div className="flex-1">
-                <div className="text-lg font-semibold text-white">V. Ramana</div>
-                <div className="text-xs text-white/40">advertsocialai@gmail.com · +91 98765 43210</div>
+                <div className="text-lg font-semibold text-foreground">V. Ramana</div>
+                <div className="text-xs text-foreground/40">advertsocialai@gmail.com · +91 98765 43210</div>
               </div>
             </div>
             <div className="space-y-2">
               {KYC_STATUS.map(({ label, status, icon: Icon }) => (
-                <div key={label} className="flex items-center justify-between p-3 rounded-lg bg-white/[0.03]">
+                <div key={label} className="flex items-center justify-between p-3 rounded-lg bg-card">
                   <div className="flex items-center gap-2">
-                    <Icon className="w-4 h-4 text-white/50" />
-                    <span className="text-sm text-white/80">{label}</span>
+                    <Icon className="w-4 h-4 text-foreground/50" />
+                    <span className="text-sm text-foreground/80">{label}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <StatusDot status={status} />
@@ -126,12 +126,12 @@ export function AdminModule({ role }: { role: Role }) {
           </div>
 
           <div className="space-y-4">
-            <div className="p-6 rounded-2xl border border-white/10 bg-white/[0.03]">
+            <div className="p-6 rounded-2xl border border-border bg-card">
               <div className="flex items-center gap-2 mb-4">
                 <Users className="w-4 h-4 text-cyan-400" />
-                <span className="text-sm font-semibold text-white">Multi-role context</span>
+                <span className="text-sm font-semibold text-foreground">Multi-role context</span>
               </div>
-              <p className="text-xs text-white/50 mb-4">
+              <p className="text-xs text-foreground/50 mb-4">
                 You can hold more than one role. Switch context here to see the matching dashboard.
               </p>
               <div className="flex flex-wrap gap-2">
@@ -142,7 +142,7 @@ export function AdminModule({ role }: { role: Role }) {
                       key={id}
                       onClick={() => setActiveRole(id)}
                       className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs border ${
-                        active ? 'border-white/30 bg-white/10 text-white' : 'border-white/10 bg-white/[0.03] text-white/50'
+                        active ? 'border-border bg-card text-foreground' : 'border-border bg-card text-foreground/50'
                       }`}
                     >
                       <Icon className="w-3 h-3" style={{ color: active ? accent : undefined }} />
@@ -153,23 +153,23 @@ export function AdminModule({ role }: { role: Role }) {
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl border border-white/10 bg-white/[0.03]">
+            <div className="p-6 rounded-2xl border border-border bg-card">
               <div className="flex items-center gap-2 mb-4">
                 <Globe className="w-4 h-4 text-violet-400" />
-                <span className="text-sm font-semibold text-white">Language & Region</span>
+                <span className="text-sm font-semibold text-foreground">Language & Region</span>
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-white/60">UI language</span>
-                  <span className="text-white">తెలుగు (Telugu)</span>
+                  <span className="text-foreground/60">UI language</span>
+                  <span className="text-foreground">తెలుగు (Telugu)</span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-white/60">Timezone</span>
-                  <span className="text-white">Asia/Kolkata (IST)</span>
+                  <span className="text-foreground/60">Timezone</span>
+                  <span className="text-foreground">Asia/Kolkata (IST)</span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-white/60">Currency</span>
-                  <span className="text-white">INR (₹)</span>
+                  <span className="text-foreground/60">Currency</span>
+                  <span className="text-foreground">INR (₹)</span>
                 </div>
               </div>
             </div>
@@ -180,36 +180,36 @@ export function AdminModule({ role }: { role: Role }) {
       {section === 'team' && (
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
           <div className="flex items-center justify-between mb-4">
-            <div className="text-[11px] uppercase tracking-widest text-white/30">Team members</div>
+            <div className="text-[11px] uppercase tracking-widest text-foreground/30">Team members</div>
             <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-cyan-500/20 border border-cyan-400/30 text-xs text-cyan-300 hover:bg-cyan-500/30">
               <Plus className="w-3.5 h-3.5" /> Invite member
             </button>
           </div>
-          <div className="overflow-x-auto rounded-2xl border border-white/10">
+          <div className="overflow-x-auto rounded-2xl border border-border">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-white/10 bg-white/5">
+                <tr className="border-b border-border bg-card">
                   {['Name', 'Email', 'Role', 'Last active', ''].map((h) => (
-                    <th key={h} className="px-4 py-3 text-left text-xs font-medium text-white/40 uppercase tracking-widest">{h}</th>
+                    <th key={h} className="px-4 py-3 text-left text-xs font-medium text-foreground/40 uppercase tracking-widest">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {TEAM.map((m) => (
-                  <tr key={m.email} className="border-b border-white/5 hover:bg-white/5">
-                    <td className="px-4 py-3 text-white/90 font-semibold">{m.name}</td>
-                    <td className="px-4 py-3 text-white/60 text-xs">{m.email}</td>
+                  <tr key={m.email} className="border-b border-border hover:bg-muted">
+                    <td className="px-4 py-3 text-foreground/90 font-semibold">{m.name}</td>
+                    <td className="px-4 py-3 text-foreground/60 text-xs">{m.email}</td>
                     <td className="px-4 py-3">
                       <span className={`px-2 py-0.5 rounded-full text-[10px] border ${
                         m.role === 'Admin' ? 'border-red-400/30 bg-red-400/10 text-red-300'
                         : m.role === 'Manager' ? 'border-amber-400/30 bg-amber-400/10 text-amber-300'
                         : m.role === 'Operator' ? 'border-sky-400/30 bg-sky-400/10 text-sky-300'
-                        : 'border-white/20 bg-white/5 text-white/60'
+                        : 'border-border bg-card text-foreground/60'
                       }`}>{m.role}</span>
                     </td>
-                    <td className="px-4 py-3 text-white/40 text-xs">{m.last}</td>
+                    <td className="px-4 py-3 text-foreground/40 text-xs">{m.last}</td>
                     <td className="px-4 py-3">
-                      <button className="text-xs text-white/40 hover:text-white">Manage</button>
+                      <button className="text-xs text-foreground/40 hover:text-foreground">Manage</button>
                     </td>
                   </tr>
                 ))}
@@ -220,18 +220,18 @@ export function AdminModule({ role }: { role: Role }) {
       )}
 
       {section === 'notifications' && (
-        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="overflow-x-auto rounded-2xl border border-white/10">
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="overflow-x-auto rounded-2xl border border-border">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-white/10 bg-white/5">
-                <th className="px-4 py-3 text-left text-xs font-medium text-white/40 uppercase tracking-widest">Event</th>
+              <tr className="border-b border-border bg-card">
+                <th className="px-4 py-3 text-left text-xs font-medium text-foreground/40 uppercase tracking-widest">Event</th>
                 {[
                   { l: 'Email', i: Mail },
                   { l: 'SMS', i: Smartphone },
                   { l: 'WhatsApp', i: MessageCircle },
                   { l: 'Push', i: Bell },
                 ].map(({ l, i: Icon }) => (
-                  <th key={l} className="px-4 py-3 text-center text-xs font-medium text-white/40 uppercase tracking-widest">
+                  <th key={l} className="px-4 py-3 text-center text-xs font-medium text-foreground/40 uppercase tracking-widest">
                     <div className="inline-flex items-center gap-1 justify-center">
                       <Icon className="w-3.5 h-3.5" /> {l}
                     </div>
@@ -241,8 +241,8 @@ export function AdminModule({ role }: { role: Role }) {
             </thead>
             <tbody>
               {NOTIF_PREFS.map((n) => (
-                <tr key={n.event} className="border-b border-white/5 hover:bg-white/5">
-                  <td className="px-4 py-3 text-white/90">{n.event}</td>
+                <tr key={n.event} className="border-b border-border hover:bg-muted">
+                  <td className="px-4 py-3 text-foreground/90">{n.event}</td>
                   {(['email', 'sms', 'whatsapp', 'push'] as const).map((c) => (
                     <td key={c} className="px-4 py-3 text-center">
                       <input
@@ -262,19 +262,19 @@ export function AdminModule({ role }: { role: Role }) {
       {section === 'integrations' && (
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {INTEGRATIONS.map((i) => (
-            <div key={i.name} className="p-4 rounded-xl border border-white/10 bg-white/[0.03]">
+            <div key={i.name} className="p-4 rounded-xl border border-border bg-card">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full" style={{ background: i.accent }} />
-                  <span className="text-sm font-semibold text-white">{i.name}</span>
+                  <span className="text-sm font-semibold text-foreground">{i.name}</span>
                 </div>
                 <StatusDot status={i.status} />
               </div>
-              <div className="text-xs text-white/40 mb-3">{i.desc}</div>
+              <div className="text-xs text-foreground/40 mb-3">{i.desc}</div>
               <button
                 className={`w-full py-1.5 rounded-lg text-xs border transition ${
                   i.status === 'connected'
-                    ? 'border-white/10 bg-white/[0.03] text-white/60 hover:bg-white/[0.06]'
+                    ? 'border-border bg-card text-foreground/60 hover:bg-muted'
                     : 'border-cyan-400/30 bg-cyan-500/10 text-cyan-300 hover:bg-cyan-500/20'
                 }`}
               >
@@ -287,13 +287,13 @@ export function AdminModule({ role }: { role: Role }) {
 
       {section === 'api' && (
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
-          <div className="p-6 rounded-2xl border border-white/10 bg-white/[0.03]">
+          <div className="p-6 rounded-2xl border border-border bg-card">
             <div className="flex items-center gap-2 mb-4">
               <Key className="w-4 h-4 text-amber-400" />
-              <span className="text-sm font-semibold text-white">API Token</span>
-              <span className="text-[10px] text-white/30 ml-auto">For institutional partners</span>
+              <span className="text-sm font-semibold text-foreground">API Token</span>
+              <span className="text-[10px] text-foreground/30 ml-auto">For institutional partners</span>
             </div>
-            <div className="flex items-center gap-2 p-3 rounded-xl bg-black border border-white/10 font-mono text-xs text-emerald-300 overflow-x-auto">
+            <div className="flex items-center gap-2 p-3 rounded-xl bg-black border border-border font-mono text-xs text-emerald-300 overflow-x-auto">
               <span className="flex-1 truncate">{apiToken}</span>
               <button
                 onClick={() => {
@@ -301,21 +301,21 @@ export function AdminModule({ role }: { role: Role }) {
                   setApiCopied(true);
                   setTimeout(() => setApiCopied(false), 1500);
                 }}
-                className="shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded bg-white/5 hover:bg-white/10 text-white/70"
+                className="shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded bg-card hover:bg-muted text-foreground/70"
               >
                 {apiCopied ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
                 {apiCopied ? 'Copied' : 'Copy'}
               </button>
             </div>
-            <div className="text-[11px] text-white/30 mt-3">
+            <div className="text-[11px] text-foreground/30 mt-3">
               Rotate every 90 days. Bearer auth · rate limited 600 req/min · IP allowlist optional.
             </div>
           </div>
 
-          <div className="p-6 rounded-2xl border border-white/10 bg-white/[0.03]">
+          <div className="p-6 rounded-2xl border border-border bg-card">
             <div className="flex items-center gap-2 mb-4">
               <Webhook className="w-4 h-4 text-violet-400" />
-              <span className="text-sm font-semibold text-white">Webhook endpoints</span>
+              <span className="text-sm font-semibold text-foreground">Webhook endpoints</span>
             </div>
             <div className="space-y-2">
               {[
@@ -323,12 +323,12 @@ export function AdminModule({ role }: { role: Role }) {
                 { event: 'price.threshold.hit',   url: 'https://your-erp.example.in/webhooks/price' },
                 { event: 'outbreak.alert.region', url: 'https://your-erp.example.in/webhooks/outbreak' },
               ].map((w) => (
-                <div key={w.event} className="flex items-center justify-between p-3 rounded-lg bg-white/[0.03]">
+                <div key={w.event} className="flex items-center justify-between p-3 rounded-lg bg-card">
                   <div className="min-w-0 flex-1">
                     <div className="text-xs font-mono text-violet-300">{w.event}</div>
-                    <div className="text-[11px] text-white/40 truncate">{w.url}</div>
+                    <div className="text-[11px] text-foreground/40 truncate">{w.url}</div>
                   </div>
-                  <button className="text-xs text-white/50 hover:text-white">Edit</button>
+                  <button className="text-xs text-foreground/50 hover:text-foreground">Edit</button>
                 </div>
               ))}
             </div>

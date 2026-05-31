@@ -42,14 +42,14 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-white grid lg:grid-cols-5">
+    <div className="min-h-screen bg-background text-foreground grid lg:grid-cols-5">
       {/* Left brand panel */}
       <div className="hidden lg:flex lg:col-span-3 relative overflow-hidden p-12 flex-col">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-black to-violet-500/10" />
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-background to-violet-500/10" />
         </div>
 
-        <Link to="/" className="relative z-10 inline-flex items-center gap-2 text-white/80 hover:text-white text-sm">
+        <Link to="/" className="relative z-10 inline-flex items-center gap-2 text-foreground/80 hover:text-foreground text-sm">
           <Fish className="w-4 h-4 text-cyan-400" />
           <span className="font-semibold">AquaI</span>
         </Link>
@@ -73,7 +73,7 @@ export default function LoginPage() {
                 </div>
                 <div className="text-3xl md:text-4xl font-bold">{prop.title}</div>
               </div>
-              <p className="text-lg text-white/60 leading-relaxed">{prop.desc}</p>
+              <p className="text-lg text-foreground/60 leading-relaxed">{prop.desc}</p>
             </motion.div>
           </AnimatePresence>
 
@@ -83,14 +83,14 @@ export default function LoginPage() {
                 key={i}
                 onClick={() => setPropIdx(i)}
                 className={`h-1.5 rounded-full transition-all ${
-                  i === propIdx ? 'w-10 bg-cyan-400' : 'w-3 bg-white/20 hover:bg-white/40'
+                  i === propIdx ? 'w-10 bg-cyan-400' : 'w-3 bg-card hover:bg-muted'
                 }`}
               />
             ))}
           </div>
         </div>
 
-        <div className="relative z-10 text-[11px] text-white/30 mt-10">
+        <div className="relative z-10 text-[11px] text-foreground/30 mt-10">
           MPEDA · NSPAAD · ICAR-CIBA validated · DPDPA-compliant · India-hosted
         </div>
       </div>
@@ -98,24 +98,24 @@ export default function LoginPage() {
       {/* Right form panel */}
       <div className="lg:col-span-2 flex flex-col p-6 lg:p-10 max-w-xl w-full mx-auto">
         <div className="flex items-center justify-between mb-12">
-          <Link to="/" className="lg:hidden inline-flex items-center gap-2 text-white text-sm">
+          <Link to="/" className="lg:hidden inline-flex items-center gap-2 text-foreground text-sm">
             <Fish className="w-4 h-4 text-cyan-400" /><span className="font-semibold">AquaI</span>
           </Link>
           <div className="ml-auto flex items-center gap-2 text-xs">
-            <Languages className="w-3.5 h-3.5 text-white/40" />
+            <Languages className="w-3.5 h-3.5 text-foreground/40" />
             <select
               value={lang}
               onChange={(e) => setLang(e.target.value)}
-              className="bg-transparent text-white/70 outline-none cursor-pointer"
+              className="bg-transparent text-foreground/70 outline-none cursor-pointer"
             >
-              {LANGUAGES.map((l) => <option key={l} value={l} className="bg-black">{l}</option>)}
+              {LANGUAGES.map((l) => <option key={l} value={l} className="bg-background">{l}</option>)}
             </select>
           </div>
         </div>
 
         <div className="my-auto">
           <h1 className="text-3xl font-bold mb-2">Welcome back</h1>
-          <p className="text-sm text-white/50 mb-8">Sign in with your mobile number</p>
+          <p className="text-sm text-foreground/50 mb-8">Sign in with your mobile number</p>
 
           {step === 'mobile' && (
             <motion.form
@@ -126,10 +126,10 @@ export default function LoginPage() {
               className="space-y-4"
             >
               <label className="block">
-                <span className="text-xs text-white/40 uppercase tracking-widest">Mobile number</span>
-                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03] focus-within:border-cyan-400/40">
+                <span className="text-xs text-foreground/40 uppercase tracking-widest">Mobile number</span>
+                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
                   <Smartphone className="w-4 h-4 text-cyan-400" />
-                  <span className="text-white/40 text-sm">+91</span>
+                  <span className="text-foreground/40 text-sm">+91</span>
                   <input
                     autoFocus
                     type="tel"
@@ -138,7 +138,7 @@ export default function LoginPage() {
                     value={mobile}
                     onChange={(e) => setMobile(e.target.value.replace(/\D/g, ''))}
                     placeholder="98765 43210"
-                    className="bg-transparent outline-none text-white flex-1 text-sm"
+                    className="bg-transparent outline-none text-foreground flex-1 text-sm"
                   />
                 </div>
               </label>
@@ -161,14 +161,14 @@ export default function LoginPage() {
               onSubmit={submitOtp}
               className="space-y-4"
             >
-              <div className="text-sm text-white/60">
-                OTP sent to <span className="font-mono text-white">+91 {mobile}</span>{' '}
+              <div className="text-sm text-foreground/60">
+                OTP sent to <span className="font-mono text-foreground">+91 {mobile}</span>{' '}
                 <button type="button" onClick={() => setStep('mobile')} className="text-cyan-400 hover:underline ml-2">change</button>
               </div>
 
               <label className="block">
-                <span className="text-xs text-white/40 uppercase tracking-widest">6-digit OTP</span>
-                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03] focus-within:border-cyan-400/40">
+                <span className="text-xs text-foreground/40 uppercase tracking-widest">6-digit OTP</span>
+                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
                   <KeyRound className="w-4 h-4 text-cyan-400" />
                   <input
                     autoFocus
@@ -178,7 +178,7 @@ export default function LoginPage() {
                     value={otp}
                     onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
                     placeholder="••••••"
-                    className="bg-transparent outline-none text-white flex-1 tracking-[0.5em] font-mono text-lg"
+                    className="bg-transparent outline-none text-foreground flex-1 tracking-[0.5em] font-mono text-lg"
                   />
                 </div>
               </label>
@@ -192,7 +192,7 @@ export default function LoginPage() {
               </button>
 
               <div className="flex items-center justify-between text-xs">
-                <button type="button" className="text-white/40 hover:text-white">
+                <button type="button" className="text-foreground/40 hover:text-foreground">
                   Didn't get the code? Resend in 30s
                 </button>
                 <Link to="/forgot-password" className="text-cyan-400 hover:underline">Forgot password</Link>
@@ -200,14 +200,14 @@ export default function LoginPage() {
             </motion.form>
           )}
 
-          <div className="mt-10 pt-6 border-t border-white/5 text-sm text-white/50">
+          <div className="mt-10 pt-6 border-t border-border text-sm text-foreground/50">
             New to AquaI?{' '}
             <Link to="/signup" className="text-cyan-400 hover:underline font-medium">Create an account</Link>
           </div>
 
-          <div className="mt-4 text-[11px] text-white/30 leading-relaxed">
-            By signing in you agree to our <Link to="/terms" className="underline hover:text-white/60">Terms</Link> and{' '}
-            <Link to="/privacy" className="underline hover:text-white/60">Privacy Policy</Link>. Aadhaar e-KYC handled per DPDPA 2023.
+          <div className="mt-4 text-[11px] text-foreground/30 leading-relaxed">
+            By signing in you agree to our <Link to="/terms" className="underline hover:text-foreground/60">Terms</Link> and{' '}
+            <Link to="/privacy" className="underline hover:text-foreground/60">Privacy Policy</Link>. Aadhaar e-KYC handled per DPDPA 2023.
           </div>
         </div>
       </div>

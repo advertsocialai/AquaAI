@@ -65,7 +65,7 @@ export function LogisticsModule() {
             className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs border transition ${
               section === id
                 ? 'border-orange-400/40 bg-orange-400/10 text-orange-300'
-                : 'border-white/10 bg-white/[0.03] text-white/50 hover:text-white/80'
+                : 'border-border bg-card text-foreground/50 hover:text-foreground/80'
             }`}
           >
             <Icon className="w-3.5 h-3.5" />
@@ -75,21 +75,21 @@ export function LogisticsModule() {
       </div>
 
       {section === 'vehicles' && (
-        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="overflow-x-auto rounded-2xl border border-white/10">
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="overflow-x-auto rounded-2xl border border-border">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-white/10 bg-white/5">
+              <tr className="border-b border-border bg-card">
                 {['Vehicle', 'Capacity', 'Typical Use', 'Rate ₹/km', 'Cold', 'Live'].map((h) => (
-                  <th key={h} className="px-4 py-3 text-left text-xs font-medium text-white/40 uppercase tracking-widest">{h}</th>
+                  <th key={h} className="px-4 py-3 text-left text-xs font-medium text-foreground/40 uppercase tracking-widest">{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {VEHICLES.map((v, i) => (
-                <tr key={i} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                  <td className="px-4 py-3 text-white/90 font-medium">{v.type}</td>
-                  <td className="px-4 py-3 text-white/60 text-xs">{v.capacity}</td>
-                  <td className="px-4 py-3 text-white/50 text-xs">{v.use}</td>
+                <tr key={i} className="border-b border-border hover:bg-muted transition-colors">
+                  <td className="px-4 py-3 text-foreground/90 font-medium">{v.type}</td>
+                  <td className="px-4 py-3 text-foreground/60 text-xs">{v.capacity}</td>
+                  <td className="px-4 py-3 text-foreground/50 text-xs">{v.use}</td>
                   <td className="px-4 py-3 font-bold text-orange-400 tabular-nums">₹{v.ratePerKm[0]}-{v.ratePerKm[1]}</td>
                   <td className="px-4 py-3">{v.cold && <Snowflake className="w-4 h-4 text-sky-400" />}</td>
                   <td className="px-4 py-3">{v.live && <Thermometer className="w-4 h-4 text-emerald-400" />}</td>
@@ -103,16 +103,16 @@ export function LogisticsModule() {
       {section === 'routes' && (
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {ROUTES.map((r, i) => (
-            <div key={i} className="p-4 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition">
-              <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-white/30 mb-3">
+            <div key={i} className="p-4 rounded-xl border border-border bg-card hover:bg-muted transition">
+              <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-foreground/30 mb-3">
                 <MapPin className="w-3 h-3" /> {r.state}
               </div>
-              <div className="flex items-center gap-2 text-sm text-white/90 mb-1">
+              <div className="flex items-center gap-2 text-sm text-foreground/90 mb-1">
                 <span className="font-semibold">{r.from}</span>
                 <RouteIcon className="w-3.5 h-3.5 text-orange-400" />
                 <span className="font-semibold">{r.to}</span>
               </div>
-              <div className="text-xs text-white/40">{r.kind}</div>
+              <div className="text-xs text-foreground/40">{r.kind}</div>
             </div>
           ))}
         </motion.div>
@@ -121,20 +121,20 @@ export function LogisticsModule() {
       {section === 'live' && (
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="space-y-2">
           {LIVE_SHIPMENTS.map((s) => (
-            <div key={s.id} className="flex flex-wrap items-center gap-4 p-3 rounded-xl border border-white/10 bg-white/[0.03]">
-              <div className="font-mono text-xs text-white/40">{s.id}</div>
+            <div key={s.id} className="flex flex-wrap items-center gap-4 p-3 rounded-xl border border-border bg-card">
+              <div className="font-mono text-xs text-foreground/40">{s.id}</div>
               <Container className="w-4 h-4 text-orange-400" />
-              <div className="text-sm text-white/90 flex-1 min-w-[140px]">{s.cargo}</div>
-              <div className="text-xs text-white/50">{s.vehicle}</div>
-              <div className="text-xs text-white/40 flex-1 min-w-[140px]">{s.route}</div>
+              <div className="text-sm text-foreground/90 flex-1 min-w-[140px]">{s.cargo}</div>
+              <div className="text-xs text-foreground/50">{s.vehicle}</div>
+              <div className="text-xs text-foreground/40 flex-1 min-w-[140px]">{s.route}</div>
               <div className="flex items-center gap-1 text-xs text-sky-300">
                 <Thermometer className="w-3 h-3" /> {s.temp}
               </div>
-              <div className="text-xs text-white/40">ETA {s.eta}h</div>
+              <div className="text-xs text-foreground/40">ETA {s.eta}h</div>
               <StatusBadge status={s.status} />
             </div>
           ))}
-          <div className="flex items-center gap-2 text-[10px] text-white/30 pt-2">
+          <div className="flex items-center gap-2 text-[10px] text-foreground/30 pt-2">
             <ShieldCheck className="w-3 h-3 text-emerald-400" /> KYC-verified drivers · transit insurance · e-way bill auto-generated
           </div>
         </motion.div>

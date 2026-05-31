@@ -67,7 +67,7 @@ function StatusBadge({ status }: { status: DisputeStatus }) {
     open:          { label: 'Open',          tone: 'text-red-300 bg-red-400/10 border-red-400/30' },
     investigating: { label: 'Investigating', tone: 'text-amber-300 bg-amber-400/10 border-amber-400/30' },
     resolved:      { label: 'Resolved',      tone: 'text-emerald-300 bg-emerald-400/10 border-emerald-400/30' },
-    rejected:      { label: 'Rejected',      tone: 'text-white/40 bg-white/[0.04] border-white/10' },
+    rejected:      { label: 'Rejected',      tone: 'text-foreground/40 bg-card border-border' },
   };
   const m = map[status];
   return <span className={`px-2 py-0.5 rounded-full text-[10px] border ${m.tone}`}>{m.label}</span>;
@@ -94,10 +94,10 @@ export function DisputeResolution() {
           { label: 'Investigating',    value: stats.investigating, icon: MessageSquareWarning, color: '#fb923c' },
           { label: 'Resolved (30d)',   value: stats.resolved,      icon: Check,             color: '#34d399' },
         ].map(({ label, value, icon: Icon, color }) => (
-          <div key={label} className="p-3 rounded-xl border border-white/10 bg-white/[0.03]">
+          <div key={label} className="p-3 rounded-xl border border-border bg-card">
             <Icon className="w-3.5 h-3.5 mb-2" style={{ color }} />
-            <div className="text-xl font-bold text-white tabular-nums">{value}</div>
-            <div className="text-[11px] text-white/40">{label}</div>
+            <div className="text-xl font-bold text-foreground tabular-nums">{value}</div>
+            <div className="text-[11px] text-foreground/40">{label}</div>
           </div>
         ))}
       </div>
@@ -112,15 +112,15 @@ export function DisputeResolution() {
               className={`w-full text-left p-3 rounded-xl border transition ${
                 selected === d.id
                   ? 'border-cyan-400/40 bg-cyan-400/5'
-                  : 'border-white/10 bg-white/[0.03] hover:bg-white/[0.06]'
+                  : 'border-border bg-card hover:bg-muted'
               }`}
             >
               <div className="flex items-center justify-between mb-2">
                 <span className="font-mono text-xs text-violet-300">{d.id}</span>
                 <StatusBadge status={d.status} />
               </div>
-              <div className="text-sm text-white/90 line-clamp-1">{d.reason}</div>
-              <div className="flex items-center justify-between mt-2 text-[11px] text-white/40">
+              <div className="text-sm text-foreground/90 line-clamp-1">{d.reason}</div>
+              <div className="flex items-center justify-between mt-2 text-[11px] text-foreground/40">
                 <span>{d.buyer}</span>
                 <span className="text-emerald-400 font-bold">₹{d.amount.toLocaleString('en-IN')}</span>
               </div>
@@ -136,13 +136,13 @@ export function DisputeResolution() {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
-                className="p-5 rounded-xl border border-white/10 bg-white/[0.03] space-y-4"
+                className="p-5 rounded-xl border border-border bg-card space-y-4"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <div className="font-mono text-xs text-violet-300 mb-1">{active.id}</div>
-                    <div className="text-sm font-semibold text-white">{active.reason}</div>
-                    <div className="text-[11px] text-white/40 mt-1">
+                    <div className="text-sm font-semibold text-foreground">{active.reason}</div>
+                    <div className="text-[11px] text-foreground/40 mt-1">
                       {active.buyer} · {active.batch} · raised {active.raised}
                     </div>
                   </div>
@@ -150,13 +150,13 @@ export function DisputeResolution() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div className="p-2 rounded-lg bg-white/[0.03]">
-                    <div className="text-white/40 text-[10px] uppercase tracking-widest">Amount in dispute</div>
+                  <div className="p-2 rounded-lg bg-card">
+                    <div className="text-foreground/40 text-[10px] uppercase tracking-widest">Amount in dispute</div>
                     <div className="text-emerald-400 font-bold mt-0.5">₹{active.amount.toLocaleString('en-IN')}</div>
                   </div>
-                  <div className="p-2 rounded-lg bg-white/[0.03]">
-                    <div className="text-white/40 text-[10px] uppercase tracking-widest">Evidence files</div>
-                    <div className="inline-flex items-center gap-1 text-white/80 mt-0.5">
+                  <div className="p-2 rounded-lg bg-card">
+                    <div className="text-foreground/40 text-[10px] uppercase tracking-widest">Evidence files</div>
+                    <div className="inline-flex items-center gap-1 text-foreground/80 mt-0.5">
                       <ImageIcon className="w-3 h-3" /> {active.evidence} attachments
                     </div>
                   </div>
@@ -167,16 +167,16 @@ export function DisputeResolution() {
                     const tone =
                       m.from === 'AquaI'    ? 'border-cyan-400/30 bg-cyan-400/5'
                       : m.from === 'Buyer'  ? 'border-amber-400/30 bg-amber-400/5'
-                      :                       'border-white/10 bg-white/[0.04]';
+                      :                       'border-border bg-card';
                     return (
                       <div key={i} className={`p-2.5 rounded-lg border ${tone} text-xs`}>
                         <div className="flex items-center justify-between mb-1">
-                          <span className="font-semibold text-white/90">{m.from}</span>
-                          <span className="text-white/30 inline-flex items-center gap-1">
+                          <span className="font-semibold text-foreground/90">{m.from}</span>
+                          <span className="text-foreground/30 inline-flex items-center gap-1">
                             <Clock className="w-2.5 h-2.5" /> {m.at}
                           </span>
                         </div>
-                        <div className="text-white/70">{m.text}</div>
+                        <div className="text-foreground/70">{m.text}</div>
                       </div>
                     );
                   })}
@@ -190,7 +190,7 @@ export function DisputeResolution() {
                     value={reply}
                     onChange={(e) => setReply(e.target.value)}
                     placeholder="Reply to buyer or escalate to AquaI mediator…"
-                    className="flex-1 px-3 py-2 rounded-lg bg-white/[0.03] border border-white/10 text-white text-sm outline-none focus:border-cyan-400/40 placeholder:text-white/30"
+                    className="flex-1 px-3 py-2 rounded-lg bg-card border border-border text-foreground text-sm outline-none focus:border-cyan-400/40 placeholder:text-foreground/30"
                   />
                   <button
                     type="submit"
@@ -201,20 +201,20 @@ export function DisputeResolution() {
                   </button>
                 </form>
 
-                <div className="flex items-center gap-2 pt-3 border-t border-white/5">
+                <div className="flex items-center gap-2 pt-3 border-t border-border">
                   <button className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 rounded-lg border border-emerald-400/30 bg-emerald-400/10 text-emerald-300 text-xs hover:bg-emerald-400/20">
                     <Check className="w-3.5 h-3.5" /> Accept settlement
                   </button>
                   <button className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 rounded-lg border border-amber-400/30 bg-amber-400/10 text-amber-300 text-xs hover:bg-amber-400/20">
                     <FileText className="w-3.5 h-3.5" /> Escalate to AquaI mediator
                   </button>
-                  <button className="inline-flex items-center justify-center p-2 rounded-lg border border-white/10 bg-white/[0.03] text-white/50 hover:bg-white/[0.06]">
+                  <button className="inline-flex items-center justify-center p-2 rounded-lg border border-border bg-card text-foreground/50 hover:bg-muted">
                     <X className="w-3.5 h-3.5" />
                   </button>
                 </div>
               </motion.div>
             ) : (
-              <div className="h-full flex items-center justify-center p-12 rounded-xl border border-dashed border-white/10 bg-white/[0.02] text-sm text-white/30">
+              <div className="h-full flex items-center justify-center p-12 rounded-xl border border-dashed border-border bg-card text-sm text-foreground/30">
                 Select a dispute on the left to view conversation, evidence and settlement options.
               </div>
             )}

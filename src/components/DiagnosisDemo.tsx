@@ -158,11 +158,11 @@ export function DiagnosisDemo() {
   const theme = RISK_THEME[riskKey] || RISK_THEME.grey;
 
   return (
-    <div className="w-full max-w-3xl mx-auto rounded-2xl border border-white/10 bg-white/5 p-6">
+    <div className="w-full max-w-3xl mx-auto rounded-2xl border border-border bg-card p-6">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="text-lg font-bold text-white">AI Diagnosis</h3>
-          <p className="text-xs text-white/50">
+          <h3 className="text-lg font-bold text-foreground">AI Diagnosis</h3>
+          <p className="text-xs text-foreground/50">
             Upload an HP smear image — full disease + quality analysis
           </p>
         </div>
@@ -180,7 +180,7 @@ export function DiagnosisDemo() {
           <img src={preview} alt="sample" className="w-full h-full object-contain" />
         )}
         {!cameraOn && !preview && (
-          <div className="text-center text-white/40 px-6">
+          <div className="text-center text-foreground/40 px-6">
             <svg className="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                 d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
@@ -192,7 +192,7 @@ export function DiagnosisDemo() {
         {loading && (
           <div className="absolute inset-0 bg-black/75 flex flex-col items-center justify-center px-6">
             <div className="w-9 h-9 border-2 border-violet-400 border-t-transparent rounded-full animate-spin" />
-            <p className="text-white/80 text-sm mt-4 text-center">{stage}</p>
+            <p className="text-foreground/80 text-sm mt-4 text-center">{stage}</p>
           </div>
         )}
       </div>
@@ -205,7 +205,7 @@ export function DiagnosisDemo() {
               className="flex-1 min-w-[140px] px-4 py-2.5 rounded-lg bg-violet-500 hover:bg-violet-400 text-white text-sm font-semibold transition">
               Start Camera
             </button>
-            <label className="flex-1 min-w-[140px] px-4 py-2.5 rounded-lg border border-white/20 hover:bg-white/5 text-white text-sm font-semibold text-center cursor-pointer transition">
+            <label className="flex-1 min-w-[140px] px-4 py-2.5 rounded-lg border border-border hover:bg-muted text-foreground text-sm font-semibold text-center cursor-pointer transition">
               Upload Image
               <input type="file" accept="image/*" className="hidden" onChange={onFile} />
             </label>
@@ -218,7 +218,7 @@ export function DiagnosisDemo() {
               Capture &amp; Diagnose
             </button>
             <button onClick={stopCamera}
-              className="px-4 py-2.5 rounded-lg border border-white/20 hover:bg-white/5 text-white text-sm transition">
+              className="px-4 py-2.5 rounded-lg border border-border hover:bg-muted text-foreground text-sm transition">
               Cancel
             </button>
           </>
@@ -250,19 +250,19 @@ export function DiagnosisDemo() {
                 <TrafficLight active={riskKey} />
                 <div>
                   <div className={`text-xl font-bold ${theme.text}`}>{theme.label}</div>
-                  <div className="text-xs text-white/40">
+                  <div className="text-xs text-foreground/40">
                     {disease.is_hard_fail
                       ? `Hard-fail — ${disease.hard_fail_disease} detected`
                       : `Risk level: ${disease.risk_level}`}
                   </div>
                 </div>
               </div>
-              <p className="text-sm text-white/70 mt-3 leading-relaxed">{disease.risk_action}</p>
+              <p className="text-sm text-foreground/70 mt-3 leading-relaxed">{disease.risk_action}</p>
             </div>
 
             {/* EHP probabilities */}
-            <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-              <div className="text-xs text-white/40 uppercase tracking-wider mb-3">
+            <div className="rounded-xl border border-border bg-card p-4">
+              <div className="text-xs text-foreground/40 uppercase tracking-wider mb-3">
                 EHP Classification
               </div>
               <ProbBar label="Healthy"      value={disease.ehp_healthy_prob}   color="#34d399" />
@@ -277,11 +277,11 @@ export function DiagnosisDemo() {
 
             {/* Composite quality gauge + breakdown */}
             {quality && (
-              <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+              <div className="rounded-xl border border-border bg-card p-4">
                 <div className="flex items-center gap-5">
                   <QSGauge score={quality.composite_score} grade={quality.grade} />
                   <div className="flex-1 min-w-0">
-                    <div className="text-xs text-white/40 uppercase tracking-wider mb-2">
+                    <div className="text-xs text-foreground/40 uppercase tracking-wider mb-2">
                       Quality Breakdown
                     </div>
                     <ScoreBar label="Visual Health"   value={quality.visual_health_score}   max={30} />
@@ -291,16 +291,16 @@ export function DiagnosisDemo() {
                     <ScoreBar label="Activity"        value={quality.activity_score}        max={10} />
                   </div>
                 </div>
-                <div className="mt-3 pt-3 border-t border-white/10 flex items-start gap-2">
-                  <span className="text-[10px] uppercase tracking-wider text-white/30 mt-0.5">
+                <div className="mt-3 pt-3 border-t border-border flex items-start gap-2">
+                  <span className="text-[10px] uppercase tracking-wider text-foreground/30 mt-0.5">
                     Stage {quality.detected_pl_stage}
                   </span>
-                  <p className="text-xs text-white/60 flex-1">{quality.stocking_recommendation}</p>
+                  <p className="text-xs text-foreground/60 flex-1">{quality.stocking_recommendation}</p>
                 </div>
               </div>
             )}
 
-            <div className="flex items-center justify-between text-[10px] text-white/30">
+            <div className="flex items-center justify-between text-[10px] text-foreground/30">
               <span>Engine: {disease.model_used}</span>
               <span>Fused risk score: {(disease.fused_risk_score * 100).toFixed(0)}%</span>
             </div>
@@ -345,10 +345,10 @@ function ProbBar({ label, value, color }: { label: string; value: number; color:
   return (
     <div className="mb-2 last:mb-0">
       <div className="flex justify-between text-[11px] mb-1">
-        <span className="text-white/60">{label}</span>
-        <span className="text-white/80 tabular-nums">{pct}%</span>
+        <span className="text-foreground/60">{label}</span>
+        <span className="text-foreground/80 tabular-nums">{pct}%</span>
       </div>
-      <div className="h-1.5 rounded-full bg-white/10 overflow-hidden">
+      <div className="h-1.5 rounded-full bg-card overflow-hidden">
         <motion.div
           className="h-full rounded-full"
           style={{ background: color }}
@@ -366,10 +366,10 @@ function ScoreBar({ label, value, max }: { label: string; value: number; max: nu
   return (
     <div className="mb-1.5 last:mb-0">
       <div className="flex justify-between text-[10px] mb-0.5">
-        <span className="text-white/50">{label}</span>
-        <span className="text-white/70 tabular-nums">{(value ?? 0).toFixed(1)}/{max}</span>
+        <span className="text-foreground/50">{label}</span>
+        <span className="text-foreground/70 tabular-nums">{(value ?? 0).toFixed(1)}/{max}</span>
       </div>
-      <div className="h-1 rounded-full bg-white/10 overflow-hidden">
+      <div className="h-1 rounded-full bg-card overflow-hidden">
         <motion.div
           className="h-full rounded-full bg-sky-400"
           initial={{ width: 0 }}
@@ -432,7 +432,7 @@ function QSGauge({ score, grade }: { score: number; grade: string }) {
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-xl font-bold text-white tabular-nums">{shown}</span>
+        <span className="text-xl font-bold text-foreground tabular-nums">{shown}</span>
         <span className="text-[8px] uppercase tracking-wider" style={{ color }}>
           {grade}
         </span>

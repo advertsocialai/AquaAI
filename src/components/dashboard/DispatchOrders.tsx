@@ -49,13 +49,13 @@ function StatusPill({ status }: { status: Status }) {
 function HealthBar({ value, danger, color }: { value: number; danger: boolean; color: string }) {
   return (
     <div className="flex items-center gap-2">
-      <div className="w-16 h-1.5 rounded-full bg-white/10 overflow-hidden">
+      <div className="w-16 h-1.5 rounded-full bg-card overflow-hidden">
         <div
           className="h-full rounded-full transition-all"
           style={{ width: `${Math.max(0, Math.min(100, value))}%`, background: danger ? '#f87171' : color }}
         />
       </div>
-      <span className={`text-xs tabular-nums ${danger ? 'text-red-300' : 'text-white/60'}`}>{value}%</span>
+      <span className={`text-xs tabular-nums ${danger ? 'text-red-300' : 'text-foreground/60'}`}>{value}%</span>
     </div>
   );
 }
@@ -80,10 +80,10 @@ export function DispatchOrders() {
           { label: 'Scheduled',         value: stats.scheduled, icon: Clock,         color: '#34d399' },
           { label: 'Cold-chain alerts', value: stats.alerts,    icon: AlertTriangle, color: '#f87171' },
         ].map(({ label, value, icon: Icon, color }) => (
-          <div key={label} className="p-3 rounded-xl border border-white/10 bg-white/[0.03]">
+          <div key={label} className="p-3 rounded-xl border border-border bg-card">
             <Icon className="w-3.5 h-3.5 mb-2" style={{ color }} />
-            <div className="text-xl font-bold text-white tabular-nums">{value}</div>
-            <div className="text-[11px] text-white/40">{label}</div>
+            <div className="text-xl font-bold text-foreground tabular-nums">{value}</div>
+            <div className="text-[11px] text-foreground/40">{label}</div>
           </div>
         ))}
       </div>
@@ -101,7 +101,7 @@ export function DispatchOrders() {
                 className={`w-full text-left p-3 rounded-xl border transition flex items-center gap-3 ${
                   selected === d.id
                     ? 'border-cyan-400/40 bg-cyan-400/5'
-                    : 'border-white/10 bg-white/[0.03] hover:bg-white/[0.06]'
+                    : 'border-border bg-card hover:bg-muted'
                 }`}
               >
                 <div className={`p-2 rounded-lg ${isLive ? 'bg-emerald-400/10' : 'bg-sky-400/10'}`}>
@@ -113,14 +113,14 @@ export function DispatchOrders() {
                     <StatusPill status={d.status} />
                     {alert && <AlertTriangle className="w-3 h-3 text-red-400" />}
                   </div>
-                  <div className="text-sm text-white/90 truncate">{d.count} → {d.buyer}</div>
-                  <div className="flex items-center gap-2 text-[11px] text-white/40 mt-0.5">
+                  <div className="text-sm text-foreground/90 truncate">{d.count} → {d.buyer}</div>
+                  <div className="flex items-center gap-2 text-[11px] text-foreground/40 mt-0.5">
                     <MapPin className="w-3 h-3" />{d.destination} · {d.km} km
-                    <span className="text-white/20">·</span>
+                    <span className="text-foreground/20">·</span>
                     <Clock className="w-3 h-3" />{d.scheduledFor}
                   </div>
                 </div>
-                <ChevronRight className="w-4 h-4 text-white/30" />
+                <ChevronRight className="w-4 h-4 text-foreground/30" />
               </motion.button>
             );
           })}
@@ -134,56 +134,56 @@ export function DispatchOrders() {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
-                className="p-5 rounded-xl border border-white/10 bg-white/[0.03] space-y-4"
+                className="p-5 rounded-xl border border-border bg-card space-y-4"
               >
                 <div>
                   <div className="font-mono text-xs text-violet-300">{active.id}</div>
-                  <div className="text-sm font-semibold text-white mt-1">{active.batchId} · {active.count}</div>
-                  <div className="text-[11px] text-white/40 mt-0.5">{active.buyer}</div>
+                  <div className="text-sm font-semibold text-foreground mt-1">{active.batchId} · {active.count}</div>
+                  <div className="text-[11px] text-foreground/40 mt-0.5">{active.buyer}</div>
                 </div>
 
                 <div className="space-y-2 text-xs">
                   <div className="flex items-center justify-between">
-                    <span className="text-white/50 inline-flex items-center gap-1.5">
+                    <span className="text-foreground/50 inline-flex items-center gap-1.5">
                       <MapPin className="w-3 h-3" /> Destination
                     </span>
-                    <span className="text-white">{active.destination} · {active.km} km</span>
+                    <span className="text-foreground">{active.destination} · {active.km} km</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-white/50 inline-flex items-center gap-1.5">
+                    <span className="text-foreground/50 inline-flex items-center gap-1.5">
                       <Truck className="w-3 h-3" /> Vehicle
                     </span>
-                    <span className="text-white">{active.vehicle}</span>
+                    <span className="text-foreground">{active.vehicle}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-white/50 inline-flex items-center gap-1.5">
+                    <span className="text-foreground/50 inline-flex items-center gap-1.5">
                       <Clock className="w-3 h-3" /> Scheduled
                     </span>
-                    <span className="text-white">{active.scheduledFor}</span>
+                    <span className="text-foreground">{active.scheduledFor}</span>
                   </div>
                   {active.etaHours !== undefined && (
                     <div className="flex items-center justify-between">
-                      <span className="text-white/50">ETA</span>
+                      <span className="text-foreground/50">ETA</span>
                       <span className="text-cyan-300">{active.etaHours.toFixed(1)} h</span>
                     </div>
                   )}
                 </div>
 
-                <div className="space-y-2 pt-3 border-t border-white/5">
-                  <div className="text-[10px] uppercase tracking-widest text-white/30">Live telemetry</div>
+                <div className="space-y-2 pt-3 border-t border-border">
+                  <div className="text-[10px] uppercase tracking-widest text-foreground/30">Live telemetry</div>
                   {active.tempC !== undefined && (
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-white/50 inline-flex items-center gap-1.5">
+                      <span className="text-foreground/50 inline-flex items-center gap-1.5">
                         <ThermometerSun className="w-3 h-3 text-sky-300" /> Temp
                       </span>
-                      <span className={`tabular-nums ${active.cargoKind === 'cold' && active.tempC > 0 ? 'text-red-300' : 'text-white'}`}>
+                      <span className={`tabular-nums ${active.cargoKind === 'cold' && active.tempC > 0 ? 'text-red-300' : 'text-foreground'}`}>
                         {active.tempC.toFixed(1)} °C
                       </span>
                     </div>
                   )}
                   {active.oxygenPct !== undefined && (
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-white/50 inline-flex items-center gap-1.5">
+                      <span className="text-foreground/50 inline-flex items-center gap-1.5">
                         <Wind className="w-3 h-3 text-emerald-300" /> O₂
                       </span>
                       <HealthBar
@@ -195,10 +195,10 @@ export function DispatchOrders() {
                   )}
                 </div>
 
-                <div className="pt-3 border-t border-white/5 space-y-2">
-                  <div className="text-[10px] uppercase tracking-widest text-white/30">Driver</div>
+                <div className="pt-3 border-t border-border space-y-2">
+                  <div className="text-[10px] uppercase tracking-widest text-foreground/30">Driver</div>
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-white">{active.driver}</span>
+                    <span className="text-foreground">{active.driver}</span>
                     <a
                       href={`tel:${active.driverPhone.replace(/\s/g, '')}`}
                       className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-cyan-500/20 border border-cyan-400/30 text-cyan-300"
@@ -220,7 +220,7 @@ export function DispatchOrders() {
                 )}
               </motion.div>
             ) : (
-              <div className="h-full flex items-center justify-center p-12 rounded-xl border border-dashed border-white/10 bg-white/[0.02] text-sm text-white/30">
+              <div className="h-full flex items-center justify-center p-12 rounded-xl border border-dashed border-border bg-card text-sm text-foreground/30">
                 Select a dispatch on the left.
               </div>
             )}

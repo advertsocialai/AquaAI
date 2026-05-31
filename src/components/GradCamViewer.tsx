@@ -52,11 +52,11 @@ export function GradCamViewer() {
       : '#94a3b8';
 
   return (
-    <div className="w-full max-w-3xl mx-auto rounded-2xl border border-white/10 bg-white/5 p-6">
+    <div className="w-full max-w-3xl mx-auto rounded-2xl border border-border bg-card p-6">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="text-lg font-bold text-white">Grad-CAM Explainability</h3>
-          <p className="text-xs text-white/50">See where the AI is looking</p>
+          <h3 className="text-lg font-bold text-foreground">Grad-CAM Explainability</h3>
+          <p className="text-xs text-foreground/50">See where the AI is looking</p>
         </div>
         <span className="text-[10px] uppercase tracking-wider px-2 py-1 rounded bg-orange-500/20 text-orange-300">
           F14
@@ -66,7 +66,7 @@ export function GradCamViewer() {
       {/* Viewport */}
       <div className="relative rounded-xl overflow-hidden bg-black aspect-video flex items-center justify-center">
         {!result && !loading && (
-          <div className="text-center text-white/40 px-6">
+          <div className="text-center text-foreground/40 px-6">
             <Flame className="w-12 h-12 mx-auto mb-2 text-orange-400/40" />
             <p className="text-sm">Upload an HP smear to generate an attention heatmap</p>
           </div>
@@ -75,7 +75,7 @@ export function GradCamViewer() {
         {loading && (
           <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center">
             <div className="w-9 h-9 border-2 border-orange-400 border-t-transparent rounded-full animate-spin" />
-            <p className="text-white/70 text-sm mt-3">Computing attention map…</p>
+            <p className="text-foreground/70 text-sm mt-3">Computing attention map…</p>
           </div>
         )}
 
@@ -107,7 +107,7 @@ export function GradCamViewer() {
                 style={{ left: `${wipe}%` }}
               />
             )}
-            <div className="absolute top-2 left-2 text-[10px] bg-black/60 px-2 py-0.5 rounded text-white/70">
+            <div className="absolute top-2 left-2 text-[10px] bg-black/60 px-2 py-0.5 rounded text-foreground/70">
               <Eye className="w-3 h-3 inline mr-1" />
               Original
             </div>
@@ -157,29 +157,29 @@ export function GradCamViewer() {
             exit={{ opacity: 0 }}
             className="mt-4 grid grid-cols-3 gap-3"
           >
-            <div className="rounded-lg bg-white/5 px-3 py-2.5 text-center">
+            <div className="rounded-lg bg-card px-3 py-2.5 text-center">
               <div className="text-xl font-bold text-red-400 tabular-nums">
                 {Math.round(result.ehp_positive_prob * 100)}%
               </div>
-              <div className="text-[10px] text-white/40">EHP probability</div>
+              <div className="text-[10px] text-foreground/40">EHP probability</div>
             </div>
-            <div className="rounded-lg bg-white/5 px-3 py-2.5 text-center">
+            <div className="rounded-lg bg-card px-3 py-2.5 text-center">
               <div className="text-xl font-bold uppercase" style={{ color: riskColor }}>
                 {result.risk_level}
               </div>
-              <div className="text-[10px] text-white/40">Risk level</div>
+              <div className="text-[10px] text-foreground/40">Risk level</div>
             </div>
-            <div className="rounded-lg bg-white/5 px-3 py-2.5 text-center">
-              <div className="text-sm font-bold text-white/80 mt-1.5 truncate">
+            <div className="rounded-lg bg-card px-3 py-2.5 text-center">
+              <div className="text-sm font-bold text-foreground/80 mt-1.5 truncate">
                 {result.model_used}
               </div>
-              <div className="text-[10px] text-white/40">Engine</div>
+              <div className="text-[10px] text-foreground/40">Engine</div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <p className="mt-3 text-[10px] text-white/30">
+      <p className="mt-3 text-[10px] text-foreground/30">
         Warm regions (red/yellow) show the tissue areas that most influenced the
         AI's EHP decision — drag the slider to compare against the original.
       </p>

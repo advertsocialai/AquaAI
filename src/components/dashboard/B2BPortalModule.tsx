@@ -23,7 +23,7 @@ function QSBar({ value }: { value: number }) {
   const color = value >= 90 ? '#34d399' : value >= 80 ? '#facc15' : value >= 70 ? '#fb923c' : '#f87171';
   return (
     <div className="flex items-center gap-2 w-24">
-      <div className="flex-1 h-1.5 rounded-full bg-white/10 overflow-hidden">
+      <div className="flex-1 h-1.5 rounded-full bg-card overflow-hidden">
         <div className="h-full rounded-full" style={{ width: `${value}%`, background: color }} />
       </div>
       <span className="text-xs font-bold tabular-nums" style={{ color }}>{value}</span>
@@ -56,34 +56,34 @@ export function B2BPortalModule() {
           { label: 'Avg QS Score',   value: `${avgQS}`, icon: TrendingUp, color: '#38bdf8' },
           { label: 'Rejected (QC)',  value: rejected,   icon: AlertCircle,color: '#f87171' },
         ].map(({ label, value, icon: Icon, color }) => (
-          <div key={label} className="p-4 rounded-xl border border-white/10 bg-white/[0.03]">
+          <div key={label} className="p-4 rounded-xl border border-border bg-card">
             <Icon className="w-4 h-4 mb-2" style={{ color }} />
-            <div className="text-2xl font-bold text-white tabular-nums">{value}</div>
-            <div className="text-xs text-white/40">{label}</div>
+            <div className="text-2xl font-bold text-foreground tabular-nums">{value}</div>
+            <div className="text-xs text-foreground/40">{label}</div>
           </div>
         ))}
       </div>
 
       <div>
-        <div className="text-[11px] uppercase tracking-widest text-white/30 mb-3">Active PL Batches</div>
-        <div className="overflow-x-auto rounded-2xl border border-white/10">
+        <div className="text-[11px] uppercase tracking-widest text-foreground/30 mb-3">Active PL Batches</div>
+        <div className="overflow-x-auto rounded-2xl border border-border">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-white/10 bg-white/5">
+              <tr className="border-b border-border bg-card">
                 {['Batch', 'Species · Stage', 'Count', 'QS', 'Status', 'Reserved For'].map((h) => (
-                  <th key={h} className="px-4 py-3 text-left text-xs font-medium text-white/40 uppercase tracking-widest">{h}</th>
+                  <th key={h} className="px-4 py-3 text-left text-xs font-medium text-foreground/40 uppercase tracking-widest">{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {BATCHES.map((b) => (
-                <motion.tr key={b.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="border-b border-white/5 hover:bg-white/5 transition">
+                <motion.tr key={b.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="border-b border-border hover:bg-muted transition">
                   <td className="px-4 py-3 font-mono text-xs text-violet-300">{b.id}</td>
-                  <td className="px-4 py-3 text-white/90">{b.species} · <span className="text-white/40">{b.size}</span></td>
-                  <td className="px-4 py-3 text-white/70 tabular-nums">{b.count}</td>
+                  <td className="px-4 py-3 text-foreground/90">{b.species} · <span className="text-foreground/40">{b.size}</span></td>
+                  <td className="px-4 py-3 text-foreground/70 tabular-nums">{b.count}</td>
                   <td className="px-4 py-3"><QSBar value={b.qs} /></td>
                   <td className="px-4 py-3"><StatusPill status={b.status} /></td>
-                  <td className="px-4 py-3 text-xs text-white/50">{b.buyer}</td>
+                  <td className="px-4 py-3 text-xs text-foreground/50">{b.buyer}</td>
                 </motion.tr>
               ))}
             </tbody>
@@ -92,19 +92,19 @@ export function B2BPortalModule() {
       </div>
 
       <div>
-        <div className="text-[11px] uppercase tracking-widest text-white/30 mb-3">Top Buyers</div>
+        <div className="text-[11px] uppercase tracking-widest text-foreground/30 mb-3">Top Buyers</div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {BUYERS.map((b) => (
-            <div key={b.name} className="p-4 rounded-xl border border-white/10 bg-white/[0.03]">
+            <div key={b.name} className="p-4 rounded-xl border border-border bg-card">
               <div className="flex items-center justify-between mb-2">
-                <div className="text-sm font-semibold text-white truncate">{b.name}</div>
+                <div className="text-sm font-semibold text-foreground truncate">{b.name}</div>
                 <div className="flex items-center gap-1 text-xs text-amber-300">
                   <Star className="w-3 h-3 fill-amber-300" /> {b.rating}
                 </div>
               </div>
-              <div className="text-[11px] text-white/40 mb-3">{b.district}</div>
+              <div className="text-[11px] text-foreground/40 mb-3">{b.district}</div>
               <div className="flex items-center justify-between text-xs">
-                <span className="text-white/50">{b.orders} orders</span>
+                <span className="text-foreground/50">{b.orders} orders</span>
                 <span className="font-bold text-emerald-400">{b.ltv}</span>
               </div>
             </div>
@@ -113,24 +113,24 @@ export function B2BPortalModule() {
       </div>
 
       <div>
-        <div className="text-[11px] uppercase tracking-widest text-white/30 mb-3">Dispatch Orders</div>
+        <div className="text-[11px] uppercase tracking-widest text-foreground/30 mb-3">Dispatch Orders</div>
         <DispatchOrders />
       </div>
 
       <div>
-        <div className="text-[11px] uppercase tracking-widest text-white/30 mb-3">Dispute Resolution</div>
+        <div className="text-[11px] uppercase tracking-widest text-foreground/30 mb-3">Dispute Resolution</div>
         <DisputeResolution />
       </div>
 
-      <div className="p-5 rounded-2xl border border-white/10 bg-white/[0.03] flex items-start gap-3">
+      <div className="p-5 rounded-2xl border border-border bg-card flex items-start gap-3">
         <FileCheck className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
         <div className="text-sm">
-          <div className="text-white font-semibold mb-1">Auto-generated invoices + QC certs</div>
-          <div className="text-white/50 text-xs flex items-center gap-2 flex-wrap">
+          <div className="text-foreground font-semibold mb-1">Auto-generated invoices + QC certs</div>
+          <div className="text-foreground/50 text-xs flex items-center gap-2 flex-wrap">
             <CheckCircle2 className="w-3 h-3 text-emerald-400" /> MPEDA license linked
-            <span className="text-white/20">·</span>
+            <span className="text-foreground/20">·</span>
             <CheckCircle2 className="w-3 h-3 text-emerald-400" /> GST e-invoice
-            <span className="text-white/20">·</span>
+            <span className="text-foreground/20">·</span>
             <CheckCircle2 className="w-3 h-3 text-emerald-400" /> HMAC-signed QC PDF + QR
           </div>
         </div>

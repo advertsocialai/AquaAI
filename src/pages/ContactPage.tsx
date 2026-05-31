@@ -41,7 +41,7 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-white">
+    <div className="min-h-screen bg-background text-foreground">
       <Header />
 
       {/* Hero */}
@@ -63,7 +63,7 @@ export default function ContactPage() {
             Get in touch
           </motion.h1>
           <motion.p
-            className="text-base text-white/60 max-w-2xl mx-auto leading-relaxed"
+            className="text-base text-foreground/60 max-w-2xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
           >
             We would love to hear from you. Whether you have a question, feedback, or want to
@@ -79,7 +79,7 @@ export default function ContactPage() {
             {/* Form */}
             <form
               onSubmit={submit}
-              className="lg:col-span-3 p-6 lg:p-8 rounded-2xl border border-white/10 bg-white/[0.03] space-y-4"
+              className="lg:col-span-3 p-6 lg:p-8 rounded-2xl border border-border bg-card space-y-4"
             >
               <div className="grid sm:grid-cols-2 gap-4">
                 <Field icon={User}   label="Name"    value={name} onChange={setName}  placeholder="Your name" />
@@ -88,19 +88,19 @@ export default function ContactPage() {
               <Field icon={Phone} label="Phone (optional)" value={phone} onChange={setPhone} placeholder="+91 98765 43210" type="tel" />
 
               <label className="block">
-                <span className="text-[11px] uppercase tracking-widest text-white/40">Message</span>
+                <span className="text-[11px] uppercase tracking-widest text-foreground/40">Message</span>
                 <textarea
                   value={msg}
                   onChange={(e) => setMsg(e.target.value)}
                   rows={5}
                   placeholder="Tell us how we can help…"
-                  className="mt-2 w-full px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03] text-white text-sm outline-none focus:border-cyan-400/40 resize-none"
+                  className="mt-2 w-full px-4 py-3 rounded-xl border border-border bg-card text-foreground text-sm outline-none focus:border-cyan-400/40 resize-none"
                 />
               </label>
 
               <label className="block">
-                <span className="text-[11px] uppercase tracking-widest text-white/40">Attachment (optional)</span>
-                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-dashed border-white/10 bg-white/[0.02] cursor-pointer hover:bg-white/[0.04]">
+                <span className="text-[11px] uppercase tracking-widest text-foreground/40">Attachment (optional)</span>
+                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-dashed border-border bg-card cursor-pointer hover:bg-muted">
                   <Upload className="w-4 h-4 text-cyan-400" />
                   <input
                     type="file"
@@ -109,7 +109,7 @@ export default function ContactPage() {
                     onChange={(e) => setFileName(e.target.files?.[0]?.name ?? null)}
                   />
                   <label htmlFor="file" className="flex-1 text-sm cursor-pointer">
-                    {fileName ?? <span className="text-white/40">PDF, image or doc — up to 10 MB</span>}
+                    {fileName ?? <span className="text-foreground/40">PDF, image or doc — up to 10 MB</span>}
                   </label>
                 </div>
               </label>
@@ -129,23 +129,23 @@ export default function ContactPage() {
               <ContactBlock icon={Phone}  title="Call us"  value="+91 95532 82325"      href="tel:+919553282325" />
               <ContactBlock icon={Mail}   title="Email"    value="info@aquarudra.com"   href="mailto:info@aquarudra.com" />
               <ContactBlock icon={MessageCircle} title="WhatsApp" value="+91 95532 82325" href="https://wa.me/919553282325" />
-              <div className="p-5 rounded-2xl border border-white/10 bg-white/[0.03]">
+              <div className="p-5 rounded-2xl border border-border bg-card">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="p-2 rounded-lg bg-emerald-400/10 border border-emerald-400/20">
                     <MapPin className="w-4 h-4 text-emerald-300" />
                   </div>
-                  <div className="text-sm font-semibold text-white">Office</div>
+                  <div className="text-sm font-semibold text-foreground">Office</div>
                 </div>
-                <p className="text-sm text-white/70 leading-relaxed">
+                <p className="text-sm text-foreground/70 leading-relaxed">
                   Aqua Rudra<br />
                   Andhra Pradesh, India<br />
-                  <span className="text-white/40 text-xs">Field offices in Bhimavaram, Nellore, Vizag</span>
+                  <span className="text-foreground/40 text-xs">Field offices in Bhimavaram, Nellore, Vizag</span>
                 </p>
               </div>
               <div className="p-5 rounded-2xl border border-cyan-400/20 bg-cyan-400/5">
                 <div className="text-[11px] uppercase tracking-widest text-cyan-300 mb-2">Response time</div>
-                <div className="text-sm text-white">Within 24 hours on business days.</div>
-                <div className="text-xs text-white/50 mt-1">Outbreak emergencies — within 1 hour.</div>
+                <div className="text-sm text-foreground">Within 24 hours on business days.</div>
+                <div className="text-xs text-foreground/50 mt-1">Outbreak emergencies — within 1 hour.</div>
               </div>
             </aside>
           </div>
@@ -162,15 +162,15 @@ function Field({ icon: Icon, label, value, onChange, placeholder, type = 'text' 
 }) {
   return (
     <label className="block">
-      <span className="text-[11px] uppercase tracking-widest text-white/40">{label}</span>
-      <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-white/10 bg-white/[0.03] focus-within:border-cyan-400/40">
+      <span className="text-[11px] uppercase tracking-widest text-foreground/40">{label}</span>
+      <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
         <Icon className="w-4 h-4 text-cyan-400" />
         <input
           type={type}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="bg-transparent outline-none text-white flex-1 text-sm"
+          className="bg-transparent outline-none text-foreground flex-1 text-sm"
         />
       </div>
     </label>
@@ -183,14 +183,14 @@ function ContactBlock({ icon: Icon, title, value, href }: {
   return (
     <a
       href={href}
-      className="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition"
+      className="flex items-center gap-3 p-4 rounded-xl border border-border bg-card hover:bg-muted transition"
     >
       <div className="p-2 rounded-lg bg-cyan-400/10 border border-cyan-400/20">
         <Icon className="w-4 h-4 text-cyan-300" />
       </div>
       <div className="flex-1 min-w-0">
-        <div className="text-[11px] uppercase tracking-widest text-white/40">{title}</div>
-        <div className="text-sm text-white truncate">{value}</div>
+        <div className="text-[11px] uppercase tracking-widest text-foreground/40">{title}</div>
+        <div className="text-sm text-foreground truncate">{value}</div>
       </div>
     </a>
   );

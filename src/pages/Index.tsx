@@ -31,13 +31,13 @@ const Index = () => {
   useEffect(() => { document.title = 'Aqua Rudra — Aquaculture Intelligence'; }, []);
 
   return (
-    <div className="min-h-screen bg-background text-white">
+    <div className="min-h-screen bg-background text-foreground">
       <Header />
 
       {/* Hero */}
       <section className="relative min-h-[92svh] flex items-center overflow-hidden pt-20">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-black to-violet-500/10" />
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-background to-violet-500/10" />
         </div>
 
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
@@ -66,7 +66,7 @@ const Index = () => {
             </motion.h1>
 
             <motion.p
-              className="text-lg md:text-xl text-white/65 max-w-2xl mb-10 leading-relaxed"
+              className="text-lg md:text-xl text-foreground/65 max-w-2xl mb-10 leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
@@ -88,14 +88,14 @@ const Index = () => {
               </Link>
               <Link
                 to="/aquaai"
-                className="inline-flex items-center gap-2 px-7 py-4 rounded-xl border border-white/15 text-white/90 hover:bg-white/[0.06] text-base transition"
+                className="inline-flex items-center gap-2 px-7 py-4 rounded-xl border border-border text-foreground/90 hover:bg-muted text-base transition"
               >
                 <PlayCircle className="w-5 h-5" /> {t('home.ctaSee')}
               </Link>
             </motion.div>
 
             <motion.div
-              className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-white/55"
+              className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-foreground/55"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
@@ -103,11 +103,11 @@ const Index = () => {
               <span className="inline-flex items-center gap-2">
                 <WifiOff className="w-4 h-4 text-emerald-400" /> {t('home.tagOffline')}
               </span>
-              <span className="text-white/15">·</span>
+              <span className="text-foreground/15">·</span>
               <span className="inline-flex items-center gap-2">
                 <Languages className="w-4 h-4 text-violet-400" /> తెలుగు · தமிழ் · हिन्दी · ଓଡ଼ିଆ · বাংলা · English
               </span>
-              <span className="text-white/15">·</span>
+              <span className="text-foreground/15">·</span>
               <span className="inline-flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-cyan-400" /> {t('home.tagFree')}
               </span>
@@ -117,19 +117,19 @@ const Index = () => {
       </section>
 
       {/* Live time + weather */}
-      <section className="border-t border-white/5 py-10">
+      <section className="border-t border-border py-10">
         <div className="container mx-auto px-6 lg:px-8 max-w-5xl">
           <WeatherTimeWidget />
         </div>
       </section>
 
       {/* Module highlights grid */}
-      <section className="py-20 border-t border-white/5">
+      <section className="py-20 border-t border-border">
         <div className="container mx-auto px-6 lg:px-8 max-w-6xl">
           <div className="text-center mb-14">
             <div className="text-sm text-cyan-300 uppercase tracking-widest mb-4">{t('home.modulesHead')}</div>
             <h2 className="text-4xl md:text-5xl font-bold leading-tight">{t('home.modulesTitle')}</h2>
-            <p className="text-base md:text-lg text-white/65 max-w-2xl mx-auto mt-4 leading-relaxed">{t('home.modulesSub')}</p>
+            <p className="text-base md:text-lg text-foreground/65 max-w-2xl mx-auto mt-4 leading-relaxed">{t('home.modulesSub')}</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {MODULES.map((m, i) => (
@@ -139,7 +139,7 @@ const Index = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="p-6 rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition"
+                className="p-6 rounded-2xl border border-border bg-card hover:bg-muted transition"
               >
                 <div
                   className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
@@ -147,8 +147,8 @@ const Index = () => {
                 >
                   <m.icon className="w-6 h-6" style={{ color: m.accent }} />
                 </div>
-                <div className="text-lg font-semibold text-white mb-2">{t(`modules.${m.key}`)}</div>
-                <p className="text-sm text-white/65 leading-relaxed">{t(`modules.${m.key}D`)}</p>
+                <div className="text-lg font-semibold text-foreground mb-2">{t(`modules.${m.key}`)}</div>
+                <p className="text-sm text-foreground/65 leading-relaxed">{t(`modules.${m.key}D`)}</p>
               </motion.div>
             ))}
           </div>

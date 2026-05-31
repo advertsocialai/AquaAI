@@ -94,16 +94,16 @@ export function OutbreakHeatmap() {
   }, [data]);
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-      <div className="px-5 py-3 border-b border-white/5 flex items-center justify-between">
+    <div className="rounded-2xl border border-border bg-card overflow-hidden">
+      <div className="px-5 py-3 border-b border-border flex items-center justify-between">
         <div className="flex items-center gap-2">
           <AlertTriangle className="w-4 h-4 text-red-400" />
-          <span className="text-sm font-semibold text-white">Outbreak Heatmap</span>
-          <span className="text-[10px] text-white/30">— last 14 days · NSPAAD sync</span>
+          <span className="text-sm font-semibold text-foreground">Outbreak Heatmap</span>
+          <span className="text-[10px] text-foreground/30">— last 14 days · NSPAAD sync</span>
         </div>
         <div className="flex items-center gap-3 text-[11px]">
           {(['high', 'medium', 'low'] as const).map((s) => (
-            <span key={s} className="inline-flex items-center gap-1.5 text-white/60">
+            <span key={s} className="inline-flex items-center gap-1.5 text-foreground/60">
               <span className="w-2 h-2 rounded-full" style={{ background: SEVERITY_COLOR[s] }} />
               {s}
             </span>
@@ -119,13 +119,13 @@ export function OutbreakHeatmap() {
       >
         <div ref={containerRef} style={{ height: '100%', width: '100%', background: '#0a0a0a' }} />
         {loading && (
-          <div className="absolute inset-0 flex items-center justify-center text-xs text-white/40 pointer-events-none">
+          <div className="absolute inset-0 flex items-center justify-center text-xs text-foreground/40 pointer-events-none">
             Loading outbreak data…
           </div>
         )}
       </motion.div>
 
-      <div className="px-5 py-2.5 border-t border-white/5 flex items-center gap-2 text-[11px] text-white/40">
+      <div className="px-5 py-2.5 border-t border-border flex items-center gap-2 text-[11px] text-foreground/40">
         <MapPin className="w-3 h-3 text-red-400" />
         {data.length} active cluster{data.length === 1 ? '' : 's'} · OpenStreetMap dark tiles
       </div>

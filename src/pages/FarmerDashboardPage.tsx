@@ -62,25 +62,25 @@ export default function FarmerDashboardPage() {
   });
 
   return (
-    <div className="min-h-screen bg-background text-white">
+    <div className="min-h-screen bg-background text-foreground">
       <Header />
 
       <main className="pt-28 pb-20">
         <div className="container mx-auto px-6 lg:px-8 max-w-6xl space-y-10">
 
           {/* ── Greeting + farm summary ───────────────────────────────────── */}
-          <section className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:p-8">
+          <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
               <div>
                 <div className="text-xs uppercase tracking-widest text-cyan-300 mb-2">{greeting}, V. Ramana</div>
                 <h1 className="text-3xl md:text-4xl font-bold leading-tight">
                   Day {FARM_SUMMARY.dayOfCycle} of cycle ·{' '}
-                  <span className="text-white/60 font-normal">{FARM_SUMMARY.activeBatches} active batches</span>
+                  <span className="text-foreground/60 font-normal">{FARM_SUMMARY.activeBatches} active batches</span>
                 </h1>
-                <div className="flex items-center gap-2 text-sm text-white/55 mt-2">
+                <div className="flex items-center gap-2 text-sm text-foreground/55 mt-2">
                   <MapPin className="w-3.5 h-3.5" />
                   <span>{FARM_SUMMARY.district}</span>
-                  <span className="text-white/20">·</span>
+                  <span className="text-foreground/20">·</span>
                   <Calendar className="w-3.5 h-3.5" />
                   <span>{new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'short' })}</span>
                 </div>
@@ -112,13 +112,13 @@ export default function FarmerDashboardPage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.05 }}
-                    className={`p-5 rounded-2xl border bg-white/[0.03] ${t.bar}`}
+                    className={`p-5 rounded-2xl border bg-card ${t.bar}`}
                   >
                     <div className={`inline-flex items-center justify-center w-9 h-9 rounded-lg mb-3 ${t.chip}`}>
                       <Bell className={`w-4 h-4 ${t.icon}`} />
                     </div>
-                    <div className="text-sm font-semibold text-white leading-snug mb-1">{a.title}</div>
-                    <div className="text-xs text-white/50">{a.meta}</div>
+                    <div className="text-sm font-semibold text-foreground leading-snug mb-1">{a.title}</div>
+                    <div className="text-xs text-foreground/50">{a.meta}</div>
                     <Link to={a.to} className={`inline-flex items-center gap-1 mt-3 text-xs ${t.icon} hover:underline`}>
                       Open <ArrowRight className="w-3 h-3" />
                     </Link>
@@ -141,25 +141,25 @@ export default function FarmerDashboardPage() {
                 <Link
                   key={tool.label}
                   to={tool.to}
-                  className="group p-4 rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition flex flex-col items-start"
+                  className="group p-4 rounded-2xl border border-border bg-card hover:bg-muted transition flex flex-col items-start"
                 >
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${tool.bg}`}>
                     <tool.icon className={`w-5 h-5 ${tool.accent}`} />
                   </div>
-                  <div className="text-sm font-semibold text-white leading-tight">{tool.label}</div>
-                  <div className="text-[11px] text-white/50 mt-0.5">{tool.sub}</div>
+                  <div className="text-sm font-semibold text-foreground leading-tight">{tool.label}</div>
+                  <div className="text-[11px] text-foreground/50 mt-0.5">{tool.sub}</div>
                 </Link>
               ))}
             </div>
           </section>
 
           {/* ── Weather ──────────────────────────────────────────────────── */}
-          <section className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 md:p-6">
+          <section className="rounded-2xl border border-border bg-card p-5 md:p-6">
             <WeatherForecast />
           </section>
 
           {/* ── Live prices ──────────────────────────────────────────────── */}
-          <section className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 md:p-6">
+          <section className="rounded-2xl border border-border bg-card p-5 md:p-6">
             <div className="flex items-end justify-between mb-4">
               <div>
                 <div className="text-xs uppercase tracking-widest text-cyan-300 mb-1">Live mandi prices</div>
@@ -184,13 +184,13 @@ export default function FarmerDashboardPage() {
                 Full history <ArrowRight className="w-3 h-3" />
               </Link>
             </div>
-            <div className="rounded-2xl border border-white/10 bg-white/[0.03] divide-y divide-white/5">
+            <div className="rounded-2xl border border-border bg-card divide-y divide-border">
               {RECENT_ACTIVITY.map((row, i) => (
                 <div key={i} className="px-5 py-4 flex items-start gap-4">
-                  <div className="text-xs text-white/40 w-24 shrink-0 pt-0.5">{row.when}</div>
+                  <div className="text-xs text-foreground/40 w-24 shrink-0 pt-0.5">{row.when}</div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-medium text-white leading-snug">{row.what}</div>
-                    <div className="text-xs text-white/55 mt-0.5">{row.detail}</div>
+                    <div className="text-sm font-medium text-foreground leading-snug">{row.what}</div>
+                    <div className="text-xs text-foreground/55 mt-0.5">{row.detail}</div>
                   </div>
                   <span
                     className={`text-[10px] uppercase tracking-widest px-2 py-1 rounded-full ${
@@ -216,8 +216,8 @@ export default function FarmerDashboardPage() {
 function Metric({ label, value }: { label: string; value: string | number }) {
   return (
     <div>
-      <div className="text-2xl md:text-3xl font-bold text-white">{value}</div>
-      <div className="text-[11px] uppercase tracking-widest text-white/40 mt-1">{label}</div>
+      <div className="text-2xl md:text-3xl font-bold text-foreground">{value}</div>
+      <div className="text-[11px] uppercase tracking-widest text-foreground/40 mt-1">{label}</div>
     </div>
   );
 }

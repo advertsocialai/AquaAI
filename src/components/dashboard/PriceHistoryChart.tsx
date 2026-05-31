@@ -52,7 +52,7 @@ export function PriceHistoryChart() {
   const dir = delta > 0 ? 'up' : delta < 0 ? 'down' : 'flat';
 
   return (
-    <div className="p-6 rounded-2xl border border-white/10 bg-white/[0.03]">
+    <div className="p-6 rounded-2xl border border-border bg-card">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
         <div className="flex flex-wrap items-center gap-2">
           {SPECIES.map((s) => (
@@ -61,8 +61,8 @@ export function PriceHistoryChart() {
               onClick={() => setSpeciesId(s.id)}
               className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs border transition ${
                 s.id === speciesId
-                  ? 'border-white/30 bg-white/10 text-white'
-                  : 'border-white/10 bg-white/[0.03] text-white/50 hover:text-white/80'
+                  ? 'border-border bg-card text-foreground'
+                  : 'border-border bg-card text-foreground/50 hover:text-foreground/80'
               }`}
             >
               <span className="w-2 h-2 rounded-full" style={{ background: s.color }} />
@@ -70,13 +70,13 @@ export function PriceHistoryChart() {
             </button>
           ))}
         </div>
-        <div className="flex items-center gap-1 p-1 rounded-lg bg-white/[0.03] border border-white/10">
+        <div className="flex items-center gap-1 p-1 rounded-lg bg-card border border-border">
           {(['7d', '30d', '90d', '1y'] as Range[]).map((r) => (
             <button
               key={r}
               onClick={() => setRange(r)}
               className={`px-2.5 py-1 rounded-md text-[11px] font-mono uppercase transition ${
-                r === range ? 'bg-white/10 text-white' : 'text-white/40 hover:text-white/70'
+                r === range ? 'bg-card text-foreground' : 'text-foreground/40 hover:text-foreground/70'
               }`}
             >
               {r}
@@ -86,12 +86,12 @@ export function PriceHistoryChart() {
       </div>
 
       <div className="flex items-baseline gap-4 mb-4">
-        <div className="text-3xl font-bold text-white tabular-nums">₹{last}<span className="text-base text-white/40">/kg</span></div>
-        <div className={`flex items-center gap-1 text-sm ${dir === 'up' ? 'text-emerald-400' : dir === 'down' ? 'text-red-400' : 'text-white/40'}`}>
+        <div className="text-3xl font-bold text-foreground tabular-nums">₹{last}<span className="text-base text-foreground/40">/kg</span></div>
+        <div className={`flex items-center gap-1 text-sm ${dir === 'up' ? 'text-emerald-400' : dir === 'down' ? 'text-red-400' : 'text-foreground/40'}`}>
           {dir === 'up' ? <TrendingUp className="w-4 h-4" /> : dir === 'down' ? <TrendingDown className="w-4 h-4" /> : null}
           <span className="tabular-nums">{delta > 0 ? '+' : ''}₹{delta} · {deltaPct.toFixed(1)}%</span>
         </div>
-        <div className="ml-auto flex items-center gap-1 text-[11px] text-white/40">
+        <div className="ml-auto flex items-center gap-1 text-[11px] text-foreground/40">
           <Calendar className="w-3 h-3" /> {range.toUpperCase()} · {data[0].x} → {data[data.length - 1].x}
         </div>
       </div>

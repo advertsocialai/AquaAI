@@ -18,9 +18,9 @@ const CALCS: { id: CalcId; label: string; icon: React.ElementType; accent: strin
 function FieldRow({ label, value, unit }: { label: string; value: string; unit?: string }) {
   return (
     <div className="flex items-baseline justify-between py-1.5 text-sm">
-      <span className="text-white/60">{label}</span>
-      <span className="font-bold text-white tabular-nums">
-        {value} {unit && <span className="text-xs font-normal text-white/40">{unit}</span>}
+      <span className="text-foreground/60">{label}</span>
+      <span className="font-bold text-foreground tabular-nums">
+        {value} {unit && <span className="text-xs font-normal text-foreground/40">{unit}</span>}
       </span>
     </div>
   );
@@ -31,17 +31,17 @@ function NumberInput({ label, value, onChange, unit, placeholder }: {
 }) {
   return (
     <label className="block">
-      <span className="text-[11px] uppercase tracking-widest text-white/40">{label}</span>
-      <div className="mt-1.5 flex items-center gap-2 px-3 py-2.5 rounded-xl border border-white/10 bg-white/[0.03] focus-within:border-cyan-400/40">
+      <span className="text-[11px] uppercase tracking-widest text-foreground/40">{label}</span>
+      <div className="mt-1.5 flex items-center gap-2 px-3 py-2.5 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
         <input
           type="text"
           inputMode="decimal"
           value={value}
           onChange={(e) => onChange(e.target.value.replace(/[^0-9.]/g, ''))}
           placeholder={placeholder}
-          className="bg-transparent outline-none text-white text-sm flex-1 tabular-nums"
+          className="bg-transparent outline-none text-foreground text-sm flex-1 tabular-nums"
         />
-        {unit && <span className="text-xs text-white/40">{unit}</span>}
+        {unit && <span className="text-xs text-foreground/40">{unit}</span>}
       </div>
     </label>
   );
@@ -62,10 +62,10 @@ function CountCalc() {
         <NumberInput label="Sample volume" value={sampleVol} onChange={setSampleVol} unit="L" />
         <NumberInput label="Total pond volume" value={pondVol} onChange={setPondVol} unit="m³" />
       </div>
-      <div className="p-5 rounded-2xl border border-white/10 bg-white/[0.03]">
-        <div className="text-[11px] uppercase tracking-widest text-white/40 mb-3">Estimated pond population</div>
+      <div className="p-5 rounded-2xl border border-border bg-card">
+        <div className="text-[11px] uppercase tracking-widest text-foreground/40 mb-3">Estimated pond population</div>
         <div className="text-4xl font-bold text-cyan-400 tabular-nums mb-2">{extrapolated.toLocaleString('en-IN')}</div>
-        <div className="text-xs text-white/40">Assumes uniform distribution. For ponds with current/aeration, take 3 samples and average.</div>
+        <div className="text-xs text-foreground/40">Assumes uniform distribution. For ponds with current/aeration, take 3 samples and average.</div>
       </div>
     </div>
   );
@@ -85,11 +85,11 @@ function FeedCalc() {
         <NumberInput label="Feeding rate (% body wt)" value={rate} onChange={setRate} unit="%" />
         <NumberInput label="Target FCR" value={fcr} onChange={setFcr} />
       </div>
-      <div className="p-5 rounded-2xl border border-white/10 bg-white/[0.03]">
+      <div className="p-5 rounded-2xl border border-border bg-card">
         <FieldRow label="Daily feed" value={daily.toFixed(1)} unit="kg/day" />
         <FieldRow label="Weekly feed" value={(daily * 7).toFixed(1)} unit="kg/wk" />
         <FieldRow label="Est. 30-day feed (× FCR)" value={cycleFeed.toFixed(0)} unit="kg" />
-        <div className="text-[11px] text-white/30 mt-3">PL stage: lower rate to 6-8%. Mid grow: 3-4%. Harvest: 1.5-2%.</div>
+        <div className="text-[11px] text-foreground/30 mt-3">PL stage: lower rate to 6-8%. Mid grow: 3-4%. Harvest: 1.5-2%.</div>
       </div>
     </div>
   );
@@ -109,11 +109,11 @@ function AerationCalc() {
         <NumberInput label="Stocking density" value={density} onChange={setDensity} unit="PL/m²" />
         <NumberInput label="Min DO target" value={doTarget} onChange={setDoTarget} unit="mg/L" />
       </div>
-      <div className="p-5 rounded-2xl border border-white/10 bg-white/[0.03]">
+      <div className="p-5 rounded-2xl border border-border bg-card">
         <FieldRow label="HP per acre" value={baseHpPerAcre.toFixed(1)} unit="HP" />
         <FieldRow label="Total HP" value={totalHp.toFixed(1)} unit="HP" />
         <FieldRow label="≈ Paddle wheels (1HP each)" value={Math.ceil(totalHp).toString()} />
-        <div className="text-[11px] text-white/30 mt-3">Add 20-30% margin for monsoon DO crashes. PSA O₂ recommended above 60 PL/m².</div>
+        <div className="text-[11px] text-foreground/30 mt-3">Add 20-30% margin for monsoon DO crashes. PSA O₂ recommended above 60 PL/m².</div>
       </div>
     </div>
   );
@@ -133,21 +133,21 @@ function LimeCalc() {
         <NumberInput label="Pond area" value={acres} onChange={setAcres} unit="acres" />
         <NumberInput label="Target pH increase" value={phDelta} onChange={setPhDelta} unit="ΔpH" />
         <label className="block">
-          <span className="text-[11px] uppercase tracking-widest text-white/40">Soil type</span>
-          <div className="mt-1.5 px-3 py-2.5 rounded-xl border border-white/10 bg-white/[0.03]">
-            <select value={soilType} onChange={(e) => setSoilType(e.target.value)} className="w-full bg-transparent text-white outline-none text-sm">
-              <option value="sandy" className="bg-black">Sandy</option>
-              <option value="loam" className="bg-black">Loam</option>
-              <option value="clay" className="bg-black">Clay</option>
+          <span className="text-[11px] uppercase tracking-widest text-foreground/40">Soil type</span>
+          <div className="mt-1.5 px-3 py-2.5 rounded-xl border border-border bg-card">
+            <select value={soilType} onChange={(e) => setSoilType(e.target.value)} className="w-full bg-transparent text-foreground outline-none text-sm">
+              <option value="sandy" className="bg-background">Sandy</option>
+              <option value="loam" className="bg-background">Loam</option>
+              <option value="clay" className="bg-background">Clay</option>
             </select>
           </div>
         </label>
       </div>
-      <div className="p-5 rounded-2xl border border-white/10 bg-white/[0.03]">
+      <div className="p-5 rounded-2xl border border-border bg-card">
         <FieldRow label="Ag lime per acre" value={kgPerAcre.toFixed(0)} unit="kg" />
         <FieldRow label="Total ag lime" value={total.toFixed(0)} unit="kg" />
         <FieldRow label="Est. cost (₹12/kg)" value={`₹${(total * 12).toLocaleString('en-IN')}`} />
-        <div className="text-[11px] text-white/30 mt-3">For EHP eradication, switch to quicklime (CaO) and target pH &gt; 12.</div>
+        <div className="text-[11px] text-foreground/30 mt-3">For EHP eradication, switch to quicklime (CaO) and target pH &gt; 12.</div>
       </div>
     </div>
   );
@@ -168,7 +168,7 @@ function VolumeCalc() {
         <NumberInput label="Width" value={width} onChange={setWidth} unit="m" />
         <NumberInput label="Avg depth" value={depth} onChange={setDepth} unit="m" />
       </div>
-      <div className="p-5 rounded-2xl border border-white/10 bg-white/[0.03]">
+      <div className="p-5 rounded-2xl border border-border bg-card">
         <FieldRow label="Area" value={areaSqm.toFixed(0)} unit="m²" />
         <FieldRow label="Area" value={acres.toFixed(3)} unit="acres" />
         <FieldRow label="Volume" value={volume.toFixed(0)} unit="m³" />
@@ -198,18 +198,18 @@ function PnLCalc() {
         <NumberInput label="Feed cost" value={feedCost} onChange={setFeedCost} unit="₹" />
         <NumberInput label="Other costs" value={otherCost} onChange={setOtherCost} unit="₹" />
       </div>
-      <div className="p-5 rounded-2xl border border-white/10 bg-white/[0.03]">
+      <div className="p-5 rounded-2xl border border-border bg-card">
         <FieldRow label="Revenue" value={`₹${revenue.toLocaleString('en-IN')}`} />
         <FieldRow label="Total cost" value={`₹${totalCost.toLocaleString('en-IN')}`} />
-        <div className="border-t border-white/10 mt-2 pt-2">
+        <div className="border-t border-border mt-2 pt-2">
           <div className="flex items-baseline justify-between py-1.5 text-sm">
-            <span className="text-white/60">Profit</span>
+            <span className="text-foreground/60">Profit</span>
             <span className={`text-2xl font-bold tabular-nums ${profit >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
               ₹{profit.toLocaleString('en-IN')}
             </span>
           </div>
           <div className="flex items-baseline justify-between py-1 text-sm">
-            <span className="text-white/60">Margin</span>
+            <span className="text-foreground/60">Margin</span>
             <span className={`font-bold tabular-nums ${margin >= 25 ? 'text-emerald-400' : margin >= 10 ? 'text-amber-400' : 'text-red-400'}`}>
               {margin.toFixed(1)}%
             </span>
@@ -236,15 +236,15 @@ export function CalculatorsModule() {
                 key={id}
                 onClick={() => setActive(id)}
                 className={`w-full flex items-start gap-3 p-3 rounded-xl border text-left transition ${
-                  sel ? 'border-white/30 bg-white/10' : 'border-white/10 bg-white/[0.03] hover:bg-white/[0.06]'
+                  sel ? 'border-border bg-card' : 'border-border bg-card hover:bg-muted'
                 }`}
               >
                 <div className="p-2 rounded-lg shrink-0" style={{ background: `${accent}22` }}>
                   <Icon className="w-4 h-4" style={{ color: accent }} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-semibold text-white">{label}</div>
-                  <div className="text-[11px] text-white/40 truncate">{desc}</div>
+                  <div className="text-sm font-semibold text-foreground">{label}</div>
+                  <div className="text-[11px] text-foreground/40 truncate">{desc}</div>
                 </div>
               </button>
             );
@@ -257,15 +257,15 @@ export function CalculatorsModule() {
         key={active}
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        className="lg:col-span-3 p-6 rounded-2xl border border-white/10 bg-white/[0.02]"
+        className="lg:col-span-3 p-6 rounded-2xl border border-border bg-card"
       >
         <div className="flex items-center gap-3 mb-6">
           <div className="p-2 rounded-lg" style={{ background: `${activeMeta.accent}22` }}>
             <Calculator className="w-4 h-4" style={{ color: activeMeta.accent }} />
           </div>
           <div>
-            <div className="text-lg font-semibold text-white">{activeMeta.label}</div>
-            <div className="text-xs text-white/40">{activeMeta.desc}</div>
+            <div className="text-lg font-semibold text-foreground">{activeMeta.label}</div>
+            <div className="text-xs text-foreground/40">{activeMeta.desc}</div>
           </div>
         </div>
 

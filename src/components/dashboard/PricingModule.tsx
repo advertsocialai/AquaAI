@@ -59,7 +59,7 @@ function TrendBadge({ trend }: { trend: Row['trend'] }) {
     return <span className="inline-flex items-center gap-1 text-emerald-400 text-xs"><TrendingUp className="w-3 h-3" /> up</span>;
   if (trend === 'down')
     return <span className="inline-flex items-center gap-1 text-red-400 text-xs"><TrendingDown className="w-3 h-3" /> down</span>;
-  return <span className="text-white/30 text-xs">flat</span>;
+  return <span className="text-foreground/30 text-xs">flat</span>;
 }
 
 function PriceTable({ rows, query }: { rows: Row[]; query: string }) {
@@ -75,16 +75,16 @@ function PriceTable({ rows, query }: { rows: Row[]; query: string }) {
   );
 
   if (filtered.length === 0) {
-    return <div className="px-4 py-6 text-center text-xs text-white/30">No species matched "{query}"</div>;
+    return <div className="px-4 py-6 text-center text-xs text-foreground/30">No species matched "{query}"</div>;
   }
 
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-white/10 bg-white/5">
+          <tr className="border-b border-border bg-card">
             {['Species', 'Size', 'Low ₹/kg', 'High ₹/kg', 'Mid', 'Trend'].map((h) => (
-              <th key={h} className="px-4 py-3 text-left text-xs font-medium text-white/40 uppercase tracking-widest">
+              <th key={h} className="px-4 py-3 text-left text-xs font-medium text-foreground/40 uppercase tracking-widest">
                 {h}
               </th>
             ))}
@@ -92,11 +92,11 @@ function PriceTable({ rows, query }: { rows: Row[]; query: string }) {
         </thead>
         <tbody>
           {filtered.map((r, i) => (
-            <tr key={i} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-              <td className="px-4 py-3 text-white/90 font-medium">{r.species}</td>
-              <td className="px-4 py-3 text-white/50 text-xs">{r.size}</td>
-              <td className="px-4 py-3 text-white/60 tabular-nums">₹{r.low}</td>
-              <td className="px-4 py-3 text-white/60 tabular-nums">₹{r.high}</td>
+            <tr key={i} className="border-b border-border hover:bg-muted transition-colors">
+              <td className="px-4 py-3 text-foreground/90 font-medium">{r.species}</td>
+              <td className="px-4 py-3 text-foreground/50 text-xs">{r.size}</td>
+              <td className="px-4 py-3 text-foreground/60 tabular-nums">₹{r.low}</td>
+              <td className="px-4 py-3 text-foreground/60 tabular-nums">₹{r.high}</td>
               <td className="px-4 py-3 font-bold text-cyan-400 tabular-nums">₹{Math.round((r.low + r.high) / 2)}</td>
               <td className="px-4 py-3"><TrendBadge trend={r.trend} /></td>
             </tr>
@@ -125,25 +125,25 @@ export function PricingModule() {
       <PriceHistoryChart />
 
       <div className="flex flex-wrap items-center gap-3">
-        <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-white/10 bg-white/5 flex-1 min-w-[200px]">
-          <Search className="w-4 h-4 text-white/40" />
+        <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-border bg-card flex-1 min-w-[200px]">
+          <Search className="w-4 h-4 text-foreground/40" />
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search species…"
-            className="bg-transparent outline-none text-sm text-white placeholder:text-white/30 flex-1"
+            className="bg-transparent outline-none text-sm text-foreground placeholder:text-foreground/30 flex-1"
           />
         </div>
-        <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-white/10 bg-white/5">
+        <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-border bg-card">
           <MapPin className="w-4 h-4 text-cyan-400" />
-          <select value={state} onChange={(e) => setState(e.target.value)} className="bg-transparent outline-none text-sm text-white">
-            {STATES.map((s) => <option key={s} value={s} className="bg-black">{s}</option>)}
+          <select value={state} onChange={(e) => setState(e.target.value)} className="bg-transparent outline-none text-sm text-foreground">
+            {STATES.map((s) => <option key={s} value={s} className="bg-background">{s}</option>)}
           </select>
         </div>
-        <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-white/10 bg-white/5">
+        <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-border bg-card">
           <Globe2 className="w-4 h-4 text-violet-400" />
-          <select value={market} onChange={(e) => setMarket(e.target.value as typeof MARKET_TYPES[number])} className="bg-transparent outline-none text-sm text-white">
-            {MARKET_TYPES.map((m) => <option key={m} value={m} className="bg-black">{m}</option>)}
+          <select value={market} onChange={(e) => setMarket(e.target.value as typeof MARKET_TYPES[number])} className="bg-transparent outline-none text-sm text-foreground">
+            {MARKET_TYPES.map((m) => <option key={m} value={m} className="bg-background">{m}</option>)}
           </select>
         </div>
       </div>
@@ -156,10 +156,10 @@ export function PricingModule() {
             className={`px-3 py-1.5 rounded-full text-xs border transition ${
               t.id === tab
                 ? 'border-cyan-400/40 bg-cyan-400/10 text-cyan-300'
-                : 'border-white/10 bg-white/[0.03] text-white/50 hover:text-white/80'
+                : 'border-border bg-card text-foreground/50 hover:text-foreground/80'
             }`}
           >
-            {t.label} <span className="text-white/30">· {t.count}</span>
+            {t.label} <span className="text-foreground/30">· {t.count}</span>
           </button>
         ))}
       </div>
@@ -168,11 +168,11 @@ export function PricingModule() {
         key={tab}
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-2xl border border-white/10 bg-white/[0.02]"
+        className="rounded-2xl border border-border bg-card"
       >
-        <div className="px-4 py-3 border-b border-white/5 flex items-center justify-between text-xs">
-          <span className="text-white/40">{state} · {market}</span>
-          <span className="text-white/30">May 2026 estimates — production: live mandi feed</span>
+        <div className="px-4 py-3 border-b border-border flex items-center justify-between text-xs">
+          <span className="text-foreground/40">{state} · {market}</span>
+          <span className="text-foreground/30">May 2026 estimates — production: live mandi feed</span>
         </div>
         <PriceTable rows={active.rows} query={query} />
       </motion.div>

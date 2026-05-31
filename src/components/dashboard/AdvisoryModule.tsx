@@ -42,11 +42,11 @@ function SeverityDot({ severity }: { severity: string }) {
 export function AdvisoryModule() {
   return (
     <div className="grid lg:grid-cols-3 gap-6">
-      <div className="lg:col-span-2 p-6 rounded-2xl border border-white/10 bg-white/[0.03]">
+      <div className="lg:col-span-2 p-6 rounded-2xl border border-border bg-card">
         <div className="flex items-center gap-2 mb-5">
           <CalendarDays className="w-4 h-4 text-emerald-400" />
-          <span className="text-sm font-semibold text-white">Crop Calendar</span>
-          <span className="text-xs text-white/30">— 120-day Vannamei cycle</span>
+          <span className="text-sm font-semibold text-foreground">Crop Calendar</span>
+          <span className="text-xs text-foreground/30">— 120-day Vannamei cycle</span>
         </div>
         <div className="space-y-2">
           {CROP_CALENDAR.map((s, i) => (
@@ -56,49 +56,49 @@ export function AdvisoryModule() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.04 }}
-              className="flex items-center gap-4 p-3 rounded-xl border border-white/5 bg-white/[0.02]"
+              className="flex items-center gap-4 p-3 rounded-xl border border-border bg-card"
             >
               <div className="font-mono text-xs text-emerald-400 w-14 shrink-0">{s.day}</div>
-              <div className="text-sm text-white/90 font-medium w-32 shrink-0">{s.stage}</div>
-              <div className="text-xs text-white/50 flex-1">{s.action}</div>
+              <div className="text-sm text-foreground/90 font-medium w-32 shrink-0">{s.stage}</div>
+              <div className="text-xs text-foreground/50 flex-1">{s.action}</div>
             </motion.div>
           ))}
         </div>
       </div>
 
       <div className="space-y-4">
-        <div className="p-5 rounded-2xl border border-white/10 bg-white/[0.03]">
+        <div className="p-5 rounded-2xl border border-border bg-card">
           <div className="flex items-center gap-2 mb-4">
             <Bell className="w-4 h-4 text-amber-400" />
-            <span className="text-sm font-semibold text-white">Live Alerts</span>
-            <span className="ml-auto text-[10px] text-white/30">5 km radius</span>
+            <span className="text-sm font-semibold text-foreground">Live Alerts</span>
+            <span className="ml-auto text-[10px] text-foreground/30">5 km radius</span>
           </div>
           <div className="space-y-3">
             {ALERTS.map((a) => (
               <div key={a.label} className="flex items-start gap-3">
                 <SeverityDot severity={a.severity} />
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm text-white/90 truncate">{a.label}</div>
-                  <div className="text-[11px] text-white/40 truncate">{a.detail}</div>
+                  <div className="text-sm text-foreground/90 truncate">{a.label}</div>
+                  <div className="text-[11px] text-foreground/40 truncate">{a.detail}</div>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl border border-white/10 bg-white/[0.03]">
+        <div className="p-5 rounded-2xl border border-border bg-card">
           <div className="flex items-center gap-2 mb-4">
             <CloudRain className="w-4 h-4 text-sky-400" />
-            <span className="text-sm font-semibold text-white">Weather (IMD)</span>
+            <span className="text-sm font-semibold text-foreground">Weather (IMD)</span>
           </div>
           <div className="flex items-end gap-4">
             <div>
-              <div className="text-3xl font-bold text-white">29°</div>
-              <div className="text-xs text-white/40">Bhimavaram · partly cloudy</div>
+              <div className="text-3xl font-bold text-foreground">29°</div>
+              <div className="text-xs text-foreground/40">Bhimavaram · partly cloudy</div>
             </div>
             <div className="ml-auto text-right text-xs">
               <div className="text-amber-300 flex items-center gap-1 justify-end"><AlertTriangle className="w-3 h-3" /> heavy rain 65mm</div>
-              <div className="text-white/40 mt-1">DO drop risk · monitor pond 3</div>
+              <div className="text-foreground/40 mt-1">DO drop risk · monitor pond 3</div>
             </div>
           </div>
         </div>
@@ -108,17 +108,17 @@ export function AdvisoryModule() {
         <VoiceAssistant />
       </div>
 
-      <div className="p-6 rounded-2xl border border-white/10 bg-white/[0.03]">
+      <div className="p-6 rounded-2xl border border-border bg-card">
         <div className="flex items-center gap-2 mb-4">
           <BookOpen className="w-4 h-4 text-cyan-400" />
-          <span className="text-sm font-semibold text-white">Govt Schemes Match</span>
+          <span className="text-sm font-semibold text-foreground">Govt Schemes Match</span>
         </div>
         <div className="space-y-2">
           {SCHEMES.map((s) => (
-            <div key={s.name} className="flex items-center justify-between p-2 rounded-lg bg-white/[0.03]">
+            <div key={s.name} className="flex items-center justify-between p-2 rounded-lg bg-card">
               <div>
-                <div className="text-sm text-white/90 font-medium">{s.name}</div>
-                <div className="text-[11px] text-white/40">{s.desc}</div>
+                <div className="text-sm text-foreground/90 font-medium">{s.name}</div>
+                <div className="text-[11px] text-foreground/40">{s.desc}</div>
               </div>
               <span className="text-xs font-bold text-emerald-400">{s.match}</span>
             </div>
@@ -126,12 +126,12 @@ export function AdvisoryModule() {
         </div>
       </div>
 
-      <div className="p-6 rounded-2xl border border-white/10 bg-white/[0.03]">
+      <div className="p-6 rounded-2xl border border-border bg-card">
         <div className="flex items-center gap-2 mb-4">
           <Users className="w-4 h-4 text-pink-400" />
-          <span className="text-sm font-semibold text-white">Community</span>
+          <span className="text-sm font-semibold text-foreground">Community</span>
         </div>
-        <ul className="text-sm text-white/70 space-y-2">
+        <ul className="text-sm text-foreground/70 space-y-2">
           <li>• Farmer forums by district & species</li>
           <li>• VLE directory with ratings</li>
           <li>• Hatchery QC leaderboard</li>

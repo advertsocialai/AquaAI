@@ -56,11 +56,11 @@ export function OutbreakMap() {
   const hottest = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
 
   return (
-    <div className="w-full rounded-2xl border border-white/10 bg-white/5 p-6">
+    <div className="w-full rounded-2xl border border-border bg-card p-6">
       <div className="flex items-center justify-between mb-5">
         <div>
-          <h3 className="text-lg font-bold text-white">Regional Outbreak Map</h3>
-          <p className="text-xs text-white/50">
+          <h3 className="text-lg font-bold text-foreground">Regional Outbreak Map</h3>
+          <p className="text-xs text-foreground/50">
             Disease density across Andhra Pradesh shrimp districts
           </p>
         </div>
@@ -68,7 +68,7 @@ export function OutbreakMap() {
           className={`flex items-center gap-1.5 text-[10px] px-2 py-1 rounded-full border ${
             live
               ? 'border-emerald-400/30 bg-emerald-400/10 text-emerald-300'
-              : 'border-white/10 bg-white/5 text-white/40'
+              : 'border-border bg-card text-foreground/40'
           }`}
         >
           <Radio className="w-3 h-3" />
@@ -99,10 +99,10 @@ export function OutbreakMap() {
                   />
                 )}
                 <MapPin className="w-3 h-3 mb-1" style={{ color }} />
-                <div className="text-[11px] font-semibold text-white/90 leading-tight">
+                <div className="text-[11px] font-semibold text-foreground/90 leading-tight">
                   {d}
                 </div>
-                <div className="text-[10px] text-white/40">
+                <div className="text-[10px] text-foreground/40">
                   {n === 0 ? 'no alerts' : `${n} alert${n > 1 ? 's' : ''}`}
                 </div>
               </motion.div>
@@ -113,25 +113,25 @@ export function OutbreakMap() {
         {/* Side panel */}
         <div className="space-y-3">
           <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-xl bg-white/5 p-3">
+            <div className="rounded-xl bg-card p-3">
               <AlertTriangle className="w-4 h-4 text-amber-400 mb-1" />
-              <div className="text-2xl font-bold text-white tabular-nums">{total}</div>
-              <div className="text-[10px] text-white/40">Active alerts</div>
+              <div className="text-2xl font-bold text-foreground tabular-nums">{total}</div>
+              <div className="text-[10px] text-foreground/40">Active alerts</div>
             </div>
-            <div className="rounded-xl bg-white/5 p-3">
+            <div className="rounded-xl bg-card p-3">
               <MapPin className="w-4 h-4 text-red-400 mb-1" />
-              <div className="text-base font-bold text-white truncate">
+              <div className="text-base font-bold text-foreground truncate">
                 {hottest?.[0] ?? '—'}
               </div>
-              <div className="text-[10px] text-white/40">Highest density</div>
+              <div className="text-[10px] text-foreground/40">Highest density</div>
             </div>
           </div>
 
-          <div className="rounded-xl bg-white/5 p-3">
-            <div className="text-[10px] uppercase tracking-wider text-white/30 mb-2">
+          <div className="rounded-xl bg-card p-3">
+            <div className="text-[10px] uppercase tracking-wider text-foreground/30 mb-2">
               How alerts spread
             </div>
-            <p className="text-xs text-white/55 leading-relaxed">
+            <p className="text-xs text-foreground/55 leading-relaxed">
               When a hard-fail diagnosis is logged with GPS, every farm within a
               5&nbsp;km radius is auto-notified by FCM &amp; WhatsApp — containing the
               outbreak before it spreads.
@@ -139,7 +139,7 @@ export function OutbreakMap() {
           </div>
 
           {/* Legend */}
-          <div className="flex items-center gap-3 text-[10px] text-white/40">
+          <div className="flex items-center gap-3 text-[10px] text-foreground/40">
             {[
               { c: '#1e3a5f', l: 'Clear' },
               { c: '#fbbf24', l: 'Low' },
@@ -156,17 +156,17 @@ export function OutbreakMap() {
       </div>
 
       {live && alerts.length > 0 && (
-        <div className="mt-4 pt-3 border-t border-white/10">
-          <div className="text-[10px] uppercase tracking-wider text-white/30 mb-2">
+        <div className="mt-4 pt-3 border-t border-border">
+          <div className="text-[10px] uppercase tracking-wider text-foreground/30 mb-2">
             Recent alerts
           </div>
           <div className="space-y-1.5">
             {alerts.map((a, i) => (
               <div key={i} className="flex items-center justify-between text-xs">
-                <span className="text-white/70">
+                <span className="text-foreground/70">
                   {a.disease} — {a.district || 'unknown district'}
                 </span>
-                <span className="text-white/30">{a.notified_farms_count ?? 0} farms notified</span>
+                <span className="text-foreground/30">{a.notified_farms_count ?? 0} farms notified</span>
               </div>
             ))}
           </div>

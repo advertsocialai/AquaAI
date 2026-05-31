@@ -31,29 +31,29 @@ export function OnboardingModule({ role }: { role: Role }) {
         key={role}
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="p-6 rounded-2xl border border-white/10 bg-white/[0.03]"
+        className="p-6 rounded-2xl border border-border bg-card"
       >
         <div className="flex items-start gap-4 mb-6">
           <div className="p-3 rounded-xl" style={{ background: `${roleMeta.accent}22` }}>
             <Icon className="w-6 h-6" style={{ color: roleMeta.accent }} />
           </div>
           <div>
-            <div className="text-xs uppercase tracking-widest text-white/30 mb-1">Selected role</div>
-            <div className="text-2xl font-bold text-white">{roleMeta.label}</div>
+            <div className="text-xs uppercase tracking-widest text-foreground/30 mb-1">Selected role</div>
+            <div className="text-2xl font-bold text-foreground">{roleMeta.label}</div>
           </div>
         </div>
 
         <div className="space-y-4">
           <div>
-            <div className="text-[11px] uppercase tracking-widest text-white/30 mb-2">Verification required</div>
-            <div className="p-3 rounded-xl bg-white/[0.04] text-sm text-white/80">{meta.req}</div>
+            <div className="text-[11px] uppercase tracking-widest text-foreground/30 mb-2">Verification required</div>
+            <div className="p-3 rounded-xl bg-card text-sm text-foreground/80">{meta.req}</div>
           </div>
 
           <div>
-            <div className="text-[11px] uppercase tracking-widest text-white/30 mb-2">Features unlocked</div>
+            <div className="text-[11px] uppercase tracking-widest text-foreground/30 mb-2">Features unlocked</div>
             <ul className="space-y-1.5">
               {meta.features.map((f) => (
-                <li key={f} className="flex items-center gap-2 text-sm text-white/70">
+                <li key={f} className="flex items-center gap-2 text-sm text-foreground/70">
                   <CheckCircle2 className="w-3.5 h-3.5" style={{ color: roleMeta.accent }} />
                   {f}
                 </li>
@@ -64,21 +64,21 @@ export function OnboardingModule({ role }: { role: Role }) {
       </motion.div>
 
       <div className="space-y-4">
-        <div className="p-6 rounded-2xl border border-white/10 bg-white/[0.03]">
-          <div className="text-[11px] uppercase tracking-widest text-white/30 mb-4">Authentication Stack</div>
+        <div className="p-6 rounded-2xl border border-border bg-card">
+          <div className="text-[11px] uppercase tracking-widest text-foreground/30 mb-4">Authentication Stack</div>
           <div className="grid grid-cols-2 gap-3">
             {AUTH_STACK.map(({ icon: AIcon, label, tone }) => (
-              <div key={label} className="flex items-center gap-2 p-3 rounded-xl bg-white/[0.03] border border-white/5">
+              <div key={label} className="flex items-center gap-2 p-3 rounded-xl bg-card border border-border">
                 <AIcon className="w-4 h-4 shrink-0" style={{ color: tone }} />
-                <span className="text-xs text-white/80">{label}</span>
+                <span className="text-xs text-foreground/80">{label}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="p-6 rounded-2xl border border-white/10 bg-white/[0.03]">
-          <div className="text-[11px] uppercase tracking-widest text-white/30 mb-3">Multi-role support</div>
-          <p className="text-sm text-white/60">
+        <div className="p-6 rounded-2xl border border-border bg-card">
+          <div className="text-[11px] uppercase tracking-widest text-foreground/30 mb-3">Multi-role support</div>
+          <p className="text-sm text-foreground/60">
             One account, multiple roles. A farmer who is also a VLE can switch context in-app
             without separate logins. RBAC enforced server-side; session per-device with revocation.
           </p>

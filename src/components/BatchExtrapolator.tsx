@@ -33,11 +33,11 @@ export function BatchExtrapolator() {
   }, [sampleCount, sampleVol, totalVol, invoiceQty]);
 
   return (
-    <div className="w-full max-w-3xl mx-auto rounded-2xl border border-white/10 bg-white/5 p-6">
+    <div className="w-full max-w-3xl mx-auto rounded-2xl border border-border bg-card p-6">
       <div className="flex items-center justify-between mb-5">
         <div>
-          <h3 className="text-lg font-bold text-white">Batch Extrapolation</h3>
-          <p className="text-xs text-white/50">Sample count → full-batch estimate</p>
+          <h3 className="text-lg font-bold text-foreground">Batch Extrapolation</h3>
+          <p className="text-xs text-foreground/50">Sample count → full-batch estimate</p>
         </div>
         <span className="text-[10px] uppercase tracking-wider px-2 py-1 rounded bg-sky-500/20 text-sky-300">
           F06 · F07
@@ -59,14 +59,14 @@ export function BatchExtrapolator() {
           className="mt-5 space-y-3"
         >
           <div className="rounded-xl border border-sky-500/30 bg-sky-500/5 p-5 text-center">
-            <div className="text-xs text-white/40 uppercase tracking-wider mb-1">
+            <div className="text-xs text-foreground/40 uppercase tracking-wider mb-1">
               Estimated batch size
             </div>
             <div className="text-3xl font-bold text-sky-300 tabular-nums">
               {calc.extrapolated.toLocaleString()}
-              <span className="text-base text-white/40 font-normal"> PL</span>
+              <span className="text-base text-foreground/40 font-normal"> PL</span>
             </div>
-            <div className="text-xs text-white/40 mt-1">
+            <div className="text-xs text-foreground/40 mt-1">
               ± {calc.margin.toLocaleString()} (95% confidence)
             </div>
           </div>
@@ -91,7 +91,7 @@ export function BatchExtrapolator() {
                 <div className={calc.flag ? 'text-red-400 font-semibold' : 'text-emerald-400 font-semibold'}>
                   {calc.flag ? 'Invoice mismatch flagged' : 'Within tolerance'}
                 </div>
-                <div className="text-white/40 text-xs">
+                <div className="text-foreground/40 text-xs">
                   {calc.flag
                     ? 'Discrepancy exceeds ±10% — raise a dispute with the hatchery.'
                     : 'Counted total agrees with the invoice (±10%).'}
@@ -110,12 +110,12 @@ function Field({ label, value, onChange }: {
 }) {
   return (
     <label className="block">
-      <span className="text-[11px] text-white/40">{label}</span>
+      <span className="text-[11px] text-foreground/40">{label}</span>
       <input
         type="number"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="mt-1 w-full rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-sm text-white
+        className="mt-1 w-full rounded-lg bg-card border border-border px-3 py-2 text-sm text-foreground
                    focus:outline-none focus:border-sky-400/50 transition tabular-nums"
       />
     </label>

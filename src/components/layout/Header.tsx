@@ -57,14 +57,14 @@ export function Header() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? 'bg-black/70 backdrop-blur-md' : 'bg-transparent'
+        scrolled ? 'bg-background/80 backdrop-blur-md' : 'bg-transparent'
       }`}
     >
       <div className="container mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center gap-3">
             <img src={atomLogo} alt="Aqua Rudra" className="w-11 h-11 object-contain brightness-125 drop-shadow-[0_0_8px_rgba(56,189,248,0.4)]" />
-            <span className="text-xl font-bold text-white tracking-wider drop-shadow-[0_0_6px_rgba(255,255,255,0.2)]">
+            <span className="text-xl font-bold text-foreground tracking-wider drop-shadow-[0_0_6px_rgba(255,255,255,0.2)]">
               AQUA<span className="font-light"> RUDRA</span>
             </span>
           </Link>
@@ -74,7 +74,7 @@ export function Header() {
               <Link
                 key={item.key}
                 to={item.to}
-                className="text-sm font-medium text-white/90 hover:text-cyan-300 transition-colors tracking-[0.18em]"
+                className="text-sm font-medium text-foreground/90 hover:text-cyan-300 transition-colors tracking-[0.18em]"
               >
                 {t(`nav.${item.key}`)}
               </Link>
@@ -107,28 +107,28 @@ export function Header() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -6 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute right-0 mt-2 w-56 rounded-xl border border-white/10 bg-black/95 backdrop-blur-sm overflow-hidden shadow-2xl"
+                    className="absolute right-0 mt-2 w-56 rounded-xl border border-border bg-popover/95 backdrop-blur-sm overflow-hidden shadow-2xl"
                   >
                     <Link
                       to="/signup"
                       onClick={() => setStartOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-cyan-400/10 transition border-b border-white/5"
+                      className="flex items-center gap-3 px-4 py-3 text-sm text-foreground hover:bg-cyan-400/10 transition border-b border-border"
                     >
                       <UserPlus className="w-4 h-4 text-cyan-300" />
                       <div>
                         <div className="font-semibold">{t('common.signUp')}</div>
-                        <div className="text-xs text-white/45">New to Aqua Rudra</div>
+                        <div className="text-xs text-foreground/45">New to Aqua Rudra</div>
                       </div>
                     </Link>
                     <Link
                       to="/login"
                       onClick={() => setStartOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-cyan-400/10 transition"
+                      className="flex items-center gap-3 px-4 py-3 text-sm text-foreground hover:bg-cyan-400/10 transition"
                     >
                       <LogIn className="w-4 h-4 text-cyan-300" />
                       <div>
                         <div className="font-semibold">{t('common.signIn')}</div>
-                        <div className="text-xs text-white/45">Returning user</div>
+                        <div className="text-xs text-foreground/45">Returning user</div>
                       </div>
                     </Link>
                   </motion.div>
@@ -139,7 +139,7 @@ export function Header() {
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-white/70 hover:text-white"
+            className="md:hidden p-2 text-foreground/70 hover:text-foreground"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -152,7 +152,7 @@ export function Header() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="md:hidden overflow-hidden bg-black/95 backdrop-blur-sm"
+              className="md:hidden overflow-hidden bg-popover/95 backdrop-blur-sm"
             >
               <nav className="flex flex-col gap-5 py-6">
                 {NAV.map((item, i) => (
@@ -164,7 +164,7 @@ export function Header() {
                   >
                     <Link
                       to={item.to}
-                      className="text-sm font-medium text-white/80 hover:text-cyan-300 tracking-[0.2em]"
+                      className="text-sm font-medium text-foreground/80 hover:text-cyan-300 tracking-[0.2em]"
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       {t(`nav.${item.key}`)}
@@ -192,7 +192,7 @@ export function Header() {
                   <Link
                     to="/login"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-3 rounded-lg text-sm text-white border border-white/10"
+                    className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-3 rounded-lg text-sm text-foreground border border-border"
                   >
                     <LogIn className="w-4 h-4" /> {t('common.signIn')}
                   </Link>

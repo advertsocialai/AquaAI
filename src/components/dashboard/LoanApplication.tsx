@@ -92,15 +92,15 @@ export function LoanApplication() {
                 className={`shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold border ${
                   done ? 'bg-emerald-400 text-black border-emerald-400'
                   : active ? 'bg-cyan-400 text-black border-cyan-400'
-                  : 'bg-white/[0.03] text-white/40 border-white/10'
+                  : 'bg-card text-foreground/40 border-border'
                 }`}
               >
                 {done ? <CheckCircle2 className="w-3 h-3" /> : i + 1}
               </div>
-              <div className={`text-[10px] uppercase tracking-widest ${active ? 'text-white' : done ? 'text-white/50' : 'text-white/30'}`}>
+              <div className={`text-[10px] uppercase tracking-widest ${active ? 'text-foreground' : done ? 'text-foreground/50' : 'text-foreground/30'}`}>
                 {s.label}
               </div>
-              {i < STEPS.length - 1 && <div className={`flex-1 h-px ${done ? 'bg-emerald-400/40' : 'bg-white/10'}`} />}
+              {i < STEPS.length - 1 && <div className={`flex-1 h-px ${done ? 'bg-emerald-400/40' : 'bg-card'}`} />}
             </div>
           );
         })}
@@ -113,7 +113,7 @@ export function LoanApplication() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.2 }}
-          className="p-5 rounded-xl border border-white/10 bg-white/[0.03]"
+          className="p-5 rounded-xl border border-border bg-card"
         >
           {step === 'farm' && (
             <div className="grid sm:grid-cols-2 gap-4">
@@ -133,12 +133,12 @@ export function LoanApplication() {
               <Field label="Tenure"           value={tenureMonths} onChange={setTenureMonths} unit="months" />
               <div className="sm:col-span-2">
                 <label className="block">
-                  <span className="text-[11px] uppercase tracking-widest text-white/40">Purpose</span>
+                  <span className="text-[11px] uppercase tracking-widest text-foreground/40">Purpose</span>
                   <textarea
                     value={purpose}
                     onChange={(e) => setPurpose(e.target.value)}
                     rows={3}
-                    className="mt-1.5 w-full px-3 py-2 rounded-xl border border-white/10 bg-white/[0.03] text-white text-sm outline-none focus:border-cyan-400/40"
+                    className="mt-1.5 w-full px-3 py-2 rounded-xl border border-border bg-card text-foreground text-sm outline-none focus:border-cyan-400/40"
                   />
                 </label>
               </div>
@@ -149,7 +149,7 @@ export function LoanApplication() {
             <div className="grid sm:grid-cols-2 gap-4">
               <Field label="Collateral type" value={collateralType} onChange={setCollateralType} />
               <Field label="Collateral value" value={collateralValue} onChange={setCollateralValue} unit="₹" />
-              <div className="sm:col-span-2 p-3 rounded-lg bg-white/[0.03] text-xs text-white/50">
+              <div className="sm:col-span-2 p-3 rounded-lg bg-card text-xs text-foreground/50">
                 <ShieldCheck className="w-3.5 h-3.5 inline mr-1.5 text-emerald-400" />
                 Collateral is verified via partner valuator. AquaI QC history + farm risk band weigh equally
                 with collateral for the final decision.
@@ -183,9 +183,9 @@ export function LoanApplication() {
                   {decision.band}
                 </div>
                 <div className="flex-1">
-                  <div className="text-xs uppercase tracking-widest text-white/30">AI risk band</div>
-                  <div className="text-2xl font-bold text-white">{decision.score} / 100</div>
-                  <div className="text-xs text-white/50">
+                  <div className="text-xs uppercase tracking-widest text-foreground/30">AI risk band</div>
+                  <div className="text-2xl font-bold text-foreground">{decision.score} / 100</div>
+                  <div className="text-xs text-foreground/50">
                     Inputs: QS history (40%) · outbreak proximity (25%) · yield consistency (20%) · tenure (10%) · water quality (5%)
                   </div>
                 </div>
@@ -197,25 +197,25 @@ export function LoanApplication() {
                 <Stat label="Recommended"    value={`₹${(recommended / 100000).toFixed(1)} L`} color={BAND_COLOR[decision.band]} />
               </div>
 
-              <div className="p-3 rounded-lg bg-white/[0.03] flex items-start gap-2 text-xs">
+              <div className="p-3 rounded-lg bg-card flex items-start gap-2 text-xs">
                 {decision.band === 'D' ? (
                   <>
                     <AlertTriangle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
-                    <span className="text-white/70">
+                    <span className="text-foreground/70">
                       Decline recommended. Outbreak risk + default history outweigh collateral. Re-apply after one clean cycle.
                     </span>
                   </>
                 ) : ratio < 1 ? (
                   <>
                     <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                    <span className="text-white/70">
+                    <span className="text-foreground/70">
                       Approved at {(ratio * 100).toFixed(0)}% of requested. To raise the cap, demonstrate one more clean QC cycle or add collateral.
                     </span>
                   </>
                 ) : (
                   <>
                     <Sparkles className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                    <span className="text-white/70">
+                    <span className="text-foreground/70">
                       Approved at full requested amount. Disbursement once collateral and KYC are verified.
                     </span>
                   </>
@@ -228,11 +228,11 @@ export function LoanApplication() {
             <button
               onClick={prev}
               disabled={idx === 0}
-              className="px-4 py-2 rounded-lg border border-white/10 bg-white/[0.03] disabled:opacity-30 disabled:cursor-not-allowed text-sm text-white/70 inline-flex items-center gap-1.5"
+              className="px-4 py-2 rounded-lg border border-border bg-card disabled:opacity-30 disabled:cursor-not-allowed text-sm text-foreground/70 inline-flex items-center gap-1.5"
             >
               <ArrowLeft className="w-3.5 h-3.5" /> Back
             </button>
-            <div className="ml-auto inline-flex items-center gap-1.5 text-[11px] text-white/30">
+            <div className="ml-auto inline-flex items-center gap-1.5 text-[11px] text-foreground/30">
               <FileText className="w-3 h-3" /> RBI-aligned · GST e-invoice generated on disbursement
             </div>
             <button
@@ -257,14 +257,14 @@ function Field({ label, value, onChange, unit }: {
 }) {
   return (
     <label className="block">
-      <span className="text-[11px] uppercase tracking-widest text-white/40">{label}</span>
-      <div className="mt-1.5 flex items-center gap-2 px-3 py-2 rounded-xl border border-white/10 bg-white/[0.03] focus-within:border-cyan-400/40">
+      <span className="text-[11px] uppercase tracking-widest text-foreground/40">{label}</span>
+      <div className="mt-1.5 flex items-center gap-2 px-3 py-2 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
         <input
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="bg-transparent outline-none text-white text-sm flex-1"
+          className="bg-transparent outline-none text-foreground text-sm flex-1"
         />
-        {unit && <span className="text-xs text-white/40">{unit}</span>}
+        {unit && <span className="text-xs text-foreground/40">{unit}</span>}
       </div>
     </label>
   );
@@ -272,17 +272,17 @@ function Field({ label, value, onChange, unit }: {
 
 function Row({ k, v }: { k: string; v: string }) {
   return (
-    <div className="flex items-baseline justify-between py-1 px-2 rounded-lg bg-white/[0.02]">
-      <span className="text-white/50 text-xs">{k}</span>
-      <span className="text-white font-medium tabular-nums truncate ml-2">{v}</span>
+    <div className="flex items-baseline justify-between py-1 px-2 rounded-lg bg-card">
+      <span className="text-foreground/50 text-xs">{k}</span>
+      <span className="text-foreground font-medium tabular-nums truncate ml-2">{v}</span>
     </div>
   );
 }
 
 function Stat({ label, value, color }: { label: string; value: string; color: string }) {
   return (
-    <div className="p-3 rounded-lg border border-white/10 bg-white/[0.03]">
-      <div className="text-[10px] uppercase tracking-widest text-white/30">{label}</div>
+    <div className="p-3 rounded-lg border border-border bg-card">
+      <div className="text-[10px] uppercase tracking-widest text-foreground/30">{label}</div>
       <div className="text-2xl font-bold tabular-nums" style={{ color }}>{value}</div>
     </div>
   );

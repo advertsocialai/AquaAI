@@ -35,7 +35,7 @@ function RoleGrid({ items, cols }: { items: RoleCard[]; cols: string }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: i * 0.04 }}
-          className="p-6 rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] transition"
+          className="p-6 rounded-2xl border border-border bg-card hover:bg-muted transition"
         >
           <div
             className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
@@ -43,8 +43,8 @@ function RoleGrid({ items, cols }: { items: RoleCard[]; cols: string }) {
           >
             <Icon className="w-6 h-6" style={{ color: accent }} />
           </div>
-          <div className="text-base font-semibold text-white mb-2">{t(`roles.${id}`)}</div>
-          <div className="text-sm text-white/65 leading-relaxed">{t(`roleDesc.${id}`)}</div>
+          <div className="text-base font-semibold text-foreground mb-2">{t(`roles.${id}`)}</div>
+          <div className="text-sm text-foreground/65 leading-relaxed">{t(`roleDesc.${id}`)}</div>
         </motion.div>
       ))}
     </div>
@@ -54,12 +54,12 @@ function RoleGrid({ items, cols }: { items: RoleCard[]; cols: string }) {
 export function BuiltForRoles() {
   const { t } = useTranslation();
   return (
-    <section className="py-24 border-t border-white/5">
+    <section className="py-24 border-t border-border">
       <div className="container mx-auto px-6 lg:px-8 max-w-6xl">
         <div className="text-center mb-14">
           <div className="text-sm text-cyan-300 uppercase tracking-widest mb-4">{t('builtFor.head')}</div>
           <h2 className="text-4xl md:text-5xl font-bold leading-tight">{t('builtFor.title')}</h2>
-          <p className="text-base md:text-lg text-white/65 max-w-2xl mx-auto mt-4 leading-relaxed">{t('builtFor.sub')}</p>
+          <p className="text-base md:text-lg text-foreground/65 max-w-2xl mx-auto mt-4 leading-relaxed">{t('builtFor.sub')}</p>
         </div>
 
         <RoleGrid items={MAIN_ROLES} cols="sm:grid-cols-2 max-w-2xl" />
@@ -102,7 +102,7 @@ const TESTIMONIALS = [
 export function Testimonials() {
   const { t } = useTranslation();
   return (
-    <section className="py-24 border-t border-white/5">
+    <section className="py-24 border-t border-border">
       <div className="container mx-auto px-6 lg:px-8 max-w-6xl">
         <div className="text-center mb-14">
           <div className="text-sm text-cyan-300 uppercase tracking-widest mb-4">{t('testimonials.head')}</div>
@@ -116,19 +116,19 @@ export function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
-              className="p-7 rounded-2xl border border-white/10 bg-white/[0.03] flex flex-col"
+              className="p-7 rounded-2xl border border-border bg-card flex flex-col"
             >
               <div className="flex items-center gap-1 text-amber-300 mb-5">
                 {Array.from({ length: 5 }).map((_, j) => (
                   <Star key={j} className="w-4 h-4 fill-amber-300" />
                 ))}
               </div>
-              <blockquote className="text-base text-white/85 leading-relaxed flex-1">
+              <blockquote className="text-base text-foreground/85 leading-relaxed flex-1">
                 "{t.quote}"
               </blockquote>
-              <figcaption className="mt-6 pt-5 border-t border-white/5">
-                <div className="text-base font-semibold text-white">{t.name}</div>
-                <div className="text-sm text-white/50">{t.role}</div>
+              <figcaption className="mt-6 pt-5 border-t border-border">
+                <div className="text-base font-semibold text-foreground">{t.name}</div>
+                <div className="text-sm text-foreground/50">{t.role}</div>
                 <div className="text-sm text-emerald-400 mt-1 font-mono">{t.metric}</div>
               </figcaption>
             </motion.figure>
@@ -144,17 +144,17 @@ export function Testimonials() {
 export function MobileAppCta() {
   const { t } = useTranslation();
   return (
-    <section id="download-app" className="py-24 border-t border-white/5 bg-gradient-to-br from-cyan-500/10 via-black to-violet-500/10 scroll-mt-24">
+    <section id="download-app" className="py-24 border-t border-border bg-gradient-to-br from-cyan-500/10 via-background to-violet-500/10 scroll-mt-24">
       <div className="container mx-auto px-6 lg:px-8 max-w-5xl">
         <div className="grid lg:grid-cols-5 gap-10 items-center">
           <div className="lg:col-span-3">
             <div className="text-sm text-cyan-300 uppercase tracking-widest mb-4">{t('mobileApp.head')}</div>
             <h2 className="text-4xl md:text-5xl font-bold mb-5 leading-tight">{t('mobileApp.title')}</h2>
-            <p className="text-base md:text-lg text-white/70 mb-8 max-w-xl leading-relaxed">{t('mobileApp.body')}</p>
+            <p className="text-base md:text-lg text-foreground/70 mb-8 max-w-xl leading-relaxed">{t('mobileApp.body')}</p>
             <div className="flex flex-wrap items-center gap-3">
               <a
                 href="#"
-                className="inline-flex items-center gap-3 px-5 py-3 rounded-xl bg-white text-black hover:bg-white/90 transition"
+                className="inline-flex items-center gap-3 px-5 py-3 rounded-xl bg-white text-black hover:bg-muted transition"
               >
                 <Play className="w-5 h-5" />
                 <div className="flex flex-col leading-tight text-left">
@@ -164,7 +164,7 @@ export function MobileAppCta() {
               </a>
               <a
                 href="#"
-                className="inline-flex items-center gap-3 px-5 py-3 rounded-xl bg-white text-black hover:bg-white/90 transition"
+                className="inline-flex items-center gap-3 px-5 py-3 rounded-xl bg-white text-black hover:bg-muted transition"
               >
                 <Apple className="w-5 h-5" />
                 <div className="flex flex-col leading-tight text-left">
@@ -172,21 +172,21 @@ export function MobileAppCta() {
                   <span className="text-sm font-bold">App Store</span>
                 </div>
               </a>
-              <button className="inline-flex items-center gap-2 px-4 py-3 rounded-xl border border-white/15 text-white/80 hover:bg-white/[0.06] text-sm">
+              <button className="inline-flex items-center gap-2 px-4 py-3 rounded-xl border border-border text-foreground/80 hover:bg-muted text-sm">
                 <QrCode className="w-4 h-4" /> Scan QR
               </button>
             </div>
           </div>
           <div className="lg:col-span-2 flex justify-center">
-            <div className="relative w-56 h-[460px] rounded-[2.5rem] border-[10px] border-white/10 bg-gradient-to-br from-cyan-500/10 to-violet-500/10 overflow-hidden shadow-2xl shadow-cyan-500/20">
+            <div className="relative w-56 h-[460px] rounded-[2.5rem] border-[10px] border-border bg-gradient-to-br from-cyan-500/10 to-violet-500/10 overflow-hidden shadow-2xl shadow-cyan-500/20">
               <div className="absolute top-3 left-1/2 -translate-x-1/2 w-20 h-4 rounded-full bg-black/80" />
               <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
                 <Smartphone className="w-10 h-10 text-cyan-300 mb-4" />
-                <div className="text-sm font-bold text-white mb-1">Aqua Rudra</div>
-                <div className="text-[11px] text-white/50 mb-6">Tap to count PLs</div>
-                <div className="w-full p-3 rounded-xl bg-white/[0.06] border border-white/10 mb-2">
-                  <div className="text-[10px] text-white/40 uppercase tracking-widest">Count</div>
-                  <div className="text-2xl font-bold text-white tabular-nums">2,847</div>
+                <div className="text-sm font-bold text-foreground mb-1">Aqua Rudra</div>
+                <div className="text-[11px] text-foreground/50 mb-6">Tap to count PLs</div>
+                <div className="w-full p-3 rounded-xl bg-card border border-border mb-2">
+                  <div className="text-[10px] text-foreground/40 uppercase tracking-widest">Count</div>
+                  <div className="text-2xl font-bold text-foreground tabular-nums">2,847</div>
                   <div className="text-[10px] text-emerald-400">PL-12 · clean tray</div>
                 </div>
                 <div className="w-full p-3 rounded-xl bg-emerald-400/10 border border-emerald-400/30">
@@ -223,7 +223,7 @@ export function FaqSection() {
   const { t } = useTranslation();
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section className="py-24 border-t border-white/5">
+    <section className="py-24 border-t border-border">
       <div className="container mx-auto px-6 lg:px-8 max-w-3xl">
         <div className="text-center mb-12">
           <div className="text-sm text-cyan-300 uppercase tracking-widest mb-4">{t('faq.head')}</div>
@@ -233,15 +233,15 @@ export function FaqSection() {
           {FAQ.map((item, i) => (
             <div
               key={item.q}
-              className="rounded-xl border border-white/10 bg-white/[0.03] overflow-hidden"
+              className="rounded-xl border border-border bg-card overflow-hidden"
             >
               <button
                 onClick={() => setOpen(open === i ? null : i)}
                 className="w-full flex items-center justify-between gap-4 p-5 text-left"
               >
-                <span className="text-base md:text-lg font-medium text-white">{item.q}</span>
+                <span className="text-base md:text-lg font-medium text-foreground">{item.q}</span>
                 <ChevronDown
-                  className={`w-5 h-5 text-white/40 shrink-0 transition-transform ${open === i ? 'rotate-180 text-cyan-400' : ''}`}
+                  className={`w-5 h-5 text-foreground/40 shrink-0 transition-transform ${open === i ? 'rotate-180 text-cyan-400' : ''}`}
                 />
               </button>
               <AnimatePresence initial={false}>
@@ -251,9 +251,9 @@ export function FaqSection() {
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.2 }}
-                    className="overflow-hidden border-t border-white/5"
+                    className="overflow-hidden border-t border-border"
                   >
-                    <p className="text-base text-white/70 leading-relaxed p-5">{item.a}</p>
+                    <p className="text-base text-foreground/70 leading-relaxed p-5">{item.a}</p>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -270,10 +270,10 @@ export function FaqSection() {
 export function FinalCta() {
   const { t } = useTranslation();
   return (
-    <section className="py-28 border-t border-white/5">
+    <section className="py-28 border-t border-border">
       <div className="container mx-auto px-6 lg:px-8 max-w-3xl text-center">
         <h2 className="text-4xl md:text-6xl font-bold mb-5 leading-tight">{t('finalCta.title')}</h2>
-        <p className="text-base md:text-lg text-white/70 mb-10 max-w-xl mx-auto leading-relaxed">{t('finalCta.body')}</p>
+        <p className="text-base md:text-lg text-foreground/70 mb-10 max-w-xl mx-auto leading-relaxed">{t('finalCta.body')}</p>
         <div className="flex flex-wrap items-center justify-center gap-3">
           <Link
             to="/signup"
@@ -283,13 +283,13 @@ export function FinalCta() {
           </Link>
           <Link
             to="/login"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl border border-white/15 text-white/85 hover:bg-white/[0.06] text-base"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl border border-border text-foreground/85 hover:bg-muted text-base"
           >
             {t('common.signIn')}
           </Link>
           <Link
             to="/knowledge"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-white/60 hover:text-white text-base"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-foreground/60 hover:text-foreground text-base"
           >
             <BookOpen className="w-5 h-5" /> {t('finalCta.readArticles')}
           </Link>

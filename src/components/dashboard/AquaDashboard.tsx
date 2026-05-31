@@ -65,7 +65,7 @@ const ROLE_ACCESS: Record<Role, { default: TabId; tabs: TabId[] }> = {
 
 function TabLoader() {
   return (
-    <div className="flex items-center justify-center py-16 text-sm text-white/40">
+    <div className="flex items-center justify-center py-16 text-sm text-foreground/40">
       <Loader2 className="w-4 h-4 mr-2 animate-spin" />
       Loading module…
     </div>
@@ -85,10 +85,10 @@ export function AquaDashboard() {
 
   return (
     <div className="space-y-6">
-      <div className="p-5 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm">
+      <div className="p-5 rounded-2xl border border-border bg-card backdrop-blur-sm">
         <div className="flex items-center justify-between mb-3">
-          <div className="text-[11px] uppercase tracking-widest text-white/30">View As</div>
-          <div className="text-[11px] text-white/30">
+          <div className="text-[11px] uppercase tracking-widest text-foreground/30">View As</div>
+          <div className="text-[11px] text-foreground/30">
             {visibleTabs.length} module{visibleTabs.length === 1 ? '' : 's'} available · default: {TABS.find(t => t.id === ROLE_ACCESS[role].default)?.label}
           </div>
         </div>
@@ -104,18 +104,18 @@ export function AquaDashboard() {
       <KpiDashboard role={role} />
 
       <Tabs value={tab} onValueChange={(v) => setTab(v as TabId)}>
-        <TabsList className="w-full h-auto flex-wrap justify-start bg-white/[0.03] border border-white/10 p-1.5 gap-1">
+        <TabsList className="w-full h-auto flex-wrap justify-start bg-card border border-border p-1.5 gap-1">
           {visibleTabs.map(({ id, label, short, icon: Icon, accent }) => {
             const active = id === tab;
             return (
               <TabsTrigger
                 key={id}
                 value={id}
-                className="data-[state=active]:bg-white/10 data-[state=active]:text-white text-white/50 hover:text-white/80 transition gap-2 px-3 py-2 rounded-md"
+                className="data-[state=active]:bg-card data-[state=active]:text-foreground text-foreground/50 hover:text-foreground/80 transition gap-2 px-3 py-2 rounded-md"
               >
                 <Icon className="w-3.5 h-3.5" style={{ color: active ? accent : undefined }} />
                 <span className="hidden sm:inline">{label}</span>
-                <span className="text-[10px] font-mono text-white/30">{short}</span>
+                <span className="text-[10px] font-mono text-foreground/30">{short}</span>
               </TabsTrigger>
             );
           })}
@@ -133,8 +133,8 @@ export function AquaDashboard() {
                 <div className="p-2 rounded-lg" style={{ background: `${accent}22` }}>
                   <Icon className="w-4 h-4" style={{ color: accent }} />
                 </div>
-                <h3 className="text-lg font-semibold text-white">{label}</h3>
-                <div className="ml-auto text-[10px] text-white/30 font-mono">
+                <h3 className="text-lg font-semibold text-foreground">{label}</h3>
+                <div className="ml-auto text-[10px] text-foreground/30 font-mono">
                   {role.toUpperCase()}
                 </div>
               </div>

@@ -51,11 +51,11 @@ export function WaterQualityPanel() {
   const alerts = params.filter((p) => p.value < p.safeLo || p.value > p.safeHi).length;
 
   return (
-    <div className="w-full rounded-2xl border border-white/10 bg-white/5 p-6">
+    <div className="w-full rounded-2xl border border-border bg-card p-6">
       <div className="flex items-center justify-between mb-5">
         <div>
-          <h3 className="text-lg font-bold text-white">Water Quality Monitor</h3>
-          <p className="text-xs text-white/50">
+          <h3 className="text-lg font-bold text-foreground">Water Quality Monitor</h3>
+          <p className="text-xs text-foreground/50">
             Pond IoT sensors — parameters linked to disease risk
           </p>
         </div>
@@ -97,20 +97,20 @@ function Gauge({ p }: { p: Param }) {
   const color = inRange ? '#34d399' : '#f59e0b';
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5">
+    <div className="rounded-xl border border-border bg-card p-3.5">
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-1.5">
           <p.icon className="w-3.5 h-3.5" style={{ color }} />
-          <span className="text-[11px] text-white/55">{p.label}</span>
+          <span className="text-[11px] text-foreground/55">{p.label}</span>
         </div>
         <span className="text-sm font-bold tabular-nums" style={{ color }}>
           {p.value}
-          <span className="text-[10px] text-white/35 font-normal"> {p.unit}</span>
+          <span className="text-[10px] text-foreground/35 font-normal"> {p.unit}</span>
         </span>
       </div>
 
       {/* Track with safe band + value marker */}
-      <div className="relative h-2 rounded-full bg-white/8 overflow-hidden">
+      <div className="relative h-2 rounded-full bg-card overflow-hidden">
         <div
           className="absolute inset-y-0 bg-emerald-400/25"
           style={{ left: `${safeLoPct}%`, width: `${safeHiPct - safeLoPct}%` }}
@@ -120,7 +120,7 @@ function Gauge({ p }: { p: Param }) {
           style={{ left: `calc(${Math.max(0, Math.min(100, pct))}% - 2px)`, background: color }}
         />
       </div>
-      <div className="flex justify-between mt-1 text-[9px] text-white/25">
+      <div className="flex justify-between mt-1 text-[9px] text-foreground/25">
         <span>{p.min}</span>
         <span className="text-emerald-400/50">
           safe {p.safeLo}–{p.safeHi}

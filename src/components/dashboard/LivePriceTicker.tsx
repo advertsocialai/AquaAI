@@ -92,12 +92,12 @@ export function LivePriceTicker() {
   const climateText = climate ? climateLabel(climate.code).label : 'loading…';
 
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.03] overflow-hidden">
+    <div className="rounded-xl border border-border bg-card overflow-hidden">
       {/* Header strip — date · live indicator · last update */}
-      <div className="px-4 py-3 border-b border-white/5 flex items-center gap-3 text-xs">
-        <span className="font-semibold text-white">{dateLabel}</span>
-        <span className="text-white/30">·</span>
-        <span className="text-white/55 tabular-nums">{timeLabel}</span>
+      <div className="px-4 py-3 border-b border-border flex items-center gap-3 text-xs">
+        <span className="font-semibold text-foreground">{dateLabel}</span>
+        <span className="text-foreground/30">·</span>
+        <span className="text-foreground/55 tabular-nums">{timeLabel}</span>
         {connected ? (
           <span className="ml-auto inline-flex items-center gap-1.5 text-emerald-300">
             <Wifi className="w-3 h-3" /> Live
@@ -107,25 +107,25 @@ export function LivePriceTicker() {
             <WifiOff className="w-3 h-3" /> Stub
           </span>
         )}
-        <span className="inline-flex items-center gap-1 text-white/35">
+        <span className="inline-flex items-center gap-1 text-foreground/35">
           <Activity className="w-3 h-3" /> {ago}s
         </span>
       </div>
 
       {/* Vertical price list — one row per species */}
-      <ul className="divide-y divide-white/5 max-h-80 overflow-y-auto">
+      <ul className="divide-y divide-border max-h-80 overflow-y-auto">
         {Object.entries(prices).map(([sku, price]) => {
           const d = delta[sku] ?? 0;
-          const color = d > 0 ? 'text-emerald-400' : d < 0 ? 'text-red-400' : 'text-white/40';
+          const color = d > 0 ? 'text-emerald-400' : d < 0 ? 'text-red-400' : 'text-foreground/40';
           const TrendIcon = d > 0 ? TrendingUp : d < 0 ? TrendingDown : Minus;
           return (
-            <li key={sku} className="px-4 py-3 flex items-center gap-3 hover:bg-white/[0.03] transition">
+            <li key={sku} className="px-4 py-3 flex items-center gap-3 hover:bg-muted transition">
               <div className="flex-1 min-w-0">
-                <div className="text-sm font-medium text-white truncate">{LABELS[sku] ?? sku}</div>
-                <div className="text-[11px] text-white/40 tabular-nums">{dateLabel} · farmgate</div>
+                <div className="text-sm font-medium text-foreground truncate">{LABELS[sku] ?? sku}</div>
+                <div className="text-[11px] text-foreground/40 tabular-nums">{dateLabel} · farmgate</div>
               </div>
               <div className="text-right shrink-0">
-                <div className="text-base font-bold text-white tabular-nums">₹{price}</div>
+                <div className="text-base font-bold text-foreground tabular-nums">₹{price}</div>
                 <div className={`text-xs tabular-nums inline-flex items-center gap-1 ${color}`}>
                   <TrendIcon className="w-3 h-3" />
                   {d > 0 ? `+${d}` : d < 0 ? d : '—'}
@@ -137,18 +137,18 @@ export function LivePriceTicker() {
       </ul>
 
       {/* Climate strip — current weather for the selected district, anchored below */}
-      <div className="px-4 py-3 border-t border-white/5 bg-cyan-400/[0.04] flex items-center gap-3 text-sm">
+      <div className="px-4 py-3 border-t border-border bg-cyan-400/[0.04] flex items-center gap-3 text-sm">
         <div className="w-9 h-9 rounded-lg bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center shrink-0">
           <ClimateIcon className="w-4 h-4 text-cyan-300" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-baseline gap-2">
-            <span className="text-lg font-bold text-white tabular-nums">
+            <span className="text-lg font-bold text-foreground tabular-nums">
               {climate ? `${Math.round(climate.tempC)}°C` : '—'}
             </span>
-            <span className="text-white/55 capitalize truncate">{climateText}</span>
+            <span className="text-foreground/55 capitalize truncate">{climateText}</span>
           </div>
-          <div className="text-[11px] text-white/40">
+          <div className="text-[11px] text-foreground/40">
             Rain {climate ? `${climate.rainMm}mm` : '—'} · {climate?.district ?? 'Bhimavaram'}
           </div>
         </div>

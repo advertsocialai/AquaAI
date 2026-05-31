@@ -169,11 +169,11 @@ export function SeedScanner() {
 
   return (
     <div className="w-full max-w-3xl mx-auto">
-      <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+      <div className="rounded-2xl border border-border bg-card p-6">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className="text-lg font-bold text-white">Seed Counter Scanner</h3>
-            <p className="text-xs text-white/50">
+            <h3 className="text-lg font-bold text-foreground">Seed Counter Scanner</h3>
+            <p className="text-xs text-foreground/50">
               Point your camera at a counting tray — AI counts every PL
             </p>
           </div>
@@ -191,7 +191,7 @@ export function SeedScanner() {
           {/* Framing guide overlay */}
           {cameraOn && (
             <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute inset-[12%] border border-dashed border-white/30 rounded-lg">
+              <div className="absolute inset-[12%] border border-dashed border-border rounded-lg">
                 {/* corner brackets */}
                 {[
                   'top-0 left-0 border-t-2 border-l-2 rounded-tl-lg',
@@ -203,7 +203,7 @@ export function SeedScanner() {
                 ))}
               </div>
               <div className="absolute top-3 left-0 right-0 text-center">
-                <span className="text-[11px] text-white/70 bg-black/50 px-2 py-1 rounded">
+                <span className="text-[11px] text-foreground/70 bg-black/50 px-2 py-1 rounded">
                   Align the counting tray within the frame
                 </span>
               </div>
@@ -228,7 +228,7 @@ export function SeedScanner() {
           )}
 
           {!cameraOn && !capturedImage && (
-            <div className="text-center text-white/40 px-6">
+            <div className="text-center text-foreground/40 px-6">
               <svg className="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
                   d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
@@ -242,7 +242,7 @@ export function SeedScanner() {
           {loading && (
             <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center">
               <div className="w-8 h-8 border-2 border-sky-400 border-t-transparent rounded-full animate-spin" />
-              <p className="text-white/70 text-sm mt-3">Counting seeds…</p>
+              <p className="text-foreground/70 text-sm mt-3">Counting seeds…</p>
             </div>
           )}
         </div>
@@ -257,7 +257,7 @@ export function SeedScanner() {
               >
                 Start Camera
               </button>
-              <label className="flex-1 min-w-[140px] px-4 py-2.5 rounded-lg border border-white/20 hover:bg-white/5 text-white text-sm font-semibold text-center cursor-pointer transition">
+              <label className="flex-1 min-w-[140px] px-4 py-2.5 rounded-lg border border-border hover:bg-muted text-foreground text-sm font-semibold text-center cursor-pointer transition">
                 Upload Image
                 <input type="file" accept="image/*" className="hidden" onChange={onFileSelected} />
               </label>
@@ -274,7 +274,7 @@ export function SeedScanner() {
               </button>
               <button
                 onClick={stopCamera}
-                className="px-4 py-2.5 rounded-lg border border-white/20 hover:bg-white/5 text-white text-sm transition"
+                className="px-4 py-2.5 rounded-lg border border-border hover:bg-muted text-foreground text-sm transition"
               >
                 Cancel
               </button>
@@ -310,15 +310,15 @@ export function SeedScanner() {
                 <Stat label="Debris" value={result.debris_count} color="text-amber-400" />
                 <Stat label="Survival" value={`${result.survival_rate_pct}%`} color="text-sky-400" />
               </div>
-              <div className="flex items-center justify-between mt-3 text-xs text-white/50">
+              <div className="flex items-center justify-between mt-3 text-xs text-foreground/50">
                 <span>
-                  Total counted: <strong className="text-white">{result.total_count}</strong>
+                  Total counted: <strong className="text-foreground">{result.total_count}</strong>
                   {result.mean_length_mm != null && ` · avg ${result.mean_length_mm}mm`}
                   {result.cv_pct != null && ` · CV ${result.cv_pct}%`}
                 </span>
-                <span className="px-2 py-0.5 rounded bg-white/5">{result.model_used}</span>
+                <span className="px-2 py-0.5 rounded bg-card">{result.model_used}</span>
               </div>
-              <div className="flex gap-3 mt-2 text-[10px] text-white/40">
+              <div className="flex gap-3 mt-2 text-[10px] text-foreground/40">
                 <Legend color="#22c55e" label="Live" />
                 <Legend color="#ef4444" label="Dead" />
                 <Legend color="#f59e0b" label="Debris" />
@@ -333,9 +333,9 @@ export function SeedScanner() {
 
 function Stat({ label, value, color }: { label: string; value: number | string; color: string }) {
   return (
-    <div className="rounded-lg bg-white/5 px-3 py-2.5 text-center">
+    <div className="rounded-lg bg-card px-3 py-2.5 text-center">
       <div className={`text-2xl font-bold ${color}`}>{value}</div>
-      <div className="text-[10px] uppercase tracking-wider text-white/40">{label}</div>
+      <div className="text-[10px] uppercase tracking-wider text-foreground/40">{label}</div>
     </div>
   );
 }

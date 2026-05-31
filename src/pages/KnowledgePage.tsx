@@ -289,13 +289,13 @@ export default function KnowledgePage() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-white">
+    <div className="min-h-screen bg-background text-foreground">
       <Header />
 
       {/* Hero — warm, inviting, illustration on the right */}
       <section className="relative pt-32 pb-16 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-black to-violet-500/10" />
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-background to-violet-500/10" />
         </div>
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-2 gap-10 items-center max-w-6xl mx-auto">
@@ -315,7 +315,7 @@ export default function KnowledgePage() {
               </motion.h1>
               <motion.p
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
-                className="text-base md:text-lg text-white/70 max-w-xl leading-relaxed mb-8"
+                className="text-base md:text-lg text-foreground/70 max-w-xl leading-relaxed mb-8"
               >
                 Field-tested guides, disease playbooks and farmer case studies — sourced from
                 ICAR-CIBA, NSPAAD, MPEDA circulars and Aqua Rudra's own diagnostic dataset. Read
@@ -324,20 +324,20 @@ export default function KnowledgePage() {
 
               <form
                 onSubmit={(e) => { e.preventDefault(); setPage(1); }}
-                className="max-w-xl flex items-center gap-2 px-4 py-3.5 rounded-xl border border-white/10 bg-white/[0.04] focus-within:border-cyan-400/40"
+                className="max-w-xl flex items-center gap-2 px-4 py-3.5 rounded-xl border border-border bg-card focus-within:border-cyan-400/40"
               >
-                <Search className="w-5 h-5 text-white/40" />
+                <Search className="w-5 h-5 text-foreground/40" />
                 <input
                   value={query}
                   onChange={(e) => { setQuery(e.target.value); setPage(1); }}
                   placeholder="Search articles, diseases, species…"
-                  className="flex-1 bg-transparent outline-none text-white text-base placeholder:text-white/35"
+                  className="flex-1 bg-transparent outline-none text-foreground text-base placeholder:text-foreground/35"
                 />
                 {query && (
                   <button
                     type="button"
                     onClick={() => { setQuery(''); setPage(1); }}
-                    className="text-sm text-white/45 hover:text-white"
+                    className="text-sm text-foreground/45 hover:text-foreground"
                   >
                     clear
                   </button>
@@ -363,7 +363,7 @@ export default function KnowledgePage() {
             {/* Articles */}
             <div className="lg:col-span-2 space-y-6">
               {paged.length === 0 ? (
-                <div className="text-center py-16 text-sm text-white/30">
+                <div className="text-center py-16 text-sm text-foreground/30">
                   No articles match "{query}"
                 </div>
               ) : (
@@ -375,7 +375,7 @@ export default function KnowledgePage() {
                   <button
                     onClick={() => setPage((p) => Math.max(1, p - 1))}
                     disabled={safePage === 1}
-                    className="p-2 rounded-lg border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] disabled:opacity-30 text-white/70"
+                    className="p-2 rounded-lg border border-border bg-card hover:bg-muted disabled:opacity-30 text-foreground/70"
                   >
                     <ChevronLeft className="w-4 h-4" />
                   </button>
@@ -388,7 +388,7 @@ export default function KnowledgePage() {
                         className={`min-w-9 h-9 rounded-lg text-sm font-medium border transition ${
                           n === safePage
                             ? 'border-cyan-400/40 bg-cyan-400/10 text-cyan-300'
-                            : 'border-white/10 bg-white/[0.03] text-white/60 hover:text-white'
+                            : 'border-border bg-card text-foreground/60 hover:text-foreground'
                         }`}
                       >
                         {n}
@@ -398,7 +398,7 @@ export default function KnowledgePage() {
                   <button
                     onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                     disabled={safePage === totalPages}
-                    className="p-2 rounded-lg border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] disabled:opacity-30 text-white/70"
+                    className="p-2 rounded-lg border border-border bg-card hover:bg-muted disabled:opacity-30 text-foreground/70"
                   >
                     <ChevronRight className="w-4 h-4" />
                   </button>
@@ -408,17 +408,17 @@ export default function KnowledgePage() {
 
             {/* Sidebar */}
             <aside className="space-y-6">
-              <div className="p-5 rounded-2xl border border-white/10 bg-white/[0.03]">
+              <div className="p-5 rounded-2xl border border-border bg-card">
                 <div className="text-[11px] uppercase tracking-widest text-cyan-300 mb-4">Popular posts</div>
                 <ol className="space-y-3">
                   {popular.map((a, i) => (
                     <li key={a.slug} className="flex gap-3">
-                      <span className="text-2xl font-bold text-white/15 leading-none tabular-nums">
+                      <span className="text-2xl font-bold text-foreground/15 leading-none tabular-nums">
                         {i + 1}
                       </span>
                       <Link
                         to={`/knowledge/${a.slug}`}
-                        className="text-sm text-white/80 hover:text-cyan-300 leading-snug line-clamp-3 transition"
+                        className="text-sm text-foreground/80 hover:text-cyan-300 leading-snug line-clamp-3 transition"
                       >
                         {a.title}
                       </Link>
@@ -430,9 +430,9 @@ export default function KnowledgePage() {
               <div className="p-5 rounded-2xl border border-emerald-400/30 bg-emerald-400/5">
                 <div className="flex items-center gap-2 mb-2">
                   <Mail className="w-4 h-4 text-emerald-300" />
-                  <span className="text-sm font-semibold text-white">Subscribe to stay updated</span>
+                  <span className="text-sm font-semibold text-foreground">Subscribe to stay updated</span>
                 </div>
-                <p className="text-xs text-white/60 mb-4">
+                <p className="text-xs text-foreground/60 mb-4">
                   Weekly newsletter — disease alerts, pricing trends, new articles. In your
                   language.
                 </p>
@@ -442,7 +442,7 @@ export default function KnowledgePage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="your@email.in"
-                    className="flex-1 px-3 py-2 rounded-lg bg-white/[0.03] border border-white/10 text-sm text-white outline-none focus:border-emerald-400/40"
+                    className="flex-1 px-3 py-2 rounded-lg bg-card border border-border text-sm text-foreground outline-none focus:border-emerald-400/40"
                   />
                   <button
                     type="submit"
@@ -531,7 +531,7 @@ function ArticleCard({ article, delay }: { article: Article; delay: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4, delay }}
-      className="rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden hover:border-cyan-400/30 transition"
+      className="rounded-2xl border border-border bg-card overflow-hidden hover:border-cyan-400/30 transition"
     >
       <Link to={`/knowledge/${article.slug}`} className="block">
         <div
@@ -539,7 +539,7 @@ function ArticleCard({ article, delay }: { article: Article; delay: number }) {
           style={{ backgroundImage: `url(${article.hero})` }}
         />
         <div className="p-5">
-          <div className="flex items-center gap-3 mb-3 text-[11px] text-white/40">
+          <div className="flex items-center gap-3 mb-3 text-[11px] text-foreground/40">
             <span className="px-2 py-0.5 rounded-full border border-cyan-400/30 bg-cyan-400/10 text-cyan-300 uppercase tracking-wide">
               {article.category}
             </span>
@@ -547,10 +547,10 @@ function ArticleCard({ article, delay }: { article: Article; delay: number }) {
             <span>·</span>
             <span>{new Date(article.publishedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
           </div>
-          <h3 className="text-xl font-bold text-white leading-snug mb-2 hover:text-cyan-300 transition">
+          <h3 className="text-xl font-bold text-foreground leading-snug mb-2 hover:text-cyan-300 transition">
             {article.title}
           </h3>
-          <p className="text-sm text-white/60 leading-relaxed mb-4 line-clamp-3">{article.excerpt}</p>
+          <p className="text-sm text-foreground/60 leading-relaxed mb-4 line-clamp-3">{article.excerpt}</p>
           <div className="inline-flex items-center gap-1 text-xs text-cyan-300">
             Read article <ArrowRight className="w-3 h-3" />
           </div>

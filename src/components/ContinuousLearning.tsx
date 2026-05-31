@@ -24,11 +24,11 @@ export function ContinuousLearning() {
   }, []);
 
   return (
-    <div className="w-full rounded-2xl border border-white/10 bg-white/5 p-6">
+    <div className="w-full rounded-2xl border border-border bg-card p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h3 className="text-lg font-bold text-white">Continuous Learning Loop</h3>
-          <p className="text-xs text-white/50">
+          <h3 className="text-lg font-bold text-foreground">Continuous Learning Loop</h3>
+          <p className="text-xs text-foreground/50">
             Every PCR result makes the model sharper — F16
           </p>
         </div>
@@ -53,8 +53,8 @@ export function ContinuousLearning() {
               }}
             >
               <s.icon className="w-5 h-5 mb-2" style={{ color: s.color }} />
-              <div className="text-sm font-semibold text-white">{s.title}</div>
-              <div className="text-[10px] text-white/45 mt-0.5 leading-snug">{s.desc}</div>
+              <div className="text-sm font-semibold text-foreground">{s.title}</div>
+              <div className="text-[10px] text-foreground/45 mt-0.5 leading-snug">{s.desc}</div>
             </motion.div>
             {i < STEPS.length - 1 && (
               <ArrowRight
@@ -67,7 +67,7 @@ export function ContinuousLearning() {
       </div>
 
       {/* Loop-back indicator */}
-      <div className="mt-4 flex items-center gap-2 text-xs text-white/40">
+      <div className="mt-4 flex items-center gap-2 text-xs text-foreground/40">
         <div className="flex-1 h-px bg-gradient-to-r from-emerald-400/40 to-transparent" />
         <span className="flex items-center gap-1">
           <ArrowRight className="w-3 h-3 rotate-180 text-emerald-400" />
@@ -81,9 +81,9 @@ export function ContinuousLearning() {
           { k: 'Priority cases', v: 'AI ≠ PCR' },
           { k: 'Delivery', v: 'OTA push' },
         ].map((x) => (
-          <div key={x.k} className="rounded-lg bg-white/5 px-3 py-2 text-center">
-            <div className="text-sm font-bold text-white">{x.v}</div>
-            <div className="text-[10px] text-white/40">{x.k}</div>
+          <div key={x.k} className="rounded-lg bg-card px-3 py-2 text-center">
+            <div className="text-sm font-bold text-foreground">{x.v}</div>
+            <div className="text-[10px] text-foreground/40">{x.k}</div>
           </div>
         ))}
       </div>
