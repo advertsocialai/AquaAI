@@ -110,7 +110,7 @@ export function AdvisoryModule() {
 
       <div className="p-6 rounded-2xl border border-border bg-card">
         <div className="flex items-center gap-2 mb-4">
-          <BookOpen className="w-4 h-4 text-cyan-400" />
+          <BookOpen className="w-4 h-4 text-teal-400" />
           <span className="text-sm font-semibold text-foreground">Govt Schemes Match</span>
         </div>
         <div className="space-y-2">
@@ -135,7 +135,7 @@ export function AdvisoryModule() {
           <li>• Farmer forums by district & species</li>
           <li>• VLE directory with ratings</li>
           <li>• Hatchery QC leaderboard</li>
-          <li className="flex items-center gap-1.5 text-cyan-300">
+          <li className="flex items-center gap-1.5 text-teal-300">
             <Phone className="w-3.5 h-3.5" /> Book vet consultation
           </li>
         </ul>

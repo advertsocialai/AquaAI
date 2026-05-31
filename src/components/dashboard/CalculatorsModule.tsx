@@ -32,7 +32,7 @@ function NumberInput({ label, value, onChange, unit, placeholder }: {
   return (
     <label className="block">
       <span className="text-[11px] uppercase tracking-widest text-foreground/40">{label}</span>
-      <div className="mt-1.5 flex items-center gap-2 px-3 py-2.5 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
+      <div className="mt-1.5 flex items-center gap-2 px-3 py-2.5 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
         <input
           type="text"
           inputMode="decimal"
@@ -64,7 +64,7 @@ function CountCalc() {
       </div>
       <div className="p-5 rounded-2xl border border-border bg-card">
         <div className="text-[11px] uppercase tracking-widest text-foreground/40 mb-3">Estimated pond population</div>
-        <div className="text-4xl font-bold text-cyan-400 tabular-nums mb-2">{extrapolated.toLocaleString('en-IN')}</div>
+        <div className="text-4xl font-bold text-teal-400 tabular-nums mb-2">{extrapolated.toLocaleString('en-IN')}</div>
         <div className="text-xs text-foreground/40">Assumes uniform distribution. For ponds with current/aeration, take 3 samples and average.</div>
       </div>
     </div>

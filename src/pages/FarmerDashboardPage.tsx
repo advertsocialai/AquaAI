@@ -32,7 +32,7 @@ const TODAYS_ACTIONS = [
 const QUICK_TOOLS = [
   { icon: Microscope, label: 'Disease detector', sub: 'Snap a sample',     to: '/aquaai#dashboard', accent: 'text-rose-300',     bg: 'bg-rose-400/10' },
   { icon: Camera,     label: 'Seed counter',     sub: 'Tray photo → count', to: '/aquaai#dashboard', accent: 'text-emerald-300',  bg: 'bg-emerald-400/10' },
-  { icon: Droplets,   label: 'Water quality',    sub: 'Sample → grade',     to: '/aquaai#dashboard', accent: 'text-cyan-300',     bg: 'bg-cyan-400/10' },
+  { icon: Droplets,   label: 'Water quality',    sub: 'Sample → grade',     to: '/aquaai#dashboard', accent: 'text-teal-300',     bg: 'bg-teal-400/10' },
   { icon: Calculator, label: 'Calculators',      sub: 'FCR · stocking',     to: '/aquaai#dashboard', accent: 'text-violet-300',   bg: 'bg-violet-400/10' },
   { icon: BookOpen,   label: 'Knowledge',        sub: 'Articles · schemes', to: '/knowledge',        accent: 'text-amber-300',    bg: 'bg-amber-400/10' },
   { icon: ShieldCheck,label: 'Certificates',     sub: 'QC · lineage',       to: '/verify/QC-2026-04421', accent: 'text-sky-300',  bg: 'bg-sky-400/10' },
@@ -48,7 +48,7 @@ const RECENT_ACTIVITY = [
 const tone = {
   urgent:  { bar: 'border-rose-400/40',    icon: 'text-rose-300',    chip: 'bg-rose-400/10' },
   warning: { bar: 'border-amber-400/40',   icon: 'text-amber-300',   chip: 'bg-amber-400/10' },
-  info:    { bar: 'border-cyan-400/40',    icon: 'text-cyan-300',    chip: 'bg-cyan-400/10' },
+  info:    { bar: 'border-teal-400/40',    icon: 'text-teal-300',    chip: 'bg-teal-400/10' },
 };
 
 export default function FarmerDashboardPage() {
@@ -72,7 +72,7 @@ export default function FarmerDashboardPage() {
           <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
               <div>
-                <div className="text-xs uppercase tracking-widest text-cyan-300 mb-2">{greeting}, V. Ramana</div>
+                <div className="text-xs uppercase tracking-widest text-teal-300 mb-2">{greeting}, V. Ramana</div>
                 <h1 className="text-3xl md:text-4xl font-bold leading-tight">
                   Day {FARM_SUMMARY.dayOfCycle} of cycle ·{' '}
                   <span className="text-foreground/60 font-normal">{FARM_SUMMARY.activeBatches} active batches</span>
@@ -97,10 +97,10 @@ export default function FarmerDashboardPage() {
           <section>
             <div className="flex items-end justify-between mb-4">
               <div>
-                <div className="text-xs uppercase tracking-widest text-cyan-300 mb-1">Today</div>
+                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Today</div>
                 <h2 className="text-xl md:text-2xl font-bold">What needs your attention</h2>
               </div>
-              <Bell className="w-5 h-5 text-cyan-300" />
+              <Bell className="w-5 h-5 text-teal-300" />
             </div>
             <div className="grid md:grid-cols-3 gap-4">
               {TODAYS_ACTIONS.map((a, i) => {
@@ -132,7 +132,7 @@ export default function FarmerDashboardPage() {
           <section>
             <div className="flex items-end justify-between mb-4">
               <div>
-                <div className="text-xs uppercase tracking-widest text-cyan-300 mb-1">Quick tools</div>
+                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Quick tools</div>
                 <h2 className="text-xl md:text-2xl font-bold">On-device AI · works offline</h2>
               </div>
             </div>
@@ -162,7 +162,7 @@ export default function FarmerDashboardPage() {
           <section className="rounded-2xl border border-border bg-card p-5 md:p-6">
             <div className="flex items-end justify-between mb-4">
               <div>
-                <div className="text-xs uppercase tracking-widest text-cyan-300 mb-1">Live mandi prices</div>
+                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Live mandi prices</div>
                 <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
                   <TrendingUp className="w-5 h-5 text-emerald-300" /> What your pond is worth today
                 </h2>
@@ -175,12 +175,12 @@ export default function FarmerDashboardPage() {
           <section>
             <div className="flex items-end justify-between mb-4">
               <div>
-                <div className="text-xs uppercase tracking-widest text-cyan-300 mb-1">Recent activity</div>
+                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Recent activity</div>
                 <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
-                  <Activity className="w-5 h-5 text-cyan-300" /> Your farm log
+                  <Activity className="w-5 h-5 text-teal-300" /> Your farm log
                 </h2>
               </div>
-              <Link to="/aquaai#dashboard" className="text-xs text-cyan-300 hover:underline inline-flex items-center gap-1">
+              <Link to="/aquaai#dashboard" className="text-xs text-teal-300 hover:underline inline-flex items-center gap-1">
                 Full history <ArrowRight className="w-3 h-3" />
               </Link>
             </div>

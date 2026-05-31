@@ -86,7 +86,7 @@ function ItemCard({ item }: { item: Item }) {
           <Icon className="w-4 h-4" style={{ color: accent }} />
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-sm font-semibold text-foreground leading-snug group-hover:text-cyan-300 transition">
+          <div className="text-sm font-semibold text-foreground leading-snug group-hover:text-teal-300 transition">
             {item.title}
           </div>
           <div className="flex items-center gap-1 mt-1 text-[11px] text-foreground/40">
@@ -101,7 +101,7 @@ function ItemCard({ item }: { item: Item }) {
           </span>
         )}
         {item.lang?.map((l) => (
-          <span key={l} className="px-2 py-0.5 rounded-full text-[10px] border border-cyan-400/20 bg-cyan-400/5 text-cyan-300">
+          <span key={l} className="px-2 py-0.5 rounded-full text-[10px] border border-teal-400/20 bg-teal-400/5 text-teal-300">
             {l}
           </span>
         ))}
@@ -137,7 +137,7 @@ export function KnowledgeHubModule() {
           />
         </div>
         <button className="flex items-center gap-2 px-3 py-2 rounded-xl border border-border bg-card text-xs text-foreground/60 hover:text-foreground">
-          <MessageCircleQuestion className="w-4 h-4 text-cyan-400" /> Ask an expert
+          <MessageCircleQuestion className="w-4 h-4 text-teal-400" /> Ask an expert
         </button>
       </div>
 

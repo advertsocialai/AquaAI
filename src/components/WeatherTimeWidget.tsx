@@ -195,7 +195,7 @@ export function WeatherTimeWidget() {
       {/* Top row — time · current weather · district input */}
       <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
         <div className="flex items-start gap-3 md:min-w-[200px]">
-          <Clock className="w-5 h-5 text-cyan-300 mt-1.5 shrink-0" />
+          <Clock className="w-5 h-5 text-teal-300 mt-1.5 shrink-0" />
           <div>
             <div className="text-3xl md:text-4xl font-bold text-foreground tabular-nums leading-tight">{timeStr}</div>
             <div className="text-sm text-foreground/55 mt-1">{dateStr}</div>
@@ -205,10 +205,10 @@ export function WeatherTimeWidget() {
         <div className="hidden md:block w-px h-16 bg-card" />
 
         <div className="flex-1 flex items-center gap-4">
-          <div className="w-14 h-14 rounded-xl bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center shrink-0">
+          <div className="w-14 h-14 rounded-xl bg-teal-400/10 border border-teal-400/30 flex items-center justify-center shrink-0">
             {loading
-              ? <Loader2 className="w-6 h-6 text-cyan-300 animate-spin" />
-              : <CurrentIcon className="w-7 h-7 text-cyan-300" />}
+              ? <Loader2 className="w-6 h-6 text-teal-300 animate-spin" />
+              : <CurrentIcon className="w-7 h-7 text-teal-300" />}
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-baseline gap-2">
@@ -238,7 +238,7 @@ export function WeatherTimeWidget() {
           </div>
           <button
             type="submit"
-            className="px-4 py-2.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-black text-sm font-semibold transition"
+            className="px-4 py-2.5 rounded-xl bg-teal-400 hover:bg-teal-300 text-black text-sm font-semibold transition"
           >
             {t('weather.update')}
           </button>
@@ -251,7 +251,7 @@ export function WeatherTimeWidget() {
       {/* 7-day forecast — always visible (skeleton while loading) */}
       <div className="mt-6 pt-6 border-t border-border">
         <div className="flex items-baseline justify-between mb-4">
-          <div className="text-sm uppercase tracking-widest text-cyan-300">
+          <div className="text-sm uppercase tracking-widest text-teal-300">
             {t('weather.next7Days')}
           </div>
           <div className="text-xs text-foreground/40">Open-Meteo · {district}</div>
@@ -280,16 +280,16 @@ export function WeatherTimeWidget() {
                 type="button"
                 key={d.date}
                 onClick={() => setOpenDay(d.date)}
-                className="p-3 rounded-xl border border-border bg-card hover:bg-cyan-400/[0.08] hover:border-cyan-400/40 text-center transition cursor-pointer"
+                className="p-3 rounded-xl border border-border bg-card hover:bg-teal-400/[0.08] hover:border-teal-400/40 text-center transition cursor-pointer"
                 title={`${label} · ${Math.round(d.windMaxKmh)} km/h wind · ${d.rainProb}% rain prob — click for hourly chart`}
               >
-                <div className="text-xs uppercase tracking-widest text-cyan-300">{dayLabel}</div>
+                <div className="text-xs uppercase tracking-widest text-teal-300">{dayLabel}</div>
                 <div className="text-[11px] text-foreground/40 mb-2">{dateLabel}</div>
-                <Icon className="w-6 h-6 mx-auto text-cyan-300 mb-2" />
+                <Icon className="w-6 h-6 mx-auto text-teal-300 mb-2" />
                 <div className="text-base font-bold text-foreground tabular-nums">{Math.round(d.max)}°</div>
                 <div className="text-xs text-foreground/45 tabular-nums">{Math.round(d.min)}°</div>
                 {d.rainMm > 0 && (
-                  <div className="text-[10px] text-cyan-400 mt-1 tabular-nums">
+                  <div className="text-[10px] text-teal-400 mt-1 tabular-nums">
                     {d.rainMm.toFixed(1)}mm · {d.rainProb}%
                   </div>
                 )}
@@ -379,7 +379,7 @@ function DayClimateModal({
         {/* Header */}
         <div className="flex items-start justify-between gap-4 mb-6">
           <div>
-            <div className="text-sm uppercase tracking-widest text-cyan-300 mb-1">{district}</div>
+            <div className="text-sm uppercase tracking-widest text-teal-300 mb-1">{district}</div>
             <h3 className="text-2xl md:text-3xl font-bold text-foreground">{dateLabel}</h3>
             <div className="text-sm text-foreground/55 mt-1 capitalize">
               {decodeWmo(day.code).label} · {Math.round(day.min)}° – {Math.round(day.max)}°C
@@ -433,7 +433,7 @@ function DayClimateModal({
             <span className="inline-flex items-center gap-1.5 text-foreground/55">
               <span className="inline-block w-3 h-3 rounded-sm bg-slate-700/40 border border-slate-600/40" /> Night
             </span>
-            <span className="inline-flex items-center gap-1.5 text-cyan-300">
+            <span className="inline-flex items-center gap-1.5 text-teal-300">
               <Thermometer className="w-3 h-3" /> Temperature
             </span>
             <span className="inline-flex items-center gap-1.5 text-blue-300">

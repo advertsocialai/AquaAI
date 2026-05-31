@@ -47,11 +47,11 @@ export default function ContactPage() {
       {/* Hero */}
       <section className="relative pt-32 pb-16 overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-background to-violet-500/10" />
+          <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-background to-violet-500/10" />
         </div>
         <div className="container mx-auto px-6 lg:px-8 relative z-10 text-center">
           <motion.div
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-400/30 bg-cyan-400/10 text-cyan-300 text-xs tracking-widest uppercase mb-6"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-teal-400/30 bg-teal-400/10 text-teal-300 text-xs tracking-widest uppercase mb-6"
             initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
           >
             Contact us · We're here to help!
@@ -94,14 +94,14 @@ export default function ContactPage() {
                   onChange={(e) => setMsg(e.target.value)}
                   rows={5}
                   placeholder="Tell us how we can help…"
-                  className="mt-2 w-full px-4 py-3 rounded-xl border border-border bg-card text-foreground text-sm outline-none focus:border-cyan-400/40 resize-none"
+                  className="mt-2 w-full px-4 py-3 rounded-xl border border-border bg-card text-foreground text-sm outline-none focus:border-teal-400/40 resize-none"
                 />
               </label>
 
               <label className="block">
                 <span className="text-[11px] uppercase tracking-widest text-foreground/40">Attachment (optional)</span>
                 <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-dashed border-border bg-card cursor-pointer hover:bg-muted">
-                  <Upload className="w-4 h-4 text-cyan-400" />
+                  <Upload className="w-4 h-4 text-teal-400" />
                   <input
                     type="file"
                     className="hidden"
@@ -117,7 +117,7 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={!name || !email || !msg || sent}
-                className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-50 text-black font-semibold text-sm transition"
+                className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-50 text-black font-semibold text-sm transition"
               >
                 {sent ? <><Check className="w-4 h-4" /> Message sent — we'll reply within 24 h</>
                       : <><Send  className="w-4 h-4" /> Send a message</>}
@@ -142,8 +142,8 @@ export default function ContactPage() {
                   <span className="text-foreground/40 text-xs">Field offices in Bhimavaram, Nellore, Vizag</span>
                 </p>
               </div>
-              <div className="p-5 rounded-2xl border border-cyan-400/20 bg-cyan-400/5">
-                <div className="text-[11px] uppercase tracking-widest text-cyan-300 mb-2">Response time</div>
+              <div className="p-5 rounded-2xl border border-teal-400/20 bg-teal-400/5">
+                <div className="text-[11px] uppercase tracking-widest text-teal-300 mb-2">Response time</div>
                 <div className="text-sm text-foreground">Within 24 hours on business days.</div>
                 <div className="text-xs text-foreground/50 mt-1">Outbreak emergencies — within 1 hour.</div>
               </div>
@@ -163,8 +163,8 @@ function Field({ icon: Icon, label, value, onChange, placeholder, type = 'text' 
   return (
     <label className="block">
       <span className="text-[11px] uppercase tracking-widest text-foreground/40">{label}</span>
-      <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
-        <Icon className="w-4 h-4 text-cyan-400" />
+      <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+        <Icon className="w-4 h-4 text-teal-400" />
         <input
           type={type}
           value={value}
@@ -185,8 +185,8 @@ function ContactBlock({ icon: Icon, title, value, href }: {
       href={href}
       className="flex items-center gap-3 p-4 rounded-xl border border-border bg-card hover:bg-muted transition"
     >
-      <div className="p-2 rounded-lg bg-cyan-400/10 border border-cyan-400/20">
-        <Icon className="w-4 h-4 text-cyan-300" />
+      <div className="p-2 rounded-lg bg-teal-400/10 border border-teal-400/20">
+        <Icon className="w-4 h-4 text-teal-300" />
       </div>
       <div className="flex-1 min-w-0">
         <div className="text-[11px] uppercase tracking-widest text-foreground/40">{title}</div>

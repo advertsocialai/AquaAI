@@ -16,7 +16,7 @@ export default function SettingsPage() {
         <div className="container mx-auto px-6 lg:px-8 max-w-6xl">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-2 rounded-lg bg-card">
-              <SettingsIcon className="w-5 h-5 text-cyan-400" />
+              <SettingsIcon className="w-5 h-5 text-teal-400" />
             </div>
             <div>
               <div className="text-[11px] uppercase tracking-widest text-foreground/30">Account</div>

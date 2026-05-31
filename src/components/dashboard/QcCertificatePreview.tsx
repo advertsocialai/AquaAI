@@ -49,7 +49,7 @@ export function QcCertificatePreview({ cert = SAMPLE_CERT }: { cert?: Cert }) {
     >
       <div className="flex items-center gap-3">
         <div className="p-2 rounded-lg bg-card">
-          <FileText className="w-4 h-4 text-cyan-400" />
+          <FileText className="w-4 h-4 text-teal-400" />
         </div>
         <div>
           <div className="text-[11px] uppercase tracking-widest text-foreground/30">QC Certificate</div>
@@ -86,7 +86,7 @@ export function QcCertificatePreview({ cert = SAMPLE_CERT }: { cert?: Cert }) {
         <button
           onClick={download}
           disabled={busy}
-          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 disabled:opacity-50 text-black font-semibold text-xs"
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-teal-500 hover:bg-teal-400 disabled:opacity-50 text-black font-semibold text-xs"
         >
           <Download className="w-3.5 h-3.5" /> Download PDF
         </button>

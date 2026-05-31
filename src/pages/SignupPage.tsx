@@ -46,12 +46,12 @@ export default function SignupPage() {
       <div className="container mx-auto px-6 lg:px-8 py-8 max-w-3xl">
         <div className="flex items-center justify-between mb-8 gap-4">
           <Link to="/" className="inline-flex items-center gap-2 text-foreground">
-            <Fish className="w-5 h-5 text-cyan-400" />
+            <Fish className="w-5 h-5 text-teal-400" />
             <span className="font-semibold text-base">Aqua Rudra</span>
           </Link>
           <div className="text-sm text-foreground/55">
             {t('common.alreadyHaveAccount')}{' '}
-            <Link to="/login" className="text-cyan-300 hover:text-cyan-200 font-semibold underline-offset-4 hover:underline">
+            <Link to="/login" className="text-teal-300 hover:text-teal-200 font-semibold underline-offset-4 hover:underline">
               {t('common.signIn')}
             </Link>
           </div>
@@ -67,7 +67,7 @@ export default function SignupPage() {
                 <div
                   className={`shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold border transition ${
                     done ? 'bg-emerald-400 text-black border-emerald-400'
-                    : active ? 'bg-cyan-400 text-black border-cyan-400'
+                    : active ? 'bg-teal-400 text-black border-teal-400'
                     : 'bg-card text-foreground/40 border-border'
                   }`}
                 >
@@ -96,7 +96,7 @@ export default function SignupPage() {
                       key={id}
                       onClick={() => setRole(id)}
                       className={`flex items-center gap-4 p-4 rounded-2xl border transition text-left ${
-                        selected ? 'border-cyan-400/50 bg-cyan-400/5' : 'border-border bg-card hover:bg-muted'
+                        selected ? 'border-teal-400/50 bg-teal-400/5' : 'border-border bg-card hover:bg-muted'
                       }`}
                     >
                       <div className="p-3 rounded-xl shrink-0" style={{ background: `${accent}22` }}>
@@ -106,7 +106,7 @@ export default function SignupPage() {
                         <div className="text-sm font-semibold text-foreground">{label}</div>
                         <div className="text-[11px] text-foreground/40 truncate">{KYC_FIELDS[id].label}</div>
                       </div>
-                      {selected && <Check className="w-4 h-4 text-cyan-400 shrink-0" />}
+                      {selected && <Check className="w-4 h-4 text-teal-400 shrink-0" />}
                     </button>
                   );
                 })}
@@ -114,7 +114,7 @@ export default function SignupPage() {
               <button
                 onClick={next}
                 disabled={!role}
-                className="w-full sm:w-auto px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm transition inline-flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm transition inline-flex items-center justify-center gap-2"
               >
                 Continue <ArrowRight className="w-4 h-4" />
               </button>
@@ -128,8 +128,8 @@ export default function SignupPage() {
               <p className="text-sm text-foreground/50 mb-8">We'll send you a 6-digit code to confirm.</p>
 
               <div className="space-y-4 max-w-md">
-                <div className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
-                  <Smartphone className="w-4 h-4 text-cyan-400" />
+                <div className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                  <Smartphone className="w-4 h-4 text-teal-400" />
                   <span className="text-foreground/40 text-sm">+91</span>
                   <input
                     autoFocus
@@ -158,7 +158,7 @@ export default function SignupPage() {
                 <button
                   onClick={next}
                   disabled={mobile.length < 10}
-                  className="px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm inline-flex items-center gap-2"
+                  className="px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm inline-flex items-center gap-2"
                 >
                   Send OTP <ArrowRight className="w-4 h-4" />
                 </button>
@@ -173,8 +173,8 @@ export default function SignupPage() {
               <p className="text-sm text-foreground/50 mb-8">Sent to <span className="font-mono text-foreground">+91 {mobile}</span></p>
 
               <div className="max-w-md">
-                <div className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
-                  <KeyRound className="w-4 h-4 text-cyan-400" />
+                <div className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                  <KeyRound className="w-4 h-4 text-teal-400" />
                   <input
                     autoFocus
                     type="text"
@@ -196,7 +196,7 @@ export default function SignupPage() {
                 <button
                   onClick={next}
                   disabled={otp.length !== 6}
-                  className="px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm inline-flex items-center gap-2"
+                  className="px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm inline-flex items-center gap-2"
                 >
                   Verify <ArrowRight className="w-4 h-4" />
                 </button>
@@ -217,14 +217,14 @@ export default function SignupPage() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="As on Aadhaar / official ID"
-                    className="mt-2 w-full px-4 py-3 rounded-xl border border-border bg-card text-foreground outline-none focus:border-cyan-400/40 text-sm"
+                    className="mt-2 w-full px-4 py-3 rounded-xl border border-border bg-card text-foreground outline-none focus:border-teal-400/40 text-sm"
                   />
                 </label>
 
                 <label className="block">
                   <span className="text-[11px] uppercase tracking-widest text-foreground/40">{KYC_FIELDS[role].label}</span>
-                  <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
-                    <BadgeCheck className="w-4 h-4 text-cyan-400" />
+                  <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                    <BadgeCheck className="w-4 h-4 text-teal-400" />
                     <input
                       value={kyc}
                       onChange={(e) => setKyc(e.target.value)}
@@ -236,7 +236,7 @@ export default function SignupPage() {
 
                 <label className="block">
                   <span className="text-[11px] uppercase tracking-widest text-foreground/40">Location</span>
-                  <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
+                  <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
                     <MapPin className="w-4 h-4 text-emerald-400" />
                     <input
                       value={location}
@@ -255,7 +255,7 @@ export default function SignupPage() {
                 <button
                   onClick={next}
                   disabled={!name || !kyc || !location}
-                  className="px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm inline-flex items-center gap-2"
+                  className="px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm inline-flex items-center gap-2"
                 >
                   Finish <ArrowRight className="w-4 h-4" />
                 </button>
@@ -275,7 +275,7 @@ export default function SignupPage() {
               </p>
               <button
                 onClick={() => navigate('/aquaai#dashboard')}
-                className="px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-semibold text-sm inline-flex items-center gap-2"
+                className="px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 text-black font-semibold text-sm inline-flex items-center gap-2"
               >
                 Go to dashboard <ArrowRight className="w-4 h-4" />
               </button>

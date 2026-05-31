@@ -81,7 +81,7 @@ export default function ForgotPasswordPage() {
     <div className="min-h-screen bg-background text-foreground flex flex-col">
       <header className="px-6 lg:px-8 py-6 flex items-center justify-between max-w-md mx-auto w-full">
         <Link to="/" className="inline-flex items-center gap-2">
-          <Fish className="w-4 h-4 text-cyan-400" />
+          <Fish className="w-4 h-4 text-teal-400" />
           <span className="font-semibold">AquaI</span>
         </Link>
         <Link to="/login" className="text-xs text-foreground/50 hover:text-foreground">Back to sign in</Link>
@@ -109,8 +109,8 @@ export default function ForgotPasswordPage() {
             >
               <label className="block">
                 <span className="text-[11px] uppercase tracking-widest text-foreground/60">Email address</span>
-                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
-                  <Mail className="w-4 h-4 text-cyan-400" />
+                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                  <Mail className="w-4 h-4 text-teal-400" />
                   <input
                     autoFocus
                     type="email"
@@ -125,7 +125,7 @@ export default function ForgotPasswordPage() {
               <button
                 type="submit"
                 disabled={!emailValid || busy}
-                className="w-full py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-30 text-black font-semibold text-sm inline-flex items-center justify-center gap-2"
+                className="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 text-black font-semibold text-sm inline-flex items-center justify-center gap-2"
               >
                 {busy ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending…</> : <>Send code <ArrowRight className="w-4 h-4" /></>}
               </button>
@@ -143,12 +143,12 @@ export default function ForgotPasswordPage() {
             >
               <div className="text-sm text-foreground/70">
                 Code sent to <span className="font-mono text-foreground">{email}</span>{' '}
-                <button type="button" onClick={() => setStep('email')} className="text-cyan-400 hover:underline ml-2">change</button>
+                <button type="button" onClick={() => setStep('email')} className="text-teal-400 hover:underline ml-2">change</button>
               </div>
               <label className="block">
                 <span className="text-[11px] uppercase tracking-widest text-foreground/40">6-digit code</span>
-                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
-                  <KeyRound className="w-4 h-4 text-cyan-400" />
+                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                  <KeyRound className="w-4 h-4 text-teal-400" />
                   <input
                     autoFocus
                     type="text"
@@ -164,7 +164,7 @@ export default function ForgotPasswordPage() {
               <button
                 type="submit"
                 disabled={otp.length !== 6}
-                className="w-full py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-30 text-black font-semibold text-sm inline-flex items-center justify-center gap-2"
+                className="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 text-black font-semibold text-sm inline-flex items-center justify-center gap-2"
               >
                 Verify <ArrowRight className="w-4 h-4" />
               </button>
@@ -182,8 +182,8 @@ export default function ForgotPasswordPage() {
             >
               <label className="block">
                 <span className="text-[11px] uppercase tracking-widest text-foreground/60">New password</span>
-                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
-                  <Lock className="w-4 h-4 text-cyan-400" />
+                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                  <Lock className="w-4 h-4 text-teal-400" />
                   <input
                     autoFocus
                     type="password"
@@ -196,8 +196,8 @@ export default function ForgotPasswordPage() {
               </label>
               <label className="block">
                 <span className="text-[11px] uppercase tracking-widest text-foreground/40">Confirm</span>
-                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
-                  <Lock className="w-4 h-4 text-cyan-400" />
+                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                  <Lock className="w-4 h-4 text-teal-400" />
                   <input
                     type="password"
                     value={pw2}
@@ -221,7 +221,7 @@ export default function ForgotPasswordPage() {
               <button
                 type="submit"
                 disabled={!pwOk || !pwMatch || busy}
-                className="w-full py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-30 text-black font-semibold text-sm inline-flex items-center justify-center gap-2"
+                className="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 text-black font-semibold text-sm inline-flex items-center justify-center gap-2"
               >
                 {busy ? <><Loader2 className="w-4 h-4 animate-spin" /> Resetting…</> : <>Reset password <ArrowRight className="w-4 h-4" /></>}
               </button>
@@ -237,7 +237,7 @@ export default function ForgotPasswordPage() {
               <p className="text-foreground/50 mb-6 text-sm">You can now sign in with your new password.</p>
               <Link
                 to="/login"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-semibold text-sm"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 text-black font-semibold text-sm"
               >
                 Go to sign in <ArrowRight className="w-4 h-4" />
               </Link>

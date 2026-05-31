@@ -44,7 +44,7 @@ export default function VerifyPage() {
     <div className="min-h-screen bg-background text-foreground">
       <header className="px-6 lg:px-8 py-6 flex items-center justify-between max-w-4xl mx-auto">
         <Link to="/" className="inline-flex items-center gap-2">
-          <Fish className="w-4 h-4 text-cyan-400" />
+          <Fish className="w-4 h-4 text-teal-400" />
           <span className="font-semibold">AquaI</span>
         </Link>
         <div className="text-[11px] text-foreground/30 inline-flex items-center gap-1.5">
@@ -118,7 +118,7 @@ export default function VerifyPage() {
             <div className="p-5 rounded-2xl border border-border bg-card space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-cyan-400" />
+                  <FileText className="w-4 h-4 text-teal-400" />
                   <span className="text-sm font-semibold text-foreground">Certificate details</span>
                 </div>
                 <div
@@ -158,7 +158,7 @@ export default function VerifyPage() {
             </div>
 
             <div className="pt-3 border-t border-border flex items-center justify-between text-xs">
-              <Link to="/aquaai" className="text-cyan-400 hover:underline inline-flex items-center gap-1">
+              <Link to="/aquaai" className="text-teal-400 hover:underline inline-flex items-center gap-1">
                 Visit AquaI <ArrowRight className="w-3 h-3" />
               </Link>
               <a

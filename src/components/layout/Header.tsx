@@ -57,14 +57,14 @@ export function Header() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? 'bg-background/80 backdrop-blur-md' : 'bg-transparent'
+        scrolled ? 'bg-ocean/95 backdrop-blur-md shadow-lg shadow-ocean/20' : 'bg-ocean'
       }`}
     >
       <div className="container mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center gap-3">
-            <img src={atomLogo} alt="Aqua Rudra" className="w-11 h-11 object-contain brightness-125 drop-shadow-[0_0_8px_rgba(56,189,248,0.4)]" />
-            <span className="text-xl font-bold text-foreground tracking-wider drop-shadow-[0_0_6px_rgba(255,255,255,0.2)]">
+            <img src={atomLogo} alt="Aqua Rudra" className="w-11 h-11 object-contain brightness-125 drop-shadow-[0_0_8px_rgba(18,165,148,0.5)]" />
+            <span className="text-xl font-bold text-white tracking-wider">
               AQUA<span className="font-light"> RUDRA</span>
             </span>
           </Link>
@@ -74,7 +74,7 @@ export function Header() {
               <Link
                 key={item.key}
                 to={item.to}
-                className="text-sm font-medium text-foreground/90 hover:text-cyan-300 transition-colors tracking-[0.18em]"
+                className="text-sm font-medium text-white/85 hover:text-primary transition-colors tracking-[0.18em]"
               >
                 {t(`nav.${item.key}`)}
               </Link>
@@ -87,7 +87,7 @@ export function Header() {
             <button
               type="button"
               onClick={goDownload}
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-lg text-sm font-medium text-cyan-300 border border-cyan-400/40 bg-cyan-400/[0.06] hover:bg-cyan-400/[0.12] tracking-[0.12em]"
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-lg text-sm font-medium text-white border border-primary bg-primary/90 hover:bg-primary tracking-[0.12em]"
             >
               <Download className="w-4 h-4" /> {t('common.downloadApp')}
             </button>
@@ -95,7 +95,7 @@ export function Header() {
               <button
                 type="button"
                 onClick={() => setStartOpen((v) => !v)}
-                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-lg text-sm font-semibold text-black bg-cyan-400 hover:bg-cyan-300 tracking-[0.12em]"
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-lg text-sm font-semibold text-coral-foreground bg-coral hover:bg-coral-hover tracking-[0.12em]"
               >
                 <Rocket className="w-4 h-4" /> {t('common.getStarted')}
                 <ChevronDown className={`w-4 h-4 transition-transform ${startOpen ? 'rotate-180' : ''}`} />
@@ -112,9 +112,9 @@ export function Header() {
                     <Link
                       to="/signup"
                       onClick={() => setStartOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 text-sm text-foreground hover:bg-cyan-400/10 transition border-b border-border"
+                      className="flex items-center gap-3 px-4 py-3 text-sm text-foreground hover:bg-teal-400/10 transition border-b border-border"
                     >
-                      <UserPlus className="w-4 h-4 text-cyan-300" />
+                      <UserPlus className="w-4 h-4 text-primary" />
                       <div>
                         <div className="font-semibold">{t('common.signUp')}</div>
                         <div className="text-xs text-foreground/45">New to Aqua Rudra</div>
@@ -123,9 +123,9 @@ export function Header() {
                     <Link
                       to="/login"
                       onClick={() => setStartOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 text-sm text-foreground hover:bg-cyan-400/10 transition"
+                      className="flex items-center gap-3 px-4 py-3 text-sm text-foreground hover:bg-teal-400/10 transition"
                     >
-                      <LogIn className="w-4 h-4 text-cyan-300" />
+                      <LogIn className="w-4 h-4 text-primary" />
                       <div>
                         <div className="font-semibold">{t('common.signIn')}</div>
                         <div className="text-xs text-foreground/45">Returning user</div>
@@ -164,7 +164,7 @@ export function Header() {
                   >
                     <Link
                       to={item.to}
-                      className="text-sm font-medium text-foreground/80 hover:text-cyan-300 tracking-[0.2em]"
+                      className="text-sm font-medium text-foreground/80 hover:text-primary tracking-[0.2em]"
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       {t(`nav.${item.key}`)}
@@ -174,18 +174,18 @@ export function Header() {
                 <button
                   type="button"
                   onClick={goDownload}
-                  className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-3 rounded-lg text-sm font-medium text-cyan-300 border border-cyan-400/40 bg-cyan-400/[0.06]"
+                  className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-3 rounded-lg text-sm font-medium text-primary border border-primary/40 bg-primary/[0.06]"
                 >
                   <Download className="w-4 h-4" /> {t('common.downloadApp')}
                 </button>
-                <div className="text-xs uppercase tracking-widest text-cyan-300 mt-2 mb-1">
+                <div className="text-xs uppercase tracking-widest text-primary mt-2 mb-1">
                   {t('common.getStarted')}
                 </div>
                 <div className="flex items-center gap-3">
                   <Link
                     to="/signup"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-3 rounded-lg text-sm font-semibold text-black bg-cyan-400"
+                    className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-3 rounded-lg text-sm font-semibold text-coral-foreground bg-coral"
                   >
                     <UserPlus className="w-4 h-4" /> {t('common.signUp')}
                   </Link>

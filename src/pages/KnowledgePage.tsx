@@ -295,13 +295,13 @@ export default function KnowledgePage() {
       {/* Hero — warm, inviting, illustration on the right */}
       <section className="relative pt-32 pb-16 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-background to-violet-500/10" />
+          <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-background to-violet-500/10" />
         </div>
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-2 gap-10 items-center max-w-6xl mx-auto">
             <div>
               <motion.div
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 text-cyan-300 text-sm tracking-widest uppercase mb-6"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-teal-400/30 bg-teal-400/10 text-teal-300 text-sm tracking-widest uppercase mb-6"
                 initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
               >
                 <BookOpen className="w-4 h-4" />
@@ -311,7 +311,7 @@ export default function KnowledgePage() {
                 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
                 className="text-4xl md:text-6xl font-bold leading-[1.05] mb-5"
               >
-                Unlocking <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-300 to-violet-300">Boundless</span> Aquatic Wisdom
+                Unlocking <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-sky-300 to-violet-300">Boundless</span> Aquatic Wisdom
               </motion.h1>
               <motion.p
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
@@ -324,7 +324,7 @@ export default function KnowledgePage() {
 
               <form
                 onSubmit={(e) => { e.preventDefault(); setPage(1); }}
-                className="max-w-xl flex items-center gap-2 px-4 py-3.5 rounded-xl border border-border bg-card focus-within:border-cyan-400/40"
+                className="max-w-xl flex items-center gap-2 px-4 py-3.5 rounded-xl border border-border bg-card focus-within:border-teal-400/40"
               >
                 <Search className="w-5 h-5 text-foreground/40" />
                 <input
@@ -387,7 +387,7 @@ export default function KnowledgePage() {
                         onClick={() => setPage(n)}
                         className={`min-w-9 h-9 rounded-lg text-sm font-medium border transition ${
                           n === safePage
-                            ? 'border-cyan-400/40 bg-cyan-400/10 text-cyan-300'
+                            ? 'border-teal-400/40 bg-teal-400/10 text-teal-300'
                             : 'border-border bg-card text-foreground/60 hover:text-foreground'
                         }`}
                       >
@@ -409,7 +409,7 @@ export default function KnowledgePage() {
             {/* Sidebar */}
             <aside className="space-y-6">
               <div className="p-5 rounded-2xl border border-border bg-card">
-                <div className="text-[11px] uppercase tracking-widest text-cyan-300 mb-4">Popular posts</div>
+                <div className="text-[11px] uppercase tracking-widest text-teal-300 mb-4">Popular posts</div>
                 <ol className="space-y-3">
                   {popular.map((a, i) => (
                     <li key={a.slug} className="flex gap-3">
@@ -418,7 +418,7 @@ export default function KnowledgePage() {
                       </span>
                       <Link
                         to={`/knowledge/${a.slug}`}
-                        className="text-sm text-foreground/80 hover:text-cyan-300 leading-snug line-clamp-3 transition"
+                        className="text-sm text-foreground/80 hover:text-teal-300 leading-snug line-clamp-3 transition"
                       >
                         {a.title}
                       </Link>
@@ -531,7 +531,7 @@ function ArticleCard({ article, delay }: { article: Article; delay: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4, delay }}
-      className="rounded-2xl border border-border bg-card overflow-hidden hover:border-cyan-400/30 transition"
+      className="rounded-2xl border border-border bg-card overflow-hidden hover:border-teal-400/30 transition"
     >
       <Link to={`/knowledge/${article.slug}`} className="block">
         <div
@@ -540,18 +540,18 @@ function ArticleCard({ article, delay }: { article: Article; delay: number }) {
         />
         <div className="p-5">
           <div className="flex items-center gap-3 mb-3 text-[11px] text-foreground/40">
-            <span className="px-2 py-0.5 rounded-full border border-cyan-400/30 bg-cyan-400/10 text-cyan-300 uppercase tracking-wide">
+            <span className="px-2 py-0.5 rounded-full border border-teal-400/30 bg-teal-400/10 text-teal-300 uppercase tracking-wide">
               {article.category}
             </span>
             <span className="inline-flex items-center gap-1"><Clock className="w-3 h-3" /> {article.readMin} min read</span>
             <span>·</span>
             <span>{new Date(article.publishedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
           </div>
-          <h3 className="text-xl font-bold text-foreground leading-snug mb-2 hover:text-cyan-300 transition">
+          <h3 className="text-xl font-bold text-foreground leading-snug mb-2 hover:text-teal-300 transition">
             {article.title}
           </h3>
           <p className="text-sm text-foreground/60 leading-relaxed mb-4 line-clamp-3">{article.excerpt}</p>
-          <div className="inline-flex items-center gap-1 text-xs text-cyan-300">
+          <div className="inline-flex items-center gap-1 text-xs text-teal-300">
             Read article <ArrowRight className="w-3 h-3" />
           </div>
         </div>

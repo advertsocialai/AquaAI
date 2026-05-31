@@ -122,13 +122,13 @@ export function VoiceReader() {
         <button
           onClick={start}
           aria-label={t('voice.readPage')}
-          className="group inline-flex items-center gap-2 px-4 py-3 rounded-full bg-cyan-400 hover:bg-cyan-300 text-black font-semibold text-sm shadow-2xl shadow-cyan-500/30 transition"
+          className="group inline-flex items-center gap-2 px-4 py-3 rounded-full bg-teal-400 hover:bg-teal-300 text-black font-semibold text-sm shadow-2xl shadow-teal-500/30 transition"
         >
           <Mic className="w-4 h-4" />
           <span className="hidden md:inline">{t('voice.readPage')}</span>
         </button>
       ) : (
-        <div className="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-cyan-400 text-black shadow-2xl shadow-cyan-500/30">
+        <div className="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-teal-400 text-black shadow-2xl shadow-teal-500/30">
           <button
             onClick={togglePause}
             aria-label={state === 'paused' ? t('voice.resume') : t('voice.pause')}

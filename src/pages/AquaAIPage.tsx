@@ -22,7 +22,7 @@ const AquaAIPage = () => {
       {/* Hero */}
       <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-background to-violet-500/10" />
+          <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-background to-violet-500/10" />
         </div>
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl">
@@ -33,7 +33,7 @@ const AquaAIPage = () => {
               transition={{ duration: 0.7, delay: 0.1 }}
             >
               {t('aquaai_page.title1')}
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-violet-400">
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-violet-400">
                 {t('aquaai_page.title2')}
               </span>
               {t('aquaai_page.title3')}
@@ -59,7 +59,7 @@ const AquaAIPage = () => {
         <div className="container mx-auto px-6 lg:px-8">
           <motion.div className="mb-12"
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="text-sm text-cyan-300 uppercase tracking-widest mb-4">{t('aquaai_page.dashboardHead')}</div>
+            <div className="text-sm text-teal-300 uppercase tracking-widest mb-4">{t('aquaai_page.dashboardHead')}</div>
             <h2 className="text-4xl md:text-5xl font-bold leading-tight">{t('aquaai_page.dashboardTitle')}<br />
               <span className="text-foreground/40">{t('aquaai_page.dashboardModules')}</span>
             </h2>

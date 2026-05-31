@@ -37,13 +37,13 @@ const Index = () => {
       {/* Hero */}
       <section className="relative min-h-[92svh] flex items-center overflow-hidden pt-20">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-background to-violet-500/10" />
+          <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-background to-violet-500/10" />
         </div>
 
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl">
             <motion.div
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-cyan-400/30 bg-cyan-400/10 text-cyan-300 text-sm tracking-widest uppercase mb-8"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-teal-400/30 bg-teal-400/10 text-teal-300 text-sm tracking-widest uppercase mb-8"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -60,7 +60,7 @@ const Index = () => {
             >
               {t('home.hero1')}
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-sky-400 to-violet-400">
                 {t('home.hero2')}
               </span>
             </motion.h1>
@@ -82,7 +82,7 @@ const Index = () => {
             >
               <Link
                 to="/signup"
-                className="inline-flex items-center gap-2 px-7 py-4 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-black font-semibold text-base transition"
+                className="inline-flex items-center gap-2 px-7 py-4 rounded-xl bg-coral hover:bg-coral-hover text-coral-foreground font-semibold text-base transition"
               >
                 {t('home.ctaStart')} <ArrowRight className="w-5 h-5" />
               </Link>
@@ -109,7 +109,7 @@ const Index = () => {
               </span>
               <span className="text-foreground/15">·</span>
               <span className="inline-flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-cyan-400" /> {t('home.tagFree')}
+                <Sparkles className="w-4 h-4 text-teal-400" /> {t('home.tagFree')}
               </span>
             </motion.div>
           </div>
@@ -127,7 +127,7 @@ const Index = () => {
       <section className="py-20 border-t border-border">
         <div className="container mx-auto px-6 lg:px-8 max-w-6xl">
           <div className="text-center mb-14">
-            <div className="text-sm text-cyan-300 uppercase tracking-widest mb-4">{t('home.modulesHead')}</div>
+            <div className="text-sm text-teal-300 uppercase tracking-widest mb-4">{t('home.modulesHead')}</div>
             <h2 className="text-4xl md:text-5xl font-bold leading-tight">{t('home.modulesTitle')}</h2>
             <p className="text-base md:text-lg text-foreground/65 max-w-2xl mx-auto mt-4 leading-relaxed">{t('home.modulesSub')}</p>
           </div>

@@ -18,7 +18,7 @@ const NotFound = () => {
     <div className="relative min-h-screen flex items-center justify-center bg-background text-foreground overflow-hidden">
       {/* Same hero ambience as the homepage */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-background to-violet-500/10" />
+        <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-background to-violet-500/10" />
       </div>
 
       <motion.div
@@ -27,12 +27,12 @@ const NotFound = () => {
         transition={{ duration: 0.6 }}
         className="relative z-10 max-w-xl px-6 text-center"
       >
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-400/30 bg-cyan-400/10 text-cyan-300 text-xs tracking-widest uppercase mb-8">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-teal-400/30 bg-teal-400/10 text-teal-300 text-xs tracking-widest uppercase mb-8">
           <Fish className="w-3.5 h-3.5" />
           Aqua Rudra
         </div>
 
-        <h1 className="text-7xl md:text-9xl font-bold tracking-tight mb-4 bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-400 bg-clip-text text-transparent">
+        <h1 className="text-7xl md:text-9xl font-bold tracking-tight mb-4 bg-gradient-to-r from-teal-400 via-sky-400 to-violet-400 bg-clip-text text-transparent">
           404
         </h1>
         <p className="text-base md:text-lg text-foreground/70 mb-2">This page slipped past the net.</p>
@@ -42,7 +42,7 @@ const NotFound = () => {
 
         <Link
           to="/"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-black font-semibold text-sm transition mb-10"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-teal-400 hover:bg-teal-300 text-black font-semibold text-sm transition mb-10"
         >
           <Home className="w-4 h-4" /> {t("common.home") || "Back to home"}
           <ArrowRight className="w-4 h-4" />
@@ -69,9 +69,9 @@ function SuggestLink({ to, icon: Icon, label }: {
   return (
     <Link
       to={to}
-      className="flex flex-col items-center gap-1 p-3 rounded-xl border border-border bg-card hover:bg-muted hover:border-cyan-400/30 transition text-xs text-foreground/75"
+      className="flex flex-col items-center gap-1 p-3 rounded-xl border border-border bg-card hover:bg-muted hover:border-teal-400/30 transition text-xs text-foreground/75"
     >
-      <Icon className="w-4 h-4 text-cyan-300" />
+      <Icon className="w-4 h-4 text-teal-300" />
       {label}
     </Link>
   );

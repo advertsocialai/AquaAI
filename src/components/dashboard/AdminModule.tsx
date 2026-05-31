@@ -97,7 +97,7 @@ export function AdminModule({ role }: { role: Role }) {
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="grid lg:grid-cols-2 gap-6">
           <div className="p-6 rounded-2xl border border-border bg-card">
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-14 h-14 rounded-full bg-cyan-400/20 border border-cyan-400/30 flex items-center justify-center text-2xl font-bold text-cyan-300">
+              <div className="w-14 h-14 rounded-full bg-teal-400/20 border border-teal-400/30 flex items-center justify-center text-2xl font-bold text-teal-300">
                 V
               </div>
               <div className="flex-1">
@@ -128,7 +128,7 @@ export function AdminModule({ role }: { role: Role }) {
           <div className="space-y-4">
             <div className="p-6 rounded-2xl border border-border bg-card">
               <div className="flex items-center gap-2 mb-4">
-                <Users className="w-4 h-4 text-cyan-400" />
+                <Users className="w-4 h-4 text-teal-400" />
                 <span className="text-sm font-semibold text-foreground">Multi-role context</span>
               </div>
               <p className="text-xs text-foreground/50 mb-4">
@@ -181,7 +181,7 @@ export function AdminModule({ role }: { role: Role }) {
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
           <div className="flex items-center justify-between mb-4">
             <div className="text-[11px] uppercase tracking-widest text-foreground/30">Team members</div>
-            <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-cyan-500/20 border border-cyan-400/30 text-xs text-cyan-300 hover:bg-cyan-500/30">
+            <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-teal-500/20 border border-teal-400/30 text-xs text-teal-300 hover:bg-teal-500/30">
               <Plus className="w-3.5 h-3.5" /> Invite member
             </button>
           </div>
@@ -248,7 +248,7 @@ export function AdminModule({ role }: { role: Role }) {
                       <input
                         type="checkbox"
                         defaultChecked={n.channels[c]}
-                        className="w-4 h-4 rounded accent-cyan-500 cursor-pointer"
+                        className="w-4 h-4 rounded accent-teal-500 cursor-pointer"
                       />
                     </td>
                   ))}
@@ -275,7 +275,7 @@ export function AdminModule({ role }: { role: Role }) {
                 className={`w-full py-1.5 rounded-lg text-xs border transition ${
                   i.status === 'connected'
                     ? 'border-border bg-card text-foreground/60 hover:bg-muted'
-                    : 'border-cyan-400/30 bg-cyan-500/10 text-cyan-300 hover:bg-cyan-500/20'
+                    : 'border-teal-400/30 bg-teal-500/10 text-teal-300 hover:bg-teal-500/20'
                 }`}
               >
                 {i.status === 'connected' ? 'Manage' : i.status === 'pending' ? 'Complete setup' : 'Connect'}

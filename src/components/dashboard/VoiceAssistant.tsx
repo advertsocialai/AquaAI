@@ -154,7 +154,7 @@ export function VoiceAssistant() {
                       : 'bg-card text-foreground/90 rounded-bl-sm flex items-start gap-2'
                   }`}
                 >
-                  {m.role === 'assistant' && <Sparkles className="w-3 h-3 text-cyan-400 shrink-0 mt-1" />}
+                  {m.role === 'assistant' && <Sparkles className="w-3 h-3 text-teal-400 shrink-0 mt-1" />}
                   <span>{m.text}</span>
                 </div>
               </div>

@@ -137,9 +137,9 @@ export function LivePriceTicker() {
       </ul>
 
       {/* Climate strip — current weather for the selected district, anchored below */}
-      <div className="px-4 py-3 border-t border-border bg-cyan-400/[0.04] flex items-center gap-3 text-sm">
-        <div className="w-9 h-9 rounded-lg bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center shrink-0">
-          <ClimateIcon className="w-4 h-4 text-cyan-300" />
+      <div className="px-4 py-3 border-t border-border bg-teal-400/[0.04] flex items-center gap-3 text-sm">
+        <div className="w-9 h-9 rounded-lg bg-teal-400/10 border border-teal-400/30 flex items-center justify-center shrink-0">
+          <ClimateIcon className="w-4 h-4 text-teal-300" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-baseline gap-2">

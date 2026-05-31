@@ -123,7 +123,7 @@ export function B2BPortalModule() {
       </div>
 
       <div className="p-5 rounded-2xl border border-border bg-card flex items-start gap-3">
-        <FileCheck className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
+        <FileCheck className="w-5 h-5 text-teal-400 shrink-0 mt-0.5" />
         <div className="text-sm">
           <div className="text-foreground font-semibold mb-1">Auto-generated invoices + QC certs</div>
           <div className="text-foreground/50 text-xs flex items-center gap-2 flex-wrap">

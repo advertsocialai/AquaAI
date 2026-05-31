@@ -97,7 +97,7 @@ function PriceTable({ rows, query }: { rows: Row[]; query: string }) {
               <td className="px-4 py-3 text-foreground/50 text-xs">{r.size}</td>
               <td className="px-4 py-3 text-foreground/60 tabular-nums">₹{r.low}</td>
               <td className="px-4 py-3 text-foreground/60 tabular-nums">₹{r.high}</td>
-              <td className="px-4 py-3 font-bold text-cyan-400 tabular-nums">₹{Math.round((r.low + r.high) / 2)}</td>
+              <td className="px-4 py-3 font-bold text-teal-400 tabular-nums">₹{Math.round((r.low + r.high) / 2)}</td>
               <td className="px-4 py-3"><TrendBadge trend={r.trend} /></td>
             </tr>
           ))}
@@ -135,7 +135,7 @@ export function PricingModule() {
           />
         </div>
         <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-border bg-card">
-          <MapPin className="w-4 h-4 text-cyan-400" />
+          <MapPin className="w-4 h-4 text-teal-400" />
           <select value={state} onChange={(e) => setState(e.target.value)} className="bg-transparent outline-none text-sm text-foreground">
             {STATES.map((s) => <option key={s} value={s} className="bg-background">{s}</option>)}
           </select>
@@ -155,7 +155,7 @@ export function PricingModule() {
             onClick={() => setTab(t.id)}
             className={`px-3 py-1.5 rounded-full text-xs border transition ${
               t.id === tab
-                ? 'border-cyan-400/40 bg-cyan-400/10 text-cyan-300'
+                ? 'border-teal-400/40 bg-teal-400/10 text-teal-300'
                 : 'border-border bg-card text-foreground/50 hover:text-foreground/80'
             }`}
           >

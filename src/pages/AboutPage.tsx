@@ -54,11 +54,11 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="relative pt-32 pb-12 overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-background to-violet-500/10" />
+          <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-background to-violet-500/10" />
         </div>
         <div className="container mx-auto px-6 lg:px-8 relative z-10 text-center">
           <motion.div
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-400/30 bg-cyan-400/10 text-cyan-300 text-xs tracking-widest uppercase mb-6"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-teal-400/30 bg-teal-400/10 text-teal-300 text-xs tracking-widest uppercase mb-6"
             initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
           >
             Our Story
@@ -92,7 +92,7 @@ export default function AboutPage() {
       <section className="py-20 border-t border-border bg-card">
         <div className="container mx-auto px-6 lg:px-8 max-w-5xl">
           <div className="text-center mb-12">
-            <div className="text-xs text-cyan-300 uppercase tracking-widest mb-3">Our Impact</div>
+            <div className="text-xs text-teal-300 uppercase tracking-widest mb-3">Our Impact</div>
             <h2 className="text-3xl md:text-4xl font-bold mb-3">Driving progress in aquaculture</h2>
             <p className="text-sm text-foreground/60 max-w-2xl mx-auto">
               Over time, Aqua Rudra has made a measurable impact in aquaculture — helping farmers
@@ -124,7 +124,7 @@ export default function AboutPage() {
       <section className="py-20 border-t border-border">
         <div className="container mx-auto px-6 lg:px-8 max-w-5xl">
           <div className="text-center mb-12">
-            <div className="text-xs text-cyan-300 uppercase tracking-widest mb-3">Our Change in Industry</div>
+            <div className="text-xs text-teal-300 uppercase tracking-widest mb-3">Our Change in Industry</div>
             <h2 className="text-3xl md:text-4xl font-bold mb-3">Aquaculture challenges & Aqua Rudra's solutions</h2>
             <p className="text-sm text-foreground/60 max-w-2xl mx-auto">
               Tackling obstacles — our journey of incremental solutions.
@@ -149,7 +149,7 @@ export default function AboutPage() {
                     <div className="text-lg font-bold text-foreground mb-2">{c.challenge}</div>
                     <p className="text-sm text-foreground/60 leading-relaxed">{c.challengeBody}</p>
                   </div>
-                  <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-cyan-400 ring-4 ring-cyan-400/20" />
+                  <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-teal-400 ring-4 ring-teal-400/20" />
                   <div className="md:pl-6">
                     <div className="text-[11px] uppercase tracking-widest text-emerald-300 mb-2">Aqua Rudra's Solution</div>
                     <div className="text-lg font-bold text-foreground mb-2">{c.solution}</div>
@@ -165,7 +165,7 @@ export default function AboutPage() {
       {/* Breaking Barriers — multilingual */}
       <section className="py-20 border-t border-border bg-card">
         <div className="container mx-auto px-6 lg:px-8 max-w-3xl text-center">
-          <div className="text-xs text-cyan-300 uppercase tracking-widest mb-3">
+          <div className="text-xs text-teal-300 uppercase tracking-widest mb-3">
             Embracing Challenges, Strengthening Ties
           </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Breaking barriers, connecting communities</h2>
@@ -183,7 +183,7 @@ export default function AboutPage() {
           <div className="inline-flex flex-wrap items-center gap-2 justify-center">
             {['English', 'తెలుగు', 'தமிழ்', 'हिन्दी', 'ଓଡ଼ିଆ', 'বাংলা'].map((lang) => (
               <span key={lang} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-card text-sm text-foreground/80">
-                <Languages className="w-3 h-3 text-cyan-400" /> {lang}
+                <Languages className="w-3 h-3 text-teal-400" /> {lang}
               </span>
             ))}
           </div>
@@ -200,7 +200,7 @@ export default function AboutPage() {
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link
               to="/signup"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-semibold text-sm"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 text-black font-semibold text-sm"
             >
               Get started <ArrowRight className="w-4 h-4" />
             </Link>

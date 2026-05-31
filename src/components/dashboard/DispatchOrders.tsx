@@ -100,7 +100,7 @@ export function DispatchOrders() {
                 onClick={() => setSelected(d.id)}
                 className={`w-full text-left p-3 rounded-xl border transition flex items-center gap-3 ${
                   selected === d.id
-                    ? 'border-cyan-400/40 bg-cyan-400/5'
+                    ? 'border-teal-400/40 bg-teal-400/5'
                     : 'border-border bg-card hover:bg-muted'
                 }`}
               >
@@ -164,7 +164,7 @@ export function DispatchOrders() {
                   {active.etaHours !== undefined && (
                     <div className="flex items-center justify-between">
                       <span className="text-foreground/50">ETA</span>
-                      <span className="text-cyan-300">{active.etaHours.toFixed(1)} h</span>
+                      <span className="text-teal-300">{active.etaHours.toFixed(1)} h</span>
                     </div>
                   )}
                 </div>
@@ -201,7 +201,7 @@ export function DispatchOrders() {
                     <span className="text-foreground">{active.driver}</span>
                     <a
                       href={`tel:${active.driverPhone.replace(/\s/g, '')}`}
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-cyan-500/20 border border-cyan-400/30 text-cyan-300"
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-teal-500/20 border border-teal-400/30 text-teal-300"
                     >
                       <Phone className="w-3 h-3" /> Call
                     </a>

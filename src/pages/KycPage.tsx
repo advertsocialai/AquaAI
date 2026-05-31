@@ -106,7 +106,7 @@ export default function KycPage() {
     <div className="min-h-screen bg-background text-foreground">
       <header className="px-6 lg:px-8 py-6 flex items-center justify-between max-w-4xl mx-auto">
         <Link to="/" className="inline-flex items-center gap-2">
-          <Fish className="w-4 h-4 text-cyan-400" />
+          <Fish className="w-4 h-4 text-teal-400" />
           <span className="font-semibold">AquaI</span>
         </Link>
         <div className="text-[11px] text-foreground/30 inline-flex items-center gap-1.5">
@@ -132,7 +132,7 @@ export default function KycPage() {
                 <div
                   className={`shrink-0 w-7 h-7 rounded-full flex items-center justify-center border ${
                     done ? 'bg-emerald-400 text-black border-emerald-400'
-                    : active ? 'bg-cyan-400 text-black border-cyan-400'
+                    : active ? 'bg-teal-400 text-black border-teal-400'
                     : 'bg-card text-foreground/40 border-border'
                   }`}
                 >
@@ -159,8 +159,8 @@ export default function KycPage() {
             >
               <label className="block">
                 <span className="text-[11px] uppercase tracking-widest text-foreground/40">12-digit Aadhaar number</span>
-                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
-                  <ShieldCheck className="w-4 h-4 text-cyan-400" />
+                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                  <ShieldCheck className="w-4 h-4 text-teal-400" />
                   <input
                     autoFocus
                     inputMode="numeric"
@@ -177,7 +177,7 @@ export default function KycPage() {
               <button
                 type="submit"
                 disabled={aadhaar.length !== 12}
-                className="w-full sm:w-auto px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-30 text-black font-semibold text-sm inline-flex items-center gap-2"
+                className="w-full sm:w-auto px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 text-black font-semibold text-sm inline-flex items-center gap-2"
               >
                 Send Aadhaar OTP <ArrowRight className="w-4 h-4" />
               </button>
@@ -195,12 +195,12 @@ export default function KycPage() {
             >
               <div className="text-sm text-foreground/70">
                 OTP sent by NSDL to the mobile linked to your Aadhaar.{' '}
-                <button type="button" onClick={() => setStep('aadhaar')} className="text-cyan-400 hover:underline">change</button>
+                <button type="button" onClick={() => setStep('aadhaar')} className="text-teal-400 hover:underline">change</button>
               </div>
               <label className="block">
                 <span className="text-[11px] uppercase tracking-widest text-foreground/40">6-digit OTP</span>
-                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
-                  <KeyRound className="w-4 h-4 text-cyan-400" />
+                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                  <KeyRound className="w-4 h-4 text-teal-400" />
                   <input
                     autoFocus
                     inputMode="numeric"
@@ -216,7 +216,7 @@ export default function KycPage() {
               <button
                 type="submit"
                 disabled={otp.length !== 6 || otpVerifying}
-                className="w-full sm:w-auto px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-30 text-black font-semibold text-sm inline-flex items-center gap-2"
+                className="w-full sm:w-auto px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 text-black font-semibold text-sm inline-flex items-center gap-2"
               >
                 Verify <Check className="w-4 h-4" />
               </button>
@@ -235,7 +235,7 @@ export default function KycPage() {
               <form onSubmit={submitPan} className="space-y-4">
                 <label className="block">
                   <span className="text-[11px] uppercase tracking-widest text-foreground/40">PAN (ABCDE1234F)</span>
-                  <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
+                  <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
                     <BadgeCheck className="w-4 h-4 text-violet-400" />
                     <input
                       autoFocus
@@ -249,7 +249,7 @@ export default function KycPage() {
                 <button
                   type="submit"
                   disabled={!/^[A-Z]{5}[0-9]{4}[A-Z]$/.test(pan)}
-                  className="px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-30 text-black font-semibold text-sm inline-flex items-center gap-2"
+                  className="px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 text-black font-semibold text-sm inline-flex items-center gap-2"
                 >
                   Verify PAN <ArrowRight className="w-4 h-4" />
                 </button>
@@ -270,7 +270,7 @@ export default function KycPage() {
               <form onSubmit={submitGst} className="space-y-4">
                 <label className="block">
                   <span className="text-[11px] uppercase tracking-widest text-foreground/40">GSTIN (15 chars · skip if individual)</span>
-                  <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
+                  <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
                     <Building2 className="w-4 h-4 text-amber-400" />
                     <input
                       autoFocus
@@ -285,7 +285,7 @@ export default function KycPage() {
                   <button
                     type="submit"
                     disabled={gst.length < 15}
-                    className="px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-30 text-black font-semibold text-sm inline-flex items-center gap-2"
+                    className="px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 text-black font-semibold text-sm inline-flex items-center gap-2"
                   >
                     Verify GST <ArrowRight className="w-4 h-4" />
                   </button>
@@ -316,7 +316,7 @@ export default function KycPage() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <label className="block">
                     <span className="text-[11px] uppercase tracking-widest text-foreground/40">Account number</span>
-                    <div className="mt-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
+                    <div className="mt-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
                       <input
                         value={accountNo}
                         onChange={(e) => setAccountNo(e.target.value.replace(/\D/g, '').slice(0, 18))}
@@ -327,7 +327,7 @@ export default function KycPage() {
                   </label>
                   <label className="block">
                     <span className="text-[11px] uppercase tracking-widest text-foreground/40">IFSC</span>
-                    <div className="mt-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
+                    <div className="mt-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
                       <input
                         value={ifsc}
                         onChange={(e) => setIfsc(e.target.value.toUpperCase().slice(0, 11))}
@@ -340,7 +340,7 @@ export default function KycPage() {
                 <button
                   type="submit"
                   disabled={accountNo.length < 8 || ifsc.length !== 11 || pennyDrop === 'running'}
-                  className="px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-30 text-black font-semibold text-sm inline-flex items-center gap-2"
+                  className="px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 text-black font-semibold text-sm inline-flex items-center gap-2"
                 >
                   {pennyDrop === 'running' ? <Pending /> : <Smartphone className="w-4 h-4" />}
                   Run penny-drop verification
@@ -377,7 +377,7 @@ export default function KycPage() {
               </div>
               <Link
                 to="/aquaai#dashboard"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-semibold text-sm"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 text-black font-semibold text-sm"
               >
                 Continue to dashboard <ArrowRight className="w-4 h-4" />
               </Link>

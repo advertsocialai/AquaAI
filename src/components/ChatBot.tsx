@@ -47,7 +47,7 @@ export function ChatBot() {
         onClick={() => setOpen((o) => !o)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-br from-cyan-500 to-violet-500 shadow-lg shadow-cyan-500/30 flex items-center justify-center text-white"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-br from-teal-500 to-violet-500 shadow-lg shadow-teal-500/30 flex items-center justify-center text-white"
         aria-label="Open chat"
       >
         {open ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
@@ -62,8 +62,8 @@ export function ChatBot() {
             transition={{ duration: 0.2 }}
             className="fixed bottom-24 right-6 z-50 w-[min(380px,calc(100vw-3rem))] h-[520px] rounded-2xl border border-border bg-card/95 backdrop-blur-xl shadow-2xl flex flex-col overflow-hidden"
           >
-            <div className="flex items-center gap-3 p-4 border-b border-border bg-gradient-to-r from-cyan-500/10 to-violet-500/10">
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-cyan-500 to-violet-500 flex items-center justify-center">
+            <div className="flex items-center gap-3 p-4 border-b border-border bg-gradient-to-r from-teal-500/10 to-violet-500/10">
+              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-teal-500 to-violet-500 flex items-center justify-center">
                 <Bot className="w-4 h-4 text-foreground" />
               </div>
               <div className="flex-1 min-w-0">
@@ -92,14 +92,14 @@ export function ChatBot() {
                   <div
                     className={`max-w-[85%] px-3 py-2 rounded-2xl text-sm leading-relaxed ${
                       m.role === 'user'
-                        ? 'bg-cyan-500/20 text-cyan-100 rounded-br-sm'
+                        ? 'bg-teal-500/20 text-teal-100 rounded-br-sm'
                         : 'bg-card text-foreground/90 rounded-bl-sm'
                     }`}
                   >
                     {m.role === 'bot' && (
                       <div className="flex items-center gap-1.5 mb-1">
-                        <Sparkles className="w-3 h-3 text-cyan-400" />
-                        <span className="text-[10px] uppercase tracking-widest text-cyan-400">AquaI</span>
+                        <Sparkles className="w-3 h-3 text-teal-400" />
+                        <span className="text-[10px] uppercase tracking-widest text-teal-400">AquaI</span>
                       </div>
                     )}
                     {m.text}
@@ -133,12 +133,12 @@ export function ChatBot() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask anything…"
-                className="flex-1 px-3 py-2 rounded-xl bg-card border border-border text-foreground text-sm outline-none focus:border-cyan-400/40 placeholder:text-foreground/30"
+                className="flex-1 px-3 py-2 rounded-xl bg-card border border-border text-foreground text-sm outline-none focus:border-teal-400/40 placeholder:text-foreground/30"
               />
               <button
                 type="submit"
                 disabled={!input.trim()}
-                className="p-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-30 disabled:cursor-not-allowed text-black transition"
+                className="p-2 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black transition"
               >
                 <Send className="w-4 h-4" />
               </button>

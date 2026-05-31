@@ -186,7 +186,7 @@ export default function KnowledgeArticlePage() {
             <ArrowLeft className="w-3 h-3" /> Knowledge Hub
           </Link>
           <div className="flex items-center gap-3 mb-4 text-[11px]">
-            <span className="px-2 py-0.5 rounded-full border border-cyan-400/30 bg-cyan-400/10 text-cyan-300 uppercase tracking-wide">
+            <span className="px-2 py-0.5 rounded-full border border-teal-400/30 bg-teal-400/10 text-teal-300 uppercase tracking-wide">
               {article.category}
             </span>
             <span className="inline-flex items-center gap-1 text-foreground/40"><Clock className="w-3 h-3" /> {article.readMin} min read</span>
@@ -229,8 +229,8 @@ export default function KnowledgeArticlePage() {
                 );
               if (block.kind === 'callout-tip')
                 return (
-                  <div key={i} className="flex items-start gap-3 p-4 rounded-xl border border-cyan-400/30 bg-cyan-400/5">
-                    <Lightbulb className="w-5 h-5 text-cyan-300 shrink-0 mt-0.5" />
+                  <div key={i} className="flex items-start gap-3 p-4 rounded-xl border border-teal-400/30 bg-teal-400/5">
+                    <Lightbulb className="w-5 h-5 text-teal-300 shrink-0 mt-0.5" />
                     <p className="text-sm text-foreground/85 italic">{block.text}</p>
                   </div>
                 );
@@ -271,7 +271,7 @@ export default function KnowledgeArticlePage() {
       {related.length > 0 && (
         <section className="py-20 border-t border-border mt-16 bg-card">
           <div className="container mx-auto px-6 lg:px-8 max-w-5xl">
-            <div className="text-xs text-cyan-300 uppercase tracking-widest mb-2">Related reading</div>
+            <div className="text-xs text-teal-300 uppercase tracking-widest mb-2">Related reading</div>
             <h2 className="text-2xl font-bold mb-8">More from {article.category}</h2>
             <div className="grid sm:grid-cols-3 gap-4">
               {related.map((r) => (
@@ -285,7 +285,7 @@ export default function KnowledgeArticlePage() {
                     style={{ backgroundImage: `url(${r.hero})` }}
                   />
                   <div className="p-4">
-                    <div className="text-sm font-semibold text-foreground group-hover:text-cyan-300 leading-snug line-clamp-3 transition">
+                    <div className="text-sm font-semibold text-foreground group-hover:text-teal-300 leading-snug line-clamp-3 transition">
                       {r.title}
                     </div>
                     <div className="text-[11px] text-foreground/40 mt-2 inline-flex items-center gap-1">
@@ -298,7 +298,7 @@ export default function KnowledgeArticlePage() {
             <div className="text-center mt-8">
               <Link
                 to="/knowledge"
-                className="inline-flex items-center gap-2 text-sm text-cyan-300 hover:text-cyan-200"
+                className="inline-flex items-center gap-2 text-sm text-teal-300 hover:text-teal-200"
               >
                 <BookOpen className="w-4 h-4" /> Browse all articles <ArrowRight className="w-4 h-4" />
               </Link>

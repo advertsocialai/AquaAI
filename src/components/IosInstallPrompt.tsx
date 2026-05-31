@@ -111,11 +111,11 @@ export function IosInstallPrompt() {
       data-voice-skip
       role="dialog"
       aria-label="Install Aqua Rudra"
-      className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 w-[min(96vw,420px)] rounded-2xl border border-cyan-400/30 bg-popover/95 backdrop-blur-xl shadow-2xl shadow-cyan-500/30 p-4"
+      className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 w-[min(96vw,420px)] rounded-2xl border border-teal-400/30 bg-popover/95 backdrop-blur-xl shadow-2xl shadow-teal-500/30 p-4"
     >
       <div className="flex items-start gap-3">
-        <div className="shrink-0 w-10 h-10 rounded-xl bg-cyan-400/15 border border-cyan-400/30 flex items-center justify-center">
-          <Smartphone className="w-5 h-5 text-cyan-300" />
+        <div className="shrink-0 w-10 h-10 rounded-xl bg-teal-400/15 border border-teal-400/30 flex items-center justify-center">
+          <Smartphone className="w-5 h-5 text-teal-300" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between gap-2">
@@ -136,7 +136,7 @@ export function IosInstallPrompt() {
               <div className="mt-3 flex items-center gap-2">
                 <button
                   onClick={triggerNativeInstall}
-                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-cyan-400 hover:bg-cyan-300 text-black text-xs font-semibold"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-teal-400 hover:bg-teal-300 text-black text-xs font-semibold"
                 >
                   <Download className="w-3.5 h-3.5" /> Install
                 </button>
@@ -155,21 +155,21 @@ export function IosInstallPrompt() {
               </p>
               <ol className="mt-3 space-y-2 text-xs text-foreground/80">
                 <li className="flex items-center gap-2">
-                  <span className="shrink-0 w-5 h-5 rounded-full bg-cyan-400/20 text-cyan-300 grid place-items-center text-[10px] font-bold">1</span>
+                  <span className="shrink-0 w-5 h-5 rounded-full bg-teal-400/20 text-teal-300 grid place-items-center text-[10px] font-bold">1</span>
                   <span className="inline-flex items-center gap-1">
-                    Tap the <Share className="inline w-3.5 h-3.5 mx-1 text-cyan-300" /> Share button in Safari
+                    Tap the <Share className="inline w-3.5 h-3.5 mx-1 text-teal-300" /> Share button in Safari
                   </span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="shrink-0 w-5 h-5 rounded-full bg-cyan-400/20 text-cyan-300 grid place-items-center text-[10px] font-bold">2</span>
+                  <span className="shrink-0 w-5 h-5 rounded-full bg-teal-400/20 text-teal-300 grid place-items-center text-[10px] font-bold">2</span>
                   <span className="inline-flex items-center gap-1">
                     Scroll down and tap
-                    <Plus className="inline w-3.5 h-3.5 mx-1 text-cyan-300" />
+                    <Plus className="inline w-3.5 h-3.5 mx-1 text-teal-300" />
                     <span>Add to Home Screen</span>
                   </span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="shrink-0 w-5 h-5 rounded-full bg-cyan-400/20 text-cyan-300 grid place-items-center text-[10px] font-bold">3</span>
+                  <span className="shrink-0 w-5 h-5 rounded-full bg-teal-400/20 text-teal-300 grid place-items-center text-[10px] font-bold">3</span>
                   <span>Tap <strong className="text-foreground">Add</strong> to confirm</span>
                 </li>
               </ol>

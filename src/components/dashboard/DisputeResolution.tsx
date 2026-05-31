@@ -111,7 +111,7 @@ export function DisputeResolution() {
               onClick={() => setSelected(d.id)}
               className={`w-full text-left p-3 rounded-xl border transition ${
                 selected === d.id
-                  ? 'border-cyan-400/40 bg-cyan-400/5'
+                  ? 'border-teal-400/40 bg-teal-400/5'
                   : 'border-border bg-card hover:bg-muted'
               }`}
             >
@@ -165,7 +165,7 @@ export function DisputeResolution() {
                 <div className="space-y-2 max-h-56 overflow-y-auto">
                   {active.messages.map((m, i) => {
                     const tone =
-                      m.from === 'AquaI'    ? 'border-cyan-400/30 bg-cyan-400/5'
+                      m.from === 'AquaI'    ? 'border-teal-400/30 bg-teal-400/5'
                       : m.from === 'Buyer'  ? 'border-amber-400/30 bg-amber-400/5'
                       :                       'border-border bg-card';
                     return (
@@ -190,12 +190,12 @@ export function DisputeResolution() {
                     value={reply}
                     onChange={(e) => setReply(e.target.value)}
                     placeholder="Reply to buyer or escalate to AquaI mediator…"
-                    className="flex-1 px-3 py-2 rounded-lg bg-card border border-border text-foreground text-sm outline-none focus:border-cyan-400/40 placeholder:text-foreground/30"
+                    className="flex-1 px-3 py-2 rounded-lg bg-card border border-border text-foreground text-sm outline-none focus:border-teal-400/40 placeholder:text-foreground/30"
                   />
                   <button
                     type="submit"
                     disabled={!reply.trim()}
-                    className="p-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 disabled:opacity-30 text-black"
+                    className="p-2 rounded-lg bg-teal-500 hover:bg-teal-400 disabled:opacity-30 text-black"
                   >
                     <Send className="w-4 h-4" />
                   </button>

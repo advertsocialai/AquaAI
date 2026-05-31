@@ -78,13 +78,13 @@ export function Footer() {
       <div className="border-b border-border">
         <div className="mx-auto w-full max-w-5xl px-5 sm:px-6 lg:px-8 py-8 md:py-10 grid md:grid-cols-2 gap-6 md:gap-8 items-center">
           <div>
-            <div className="text-xs uppercase tracking-widest text-cyan-300 mb-2">{t('footer.subscribe')}</div>
+            <div className="text-xs uppercase tracking-widest text-teal-300 mb-2">{t('footer.subscribe')}</div>
             <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2 leading-tight">{t('footer.tagline')}</h3>
             <p className="text-sm sm:text-base text-foreground/70">{t('footer.subscribeSub')}</p>
           </div>
           <form onSubmit={subscribe} className="flex items-center gap-2 w-full md:max-w-md md:ml-auto">
-            <div className="flex items-center gap-2 flex-1 min-w-0 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
-              <Mail className="w-4 h-4 text-cyan-400 shrink-0" />
+            <div className="flex items-center gap-2 flex-1 min-w-0 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+              <Mail className="w-4 h-4 text-teal-400 shrink-0" />
               <input
                 type="email"
                 value={email}
@@ -100,7 +100,7 @@ export function Footer() {
             <button
               type="submit"
               disabled={subscribed}
-              className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-60 text-black font-semibold text-sm shrink-0"
+              className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-60 text-black font-semibold text-sm shrink-0"
             >
               {subscribed ? <><Check className="w-4 h-4" /> Subscribed</> : <><Send className="w-4 h-4" /> Subscribe</>}
             </button>
@@ -113,7 +113,7 @@ export function Footer() {
         {/* Brand + apps + social */}
         <div className="space-y-4">
           <Link to="/" className="inline-flex items-center gap-3">
-            <img src={atomLogo} alt="Aqua Rudra" className="w-8 h-8 object-contain text-cyan-300" />
+            <img src={atomLogo} alt="Aqua Rudra" className="w-8 h-8 object-contain text-teal-300" />
             <span className="text-lg font-bold text-foreground tracking-wider">AQUA<span className="font-light"> RUDRA</span></span>
           </Link>
           <p className="text-sm text-foreground/70 leading-relaxed max-w-sm">{t('footer.brandLine')}</p>
@@ -150,15 +150,15 @@ export function Footer() {
             </a>
           </div>
           <div className="flex items-center gap-4 pt-2">
-            <a href={SOCIAL.facebook}  target="_blank" rel="noopener noreferrer" aria-label="Facebook"  className="text-foreground/60 hover:text-cyan-300 transition"><Facebook  className="w-4 h-4" /></a>
-            <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-foreground/60 hover:text-cyan-300 transition"><Instagram className="w-4 h-4" /></a>
-            <a href={SOCIAL.youtube}   target="_blank" rel="noopener noreferrer" aria-label="YouTube"   className="text-foreground/60 hover:text-cyan-300 transition"><Youtube   className="w-4 h-4" /></a>
+            <a href={SOCIAL.facebook}  target="_blank" rel="noopener noreferrer" aria-label="Facebook"  className="text-foreground/60 hover:text-teal-300 transition"><Facebook  className="w-4 h-4" /></a>
+            <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-foreground/60 hover:text-teal-300 transition"><Instagram className="w-4 h-4" /></a>
+            <a href={SOCIAL.youtube}   target="_blank" rel="noopener noreferrer" aria-label="YouTube"   className="text-foreground/60 hover:text-teal-300 transition"><Youtube   className="w-4 h-4" /></a>
           </div>
         </div>
 
         {/* Quick links */}
         <div>
-          <div className="text-xs uppercase tracking-widest text-cyan-300 mb-4">{t('footer.quickLinks')}</div>
+          <div className="text-xs uppercase tracking-widest text-teal-300 mb-4">{t('footer.quickLinks')}</div>
           <ul className="space-y-2.5">
             {QUICK_LINKS.map((l) => (
               <li key={l.label}>
@@ -172,28 +172,28 @@ export function Footer() {
 
         {/* Get in touch */}
         <div>
-          <div className="text-xs uppercase tracking-widest text-cyan-300 mb-4">{t('footer.getInTouch')}</div>
+          <div className="text-xs uppercase tracking-widest text-teal-300 mb-4">{t('footer.getInTouch')}</div>
           <ul className="space-y-2.5 text-sm">
             <li className="flex items-start gap-2.5 text-foreground/75">
-              <Phone className="w-4 h-4 mt-0.5 text-cyan-400 shrink-0" />
+              <Phone className="w-4 h-4 mt-0.5 text-teal-400 shrink-0" />
               <a href={`tel:${PRIMARY_PHONE.replace(/\s/g, '')}`} className="hover:text-foreground transition">{PRIMARY_PHONE}</a>
             </li>
             <li className="flex items-start gap-2.5 text-foreground/75">
-              <Mail className="w-4 h-4 mt-0.5 text-cyan-400 shrink-0" />
+              <Mail className="w-4 h-4 mt-0.5 text-teal-400 shrink-0" />
               <a href={`mailto:${PRIMARY_EMAIL}`} className="hover:text-foreground transition break-all">{PRIMARY_EMAIL}</a>
             </li>
             <li className="flex items-start gap-2.5 text-foreground/75">
-              <Mail className="w-4 h-4 mt-0.5 text-cyan-400 shrink-0" />
+              <Mail className="w-4 h-4 mt-0.5 text-teal-400 shrink-0" />
               <a href={`mailto:${SUPPORT_EMAIL}`} className="hover:text-foreground transition break-all">{SUPPORT_EMAIL}</a>
             </li>
             <li className="flex items-start gap-2.5 text-foreground/75">
-              <MapPin className="w-4 h-4 mt-0.5 text-cyan-400 shrink-0" />
+              <MapPin className="w-4 h-4 mt-0.5 text-teal-400 shrink-0" />
               <span>Andhra Pradesh, India</span>
             </li>
           </ul>
           <Link
             to="/contact"
-            className="inline-flex items-center gap-1.5 mt-4 text-sm text-cyan-400 hover:underline"
+            className="inline-flex items-center gap-1.5 mt-4 text-sm text-teal-400 hover:underline"
           >
             {t('footer.sendMessage')} <ArrowRight className="w-3.5 h-3.5" />
           </Link>

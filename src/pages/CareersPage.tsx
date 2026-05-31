@@ -44,12 +44,12 @@ export default function CareersPage() {
       {/* Hero */}
       <section className="relative pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-background to-violet-500/10" />
-          <div className="absolute top-0 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
+          <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-background to-violet-500/10" />
+          <div className="absolute top-0 right-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl" />
         </div>
         <div className="container mx-auto px-6 lg:px-8 relative z-10 text-center">
           <motion.div
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-400/30 bg-cyan-400/10 text-cyan-300 text-xs tracking-widest uppercase mb-6"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-teal-400/30 bg-teal-400/10 text-teal-300 text-xs tracking-widest uppercase mb-6"
             initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
           >
             Careers · We're hiring
@@ -74,7 +74,7 @@ export default function CareersPage() {
       <section className="py-20 border-t border-border">
         <div className="container mx-auto px-6 lg:px-8 max-w-6xl">
           <div className="text-center mb-12">
-            <div className="text-xs text-cyan-300 uppercase tracking-widest mb-3">Our Work Culture</div>
+            <div className="text-xs text-teal-300 uppercase tracking-widest mb-3">Our Work Culture</div>
             <h2 className="text-3xl md:text-4xl font-bold">Career Perks</h2>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -87,8 +87,8 @@ export default function CareersPage() {
                 transition={{ duration: 0.4, delay: i * 0.05 }}
                 className="p-6 rounded-2xl border border-border bg-card hover:bg-muted transition"
               >
-                <div className="w-10 h-10 rounded-xl bg-cyan-400/10 border border-cyan-400/20 flex items-center justify-center mb-4">
-                  <Icon className="w-5 h-5 text-cyan-300" />
+                <div className="w-10 h-10 rounded-xl bg-teal-400/10 border border-teal-400/20 flex items-center justify-center mb-4">
+                  <Icon className="w-5 h-5 text-teal-300" />
                 </div>
                 <div className="text-base font-semibold text-foreground mb-2">{title}</div>
                 <p className="text-sm text-foreground/60 leading-relaxed">{desc}</p>
@@ -102,7 +102,7 @@ export default function CareersPage() {
       <section className="py-20 border-t border-border bg-card">
         <div className="container mx-auto px-6 lg:px-8 max-w-5xl">
           <div className="text-center mb-12">
-            <div className="text-xs text-cyan-300 uppercase tracking-widest mb-3">Aqua Rudra Kingship</div>
+            <div className="text-xs text-teal-300 uppercase tracking-widest mb-3">Aqua Rudra Kingship</div>
             <h2 className="text-3xl md:text-4xl font-bold">Why Aqua Rudra?</h2>
             <p className="text-foreground/60 mt-4 max-w-2xl mx-auto text-sm">
               At Aqua Rudra we are driven by innovation, collaboration and the pursuit of excellence.
@@ -136,7 +136,7 @@ export default function CareersPage() {
       <section className="py-20 border-t border-border">
         <div className="container mx-auto px-6 lg:px-8 max-w-4xl">
           <div className="mb-10">
-            <div className="text-xs text-cyan-300 uppercase tracking-widest mb-3">Open Roles</div>
+            <div className="text-xs text-teal-300 uppercase tracking-widest mb-3">Open Roles</div>
             <h2 className="text-3xl md:text-4xl font-bold">Current openings</h2>
           </div>
           <div className="space-y-3">
@@ -154,7 +154,7 @@ export default function CareersPage() {
                 </div>
                 <Link
                   to="/contact"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border group-hover:border-cyan-400/40 group-hover:bg-cyan-400/10 text-xs text-foreground/80 group-hover:text-cyan-300 transition"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border group-hover:border-teal-400/40 group-hover:bg-teal-400/10 text-xs text-foreground/80 group-hover:text-teal-300 transition"
                 >
                   Apply <ArrowRight className="w-3 h-3" />
                 </Link>
@@ -177,7 +177,7 @@ export default function CareersPage() {
           </p>
           <Link
             to="/contact"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-semibold text-sm"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 text-black font-semibold text-sm"
           >
             <Upload className="w-4 h-4" /> Post your resume
           </Link>

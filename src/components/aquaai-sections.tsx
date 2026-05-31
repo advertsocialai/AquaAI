@@ -57,7 +57,7 @@ export function BuiltForRoles() {
     <section className="py-24 border-t border-border">
       <div className="container mx-auto px-6 lg:px-8 max-w-6xl">
         <div className="text-center mb-14">
-          <div className="text-sm text-cyan-300 uppercase tracking-widest mb-4">{t('builtFor.head')}</div>
+          <div className="text-sm text-teal-300 uppercase tracking-widest mb-4">{t('builtFor.head')}</div>
           <h2 className="text-4xl md:text-5xl font-bold leading-tight">{t('builtFor.title')}</h2>
           <p className="text-base md:text-lg text-foreground/65 max-w-2xl mx-auto mt-4 leading-relaxed">{t('builtFor.sub')}</p>
         </div>
@@ -66,7 +66,7 @@ export function BuiltForRoles() {
 
         <div className="mt-20">
           <div className="text-center mb-10">
-            <div className="text-sm text-cyan-300 uppercase tracking-widest mb-3">{t('aquaServices.head')}</div>
+            <div className="text-sm text-teal-300 uppercase tracking-widest mb-3">{t('aquaServices.head')}</div>
             <h3 className="text-2xl md:text-3xl font-bold leading-tight">{t('aquaServices.title')}</h3>
           </div>
           <RoleGrid items={SERVICE_ROLES} cols="sm:grid-cols-2 md:grid-cols-4" />
@@ -105,7 +105,7 @@ export function Testimonials() {
     <section className="py-24 border-t border-border">
       <div className="container mx-auto px-6 lg:px-8 max-w-6xl">
         <div className="text-center mb-14">
-          <div className="text-sm text-cyan-300 uppercase tracking-widest mb-4">{t('testimonials.head')}</div>
+          <div className="text-sm text-teal-300 uppercase tracking-widest mb-4">{t('testimonials.head')}</div>
           <h2 className="text-4xl md:text-5xl font-bold leading-tight">{t('testimonials.title')}</h2>
         </div>
         <div className="grid md:grid-cols-3 gap-5">
@@ -144,11 +144,11 @@ export function Testimonials() {
 export function MobileAppCta() {
   const { t } = useTranslation();
   return (
-    <section id="download-app" className="py-24 border-t border-border bg-gradient-to-br from-cyan-500/10 via-background to-violet-500/10 scroll-mt-24">
+    <section id="download-app" className="py-24 border-t border-border bg-gradient-to-br from-teal-500/10 via-background to-violet-500/10 scroll-mt-24">
       <div className="container mx-auto px-6 lg:px-8 max-w-5xl">
         <div className="grid lg:grid-cols-5 gap-10 items-center">
           <div className="lg:col-span-3">
-            <div className="text-sm text-cyan-300 uppercase tracking-widest mb-4">{t('mobileApp.head')}</div>
+            <div className="text-sm text-teal-300 uppercase tracking-widest mb-4">{t('mobileApp.head')}</div>
             <h2 className="text-4xl md:text-5xl font-bold mb-5 leading-tight">{t('mobileApp.title')}</h2>
             <p className="text-base md:text-lg text-foreground/70 mb-8 max-w-xl leading-relaxed">{t('mobileApp.body')}</p>
             <div className="flex flex-wrap items-center gap-3">
@@ -178,10 +178,10 @@ export function MobileAppCta() {
             </div>
           </div>
           <div className="lg:col-span-2 flex justify-center">
-            <div className="relative w-56 h-[460px] rounded-[2.5rem] border-[10px] border-border bg-gradient-to-br from-cyan-500/10 to-violet-500/10 overflow-hidden shadow-2xl shadow-cyan-500/20">
+            <div className="relative w-56 h-[460px] rounded-[2.5rem] border-[10px] border-border bg-gradient-to-br from-teal-500/10 to-violet-500/10 overflow-hidden shadow-2xl shadow-teal-500/20">
               <div className="absolute top-3 left-1/2 -translate-x-1/2 w-20 h-4 rounded-full bg-black/80" />
               <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
-                <Smartphone className="w-10 h-10 text-cyan-300 mb-4" />
+                <Smartphone className="w-10 h-10 text-teal-300 mb-4" />
                 <div className="text-sm font-bold text-foreground mb-1">Aqua Rudra</div>
                 <div className="text-[11px] text-foreground/50 mb-6">Tap to count PLs</div>
                 <div className="w-full p-3 rounded-xl bg-card border border-border mb-2">
@@ -226,7 +226,7 @@ export function FaqSection() {
     <section className="py-24 border-t border-border">
       <div className="container mx-auto px-6 lg:px-8 max-w-3xl">
         <div className="text-center mb-12">
-          <div className="text-sm text-cyan-300 uppercase tracking-widest mb-4">{t('faq.head')}</div>
+          <div className="text-sm text-teal-300 uppercase tracking-widest mb-4">{t('faq.head')}</div>
           <h2 className="text-4xl md:text-5xl font-bold leading-tight">{t('faq.title')}</h2>
         </div>
         <div className="space-y-3">
@@ -241,7 +241,7 @@ export function FaqSection() {
               >
                 <span className="text-base md:text-lg font-medium text-foreground">{item.q}</span>
                 <ChevronDown
-                  className={`w-5 h-5 text-foreground/40 shrink-0 transition-transform ${open === i ? 'rotate-180 text-cyan-400' : ''}`}
+                  className={`w-5 h-5 text-foreground/40 shrink-0 transition-transform ${open === i ? 'rotate-180 text-teal-400' : ''}`}
                 />
               </button>
               <AnimatePresence initial={false}>
@@ -277,7 +277,7 @@ export function FinalCta() {
         <div className="flex flex-wrap items-center justify-center gap-3">
           <Link
             to="/signup"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-black font-semibold text-base"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-teal-400 hover:bg-teal-300 text-black font-semibold text-base"
           >
             {t('finalCta.createAccount')} <ArrowRight className="w-5 h-5" />
           </Link>

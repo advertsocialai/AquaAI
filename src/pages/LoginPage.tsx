@@ -46,16 +46,16 @@ export default function LoginPage() {
       {/* Left brand panel */}
       <div className="hidden lg:flex lg:col-span-3 relative overflow-hidden p-12 flex-col">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-background to-violet-500/10" />
+          <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-background to-violet-500/10" />
         </div>
 
         <Link to="/" className="relative z-10 inline-flex items-center gap-2 text-foreground/80 hover:text-foreground text-sm">
-          <Fish className="w-4 h-4 text-cyan-400" />
+          <Fish className="w-4 h-4 text-teal-400" />
           <span className="font-semibold">AquaI</span>
         </Link>
 
         <div className="relative z-10 mt-auto max-w-xl">
-          <div className="text-[11px] uppercase tracking-widest text-cyan-300/70 mb-6">
+          <div className="text-[11px] uppercase tracking-widest text-teal-300/70 mb-6">
             Decoding aquaculture, one pond at a time
           </div>
 
@@ -68,8 +68,8 @@ export default function LoginPage() {
               transition={{ duration: 0.4 }}
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="p-3 rounded-xl bg-cyan-400/10 border border-cyan-400/20">
-                  <PropIcon className="w-6 h-6 text-cyan-300" />
+                <div className="p-3 rounded-xl bg-teal-400/10 border border-teal-400/20">
+                  <PropIcon className="w-6 h-6 text-teal-300" />
                 </div>
                 <div className="text-3xl md:text-4xl font-bold">{prop.title}</div>
               </div>
@@ -83,7 +83,7 @@ export default function LoginPage() {
                 key={i}
                 onClick={() => setPropIdx(i)}
                 className={`h-1.5 rounded-full transition-all ${
-                  i === propIdx ? 'w-10 bg-cyan-400' : 'w-3 bg-card hover:bg-muted'
+                  i === propIdx ? 'w-10 bg-teal-400' : 'w-3 bg-card hover:bg-muted'
                 }`}
               />
             ))}
@@ -99,7 +99,7 @@ export default function LoginPage() {
       <div className="lg:col-span-2 flex flex-col p-6 lg:p-10 max-w-xl w-full mx-auto">
         <div className="flex items-center justify-between mb-12">
           <Link to="/" className="lg:hidden inline-flex items-center gap-2 text-foreground text-sm">
-            <Fish className="w-4 h-4 text-cyan-400" /><span className="font-semibold">AquaI</span>
+            <Fish className="w-4 h-4 text-teal-400" /><span className="font-semibold">AquaI</span>
           </Link>
           <div className="ml-auto flex items-center gap-2 text-xs">
             <Languages className="w-3.5 h-3.5 text-foreground/40" />
@@ -127,8 +127,8 @@ export default function LoginPage() {
             >
               <label className="block">
                 <span className="text-xs text-foreground/40 uppercase tracking-widest">Mobile number</span>
-                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
-                  <Smartphone className="w-4 h-4 text-cyan-400" />
+                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                  <Smartphone className="w-4 h-4 text-teal-400" />
                   <span className="text-foreground/40 text-sm">+91</span>
                   <input
                     autoFocus
@@ -146,7 +146,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={mobile.length < 10}
-                className="w-full py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm transition flex items-center justify-center gap-2"
+                className="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm transition flex items-center justify-center gap-2"
               >
                 Send OTP <ArrowRight className="w-4 h-4" />
               </button>
@@ -163,13 +163,13 @@ export default function LoginPage() {
             >
               <div className="text-sm text-foreground/60">
                 OTP sent to <span className="font-mono text-foreground">+91 {mobile}</span>{' '}
-                <button type="button" onClick={() => setStep('mobile')} className="text-cyan-400 hover:underline ml-2">change</button>
+                <button type="button" onClick={() => setStep('mobile')} className="text-teal-400 hover:underline ml-2">change</button>
               </div>
 
               <label className="block">
                 <span className="text-xs text-foreground/40 uppercase tracking-widest">6-digit OTP</span>
-                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-cyan-400/40">
-                  <KeyRound className="w-4 h-4 text-cyan-400" />
+                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                  <KeyRound className="w-4 h-4 text-teal-400" />
                   <input
                     autoFocus
                     type="text"
@@ -186,7 +186,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={otp.length !== 6}
-                className="w-full py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm transition flex items-center justify-center gap-2"
+                className="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm transition flex items-center justify-center gap-2"
               >
                 Sign in <ShieldCheck className="w-4 h-4" />
               </button>
@@ -195,14 +195,14 @@ export default function LoginPage() {
                 <button type="button" className="text-foreground/40 hover:text-foreground">
                   Didn't get the code? Resend in 30s
                 </button>
-                <Link to="/forgot-password" className="text-cyan-400 hover:underline">Forgot password</Link>
+                <Link to="/forgot-password" className="text-teal-400 hover:underline">Forgot password</Link>
               </div>
             </motion.form>
           )}
 
           <div className="mt-10 pt-6 border-t border-border text-sm text-foreground/50">
             New to AquaI?{' '}
-            <Link to="/signup" className="text-cyan-400 hover:underline font-medium">Create an account</Link>
+            <Link to="/signup" className="text-teal-400 hover:underline font-medium">Create an account</Link>
           </div>
 
           <div className="mt-4 text-[11px] text-foreground/30 leading-relaxed">

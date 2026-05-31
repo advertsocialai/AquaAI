@@ -110,7 +110,7 @@ export function CommunityModule() {
                   <span>·</span>
                   <span>{d.threads} threads</span>
                 </div>
-                <div className="text-xs text-cyan-300 line-clamp-2">🔥 {d.hot}</div>
+                <div className="text-xs text-teal-300 line-clamp-2">🔥 {d.hot}</div>
               </motion.button>
             ))}
           </div>
@@ -168,7 +168,7 @@ export function CommunityModule() {
               <div className="flex items-center justify-between pt-3 border-t border-border">
                 <div>
                   <div className="text-[10px] uppercase tracking-widest text-foreground/30">Yield</div>
-                  <div className="text-sm font-bold text-cyan-400 tabular-nums">{s.yield}</div>
+                  <div className="text-sm font-bold text-teal-400 tabular-nums">{s.yield}</div>
                 </div>
                 <div className="text-right">
                   <div className="text-[10px] uppercase tracking-widest text-foreground/30">Cycle profit</div>
@@ -185,7 +185,7 @@ export function CommunityModule() {
           {VLES.map((v) => (
             <div key={v.name} className="p-4 rounded-xl border border-border bg-card">
               <div className="flex items-center gap-2 mb-2">
-                <Users className="w-4 h-4 text-cyan-400" />
+                <Users className="w-4 h-4 text-teal-400" />
                 <div className="text-sm font-semibold text-foreground">{v.name}</div>
               </div>
               <div className="text-[11px] text-foreground/40 mb-3">{v.district} · since {v.since}</div>

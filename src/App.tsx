@@ -39,7 +39,7 @@ function RouteFallback() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
       <div className="flex items-center gap-3 text-foreground/40 text-sm">
-        <div className="w-4 h-4 rounded-full border-2 border-cyan-400 border-t-transparent animate-spin" />
+        <div className="w-4 h-4 rounded-full border-2 border-teal-400 border-t-transparent animate-spin" />
         Loading…
       </div>
     </div>

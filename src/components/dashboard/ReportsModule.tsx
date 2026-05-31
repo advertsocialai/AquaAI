@@ -122,7 +122,7 @@ export function ReportsModule() {
         <button className="flex items-center gap-2 px-3 py-2 rounded-xl border border-border bg-card text-xs text-foreground/60 hover:text-foreground">
           <Filter className="w-3.5 h-3.5 text-amber-400" /> Filters
         </button>
-        <button className="flex items-center gap-2 px-3 py-2 rounded-xl bg-cyan-500/20 border border-cyan-400/30 text-xs text-cyan-300 hover:bg-cyan-500/30">
+        <button className="flex items-center gap-2 px-3 py-2 rounded-xl bg-teal-500/20 border border-teal-400/30 text-xs text-teal-300 hover:bg-teal-500/30">
           <Download className="w-3.5 h-3.5" /> Export CSV
         </button>
       </div>
