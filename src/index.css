@@ -4,26 +4,41 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 6%;
-    --card: 0 0% 98%;
-    --card-foreground: 0 0% 6%;
+    /* AquaAI design system — clean, clinical, trustworthy. White base.
+       60/30/10: ~60% white+neutrals, ~30% aqua+ocean, ~10% coral (CTA only). */
+    --background: 0 0% 100%;              /* #FFFFFF */
+    --foreground: 198 42% 13%;            /* #13262E text primary */
+    --card: 180 21% 96%;                  /* #F4F8F8 surfaces */
+    --card-foreground: 198 42% 13%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 6%;
-    --primary: 200 90% 38%;
+    --popover-foreground: 198 42% 13%;
+    --primary: 173 80% 36%;               /* #12A594 aqua/teal brand */
     --primary-foreground: 0 0% 100%;
-    --secondary: 210 16% 95%;
-    --secondary-foreground: 0 0% 10%;
-    --muted: 210 16% 93%;
-    --muted-foreground: 0 0% 40%;
-    --accent: 200 90% 95%;
-    --accent-foreground: 200 90% 25%;
-    --destructive: 0 72% 51%;
+    --secondary: 166 46% 89%;             /* #D6F0EA teal tint soft fill */
+    --secondary-foreground: 198 42% 13%;
+    --muted: 180 21% 96%;                 /* #F4F8F8 */
+    --muted-foreground: 198 12% 40%;      /* #5A6B72 text secondary */
+    --accent: 166 46% 89%;               /* #D6F0EA */
+    --accent-foreground: 173 80% 36%;
+    --destructive: 4 70% 54%;             /* #DC4338 disease/alert */
     --destructive-foreground: 0 0% 100%;
-    --border: 210 16% 88%;
-    --input: 210 16% 88%;
-    --ring: 200 90% 38%;
+    --border: 180 19% 91%;                /* #E3ECEC */
+    --input: 180 19% 91%;
+    --ring: 173 80% 36%;
     --radius: 0.5rem;
+
+    /* Brand extras (not in stock shadcn token set) */
+    --ocean: 203 79% 20%;                 /* #0B3D5C headers / nav */
+    --ocean-foreground: 0 0% 100%;
+    --coral: 11 100% 65%;                 /* #FF6B4A — PRIMARY CTA ONLY */
+    --coral-hover: 10 75% 52%;            /* #E04A2B */
+    --coral-foreground: 0 0% 100%;
+    --brand-tint: 166 46% 89%;            /* #D6F0EA */
+
+    /* Diagnostic states — kept separate from brand colors, never teal */
+    --healthy: 144 55% 40%;               /* #2E9E5B */
+    --caution: 36 79% 57%;                /* #E8A13A monitor */
+    --alert: 4 70% 54%;                   /* #DC4338 disease */
   }
 
   .dark {

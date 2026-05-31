@@ -54,6 +54,19 @@ export default {
         surface: {
           elevated: "hsl(var(--surface-elevated))",
         },
+        ocean: {
+          DEFAULT: "hsl(var(--ocean))",
+          foreground: "hsl(var(--ocean-foreground))",
+        },
+        coral: {
+          DEFAULT: "hsl(var(--coral))",
+          hover: "hsl(var(--coral-hover))",
+          foreground: "hsl(var(--coral-foreground))",
+        },
+        "brand-tint": "hsl(var(--brand-tint))",
+        healthy: "hsl(var(--healthy))",
+        caution: "hsl(var(--caution))",
+        alert: "hsl(var(--alert))",
       },
       borderRadius: {
         lg: "var(--radius)",
