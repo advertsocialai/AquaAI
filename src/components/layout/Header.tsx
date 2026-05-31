@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Menu, X, Download, Rocket, LogIn, UserPlus, ChevronDown, LayoutDashboard, LogOut, LayoutDashboard as DashIcon, Settings } from 'lucide-react';
+import { Menu, X, Download, Rocket, LogIn, UserPlus, ChevronDown, LayoutDashboard, LogOut, LayoutDashboard as DashIcon, Settings, User as UserIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
@@ -195,6 +195,13 @@ export function Header() {
                         </Link>
                       )}
                       <Link
+                        to="/profile"
+                        onClick={() => setAcctOpen(false)}
+                        className="flex items-center gap-3 px-4 py-3 text-sm text-foreground hover:bg-teal-400/10 transition"
+                      >
+                        <UserIcon className="w-4 h-4 text-primary" /> Profile
+                      </Link>
+                      <Link
                         to="/settings"
                         onClick={() => setAcctOpen(false)}
                         className="flex items-center gap-3 px-4 py-3 text-sm text-foreground hover:bg-teal-400/10 transition"
@@ -339,6 +346,13 @@ export function Header() {
                         <DashIcon className="w-4 h-4 text-primary" /> My dashboard
                       </Link>
                     )}
+                    <Link
+                      to="/profile"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="inline-flex items-center gap-2 px-3 py-3 rounded-lg text-sm text-foreground border border-border"
+                    >
+                      <UserIcon className="w-4 h-4 text-primary" /> Profile
+                    </Link>
                     <button
                       type="button"
                       onClick={handleSignOut}
