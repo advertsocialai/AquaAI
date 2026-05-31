@@ -92,7 +92,19 @@ def track_shipment(shipment_id: str):
 
 @router.post("/load-match")
 def post_load(payload: dict):
-    return {"ok": True, "match_id": "match_stub_001", "bids_expected": "2-3 hours"}
+    match_id = "match_stub_001"
+    # Confirm the load was posted via web push. Best-effort.
+    try:
+        from app.services.webpush_service import notify_dispatch_update
+        uid = payload.get("user_id")
+        notify_dispatch_update(
+            user_ids=[uid] if uid else None,
+            shipment_id=match_id, status="posted",
+            detail="Load posted — expect 2-3 bids within a few hours.",
+        )
+    except Exception as e:  # noqa: BLE001
+        print(f"[WebPush ERROR] {e}")
+    return {"ok": True, "match_id": match_id, "bids_expected": "2-3 hours"}
 
 
 @router.post("/eway-bill")

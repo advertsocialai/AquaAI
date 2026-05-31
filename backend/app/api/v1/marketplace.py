@@ -165,6 +165,18 @@ async def checkout(
     )
     row = result.first()
     await db.commit()
+
+    # Confirm the order via web push (broadcast — orders aren't tied to a
+    # Supabase auth UUID here). Best-effort: never fail checkout on push error.
+    try:
+        from app.services.webpush_service import notify_order_update
+        notify_order_update(
+            user_ids=None, order_id=row[0], status="new",
+            detail=f"Order #{row[0]} received — ₹{subtotal:,.0f}. We'll confirm shortly.",
+        )
+    except Exception as e:  # noqa: BLE001
+        print(f"[WebPush ERROR] {e}")
+
     return CheckoutResponse(
         ok=True,
         order_id=row[0],

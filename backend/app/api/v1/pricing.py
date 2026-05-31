@@ -96,4 +96,18 @@ def configured_alerts(user_id: str | None = None):
 
 @router.post("/alerts")
 def create_alert(payload: dict):
+    # Confirm the alert was set via web push. If a Supabase user_id is supplied
+    # target just that user; otherwise broadcast. Best-effort.
+    try:
+        from app.services.webpush_service import notify_price_alert
+        species = str(payload.get("species", "Your species"))
+        above = payload.get("above") or payload.get("price") or 0
+        uid = payload.get("user_id")
+        notify_price_alert(
+            user_ids=[uid] if uid else None,
+            species=species, price_inr=float(above or 0),
+            detail=f"Alert set: we'll notify you when {species} crosses ₹{float(above or 0):,.0f}/kg.",
+        )
+    except Exception as e:  # noqa: BLE001
+        print(f"[WebPush ERROR] {e}")
     return {"ok": True, "alert_id": "alert_stub_001", "payload": payload}

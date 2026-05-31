@@ -135,3 +135,46 @@ def send_web_push(
 
     _prune_dead(dead)
     return {"sent": sent, "failed": failed, "pruned": len(dead), "stub": False}
+
+
+# ── Typed helpers for common events ──────────────────────────────────────────
+# Thin wrappers with consistent copy so call sites stay readable. Each is
+# best-effort and safe to call even when push is unconfigured.
+
+def notify_order_update(
+    *, user_ids: Optional[Iterable[str]], order_id, status: str, detail: str = ""
+) -> dict:
+    """Order placed / accepted / dispatched / delivered."""
+    titles = {
+        "new": "Order received",
+        "accepted": "Order accepted",
+        "dispatched": "Order dispatched",
+        "delivered": "Order delivered",
+    }
+    title = titles.get(status, "Order update")
+    body = detail or f"Order #{order_id} is now {status}."
+    return send_web_push(
+        title, body, user_ids=user_ids, url="/trader", tag=f"order-{order_id}"
+    )
+
+
+def notify_price_alert(
+    *, user_ids: Optional[Iterable[str]], species: str, price_inr: float, detail: str = ""
+) -> dict:
+    """Price moved past a watched threshold (or an alert was just set)."""
+    body = detail or f"{species} is now ₹{price_inr:,.0f}/kg."
+    return send_web_push(
+        title="Price alert", body=body, user_ids=user_ids,
+        url="/aquaai#pricing", tag=f"price-{species.lower()}",
+    )
+
+
+def notify_dispatch_update(
+    *, user_ids: Optional[Iterable[str]], shipment_id: str, status: str, detail: str = ""
+) -> dict:
+    """Logistics: shipment posted / on-route / cold-chain / delivered."""
+    body = detail or f"Shipment {shipment_id}: {status}."
+    return send_web_push(
+        title="Logistics update", body=body, user_ids=user_ids,
+        url="/transporter", tag=f"ship-{shipment_id}",
+    )
