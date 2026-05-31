@@ -1,0 +1,56 @@
+name: aquarudra_mobile
+description: "Aqua Rudra mobile — India's aquaculture intelligence platform on Android + iOS"
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.12.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # State management — Riverpod backs each feature's ViewModel
+  flutter_riverpod: ^2.5.1
+  riverpod_annotation: ^2.3.5
+
+  # Routing — declarative, deep-link friendly
+  go_router: ^14.6.0
+
+  # Networking
+  dio: ^5.7.0
+
+  # Backend SDK — same Supabase project as the web app
+  supabase_flutter: ^2.8.0
+
+  # Local storage
+  shared_preferences: ^2.3.4
+  flutter_secure_storage: ^9.2.4
+
+  # UI / theming
+  google_fonts: ^6.2.1
+  cupertino_icons: ^1.0.8
+  flutter_svg: ^2.0.16
+
+  # Internationalisation
+  intl: ^0.20.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+  # Codegen for Riverpod providers + i18n
+  build_runner: ^2.4.13
+  riverpod_generator: ^2.4.4
+  riverpod_lint: ^2.6.4
+  custom_lint: ^0.7.5
+
+flutter:
+  uses-material-design: true
+  generate: true   # enables flutter_localizations codegen from .arb
+  assets:
+    - assets/images/
+    - assets/icons/
