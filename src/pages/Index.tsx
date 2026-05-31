@@ -139,16 +139,20 @@ const Index = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="p-6 rounded-2xl border border-border bg-card hover:bg-muted transition"
               >
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
-                  style={{ background: `${m.accent}22`, border: `1px solid ${m.accent}55` }}
+                <Link
+                  to={`/aquaai#${m.key}`}
+                  className="block h-full p-6 rounded-2xl border border-border bg-card hover:bg-muted hover:border-teal-400/40 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400/50"
                 >
-                  <m.icon className="w-6 h-6" style={{ color: m.accent }} />
-                </div>
-                <div className="text-lg font-semibold text-foreground mb-2">{t(`modules.${m.key}`)}</div>
-                <p className="text-sm text-foreground/65 leading-relaxed">{t(`modules.${m.key}D`)}</p>
+                  <div
+                    className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
+                    style={{ background: `${m.accent}22`, border: `1px solid ${m.accent}55` }}
+                  >
+                    <m.icon className="w-6 h-6" style={{ color: m.accent }} />
+                  </div>
+                  <div className="text-lg font-semibold text-foreground mb-2">{t(`modules.${m.key}`)}</div>
+                  <p className="text-sm text-foreground/65 leading-relaxed">{t(`modules.${m.key}D`)}</p>
+                </Link>
               </motion.div>
             ))}
           </div>

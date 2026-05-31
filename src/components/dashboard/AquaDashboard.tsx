@@ -72,9 +72,23 @@ function TabLoader() {
   );
 }
 
+const ALL_TAB_IDS = TABS.map((t) => t.id);
+
 export function AquaDashboard() {
   const [role, setRole] = useState<Role>('farmer');
   const [tab, setTab] = useState<TabId>(ROLE_ACCESS.farmer.default);
+
+  // Honor a URL hash like /aquaai#pricing so the homepage module cards can
+  // deep-link straight into the matching module.
+  useEffect(() => {
+    const applyHash = () => {
+      const id = window.location.hash.replace('#', '') as TabId;
+      if (id && (ALL_TAB_IDS as string[]).includes(id)) setTab(id);
+    };
+    applyHash();
+    window.addEventListener('hashchange', applyHash);
+    return () => window.removeEventListener('hashchange', applyHash);
+  }, []);
 
   useEffect(() => {
     const access = ROLE_ACCESS[role];
