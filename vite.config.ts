@@ -35,6 +35,8 @@ export default defineConfig(() => ({
       workbox: {
         globPatterns: ["**/*.{js,css,html,svg,png,jpg,jpeg,woff,woff2}"],
         navigateFallback: "/index.html",
+        // Pull in our push/notification listeners on top of the generated SW.
+        importScripts: ["/push-sw.js"],
         runtimeCaching: [
           {
             // Cache-first for static assets.

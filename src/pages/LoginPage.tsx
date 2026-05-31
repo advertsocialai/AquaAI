@@ -3,11 +3,13 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Mail, ShieldCheck, Lock, Activity, IndianRupee,
-  BadgeCheck, ArrowRight, Fish, AlertCircle, Loader2,
+  BadgeCheck, ArrowRight, Fish, AlertCircle, Loader2, KeyRound,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { DASHBOARD_ROUTE } from '@/pages/dashboards/configs';
 import type { Role } from '@/components/dashboard/RoleSelector';
+
+type Mode = 'password' | 'otp';
 
 const VALUE_PROPS = [
   { icon: Activity,      title: 'Live AI Diagnostics',  desc: 'PCR-validated detection in 30 seconds' },
@@ -20,8 +22,11 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const from = (location.state as { from?: string } | null)?.from;
+  const [mode, setMode] = useState<Mode>('password');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [otp, setOtp] = useState('');
+  const [otpSent, setOtpSent] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [propIdx, setPropIdx] = useState(0);
@@ -34,6 +39,11 @@ export default function LoginPage() {
   const prop = VALUE_PROPS[propIdx];
   const PropIcon = prop.icon;
   const emailValid = /^\S+@\S+\.\S+$/.test(email.trim());
+
+  function goToDashboard(user: { user_metadata?: Record<string, unknown> } | null) {
+    const role = (user?.user_metadata?.role as Role | undefined) ?? null;
+    navigate(from ?? (role ? DASHBOARD_ROUTE[role] : '/aquaai#dashboard'), { replace: true });
+  }
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -50,8 +60,40 @@ export default function LoginPage() {
       setError(err.message === 'Invalid login credentials' ? 'Wrong email or password.' : err.message);
       return;
     }
-    const role = (data.user?.user_metadata?.role as Role | undefined) ?? null;
-    navigate(from ?? (role ? DASHBOARD_ROUTE[role] : '/aquaai#dashboard'), { replace: true });
+    goToDashboard(data.user);
+  }
+
+  // Email OTP: send a 6-digit code to the address.
+  async function sendOtp(e: React.FormEvent) {
+    e.preventDefault();
+    if (!emailValid) return;
+    if (!supabase) { setError('Authentication is not configured.'); return; }
+    setBusy(true);
+    setError(null);
+    const { error: err } = await supabase.auth.signInWithOtp({
+      email: email.trim().toLowerCase(),
+      options: { shouldCreateUser: false },
+    });
+    setBusy(false);
+    if (err) { setError(err.message); return; }
+    setOtpSent(true);
+  }
+
+  // Email OTP: verify the typed code and sign in.
+  async function verifyOtp(e: React.FormEvent) {
+    e.preventDefault();
+    if (otp.trim().length < 6) return;
+    if (!supabase) { setError('Authentication is not configured.'); return; }
+    setBusy(true);
+    setError(null);
+    const { data, error: err } = await supabase.auth.verifyOtp({
+      email: email.trim().toLowerCase(),
+      token: otp.trim(),
+      type: 'email',
+    });
+    setBusy(false);
+    if (err) { setError(err.message === 'Token has expired or is invalid' ? 'That code is wrong or expired.' : err.message); return; }
+    goToDashboard(data.user);
   }
 
   return (
@@ -126,55 +168,158 @@ export default function LoginPage() {
             </div>
           )}
 
-          <motion.form
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            onSubmit={submit}
-            className="space-y-4"
-          >
-            <label className="block">
-              <span className="text-xs text-foreground/40 uppercase tracking-widest">Email</span>
-              <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
-                <Mail className="w-4 h-4 text-teal-400" />
-                <input
-                  autoFocus
-                  type="email"
-                  autoComplete="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                  className="bg-transparent outline-none text-foreground flex-1 text-sm"
-                />
-              </div>
-            </label>
-
-            <label className="block">
-              <span className="text-xs text-foreground/40 uppercase tracking-widest">Password</span>
-              <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
-                <Lock className="w-4 h-4 text-teal-400" />
-                <input
-                  type="password"
-                  autoComplete="current-password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Your password"
-                  className="bg-transparent outline-none text-foreground flex-1 text-sm"
-                />
-              </div>
-            </label>
-
+          {/* Method toggle */}
+          <div className="flex items-center gap-1 p-1 rounded-xl border border-border bg-card mb-6 text-sm">
             <button
-              type="submit"
-              disabled={!emailValid || !password || busy}
-              className="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm transition flex items-center justify-center gap-2"
+              type="button"
+              onClick={() => { setMode('password'); setError(null); }}
+              className={`flex-1 py-2 rounded-lg font-medium transition inline-flex items-center justify-center gap-1.5 ${
+                mode === 'password' ? 'bg-teal-500 text-black' : 'text-foreground/60 hover:text-foreground'
+              }`}
             >
-              {busy ? <><Loader2 className="w-4 h-4 animate-spin" /> Signing in…</> : <>Sign in <ShieldCheck className="w-4 h-4" /></>}
+              <Lock className="w-3.5 h-3.5" /> Password
             </button>
+            <button
+              type="button"
+              onClick={() => { setMode('otp'); setError(null); }}
+              className={`flex-1 py-2 rounded-lg font-medium transition inline-flex items-center justify-center gap-1.5 ${
+                mode === 'otp' ? 'bg-teal-500 text-black' : 'text-foreground/60 hover:text-foreground'
+              }`}
+            >
+              <KeyRound className="w-3.5 h-3.5" /> Email code
+            </button>
+          </div>
 
-            <div className="text-right text-xs">
-              <Link to="/forgot-password" className="text-teal-400 hover:underline">Forgot password?</Link>
-            </div>
-          </motion.form>
+          {mode === 'password' && (
+            <motion.form
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              onSubmit={submit}
+              className="space-y-4"
+            >
+              <label className="block">
+                <span className="text-xs text-foreground/40 uppercase tracking-widest">Email</span>
+                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                  <Mail className="w-4 h-4 text-teal-400" />
+                  <input
+                    autoFocus
+                    type="email"
+                    autoComplete="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@example.com"
+                    className="bg-transparent outline-none text-foreground flex-1 text-sm"
+                  />
+                </div>
+              </label>
+
+              <label className="block">
+                <span className="text-xs text-foreground/40 uppercase tracking-widest">Password</span>
+                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                  <Lock className="w-4 h-4 text-teal-400" />
+                  <input
+                    type="password"
+                    autoComplete="current-password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Your password"
+                    className="bg-transparent outline-none text-foreground flex-1 text-sm"
+                  />
+                </div>
+              </label>
+
+              <button
+                type="submit"
+                disabled={!emailValid || !password || busy}
+                className="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm transition flex items-center justify-center gap-2"
+              >
+                {busy ? <><Loader2 className="w-4 h-4 animate-spin" /> Signing in…</> : <>Sign in <ShieldCheck className="w-4 h-4" /></>}
+              </button>
+
+              <div className="text-right text-xs">
+                <Link to="/forgot-password" className="text-teal-400 hover:underline">Forgot password?</Link>
+              </div>
+            </motion.form>
+          )}
+
+          {mode === 'otp' && !otpSent && (
+            <motion.form
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              onSubmit={sendOtp}
+              className="space-y-4"
+            >
+              <label className="block">
+                <span className="text-xs text-foreground/40 uppercase tracking-widest">Email</span>
+                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                  <Mail className="w-4 h-4 text-teal-400" />
+                  <input
+                    autoFocus
+                    type="email"
+                    autoComplete="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@example.com"
+                    className="bg-transparent outline-none text-foreground flex-1 text-sm"
+                  />
+                </div>
+              </label>
+              <button
+                type="submit"
+                disabled={!emailValid || busy}
+                className="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm transition flex items-center justify-center gap-2"
+              >
+                {busy ? <><Loader2 className="w-4 h-4 animate-spin" /> Sending code…</> : <>Email me a code <ArrowRight className="w-4 h-4" /></>}
+              </button>
+              <p className="text-[11px] text-foreground/40 text-center">
+                We'll send a 6-digit code to your email. No password needed.
+              </p>
+            </motion.form>
+          )}
+
+          {mode === 'otp' && otpSent && (
+            <motion.form
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              onSubmit={verifyOtp}
+              className="space-y-4"
+            >
+              <p className="text-sm text-foreground/60">
+                Enter the 6-digit code sent to <span className="text-foreground font-medium">{email}</span>.
+              </p>
+              <label className="block">
+                <span className="text-xs text-foreground/40 uppercase tracking-widest">Verification code</span>
+                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                  <KeyRound className="w-4 h-4 text-teal-400" />
+                  <input
+                    autoFocus
+                    inputMode="numeric"
+                    autoComplete="one-time-code"
+                    maxLength={6}
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
+                    placeholder="000000"
+                    className="bg-transparent outline-none text-foreground flex-1 text-sm tracking-[0.5em] font-mono"
+                  />
+                </div>
+              </label>
+              <button
+                type="submit"
+                disabled={otp.length < 6 || busy}
+                className="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm transition flex items-center justify-center gap-2"
+              >
+                {busy ? <><Loader2 className="w-4 h-4 animate-spin" /> Verifying…</> : <>Verify & sign in <ShieldCheck className="w-4 h-4" /></>}
+              </button>
+              <div className="flex items-center justify-between text-xs">
+                <button type="button" onClick={() => { setOtpSent(false); setOtp(''); setError(null); }} className="text-foreground/50 hover:text-foreground">
+                  Use a different email
+                </button>
+                <button type="button" onClick={sendOtp} disabled={busy} className="text-teal-400 hover:underline disabled:opacity-40">
+                  Resend code
+                </button>
+              </div>
+            </motion.form>
+          )}
 
           <div className="mt-10 pt-6 border-t border-border text-sm text-foreground/50">
             New to Aqua Rudra?{' '}

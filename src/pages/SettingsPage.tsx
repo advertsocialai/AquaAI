@@ -3,6 +3,7 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { AdminModule } from '@/components/dashboard/AdminModule';
 import { RoleSelector, type Role } from '@/components/dashboard/RoleSelector';
+import { NotificationSettings } from '@/components/settings/NotificationSettings';
 import { Settings as SettingsIcon } from 'lucide-react';
 
 export default function SettingsPage() {
@@ -23,6 +24,8 @@ export default function SettingsPage() {
               <h1 className="text-2xl font-bold text-foreground">Settings</h1>
             </div>
           </div>
+
+          <NotificationSettings />
 
           <div className="mb-6 p-4 rounded-xl border border-border bg-card">
             <div className="text-[11px] uppercase tracking-widest text-foreground/30 mb-3">Active role context</div>
