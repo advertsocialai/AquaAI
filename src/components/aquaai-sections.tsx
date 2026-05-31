@@ -214,7 +214,7 @@ const FAQ = [
   { q: 'Can banks rely on the QC certificate?',
     a: 'Yes. Every certificate is HMAC-SHA256 signed over the cert ID, batch, score, disease status and timestamp. The signature is verifiable at the public /verify/{certId} endpoint with a QR scan.' },
   { q: 'Which languages does the platform support?',
-    a: 'English, Telugu, Tamil, Hindi, Odia, Bengali. The voice assistant speaks the reply back to you in your chosen language using your browser or phone\'s built-in speech engine.' },
+    a: 'English, Telugu, Hindi, Odia, Bengali. The voice assistant speaks the reply back to you in your chosen language using your browser or phone\'s built-in speech engine.' },
   { q: 'How does pricing work for hatcheries and banks?',
     a: 'Hatchery SaaS is ₹15k/month per facility. Bank API access for farm-risk scoring is ₹50/farm/month. Farmers pay nothing for core features — VLEs earn a commission on diagnostic services.' },
 ];
