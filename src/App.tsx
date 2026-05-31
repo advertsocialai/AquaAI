@@ -32,6 +32,7 @@ const KnowledgePage   = lazy(() => import("./pages/KnowledgePage"));
 const KnowledgeArticlePage = lazy(() => import("./pages/KnowledgeArticlePage"));
 const AboutPage       = lazy(() => import("./pages/AboutPage"));
 const FarmerDashboardPage = lazy(() => import("./pages/FarmerDashboardPage"));
+const TraderDashboardPage = lazy(() => import("./pages/TraderDashboardPage"));
 
 const queryClient = new QueryClient();
 
@@ -83,6 +84,7 @@ function AnimatedRoutes() {
           <Route path="/terms" element={<PageTransition><TermsPage /></PageTransition>} />
           <Route path="/aquaai" element={<PageTransition><AquaAIPage /></PageTransition>} />
           <Route path="/farmer" element={<PageTransition><FarmerDashboardPage /></PageTransition>} />
+          <Route path="/trader" element={<PageTransition><TraderDashboardPage /></PageTransition>} />
           <Route path="/login" element={<PageTransition><LoginPage /></PageTransition>} />
           <Route path="/signup" element={<PageTransition><SignupPage /></PageTransition>} />
           <Route path="/settings" element={<PageTransition><SettingsPage /></PageTransition>} />

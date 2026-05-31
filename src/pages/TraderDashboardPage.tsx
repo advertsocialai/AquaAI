@@ -2,57 +2,55 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  Camera, Microscope, Droplets, Bell, ArrowRight, MapPin, Calendar,
-  TrendingUp, Activity, BookOpen, Calculator, ShieldCheck,
+  ShoppingCart, Truck, FileCheck, Wallet, Bell, ArrowRight, MapPin, Calendar,
+  TrendingUp, Activity, BookOpen, ShieldCheck, Package,
 } from 'lucide-react';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
-import { WeatherForecast } from '@/components/dashboard/WeatherForecast';
 import { LivePriceTicker } from '@/components/dashboard/LivePriceTicker';
 
 // ── Demo data ──────────────────────────────────────────────────────────────────
-// Replace with Supabase fetches once the farmer's session + RLS-scoped queries
-// against `farms`, `ponds`, `batches`, `outbreak_alerts` are wired through.
+// Replace with Supabase fetches once the trader's session + RLS-scoped queries
+// against `lots`, `orders`, `shipments`, `payments` are wired through.
 
-const FARM_SUMMARY = {
-  ponds: 4,
-  totalAreaAcre: 8.2,
-  activeBatches: 3,
-  estStockKg: 4_840,
-  dayOfCycle: 86,
-  district: 'Bhimavaram, West Godavari',
+const BIZ_SUMMARY = {
+  openLots: 12,
+  todaysVolumeKg: 18_400,
+  activeSuppliers: 27,
+  avgMarginPct: 8.4,
+  region: 'Andhra Pradesh · Coastal belt',
 };
 
 const TODAYS_ACTIONS = [
-  { kind: 'urgent', title: 'Pond 2 dissolved O₂ dropped to 3.4 ppm', meta: 'Last reading 12 min ago', to: '/aquaai#dashboard' },
-  { kind: 'warning', title: 'EHP cluster reported 9 km north', meta: 'NSPAAD bulletin · last 24 h',   to: '/aquaai#dashboard' },
-  { kind: 'info',    title: 'Heavy rain forecast tonight — lower water 4 inches', meta: 'IMD · 65 mm', to: '/aquaai#dashboard' },
+  { kind: 'urgent',  title: 'Vannamei 30-count up ₹12/kg at Bhimavaram', meta: 'Mandi feed · 8 min ago',     to: '/aquaai#dashboard' },
+  { kind: 'warning', title: '3 shipments awaiting cold-chain dispatch',  meta: 'Pickup window closes 4 PM',  to: '/aquaai#dashboard' },
+  { kind: 'info',    title: '₹4.2L payment due to 2 farmer suppliers',   meta: 'Net-7 terms · clears today', to: '/aquaai#dashboard' },
 ];
 
 const QUICK_TOOLS = [
-  { icon: Microscope, label: 'Disease detector', sub: 'Snap a sample',     to: '/aquaai#dashboard', accent: 'text-rose-300',     bg: 'bg-rose-400/10' },
-  { icon: Camera,     label: 'Seed counter',     sub: 'Tray photo → count', to: '/aquaai#dashboard', accent: 'text-emerald-300',  bg: 'bg-emerald-400/10' },
-  { icon: Droplets,   label: 'Water quality',    sub: 'Sample → grade',     to: '/aquaai#dashboard', accent: 'text-teal-300',     bg: 'bg-teal-400/10' },
-  { icon: Calculator, label: 'Calculators',      sub: 'FCR · stocking',     to: '/aquaai#dashboard', accent: 'text-violet-300',   bg: 'bg-violet-400/10' },
-  { icon: BookOpen,   label: 'Knowledge',        sub: 'Articles · schemes', to: '/knowledge',        accent: 'text-amber-300',    bg: 'bg-amber-400/10' },
-  { icon: ShieldCheck,label: 'Certificates',     sub: 'QC · lineage',       to: '/verify/QC-2026-04421', accent: 'text-sky-300',  bg: 'bg-sky-400/10' },
+  { icon: ShoppingCart, label: 'Buy lots',       sub: 'Open marketplace',   to: '/aquaai#dashboard',     accent: 'text-teal-300',    bg: 'bg-teal-400/10' },
+  { icon: Truck,        label: 'Dispatch',       sub: 'Logistics · trucks', to: '/aquaai#dashboard',     accent: 'text-orange-300',  bg: 'bg-orange-400/10' },
+  { icon: FileCheck,    label: 'QC certificates', sub: 'Verify lineage',     to: '/verify/QC-2026-04421', accent: 'text-sky-300',     bg: 'bg-sky-400/10' },
+  { icon: Wallet,       label: 'Payments',       sub: 'Settle suppliers',   to: '/aquaai#dashboard',     accent: 'text-emerald-300', bg: 'bg-emerald-400/10' },
+  { icon: Package,      label: 'My orders',      sub: 'Track procurement',  to: '/aquaai#dashboard',     accent: 'text-violet-300',  bg: 'bg-violet-400/10' },
+  { icon: BookOpen,     label: 'Knowledge',      sub: 'Export · schemes',   to: '/knowledge',            accent: 'text-amber-300',   bg: 'bg-amber-400/10' },
 ];
 
 const RECENT_ACTIVITY = [
-  { when: '12 min ago', what: 'Water quality reading',  detail: 'Pond 2 · DO 3.4 ppm · pH 7.8', status: 'alert' as const },
-  { when: '3 h ago',    what: 'Seed counter',           detail: 'Tray 4 · 12,840 PLs (±2.1%)',  status: 'ok' as const },
-  { when: '6 h ago',    what: 'Disease screen',         detail: 'Pond 1 · No condition flagged', status: 'ok' as const },
-  { when: 'Yesterday',  what: 'QC certificate issued',  detail: 'QC-2026-04421 · Grade A++',     status: 'ok' as const },
+  { when: '8 min ago',  what: 'Lot purchased',        detail: 'Lot #A-2291 · 2,400 kg · Grade A+ · ₹8.9L', status: 'ok' as const },
+  { when: '2 h ago',    what: 'Shipment dispatched',  detail: 'AP-39 reefer · Bhimavaram → Vizag port',    status: 'ok' as const },
+  { when: '5 h ago',    what: 'QC certificate cleared',detail: 'QC-2026-04421 · Grade A++ · antibiotic-free', status: 'ok' as const },
+  { when: 'Yesterday',  what: 'Payment held',         detail: 'Lot #A-2284 · pending QC re-test',          status: 'alert' as const },
 ];
 
 const tone = {
-  urgent:  { bar: 'border-rose-400/40',    icon: 'text-rose-300',    chip: 'bg-rose-400/10' },
-  warning: { bar: 'border-amber-400/40',   icon: 'text-amber-300',   chip: 'bg-amber-400/10' },
-  info:    { bar: 'border-teal-400/40',    icon: 'text-teal-300',    chip: 'bg-teal-400/10' },
+  urgent:  { bar: 'border-rose-400/40',  icon: 'text-rose-300',  chip: 'bg-rose-400/10' },
+  warning: { bar: 'border-amber-400/40', icon: 'text-amber-300', chip: 'bg-amber-400/10' },
+  info:    { bar: 'border-teal-400/40',  icon: 'text-teal-300',  chip: 'bg-teal-400/10' },
 };
 
-export default function FarmerDashboardPage() {
-  useEffect(() => { document.title = 'Farmer Dashboard — Aqua Rudra'; }, []);
+export default function TraderDashboardPage() {
+  useEffect(() => { document.title = 'Trader Dashboard — Aqua Rudra'; }, []);
 
   const [greeting] = useState(() => {
     const h = new Date().getHours();
@@ -68,27 +66,27 @@ export default function FarmerDashboardPage() {
       <main className="pt-28 pb-20">
         <div className="container mx-auto px-6 lg:px-8 max-w-6xl space-y-10">
 
-          {/* ── Greeting + farm summary ───────────────────────────────────── */}
+          {/* ── Greeting + business summary ───────────────────────────────── */}
           <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
               <div>
-                <div className="text-xs uppercase tracking-widest text-teal-300 mb-2">{greeting}, V. Ramana</div>
+                <div className="text-xs uppercase tracking-widest text-teal-300 mb-2">{greeting}, S. Prasad Exports</div>
                 <h1 className="text-3xl md:text-4xl font-bold leading-tight">
-                  Day {FARM_SUMMARY.dayOfCycle} of cycle ·{' '}
-                  <span className="text-foreground/60 font-normal">{FARM_SUMMARY.activeBatches} active batches</span>
+                  {BIZ_SUMMARY.openLots} open lots ·{' '}
+                  <span className="text-foreground/60 font-normal">{BIZ_SUMMARY.activeSuppliers} suppliers</span>
                 </h1>
                 <div className="flex items-center gap-2 text-sm text-foreground/55 mt-2">
                   <MapPin className="w-3.5 h-3.5" />
-                  <span>{FARM_SUMMARY.district}</span>
+                  <span>{BIZ_SUMMARY.region}</span>
                   <span className="text-foreground/20">·</span>
                   <Calendar className="w-3.5 h-3.5" />
                   <span>{new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'short' })}</span>
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-4 md:gap-6 lg:gap-8 lg:text-right">
-                <Metric label="Ponds"          value={FARM_SUMMARY.ponds} />
-                <Metric label="Area (acre)"    value={FARM_SUMMARY.totalAreaAcre} />
-                <Metric label="Stock (kg)"     value={FARM_SUMMARY.estStockKg.toLocaleString('en-IN')} />
+                <Metric label="Open lots"      value={BIZ_SUMMARY.openLots} />
+                <Metric label="Today (kg)"     value={BIZ_SUMMARY.todaysVolumeKg.toLocaleString('en-IN')} />
+                <Metric label="Avg margin"     value={`${BIZ_SUMMARY.avgMarginPct}%`} />
               </div>
             </div>
           </section>
@@ -128,12 +126,12 @@ export default function FarmerDashboardPage() {
             </div>
           </section>
 
-          {/* ── Quick AI tools ───────────────────────────────────────────── */}
+          {/* ── Quick tools ──────────────────────────────────────────────── */}
           <section>
             <div className="flex items-end justify-between mb-4">
               <div>
                 <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Quick tools</div>
-                <h2 className="text-xl md:text-2xl font-bold">On-device AI · works offline</h2>
+                <h2 className="text-xl md:text-2xl font-bold">Source, dispatch &amp; settle</h2>
               </div>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -153,18 +151,13 @@ export default function FarmerDashboardPage() {
             </div>
           </section>
 
-          {/* ── Weather ──────────────────────────────────────────────────── */}
-          <section className="rounded-2xl border border-border bg-card p-5 md:p-6">
-            <WeatherForecast />
-          </section>
-
           {/* ── Live prices ──────────────────────────────────────────────── */}
           <section className="rounded-2xl border border-border bg-card p-5 md:p-6">
             <div className="flex items-end justify-between mb-4">
               <div>
                 <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Live mandi prices</div>
                 <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
-                  <TrendingUp className="w-5 h-5 text-emerald-300" /> What your pond is worth today
+                  <TrendingUp className="w-5 h-5 text-emerald-300" /> Today's buy-side board
                 </h2>
               </div>
             </div>
@@ -177,7 +170,7 @@ export default function FarmerDashboardPage() {
               <div>
                 <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Recent activity</div>
                 <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
-                  <Activity className="w-5 h-5 text-teal-300" /> Your farm log
+                  <Activity className="w-5 h-5 text-teal-300" /> Your trade log
                 </h2>
               </div>
               <Link to="/aquaai#dashboard" className="text-xs text-teal-300 hover:underline inline-flex items-center gap-1">
@@ -210,18 +203,18 @@ export default function FarmerDashboardPage() {
           <section className="rounded-2xl border border-primary/30 bg-primary/[0.04] p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
             <div>
               <div className="text-xs uppercase tracking-widest text-teal-300 mb-1 inline-flex items-center gap-2">
-                <ShieldCheck className="w-3.5 h-3.5" /> Verified farmer account
+                <ShieldCheck className="w-3.5 h-3.5" /> Verified trader account
               </div>
-              <h2 className="text-xl md:text-2xl font-bold">Get your full farm dashboard</h2>
+              <h2 className="text-xl md:text-2xl font-bold">Unlock live lots, dispatch &amp; settlements</h2>
               <p className="text-sm text-foreground/55 mt-1 max-w-xl">
-                Create a free account to save ponds, track batches, and get outbreak alerts for your district.
+                Create a trader account to buy directly from verified farmers, with MPEDA-grade QC and escrow payments.
               </p>
             </div>
             <Link
               to="/signup"
               className="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-coral hover:bg-coral-hover text-coral-foreground font-semibold text-sm transition"
             >
-              Sign up as Farmer <ArrowRight className="w-4 h-4" />
+              Sign up as Trader <ArrowRight className="w-4 h-4" />
             </Link>
           </section>
         </div>
