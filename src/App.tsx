@@ -12,6 +12,7 @@ import { VoiceReader } from "@/components/VoiceReader";
 import { IosInstallPrompt } from "@/components/IosInstallPrompt";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { AuthProvider } from "@/lib/auth";
+import { RequireAuth } from "@/components/auth/RequireAuth";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -85,18 +86,18 @@ function AnimatedRoutes() {
           <Route path="/privacy" element={<PageTransition><PrivacyPage /></PageTransition>} />
           <Route path="/terms" element={<PageTransition><TermsPage /></PageTransition>} />
           <Route path="/aquaai" element={<PageTransition><AquaAIPage /></PageTransition>} />
-          <Route path="/farmer" element={<PageTransition><FarmerDashboardPage /></PageTransition>} />
-          <Route path="/trader" element={<PageTransition><TraderDashboardPage /></PageTransition>} />
-          <Route path="/vle" element={<PageTransition><RoleDashboard role="vle" /></PageTransition>} />
-          <Route path="/hatchery" element={<PageTransition><RoleDashboard role="hatchery" /></PageTransition>} />
-          <Route path="/transporter" element={<PageTransition><RoleDashboard role="transporter" /></PageTransition>} />
-          <Route path="/supplier" element={<PageTransition><RoleDashboard role="supplier" /></PageTransition>} />
-          <Route path="/bank" element={<PageTransition><RoleDashboard role="bank" /></PageTransition>} />
-          <Route path="/govt" element={<PageTransition><RoleDashboard role="govt" /></PageTransition>} />
+          <Route path="/farmer" element={<RequireAuth role="farmer"><PageTransition><FarmerDashboardPage /></PageTransition></RequireAuth>} />
+          <Route path="/trader" element={<RequireAuth role="trader"><PageTransition><TraderDashboardPage /></PageTransition></RequireAuth>} />
+          <Route path="/vle" element={<RequireAuth role="vle"><PageTransition><RoleDashboard role="vle" /></PageTransition></RequireAuth>} />
+          <Route path="/hatchery" element={<RequireAuth role="hatchery"><PageTransition><RoleDashboard role="hatchery" /></PageTransition></RequireAuth>} />
+          <Route path="/transporter" element={<RequireAuth role="transporter"><PageTransition><RoleDashboard role="transporter" /></PageTransition></RequireAuth>} />
+          <Route path="/supplier" element={<RequireAuth role="supplier"><PageTransition><RoleDashboard role="supplier" /></PageTransition></RequireAuth>} />
+          <Route path="/bank" element={<RequireAuth role="bank"><PageTransition><RoleDashboard role="bank" /></PageTransition></RequireAuth>} />
+          <Route path="/govt" element={<RequireAuth role="govt"><PageTransition><RoleDashboard role="govt" /></PageTransition></RequireAuth>} />
           <Route path="/login" element={<PageTransition><LoginPage /></PageTransition>} />
           <Route path="/signup" element={<PageTransition><SignupPage /></PageTransition>} />
-          <Route path="/settings" element={<PageTransition><SettingsPage /></PageTransition>} />
-          <Route path="/kyc" element={<PageTransition><KycPage /></PageTransition>} />
+          <Route path="/settings" element={<RequireAuth><PageTransition><SettingsPage /></PageTransition></RequireAuth>} />
+          <Route path="/kyc" element={<RequireAuth><PageTransition><KycPage /></PageTransition></RequireAuth>} />
           <Route path="/forgot-password" element={<PageTransition><ForgotPasswordPage /></PageTransition>} />
           <Route path="/verify/:certId" element={<PageTransition><VerifyPage /></PageTransition>} />
           <Route path="/careers" element={<PageTransition><CareersPage /></PageTransition>} />

@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Menu, X, Download, Rocket, LogIn, UserPlus, ChevronDown, LayoutDashboard } from 'lucide-react';
+import { Menu, X, Download, Rocket, LogIn, UserPlus, ChevronDown, LayoutDashboard, LogOut, LayoutDashboard as DashIcon, Settings } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { ROLES } from '@/components/dashboard/RoleSelector';
 import { DASHBOARD_ROUTE } from '@/pages/dashboards/configs';
+import { useAuth } from '@/lib/auth';
 
 const NAV = [
   { key: 'aquaai',    to: '/aquaai' },
@@ -24,6 +25,8 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [startOpen, setStartOpen] = useState(false);
   const [dashOpen, setDashOpen] = useState(false);
+  const [acctOpen, setAcctOpen] = useState(false);
+  const { session, user, role, signOut } = useAuth();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 100);
@@ -50,6 +53,26 @@ export function Header() {
     window.addEventListener('click', onClick);
     return () => window.removeEventListener('click', onClick);
   }, [dashOpen]);
+
+  useEffect(() => {
+    if (!acctOpen) return;
+    const onClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest('[data-account]')) setAcctOpen(false);
+    };
+    window.addEventListener('click', onClick);
+    return () => window.removeEventListener('click', onClick);
+  }, [acctOpen]);
+
+  const handleSignOut = async () => {
+    setAcctOpen(false);
+    setMobileMenuOpen(false);
+    await signOut();
+    navigate('/');
+  };
+
+  const displayName = (user?.user_metadata?.name as string | undefined) || user?.email || 'Account';
+  const myDashboard = role ? DASHBOARD_ROUTE[role] : null;
 
   const goDownload = () => {
     setMobileMenuOpen(false);
@@ -136,6 +159,60 @@ export function Header() {
             >
               <Download className="w-4 h-4" /> {t('common.downloadApp')}
             </button>
+            {session ? (
+              <div data-account className="relative">
+                <button
+                  type="button"
+                  onClick={() => setAcctOpen((v) => !v)}
+                  className="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold text-white bg-white/10 hover:bg-white/15 border border-white/15"
+                >
+                  <span className="w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold uppercase">
+                    {displayName.charAt(0)}
+                  </span>
+                  <span className="max-w-[10rem] truncate">{displayName}</span>
+                  <ChevronDown className={`w-4 h-4 transition-transform ${acctOpen ? 'rotate-180' : ''}`} />
+                </button>
+                <AnimatePresence>
+                  {acctOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute right-0 mt-2 w-60 rounded-xl border border-border bg-popover/95 backdrop-blur-sm overflow-hidden shadow-2xl"
+                    >
+                      <div className="px-4 py-3 border-b border-border">
+                        <div className="text-sm font-semibold text-foreground truncate">{displayName}</div>
+                        {user?.email && <div className="text-xs text-foreground/45 truncate">{user.email}</div>}
+                      </div>
+                      {myDashboard && (
+                        <Link
+                          to={myDashboard}
+                          onClick={() => setAcctOpen(false)}
+                          className="flex items-center gap-3 px-4 py-3 text-sm text-foreground hover:bg-teal-400/10 transition"
+                        >
+                          <DashIcon className="w-4 h-4 text-primary" /> My dashboard
+                        </Link>
+                      )}
+                      <Link
+                        to="/settings"
+                        onClick={() => setAcctOpen(false)}
+                        className="flex items-center gap-3 px-4 py-3 text-sm text-foreground hover:bg-teal-400/10 transition"
+                      >
+                        <Settings className="w-4 h-4 text-primary" /> Settings
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={handleSignOut}
+                        className="w-full flex items-center gap-3 px-4 py-3 text-sm text-foreground hover:bg-teal-400/10 transition border-t border-border"
+                      >
+                        <LogOut className="w-4 h-4 text-primary" /> Sign out
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ) : (
             <div data-getstarted className="relative">
               <button
                 type="button"
@@ -180,6 +257,7 @@ export function Header() {
                 )}
               </AnimatePresence>
             </div>
+            )}
           </div>
 
           <button
@@ -241,25 +319,57 @@ export function Header() {
                 >
                   <Download className="w-4 h-4" /> {t('common.downloadApp')}
                 </button>
-                <div className="text-xs uppercase tracking-widest text-primary mt-2 mb-1">
-                  {t('common.getStarted')}
-                </div>
-                <div className="flex items-center gap-3">
-                  <Link
-                    to="/signup"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-3 rounded-lg text-sm font-semibold text-coral-foreground bg-coral"
-                  >
-                    <UserPlus className="w-4 h-4" /> {t('common.signUp')}
-                  </Link>
-                  <Link
-                    to="/login"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-3 rounded-lg text-sm text-foreground border border-border"
-                  >
-                    <LogIn className="w-4 h-4" /> {t('common.signIn')}
-                  </Link>
-                </div>
+                {session ? (
+                  <>
+                    <div className="flex items-center gap-3 mt-2 px-1">
+                      <span className="w-9 h-9 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold uppercase shrink-0">
+                        {displayName.charAt(0)}
+                      </span>
+                      <div className="min-w-0">
+                        <div className="text-sm font-semibold text-foreground truncate">{displayName}</div>
+                        {user?.email && <div className="text-xs text-foreground/45 truncate">{user.email}</div>}
+                      </div>
+                    </div>
+                    {myDashboard && (
+                      <Link
+                        to={myDashboard}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="inline-flex items-center gap-2 px-3 py-3 rounded-lg text-sm text-foreground border border-border"
+                      >
+                        <DashIcon className="w-4 h-4 text-primary" /> My dashboard
+                      </Link>
+                    )}
+                    <button
+                      type="button"
+                      onClick={handleSignOut}
+                      className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-3 rounded-lg text-sm font-semibold text-foreground border border-border"
+                    >
+                      <LogOut className="w-4 h-4 text-primary" /> Sign out
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <div className="text-xs uppercase tracking-widest text-primary mt-2 mb-1">
+                      {t('common.getStarted')}
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Link
+                        to="/signup"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-3 rounded-lg text-sm font-semibold text-coral-foreground bg-coral"
+                      >
+                        <UserPlus className="w-4 h-4" /> {t('common.signUp')}
+                      </Link>
+                      <Link
+                        to="/login"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-3 rounded-lg text-sm text-foreground border border-border"
+                      >
+                        <LogIn className="w-4 h-4" /> {t('common.signIn')}
+                      </Link>
+                    </div>
+                  </>
+                )}
                 <div className="pt-2"><LanguageSwitcher /></div>
               </nav>
             </motion.div>

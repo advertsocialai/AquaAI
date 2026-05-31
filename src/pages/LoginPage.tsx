@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Mail, ShieldCheck, Lock, Activity, IndianRupee,
@@ -18,6 +18,8 @@ const VALUE_PROPS = [
 export default function LoginPage() {
   useEffect(() => { document.title = 'Sign in — Aqua Rudra'; }, []);
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = (location.state as { from?: string } | null)?.from;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [busy, setBusy] = useState(false);
@@ -49,7 +51,7 @@ export default function LoginPage() {
       return;
     }
     const role = (data.user?.user_metadata?.role as Role | undefined) ?? null;
-    navigate(role ? DASHBOARD_ROUTE[role] : '/aquaai#dashboard');
+    navigate(from ?? (role ? DASHBOARD_ROUTE[role] : '/aquaai#dashboard'), { replace: true });
   }
 
   return (
