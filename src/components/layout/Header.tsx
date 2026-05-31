@@ -61,10 +61,10 @@ export function Header() {
       }`}
     >
       <div className="container mx-auto px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-3">
-            <img src={atomLogo} alt="Aqua Rudra" className="w-11 h-11 object-contain brightness-125 drop-shadow-[0_0_8px_rgba(18,165,148,0.5)]" />
-            <span className="text-xl font-bold text-white tracking-wider">
+            <img src={atomLogo} alt="Aqua Rudra" className="w-9 h-9 object-contain brightness-125 drop-shadow-[0_0_8px_rgba(18,165,148,0.5)]" />
+            <span className="text-lg font-bold text-white tracking-wider">
               AQUA<span className="font-light"> RUDRA</span>
             </span>
           </Link>
