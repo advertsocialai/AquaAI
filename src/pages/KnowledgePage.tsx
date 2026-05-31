@@ -311,7 +311,7 @@ export default function KnowledgePage() {
                 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
                 className="text-4xl md:text-6xl font-bold leading-[1.05] mb-5"
               >
-                Unlocking <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-sky-300 to-violet-300">Boundless</span> Aquatic Wisdom
+                Unlocking <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-ocean">Boundless</span> Aquatic Wisdom
               </motion.h1>
               <motion.p
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}

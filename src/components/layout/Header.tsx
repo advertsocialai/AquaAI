@@ -3,7 +3,6 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Menu, X, Download, Rocket, LogIn, UserPlus, ChevronDown, LayoutDashboard } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import atomLogo from '@/assets/atom-logo.svg';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { ROLES } from '@/components/dashboard/RoleSelector';
@@ -75,7 +74,6 @@ export function Header() {
       <div className="container mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-3">
-            <img src={atomLogo} alt="Aqua Rudra" className="w-9 h-9 object-contain brightness-125 drop-shadow-[0_0_8px_rgba(18,165,148,0.5)]" />
             <span className="text-lg font-bold text-white tracking-wider">
               AQUA<span className="font-light"> RUDRA</span>
             </span>
@@ -201,7 +199,7 @@ export function Header() {
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               className="md:hidden overflow-hidden bg-popover/95 backdrop-blur-sm"
             >
-              <nav className="flex flex-col gap-5 py-6">
+              <nav className="flex flex-col gap-5 py-6 px-3">
                 {NAV.map((item, i) => (
                   <motion.div
                     key={item.key}

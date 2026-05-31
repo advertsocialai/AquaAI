@@ -33,7 +33,7 @@ const AquaAIPage = () => {
               transition={{ duration: 0.7, delay: 0.1 }}
             >
               {t('aquaai_page.title1')}
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-violet-400">
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary to-ocean">
                 {t('aquaai_page.title2')}
               </span>
               {t('aquaai_page.title3')}

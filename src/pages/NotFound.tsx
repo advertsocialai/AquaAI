@@ -32,7 +32,7 @@ const NotFound = () => {
           Aqua Rudra
         </div>
 
-        <h1 className="text-7xl md:text-9xl font-bold tracking-tight mb-4 bg-gradient-to-r from-teal-400 via-sky-400 to-violet-400 bg-clip-text text-transparent">
+        <h1 className="text-7xl md:text-9xl font-bold tracking-tight mb-4 bg-gradient-to-r from-primary to-ocean bg-clip-text text-transparent">
           404
         </h1>
         <p className="text-base md:text-lg text-foreground/70 mb-2">This page slipped past the net.</p>
