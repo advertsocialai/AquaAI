@@ -9,15 +9,13 @@ class AquaRudraApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(appRouterProvider);
+
     return MaterialApp.router(
       title: 'Aqua Rudra',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.dark,
-      routerConfig: appRouter,
-
-      // 6 Indian languages — mirrors the web /src/locales/* set.
-      // Strings live in lib/l10n/*.arb and get codegen'd at build time
-      // (pubspec.yaml has `generate: true`).
+      routerConfig: router,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -28,7 +26,7 @@ class AquaRudraApp extends ConsumerWidget {
         Locale('hi'),
         Locale('ta'),
         Locale('te'),
-        Locale('or'),   // Odia
+        Locale('or'),
         Locale('bn'),
       ],
     );
