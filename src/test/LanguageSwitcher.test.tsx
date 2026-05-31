@@ -4,12 +4,11 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import i18n from "@/lib/i18n";
 
 describe("<LanguageSwitcher />", () => {
-  it("opens the dropdown and lists all six languages", () => {
+  it("opens the dropdown and lists all five languages", () => {
     render(<LanguageSwitcher />);
     fireEvent.click(screen.getByRole("button", { name: /change language/i }));
     // Native names are unique per language; pick those.
     expect(screen.getByText("తెలుగు")).toBeInTheDocument();
-    expect(screen.getByText("தமிழ்")).toBeInTheDocument();
     expect(screen.getByText("हिन्दी")).toBeInTheDocument();
     expect(screen.getByText("ଓଡ଼ିଆ")).toBeInTheDocument();
     expect(screen.getByText("বাংলা")).toBeInTheDocument();

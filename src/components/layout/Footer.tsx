@@ -58,10 +58,12 @@ export function Footer() {
 
     // Direct insert into Supabase. RLS policy enforces format server-side too,
     // and Prefer: return=minimal (supabase-js default) keeps anon out of SELECT.
+    // `newsletter_subscribers` isn't in the generated Database types yet, so
+    // cast the table accessor (same pattern as src/lib/push.ts).
     if (supabase) {
-      const { error } = await supabase
-        .from('newsletter_subscribers')
-        .insert({ email: clean, source: 'footer' });
+      const { error } = await (supabase.from('newsletter_subscribers' as never) as never as {
+        insert: (v: unknown) => Promise<{ error: { code?: string } | null }>;
+      }).insert({ email: clean, source: 'footer' });
       // 23505 = duplicate; treat as success so the form stays idempotent.
       if (error && error.code !== '23505') {
         console.warn('newsletter subscribe failed', error);

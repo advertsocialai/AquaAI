@@ -12,17 +12,17 @@ function renderPage() {
 }
 
 describe("<ForgotPasswordPage />", () => {
-  it("starts on the mobile step", () => {
+  it("starts on the email step", () => {
     renderPage();
     expect(screen.getByText(/Reset your password/i)).toBeInTheDocument();
-    expect(screen.getByText(/Mobile number/i)).toBeInTheDocument();
+    expect(screen.getByText(/Email address/i)).toBeInTheDocument();
   });
 
-  it("disables Send code until a 10-digit number is entered", () => {
+  it("disables Send reset link until a valid email is entered", () => {
     renderPage();
-    const btn = screen.getByRole("button", { name: /Send code/i }) as HTMLButtonElement;
+    const btn = screen.getByRole("button", { name: /Send reset link/i }) as HTMLButtonElement;
     expect(btn.disabled).toBe(true);
-    fireEvent.change(screen.getByPlaceholderText(/98765/), { target: { value: "9876543210" } });
+    fireEvent.change(screen.getByPlaceholderText(/you@example\.com/), { target: { value: "farmer@example.com" } });
     expect(btn.disabled).toBe(false);
   });
 });

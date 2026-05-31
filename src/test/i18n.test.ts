@@ -2,10 +2,10 @@ import { describe, it, expect } from "vitest";
 import i18n, { LANGUAGES } from "@/lib/i18n";
 
 describe("i18n", () => {
-  it("exposes six supported languages", () => {
-    expect(LANGUAGES.length).toBe(6);
+  it("exposes five supported languages", () => {
+    expect(LANGUAGES.length).toBe(5);
     expect(LANGUAGES.map((l) => l.code).sort()).toEqual([
-      "bn", "en", "hi", "od", "ta", "te",
+      "bn", "en", "hi", "od", "te",
     ]);
   });
 
