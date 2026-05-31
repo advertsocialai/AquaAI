@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Menu, X, Download, Rocket, LogIn, UserPlus, ChevronDown } from 'lucide-react';
+import { Menu, X, Download, Rocket, LogIn, UserPlus, ChevronDown, LayoutDashboard } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import atomLogo from '@/assets/atom-logo.svg';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
+import { ROLES } from '@/components/dashboard/RoleSelector';
+import { DASHBOARD_ROUTE } from '@/pages/dashboards/configs';
 
 const NAV = [
   { key: 'aquaai',    to: '/aquaai' },
-  { key: 'farmer',    to: '/farmer' },
   { key: 'knowledge', to: '/knowledge' },
   { key: 'about',     to: '/about' },
   { key: 'careers',   to: '/careers' },
@@ -23,6 +24,7 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [startOpen, setStartOpen] = useState(false);
+  const [dashOpen, setDashOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 100);
@@ -39,6 +41,16 @@ export function Header() {
     window.addEventListener('click', onClick);
     return () => window.removeEventListener('click', onClick);
   }, [startOpen]);
+
+  useEffect(() => {
+    if (!dashOpen) return;
+    const onClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest('[data-dashboards]')) setDashOpen(false);
+    };
+    window.addEventListener('click', onClick);
+    return () => window.removeEventListener('click', onClick);
+  }, [dashOpen]);
 
   const goDownload = () => {
     setMobileMenuOpen(false);
@@ -79,6 +91,41 @@ export function Header() {
                 {t(`nav.${item.key}`)}
               </Link>
             ))}
+            <div data-dashboards className="relative">
+              <button
+                type="button"
+                onClick={() => setDashOpen((v) => !v)}
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-white/85 hover:text-primary transition-colors tracking-[0.18em]"
+              >
+                DASHBOARDS
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform ${dashOpen ? 'rotate-180' : ''}`} />
+              </button>
+              <AnimatePresence>
+                {dashOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute left-0 mt-3 w-64 rounded-xl border border-border bg-popover/95 backdrop-blur-sm overflow-hidden shadow-2xl p-1.5 grid grid-cols-1 gap-0.5"
+                  >
+                    {ROLES.map(({ id, label, icon: Icon, accent }) => (
+                      <Link
+                        key={id}
+                        to={DASHBOARD_ROUTE[id]}
+                        onClick={() => setDashOpen(false)}
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-foreground hover:bg-muted transition"
+                      >
+                        <span className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style={{ background: `${accent}22` }}>
+                          <Icon className="w-4 h-4" style={{ color: accent }} />
+                        </span>
+                        <span className="font-medium">{label}</span>
+                      </Link>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </nav>
 
           <div className="hidden md:flex items-center gap-3">
@@ -171,6 +218,24 @@ export function Header() {
                     </Link>
                   </motion.div>
                 ))}
+
+                <div className="text-xs uppercase tracking-widest text-primary mt-2 mb-1 inline-flex items-center gap-1.5">
+                  <LayoutDashboard className="w-3.5 h-3.5" /> Dashboards
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  {ROLES.map(({ id, label, icon: Icon, accent }) => (
+                    <Link
+                      key={id}
+                      to={DASHBOARD_ROUTE[id]}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center gap-2 px-3 py-2.5 rounded-lg border border-border bg-card text-xs font-medium text-foreground/80 hover:bg-muted transition"
+                    >
+                      <Icon className="w-4 h-4 shrink-0" style={{ color: accent }} />
+                      <span className="truncate">{label}</span>
+                    </Link>
+                  ))}
+                </div>
+
                 <button
                   type="button"
                   onClick={goDownload}

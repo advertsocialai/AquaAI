@@ -7,6 +7,7 @@ import {
   Languages, MapPin, BadgeCheck,
 } from 'lucide-react';
 import { ROLES, type Role } from '@/components/dashboard/RoleSelector';
+import { DASHBOARD_ROUTE } from '@/pages/dashboards/configs';
 
 const LANGUAGES = ['English', 'తెలుగు (Telugu)', 'தமிழ் (Tamil)', 'ଓଡ଼ିଆ (Odia)', 'বাংলা (Bengali)', 'हिन्दी (Hindi)'];
 const STEPS = ['Role', 'Mobile', 'OTP', 'Details', 'Done'] as const;
@@ -274,7 +275,7 @@ export default function SignupPage() {
                 We're loading your <span className="text-foreground">{ROLES.find(r => r.id === role)?.label}</span> dashboard. KYC review usually takes under 24 hours.
               </p>
               <button
-                onClick={() => navigate(role === 'farmer' ? '/farmer' : role === 'trader' ? '/trader' : '/aquaai#dashboard')}
+                onClick={() => navigate(DASHBOARD_ROUTE[role] ?? '/aquaai#dashboard')}
                 className="px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 text-black font-semibold text-sm inline-flex items-center gap-2"
               >
                 Go to dashboard <ArrowRight className="w-4 h-4" />

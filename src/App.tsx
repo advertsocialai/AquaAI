@@ -33,6 +33,7 @@ const KnowledgeArticlePage = lazy(() => import("./pages/KnowledgeArticlePage"));
 const AboutPage       = lazy(() => import("./pages/AboutPage"));
 const FarmerDashboardPage = lazy(() => import("./pages/FarmerDashboardPage"));
 const TraderDashboardPage = lazy(() => import("./pages/TraderDashboardPage"));
+const RoleDashboard = lazy(() => import("./pages/dashboards/RoleDashboard"));
 
 const queryClient = new QueryClient();
 
@@ -85,6 +86,12 @@ function AnimatedRoutes() {
           <Route path="/aquaai" element={<PageTransition><AquaAIPage /></PageTransition>} />
           <Route path="/farmer" element={<PageTransition><FarmerDashboardPage /></PageTransition>} />
           <Route path="/trader" element={<PageTransition><TraderDashboardPage /></PageTransition>} />
+          <Route path="/vle" element={<PageTransition><RoleDashboard role="vle" /></PageTransition>} />
+          <Route path="/hatchery" element={<PageTransition><RoleDashboard role="hatchery" /></PageTransition>} />
+          <Route path="/transporter" element={<PageTransition><RoleDashboard role="transporter" /></PageTransition>} />
+          <Route path="/supplier" element={<PageTransition><RoleDashboard role="supplier" /></PageTransition>} />
+          <Route path="/bank" element={<PageTransition><RoleDashboard role="bank" /></PageTransition>} />
+          <Route path="/govt" element={<PageTransition><RoleDashboard role="govt" /></PageTransition>} />
           <Route path="/login" element={<PageTransition><LoginPage /></PageTransition>} />
           <Route path="/signup" element={<PageTransition><SignupPage /></PageTransition>} />
           <Route path="/settings" element={<PageTransition><SettingsPage /></PageTransition>} />
