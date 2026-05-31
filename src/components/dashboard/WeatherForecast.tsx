@@ -2,36 +2,14 @@ import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import {
   Cloud, CloudRain, CloudDrizzle, Sun, CloudSun, Wind, Droplets,
-  MapPin, Thermometer, Waves, CheckCircle2, AlertTriangle,
+  MapPin, Waves, CheckCircle2, AlertTriangle, WifiOff,
 } from "lucide-react";
+import { fetchLiveWeather, TOWN_COORDS, type LiveWeather } from "@/lib/weather";
 
-interface WeatherData {
-  location: string;
-  temperature: number;
-  condition: string;
-  humidity: number;
-  windSpeed: number;
-  waterTemp: number;
-  forecast: Array<{
-    day: string;
-    high: number;
-    low: number;
-    condition: string;
-    rainChance: number;
-  }>;
-  alert: { message: string } | null;
-}
+type WeatherData = LiveWeather;
 
-// All mandals / towns of West Godavari district, Andhra Pradesh (scrollable).
-const WEST_GODAVARI = [
-  "Bhimavaram", "Tadepalligudem", "Tanuku", "Narsapur", "Palakollu", "Akiveedu",
-  "Undi", "Veeravasaram", "Kalla", "Achanta", "Penugonda", "Attili", "Iragavaram",
-  "Nidadavolu", "Ganapavaram", "Pentapadu", "Unguturu", "Bhimadole", "Pedavegi",
-  "Pedapadu", "Denduluru", "Kovvur", "Chagallu", "Tallapudi", "Gopalapuram",
-  "Koyyalagudem", "Jangareddygudem", "Polavaram", "Buttayagudem", "Chintalapudi",
-  "Kamavarapukota", "Lingapalem", "T. Narasapuram", "Devarapalli", "Nallajerla",
-  "Dwarakatirumala", "Mogalturu", "Yelamanchili", "Poduru", "Palacharla",
-];
+// West Godavari towns we have coordinates for (drives the picker + live fetch).
+const WEST_GODAVARI = Object.keys(TOWN_COORDS);
 
 // Pick an icon + colour for a condition string.
 function conditionIcon(condition: string) {
@@ -59,15 +37,14 @@ export function WeatherForecast() {
   );
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState(false);
+  const [offline, setOffline] = useState(false);
 
-  const fetchWeather = useCallback(async () => {
-    setLoading(true);
-    // Deterministic mock based on the location string so the UI is stable.
-    const seed = location.length * 7;
-    await new Promise((r) => setTimeout(r, 350));
+  // Deterministic offline fallback, used only if the live fetch fails.
+  const mockWeather = useCallback((town: string): WeatherData => {
+    const seed = town.length * 7;
     const conditions = ["Sunny", "Partly Cloudy", "Cloudy", "Light Rain", "Heavy Rain"];
-    setWeather({
-      location,
+    return {
+      location: town,
       temperature: 26 + (seed % 8),
       condition: conditions[seed % conditions.length],
       humidity: 65 + (seed % 25),
@@ -80,15 +57,25 @@ export function WeatherForecast() {
         condition: conditions[(seed + i) % conditions.length],
         rainChance: (seed + i * 11) % 80,
       })),
-      alert:
-        seed % 3 === 0
-          ? { message: "Strong winds expected this evening. Secure pond aerators." }
-          : null,
-    });
-    setLoading(false);
-  }, [location]);
+      alert: null,
+    };
+  }, []);
 
-  useEffect(() => { fetchWeather(); }, [fetchWeather]);
+  useEffect(() => {
+    const controller = new AbortController();
+    setLoading(true);
+    fetchLiveWeather(location, controller.signal)
+      .then((live) => { setWeather(live); setOffline(false); })
+      .catch(() => {
+        if (controller.signal.aborted) return;
+        // Network/API failure — degrade to the offline estimate.
+        setWeather(mockWeather(location));
+        setOffline(true);
+      })
+      .finally(() => { if (!controller.signal.aborted) setLoading(false); });
+    return () => controller.abort();
+  }, [location, mockWeather]);
+
   useEffect(() => { localStorage.setItem("aquai-weather-location", location); }, [location]);
 
   return (
@@ -107,6 +94,11 @@ export function WeatherForecast() {
         </select>
         <span className="text-xs text-foreground/40">West Godavari, AP</span>
         {loading && <span className="text-xs text-teal-300 animate-pulse">updating…</span>}
+        {!loading && offline && (
+          <span className="inline-flex items-center gap-1 text-xs text-amber-500" title="Live weather unavailable — showing an estimate">
+            <WifiOff className="w-3.5 h-3.5" /> estimate
+          </span>
+        )}
       </div>
 
       {weather && (

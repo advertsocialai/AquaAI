@@ -58,6 +58,17 @@ export default defineConfig(() => ({
               cacheableResponse: { statuses: [0, 200] },
             },
           },
+          {
+            // Live weather (Open-Meteo): fresh when online, last reading when not.
+            urlPattern: /^https:\/\/api\.open-meteo\.com\//,
+            handler: "NetworkFirst",
+            options: {
+              cacheName: "aquai-weather",
+              networkTimeoutSeconds: 5,
+              expiration: { maxEntries: 50, maxAgeSeconds: 60 * 30 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
         ],
       },
     }),
