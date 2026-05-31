@@ -65,4 +65,13 @@ async def send_outbreak_alert_to_farms(
     for phone in phones:
         await send_whatsapp_message(phone, f"[AquaAI Alert] {body}")
 
-    return {"fcm_sent": fcm_ok, "sms_count": len(phones)}
+    # Also push to subscribed browsers (PWA web push). Broadcast, since farm
+    # contacts here aren't mapped to Supabase auth UUIDs. Best-effort.
+    web = {"sent": 0}
+    try:
+        from app.services.webpush_service import send_web_push
+        web = send_web_push(title, body, url="/farmer", tag="outbreak")
+    except Exception as e:  # noqa: BLE001
+        print(f"[WebPush ERROR] {e}")
+
+    return {"fcm_sent": fcm_ok, "sms_count": len(phones), "web_push_sent": web.get("sent", 0)}

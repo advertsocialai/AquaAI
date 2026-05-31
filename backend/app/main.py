@@ -21,6 +21,7 @@ from app.api.v1 import models as models_router
 from app.api.v1 import risk
 from app.api.v1 import newsletter
 from app.api.v1 import contact
+from app.api.v1 import push
 
 app = FastAPI(
     title=settings.app_name,
@@ -72,6 +73,7 @@ app.include_router(models_router.router, prefix=PREFIX)     # Unified AI models 
 app.include_router(risk.router, prefix=PREFIX)              # Bank/insurer risk scoring
 app.include_router(newsletter.router, prefix=PREFIX)        # Footer newsletter subscribe
 app.include_router(contact.router, prefix=PREFIX)           # Contact form (web + mobile)
+app.include_router(push.router, prefix=PREFIX)              # Web push (VAPID) config + send
 app.include_router(metrics_router.router)                   # /metrics for Prometheus
 
 

@@ -25,6 +25,13 @@ class Settings(BaseSettings):
     whatsapp_api_url: Optional[str] = None
     whatsapp_token: Optional[str] = None
 
+    # Web Push (VAPID). Public key is also shipped to the browser; the private
+    # key is backend-only and signs the push requests. Leave unset to disable
+    # web push (service degrades to a logged stub).
+    vapid_public_key: Optional[str] = None
+    vapid_private_key: Optional[str] = None
+    vapid_subject: str = "mailto:advertsocialai@gmail.com"
+
     outbreak_alert_radius_km: float = 5.0
     certificate_expiry_days: int = 90
     hmac_secret: str = "dev-hmac-secret-change-in-production"
