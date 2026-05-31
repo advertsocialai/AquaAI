@@ -11,6 +11,7 @@ import { ChatBot } from "@/components/ChatBot";
 import { VoiceReader } from "@/components/VoiceReader";
 import { IosInstallPrompt } from "@/components/IosInstallPrompt";
 import { PageTransition } from "@/components/layout/PageTransition";
+import { AuthProvider } from "@/lib/auth";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -115,6 +116,7 @@ const App = () => {
   return (
     <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
+      <AuthProvider>
       <TooltipProvider>
         <Toaster />
         <Sonner />
@@ -127,6 +129,7 @@ const App = () => {
           <IosInstallPrompt />
         </BrowserRouter>
       </TooltipProvider>
+      </AuthProvider>
     </QueryClientProvider>
     </ErrorBoundary>
   );
