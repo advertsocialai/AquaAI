@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  ChevronRight, Languages, HelpCircle, Info, ShieldCheck,
-  LogOut, Trash2, ArrowRight, X, Loader2, AlertTriangle, MapPin, BadgeCheck,
+  ChevronRight, Trash2, ArrowRight, Loader2, AlertTriangle,
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { supabase } from '@/lib/supabase';
@@ -60,21 +59,21 @@ export default function ProfilePage() {
         {/* Header row */}
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-3xl font-bold">Menu</h1>
-          <Link to="/home" className="text-primary font-medium inline-flex items-center gap-1 hover:underline">
-            Close <X className="w-4 h-4" />
+          <Link to="/home" className="text-rose-600 font-medium hover:underline">
+            Close
           </Link>
         </div>
 
         {/* Identity card */}
         <div className="flex items-center gap-5 mb-8">
           <div className="w-24 h-24 rounded-2xl bg-muted flex items-center justify-center shrink-0">
-            <span className="text-4xl font-bold text-primary">{initial}</span>
+            <span className="text-4xl font-bold text-rose-600">{initial}</span>
           </div>
           <div>
             <div className="text-2xl font-bold">{name}</div>
             <Link
               to="/profile/details"
-              className="mt-1 text-primary font-medium inline-flex items-center gap-1.5 hover:underline"
+              className="mt-1 text-rose-600 font-medium inline-flex items-center gap-1.5 hover:underline"
             >
               View Profile <ArrowRight className="w-4 h-4" />
             </Link>
@@ -83,19 +82,27 @@ export default function ProfilePage() {
 
         {/* Menu rows */}
         <div className="divide-y divide-border border-y border-border">
-          <MenuRow icon={Languages} label="Change Language" custom={<LanguageSwitcher />} />
-          <MenuRow icon={HelpCircle} label="How It Works" to="/aquaai" />
-          <MenuRow icon={Info} label="About Aqua Rudra" to="/about" />
-          <MenuRow icon={ShieldCheck} label="Privacy Policy" to="/privacy" />
-          <MenuRow icon={LogOut} label="Logout" onClick={handleLogout} disabled={busy} />
-          <MenuRow icon={Trash2} label="Delete Account" danger onClick={() => setConfirmDelete(true)} />
+          <MenuRow label="Change Language" custom={<LanguageSwitcher />} />
+          <MenuRow label="How It Works" to="/aquaai" />
+          <MenuRow label="About Royye Raju" to="/about" />
+          <MenuRow label="About MAARC" to="/about" />
+          <MenuRow label="Privacy Policy" to="/privacy" />
+          <MenuRow label="Logout" onClick={handleLogout} disabled={busy} />
+          <MenuRow label="Delete Account" onClick={() => setConfirmDelete(true)} />
         </div>
 
         {/* Footer */}
         <div className="text-center mt-12 space-y-1.5">
           <div className="font-semibold text-foreground/80">Follow Us</div>
           <div className="text-sm text-foreground/60">Visit our website</div>
-          <Link to="/" className="text-sky-400 font-medium hover:underline">aquarudra.com</Link>
+          <a
+            href="https://matrixseafoods.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sky-400 font-medium hover:underline"
+          >
+            Matrixseafoods.in
+          </a>
         </div>
       </div>
 
@@ -141,16 +148,15 @@ export default function ProfilePage() {
 }
 
 function MenuRow({
-  icon: Icon, label, to, onClick, custom, danger, disabled,
+  label, to, onClick, custom, disabled,
 }: {
-  icon: React.ElementType; label: string; to?: string;
-  onClick?: () => void; custom?: React.ReactNode; danger?: boolean; disabled?: boolean;
+  label: string; to?: string;
+  onClick?: () => void; custom?: React.ReactNode; disabled?: boolean;
 }) {
   const content = (
     <div className="flex items-center gap-4 py-4">
-      <Icon className={`w-5 h-5 shrink-0 ${danger ? 'text-red-400' : 'text-foreground/70'}`} />
-      <span className={`flex-1 text-base font-medium ${danger ? 'text-red-400' : 'text-foreground'}`}>{label}</span>
-      {custom ?? <ChevronRight className="w-5 h-5 text-primary" />}
+      <span className="flex-1 text-lg font-medium text-foreground">{label}</span>
+      {custom ?? <ChevronRight className="w-5 h-5 text-rose-600" />}
     </div>
   );
   if (custom) return <div className="flex items-center justify-between">{content}</div>;
@@ -159,16 +165,5 @@ function MenuRow({
     <button onClick={onClick} disabled={disabled} className="w-full text-left hover:bg-muted/40 transition disabled:opacity-50">
       {content}
     </button>
-  );
-}
-
-function ProfileRow({ label, value, icon: Icon }: { label: string; value: string; icon?: React.ElementType }) {
-  return (
-    <div className="flex items-center justify-between gap-3">
-      <span className="text-foreground/45 inline-flex items-center gap-1.5">
-        {Icon && <Icon className="w-3.5 h-3.5" />} {label}
-      </span>
-      <span className="text-foreground/85 text-right font-medium truncate max-w-[60%]">{value}</span>
-    </div>
   );
 }
