@@ -3,10 +3,11 @@ import { useSearchParams } from 'react-router-dom';
 import { ChevronDown, CalendarDays } from 'lucide-react';
 import { MobileTopBar, MobileTabBar } from '@/components/mobile/MobileChrome';
 import { BrandMark } from '@/components/mobile/BrandMark';
+import { supabase } from '@/lib/supabase';
 
-/* ── Demo price data ──────────────────────────────────────────────────
- * Replace with Supabase fetches against a `market_prices` table
- * (species, location, count/size, price, day) once the feed is wired. */
+/* ── Demo price data (fallback) ───────────────────────────────────────
+ * Live prices are fetched from the Supabase `market_prices` table; these
+ * values are the offline/empty-DB fallback and the seed source. */
 
 const LOCATIONS = ['Andhra Pradesh', 'West Bengal', 'India'] as const;
 const LOC_MULT: Record<string, number> = { 'Andhra Pradesh': 1, 'West Bengal': 0.94, India: 0.97 };
@@ -111,7 +112,33 @@ export default function MarketPricePage() {
   const species = tab === 'shrimp' ? shrimpSpecies : fishSpecies;
   const setSpecies = tab === 'shrimp' ? setShrimpSpecies : setFishSpecies;
 
-  const rows = todaysRows(tab, species, location);
+  // Live base prices (Andhra Pradesh canonical) from Supabase, keyed by `${tab}|${species}`.
+  // Falls back to the demo table when the DB is empty/unavailable.
+  const [liveBase, setLiveBase] = useState<Record<string, Row[]>>({});
+  useEffect(() => {
+    if (!supabase) return;
+    let cancelled = false;
+    (async () => {
+      const { data, error } = await supabase
+        .from('market_prices')
+        .select('tab,species,label,price,sort_order')
+        .eq('tab', tab)
+        .eq('species', species)
+        .order('sort_order');
+      if (cancelled || error || !data?.length) return;
+      setLiveBase((prev) => ({
+        ...prev,
+        [`${tab}|${species}`]: data.map((d) => ({ label: d.label, price: d.price })),
+      }));
+    })();
+    return () => { cancelled = true; };
+  }, [tab, species]);
+
+  const mult = LOC_MULT[location] ?? 1;
+  const live = liveBase[`${tab}|${species}`];
+  const rows: Row[] = live
+    ? live.map((r) => ({ label: r.label, price: Math.round(r.price * mult) }))
+    : todaysRows(tab, species, location);
 
   // Weekly trend selector (count for shrimp, size for fish)
   const trendOptions = tab === 'shrimp' ? rows.map((r) => r.label) : FISH_SIZES;

@@ -530,6 +530,33 @@ export type Database = {
           },
         ]
       }
+      feed_posts: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: number
+          image_url: string | null
+          likes: number
+          title: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: never
+          image_url?: string | null
+          likes?: number
+          title: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: never
+          image_url?: string | null
+          likes?: number
+          title?: string
+        }
+        Relationships: []
+      }
       grading_sessions: {
         Row: {
           activity_score: number | null
@@ -776,6 +803,36 @@ export type Database = {
           id?: number
           requested_at?: string | null
           response_status?: number | null
+        }
+        Relationships: []
+      }
+      market_prices: {
+        Row: {
+          day: string
+          id: number
+          label: string
+          price: number
+          sort_order: number
+          species: string
+          tab: string
+        }
+        Insert: {
+          day?: string
+          id?: never
+          label: string
+          price: number
+          sort_order?: number
+          species: string
+          tab: string
+        }
+        Update: {
+          day?: string
+          id?: never
+          label?: string
+          price?: number
+          sort_order?: number
+          species?: string
+          tab?: string
         }
         Relationships: []
       }
@@ -1302,6 +1359,30 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      school_lessons: {
+        Row: {
+          category: string | null
+          created_at: string
+          id: number
+          summary: string | null
+          title: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          id?: never
+          summary?: string | null
+          title: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          id?: never
+          summary?: string | null
+          title?: string
+        }
+        Relationships: []
       }
       subscriptions: {
         Row: {
