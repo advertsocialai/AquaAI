@@ -24,7 +24,7 @@ const TABS: { key: Tab; to: string; Icon: React.ElementType }[] = [
   { key: 'home',  to: '/home',             Icon: HomeIcon },
   { key: 'rates', to: '/rates',            Icon: IndianRupee },
   { key: 'rx',    to: '/expert',           Icon: FileText },
-  { key: 'farm',  to: '/farmer',           Icon: Fish },
+  { key: 'farm',  to: '/explore',          Icon: Fish },
   { key: 'map',   to: '/aquaai#dashboard', Icon: MapPin },
 ];
 

@@ -40,6 +40,8 @@ const ProfilePage = lazy(() => import("./pages/ProfilePage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
 const MarketPricePage = lazy(() => import("./pages/MarketPricePage"));
 const ExpertPage = lazy(() => import("./pages/ExpertPage"));
+const ExplorePage = lazy(() => import("./pages/ExplorePage"));
+const ProfileDetailsPage = lazy(() => import("./pages/ProfileDetailsPage"));
 
 const queryClient = new QueryClient();
 
@@ -102,6 +104,8 @@ function AnimatedRoutes() {
           <Route path="/signup" element={<PageTransition><SignupPage /></PageTransition>} />
           <Route path="/settings" element={<RequireAuth><PageTransition><SettingsPage /></PageTransition></RequireAuth>} />
           <Route path="/profile" element={<RequireAuth><PageTransition><ProfilePage /></PageTransition></RequireAuth>} />
+          <Route path="/profile/details" element={<RequireAuth><PageTransition><ProfileDetailsPage /></PageTransition></RequireAuth>} />
+          <Route path="/explore" element={<RequireAuth><PageTransition><ExplorePage /></PageTransition></RequireAuth>} />
           <Route path="/home" element={<RequireAuth><PageTransition><HomePage /></PageTransition></RequireAuth>} />
           <Route path="/rates" element={<RequireAuth><PageTransition><MarketPricePage /></PageTransition></RequireAuth>} />
           <Route path="/expert" element={<RequireAuth><PageTransition><ExpertPage /></PageTransition></RequireAuth>} />

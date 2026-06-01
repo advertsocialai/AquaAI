@@ -15,7 +15,6 @@ export default function ProfilePage() {
   useEffect(() => { document.title = 'Profile — Aqua Rudra'; }, []);
   const navigate = useNavigate();
   const { user, role, signOut, loading } = useAuth();
-  const [showProfile, setShowProfile] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [busy, setBusy] = useState(false);
 
@@ -73,29 +72,14 @@ export default function ProfilePage() {
           </div>
           <div>
             <div className="text-2xl font-bold">{name}</div>
-            <button
-              onClick={() => setShowProfile((v) => !v)}
+            <Link
+              to="/profile/details"
               className="mt-1 text-primary font-medium inline-flex items-center gap-1.5 hover:underline"
             >
               View Profile <ArrowRight className="w-4 h-4" />
-            </button>
+            </Link>
           </div>
         </div>
-
-        {/* Expandable profile details */}
-        {showProfile && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            className="mb-6 rounded-xl border border-border bg-card p-4 space-y-2.5 text-sm overflow-hidden"
-          >
-            <ProfileRow label="Role" value={roleLabel} />
-            {user.email && <ProfileRow label="Email" value={user.email} />}
-            {user.phone && <ProfileRow label="Mobile" value={`+${user.phone}`} />}
-            {location && <ProfileRow label="Location" value={location} icon={MapPin} />}
-            {kycRef && <ProfileRow label="KYC reference" value={kycRef} icon={BadgeCheck} />}
-          </motion.div>
-        )}
 
         {/* Menu rows */}
         <div className="divide-y divide-border border-y border-border">
