@@ -61,7 +61,7 @@ export default function ProfilePage() {
         {/* Header row */}
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-3xl font-bold">Menu</h1>
-          <Link to={myDashboard} className="text-primary font-medium inline-flex items-center gap-1 hover:underline">
+          <Link to="/home" className="text-primary font-medium inline-flex items-center gap-1 hover:underline">
             Close <X className="w-4 h-4" />
           </Link>
         </div>

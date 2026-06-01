@@ -37,6 +37,7 @@ const FarmerDashboardPage = lazy(() => import("./pages/FarmerDashboardPage"));
 const TraderDashboardPage = lazy(() => import("./pages/TraderDashboardPage"));
 const RoleDashboard = lazy(() => import("./pages/dashboards/RoleDashboard"));
 const ProfilePage = lazy(() => import("./pages/ProfilePage"));
+const HomePage = lazy(() => import("./pages/HomePage"));
 
 const queryClient = new QueryClient();
 
@@ -99,6 +100,7 @@ function AnimatedRoutes() {
           <Route path="/signup" element={<PageTransition><SignupPage /></PageTransition>} />
           <Route path="/settings" element={<RequireAuth><PageTransition><SettingsPage /></PageTransition></RequireAuth>} />
           <Route path="/profile" element={<RequireAuth><PageTransition><ProfilePage /></PageTransition></RequireAuth>} />
+          <Route path="/home" element={<RequireAuth><PageTransition><HomePage /></PageTransition></RequireAuth>} />
           <Route path="/kyc" element={<RequireAuth><PageTransition><KycPage /></PageTransition></RequireAuth>} />
           <Route path="/forgot-password" element={<PageTransition><ForgotPasswordPage /></PageTransition>} />
           <Route path="/verify/:certId" element={<PageTransition><VerifyPage /></PageTransition>} />
