@@ -920,6 +920,27 @@ export type Database = {
         }
         Relationships: []
       }
+      newsletter_subscribers: {
+        Row: {
+          created_at: string
+          email: string
+          id: number
+          source: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: number
+          source?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: number
+          source?: string
+        }
+        Relationships: []
+      }
       outbreak_alerts: {
         Row: {
           alert_sent_fcm: boolean | null
@@ -1073,6 +1094,107 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      profile_ponds: {
+        Row: {
+          area_sqm: number | null
+          created_at: string
+          depth_m: number | null
+          id: string
+          name: string
+          profile_id: string
+        }
+        Insert: {
+          area_sqm?: number | null
+          created_at?: string
+          depth_m?: number | null
+          id?: string
+          name: string
+          profile_id: string
+        }
+        Update: {
+          area_sqm?: number | null
+          created_at?: string
+          depth_m?: number | null
+          id?: string
+          name?: string
+          profile_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profile_ponds_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          dob: string | null
+          full_name: string | null
+          id: string
+          location: string | null
+          mobile: string | null
+          ponds_count: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          dob?: string | null
+          full_name?: string | null
+          id: string
+          location?: string | null
+          mobile?: string | null
+          ponds_count?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          dob?: string | null
+          full_name?: string | null
+          id?: string
+          location?: string | null
+          mobile?: string | null
+          ponds_count?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      push_subscriptions: {
+        Row: {
+          auth: string
+          created_at: string
+          endpoint: string
+          id: string
+          p256dh: string
+          updated_at: string
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          auth: string
+          created_at?: string
+          endpoint: string
+          id?: string
+          p256dh: string
+          updated_at?: string
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          auth?: string
+          created_at?: string
+          endpoint?: string
+          id?: string
+          p256dh?: string
+          updated_at?: string
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: []
       }
       qc_certificates: {
         Row: {
