@@ -39,6 +39,7 @@ const RoleDashboard = lazy(() => import("./pages/dashboards/RoleDashboard"));
 const ProfilePage = lazy(() => import("./pages/ProfilePage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
 const MarketPricePage = lazy(() => import("./pages/MarketPricePage"));
+const ExpertPage = lazy(() => import("./pages/ExpertPage"));
 
 const queryClient = new QueryClient();
 
@@ -103,6 +104,7 @@ function AnimatedRoutes() {
           <Route path="/profile" element={<RequireAuth><PageTransition><ProfilePage /></PageTransition></RequireAuth>} />
           <Route path="/home" element={<RequireAuth><PageTransition><HomePage /></PageTransition></RequireAuth>} />
           <Route path="/rates" element={<RequireAuth><PageTransition><MarketPricePage /></PageTransition></RequireAuth>} />
+          <Route path="/expert" element={<RequireAuth><PageTransition><ExpertPage /></PageTransition></RequireAuth>} />
           <Route path="/kyc" element={<RequireAuth><PageTransition><KycPage /></PageTransition></RequireAuth>} />
           <Route path="/forgot-password" element={<PageTransition><ForgotPasswordPage /></PageTransition>} />
           <Route path="/verify/:certId" element={<PageTransition><VerifyPage /></PageTransition>} />
