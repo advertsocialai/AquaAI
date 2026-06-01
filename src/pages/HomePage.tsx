@@ -104,7 +104,7 @@ export default function HomePage() {
         <section>
           <SectionTitle>Shop Farm</SectionTitle>
           <Link
-            to="/aquaai#marketplace"
+            to="/shop"
             className="block rounded-2xl p-6 bg-gradient-to-br from-[#d7eebb] to-[#eaf5d8] active:scale-[0.99] transition relative overflow-hidden"
           >
             <div className="max-w-[62%]">
