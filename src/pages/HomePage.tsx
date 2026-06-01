@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import {
-  Menu, Fish, Newspaper, Lightbulb, HeartPulse, ArrowRight, Store,
-  Home as HomeIcon, IndianRupee, FileText, MapPin,
-} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Fish, Newspaper, Lightbulb, HeartPulse, ArrowRight, Store } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
+import { MobileTopBar, MobileTabBar } from '@/components/mobile/MobileChrome';
 
 /* ── Small inline icons not in lucide ─────────────────────────────── */
 function ShrimpIcon({ className = '' }: { className?: string }) {
@@ -56,18 +54,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-neutral-50 text-neutral-900">
-      {/* Top bar */}
-      <header className="sticky top-0 z-30 bg-neutral-50/95 backdrop-blur border-b border-neutral-100">
-        <div className="max-w-md mx-auto px-5 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Link to="/profile" aria-label="Menu" className="p-1 -ml-1">
-              <Menu className="w-7 h-7 text-neutral-900" />
-            </Link>
-            <span className="text-2xl font-bold">Home</span>
-          </div>
-          <Link to="/contact" className="text-rose-600 font-bold">Help Desk</Link>
-        </div>
-      </header>
+      <MobileTopBar title="Home" />
 
       <main className="max-w-md mx-auto px-5 pt-5 pb-28 space-y-8">
         {/* KYC banner */}
@@ -88,8 +75,8 @@ export default function HomePage() {
         <section>
           <SectionTitle>Market rates</SectionTitle>
           <div className="grid grid-cols-2 gap-4">
-            <Tile to="/aquaai#pricing" label="Shrimp Rates" Icon={ShrimpIcon} gradient="from-[#f4a99b] to-[#f8cfc6]" />
-            <Tile to="/aquaai#pricing" label="Fish Rates" Icon={Fish} gradient="from-[#f6b8d0] to-[#fbdce8]" />
+            <Tile to="/rates" label="Shrimp Rates" Icon={ShrimpIcon} gradient="from-[#f4a99b] to-[#f8cfc6]" />
+            <Tile to="/rates?tab=fish" label="Fish Rates" Icon={Fish} gradient="from-[#f6b8d0] to-[#fbdce8]" />
           </div>
         </section>
 
@@ -150,29 +137,7 @@ export default function HomePage() {
         </section>
       </main>
 
-      {/* Bottom tab bar */}
-      <nav className="fixed bottom-0 inset-x-0 z-30 bg-white border-t border-neutral-200">
-        <div className="max-w-md mx-auto px-6 h-20 grid grid-cols-5 items-center pb-2">
-          <TabLink to="/home" Icon={HomeIcon} active />
-          <TabLink to="/aquaai#pricing" Icon={IndianRupee} />
-          <TabLink to="/knowledge" Icon={FileText} />
-          <TabLink to="/farmer" Icon={Fish} />
-          <TabLink to="/aquaai#dashboard" Icon={MapPin} />
-        </div>
-      </nav>
+      <MobileTabBar active="home" />
     </div>
-  );
-}
-
-function TabLink({ to, Icon, active }: { to: string; Icon: React.ElementType; active?: boolean }) {
-  const navigate = useNavigate();
-  return (
-    <button
-      onClick={() => navigate(to)}
-      className="flex items-center justify-center"
-      aria-current={active ? 'page' : undefined}
-    >
-      <Icon className={`w-7 h-7 ${active ? 'text-rose-600' : 'text-neutral-400'}`} fill={active ? 'currentColor' : 'none'} />
-    </button>
   );
 }
