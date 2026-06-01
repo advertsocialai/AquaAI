@@ -11,6 +11,7 @@ type ProfileRow = {
   village: string | null; mandal: string | null; district: string | null;
   state: string | null; pincode: string | null;
   latitude: number | null; longitude: number | null;
+  alt_mobile: string | null; kyc_id: string | null; gender: string | null;
 };
 
 /* Label + value block, matching the original profile layout. */
@@ -49,7 +50,7 @@ export default function ProfileDetailsPage() {
     let cancelled = false;
     (async () => {
       const [{ data: p }, { data: pd }] = await Promise.all([
-        supabase.from('profiles').select('full_name,dob,location,mobile,ponds_count,village,mandal,district,state,pincode,latitude,longitude').eq('id', user.id).maybeSingle(),
+        supabase.from('profiles').select('full_name,dob,location,mobile,ponds_count,village,mandal,district,state,pincode,latitude,longitude,alt_mobile,kyc_id,gender').eq('id', user.id).maybeSingle(),
         supabase.from('profile_ponds').select('id,name,area_sqm,depth_m').eq('profile_id', user.id).order('created_at'),
       ]);
       if (cancelled) return;
@@ -85,6 +86,10 @@ export default function ProfileDetailsPage() {
       : '---';
   const LANG_LABELS: Record<string, string> = { en: 'English', te: 'Telugu', hi: 'Hindi' };
   const language = LANG_LABELS[(m.lang as string) ?? ''] ?? '---';
+  const whatsapp = profile?.alt_mobile || '---';
+  const gender = profile?.gender ? profile.gender[0].toUpperCase() + profile.gender.slice(1) : '---';
+  const kyc = profile?.kyc_id?.trim();
+  const kycMasked = kyc ? `•••• •••• ${kyc.slice(-4)}` : '---';
 
   return (
     <div className="min-h-screen bg-white text-neutral-900">
@@ -112,8 +117,14 @@ export default function ProfileDetailsPage() {
           <Field label="Date of Birth" value={dob} />
         </div>
 
-        <Field label="Mobile" value={mobile} />
-        <Field label="Preferred Language" value={language} />
+        <div className="grid grid-cols-2 gap-6">
+          <Field label="Mobile" value={mobile} />
+          <Field label="WhatsApp / Alternate" value={whatsapp} />
+          <Field label="Gender" value={gender} />
+          <Field label="Preferred Language" value={language} />
+        </div>
+
+        <Field label="Aadhaar / KYC ID" value={kycMasked} />
 
         <SectionHeader>Location</SectionHeader>
 

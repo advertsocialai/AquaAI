@@ -1189,11 +1189,16 @@ export type Database = {
       }
       profiles: {
         Row: {
+          alt_mobile: string | null
+          avatar_url: string | null
           created_at: string
           district: string | null
           dob: string | null
+          email: string | null
           full_name: string | null
+          gender: string | null
           id: string
+          kyc_id: string | null
           latitude: number | null
           location: string | null
           longitude: number | null
@@ -1201,16 +1206,22 @@ export type Database = {
           mobile: string | null
           pincode: string | null
           ponds_count: number
+          role: string | null
           state: string | null
           updated_at: string
           village: string | null
         }
         Insert: {
+          alt_mobile?: string | null
+          avatar_url?: string | null
           created_at?: string
           district?: string | null
           dob?: string | null
+          email?: string | null
           full_name?: string | null
+          gender?: string | null
           id: string
+          kyc_id?: string | null
           latitude?: number | null
           location?: string | null
           longitude?: number | null
@@ -1218,16 +1229,22 @@ export type Database = {
           mobile?: string | null
           pincode?: string | null
           ponds_count?: number
+          role?: string | null
           state?: string | null
           updated_at?: string
           village?: string | null
         }
         Update: {
+          alt_mobile?: string | null
+          avatar_url?: string | null
           created_at?: string
           district?: string | null
           dob?: string | null
+          email?: string | null
           full_name?: string | null
+          gender?: string | null
           id?: string
+          kyc_id?: string | null
           latitude?: number | null
           location?: string | null
           longitude?: number | null
@@ -1235,6 +1252,7 @@ export type Database = {
           mobile?: string | null
           pincode?: string | null
           ponds_count?: number
+          role?: string | null
           state?: string | null
           updated_at?: string
           village?: string | null
