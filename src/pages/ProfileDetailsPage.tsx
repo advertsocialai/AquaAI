@@ -8,6 +8,9 @@ type Pond = { id: string; name: string; area_sqm: number | null; depth_m: number
 type ProfileRow = {
   full_name: string | null; dob: string | null; location: string | null;
   mobile: string | null; ponds_count: number | null;
+  village: string | null; mandal: string | null; district: string | null;
+  state: string | null; pincode: string | null;
+  latitude: number | null; longitude: number | null;
 };
 
 /* Label + value block, matching the original profile layout. */
@@ -46,7 +49,7 @@ export default function ProfileDetailsPage() {
     let cancelled = false;
     (async () => {
       const [{ data: p }, { data: pd }] = await Promise.all([
-        supabase.from('profiles').select('full_name,dob,location,mobile,ponds_count').eq('id', user.id).maybeSingle(),
+        supabase.from('profiles').select('full_name,dob,location,mobile,ponds_count,village,mandal,district,state,pincode,latitude,longitude').eq('id', user.id).maybeSingle(),
         supabase.from('profile_ponds').select('id,name,area_sqm,depth_m').eq('profile_id', user.id).order('created_at'),
       ]);
       if (cancelled) return;
@@ -71,6 +74,17 @@ export default function ProfileDetailsPage() {
   const dob = profile?.dob || (m.dob as string | undefined) || '---';
   const location = profile?.location || (m.location as string | undefined) || '---';
   const mobile = profile?.mobile || (user.phone ? `${user.phone}` : (m.mobile as string | undefined)) || '---';
+  const village = profile?.village || '---';
+  const mandal = profile?.mandal || '---';
+  const district = profile?.district || (m.district as string | undefined) || '---';
+  const stateName = profile?.state || '---';
+  const pincode = profile?.pincode || '---';
+  const coords =
+    profile?.latitude != null && profile?.longitude != null
+      ? `${profile.latitude.toFixed(5)}, ${profile.longitude.toFixed(5)}`
+      : '---';
+  const LANG_LABELS: Record<string, string> = { en: 'English', te: 'Telugu', hi: 'Hindi' };
+  const language = LANG_LABELS[(m.lang as string) ?? ''] ?? '---';
 
   return (
     <div className="min-h-screen bg-white text-neutral-900">
@@ -82,7 +96,7 @@ export default function ProfileDetailsPage() {
             </button>
             <h1 className="text-2xl font-bold">Profile</h1>
           </div>
-          <Link to="/settings" className="inline-flex items-center gap-2 text-rose-600 font-semibold">
+          <Link to="/profile/edit" className="inline-flex items-center gap-2 text-rose-600 font-semibold">
             <Pencil className="w-5 h-5" /> Edit Profile
           </Link>
         </div>
@@ -98,8 +112,21 @@ export default function ProfileDetailsPage() {
           <Field label="Date of Birth" value={dob} />
         </div>
 
-        <Field label="Location" value={location} />
         <Field label="Mobile" value={mobile} />
+        <Field label="Preferred Language" value={language} />
+
+        <SectionHeader>Location</SectionHeader>
+
+        <Field label="Address" value={location} />
+
+        <div className="grid grid-cols-2 gap-6">
+          <Field label="Village" value={village} />
+          <Field label="Mandal" value={mandal} />
+          <Field label="District" value={district} />
+          <Field label="State" value={stateName} />
+          <Field label="Pincode" value={pincode} />
+          <Field label="GPS (lat, long)" value={coords} />
+        </div>
 
         <SectionHeader>Pond/Tank Details</SectionHeader>
 

@@ -42,6 +42,7 @@ const MarketPricePage = lazy(() => import("./pages/MarketPricePage"));
 const ExpertPage = lazy(() => import("./pages/ExpertPage"));
 const ExplorePage = lazy(() => import("./pages/ExplorePage"));
 const ProfileDetailsPage = lazy(() => import("./pages/ProfileDetailsPage"));
+const EditProfilePage = lazy(() => import("./pages/EditProfilePage"));
 const ShopPage = lazy(() => import("./pages/ShopPage"));
 const ProductDetailPage = lazy(() => import("./pages/ProductDetailPage"));
 
@@ -107,6 +108,7 @@ function AnimatedRoutes() {
           <Route path="/settings" element={<RequireAuth><PageTransition><SettingsPage /></PageTransition></RequireAuth>} />
           <Route path="/profile" element={<RequireAuth><PageTransition><ProfilePage /></PageTransition></RequireAuth>} />
           <Route path="/profile/details" element={<RequireAuth><PageTransition><ProfileDetailsPage /></PageTransition></RequireAuth>} />
+          <Route path="/profile/edit" element={<RequireAuth><PageTransition><EditProfilePage /></PageTransition></RequireAuth>} />
           <Route path="/explore" element={<RequireAuth><PageTransition><ExplorePage /></PageTransition></RequireAuth>} />
           <Route path="/home" element={<RequireAuth><PageTransition><HomePage /></PageTransition></RequireAuth>} />
           <Route path="/shop" element={<RequireAuth><PageTransition><ShopPage /></PageTransition></RequireAuth>} />

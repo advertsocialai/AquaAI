@@ -1190,33 +1190,54 @@ export type Database = {
       profiles: {
         Row: {
           created_at: string
+          district: string | null
           dob: string | null
           full_name: string | null
           id: string
+          latitude: number | null
           location: string | null
+          longitude: number | null
+          mandal: string | null
           mobile: string | null
+          pincode: string | null
           ponds_count: number
+          state: string | null
           updated_at: string
+          village: string | null
         }
         Insert: {
           created_at?: string
+          district?: string | null
           dob?: string | null
           full_name?: string | null
           id: string
+          latitude?: number | null
           location?: string | null
+          longitude?: number | null
+          mandal?: string | null
           mobile?: string | null
+          pincode?: string | null
           ponds_count?: number
+          state?: string | null
           updated_at?: string
+          village?: string | null
         }
         Update: {
           created_at?: string
+          district?: string | null
           dob?: string | null
           full_name?: string | null
           id?: string
+          latitude?: number | null
           location?: string | null
+          longitude?: number | null
+          mandal?: string | null
           mobile?: string | null
+          pincode?: string | null
           ponds_count?: number
+          state?: string | null
           updated_at?: string
+          village?: string | null
         }
         Relationships: []
       }
