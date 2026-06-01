@@ -55,6 +55,13 @@ function lastWeek() {
 
 const fmt = (d: Date) => `${d.getDate()} ${d.toLocaleString('en', { month: 'short' })}`;
 
+/* Deterministic daily price around the base for the weekly trend (demo). */
+function weeklyPrices(seedLabel: string, base: number, days: Date[]): number[] {
+  let h = 0;
+  for (let i = 0; i < seedLabel.length; i++) h = (h * 31 + seedLabel.charCodeAt(i)) % 997;
+  return days.map((_, i) => Math.round(base * (1 + 0.04 * Math.sin(h + i * 0.9))));
+}
+
 /* ── Dropdown ─────────────────────────────────────────────────────── */
 function Dropdown({
   value, options, onChange,
@@ -112,9 +119,11 @@ export default function MarketPricePage() {
   // keep trend selection valid when tab/species changes
   useEffect(() => { setTrendPick(trendOptions[0]); /* eslint-disable-next-line */ }, [tab, species]);
 
-  const { start, end } = lastWeek();
-  // No weekly price-history feed yet → show the empty state (matches design).
-  const enoughData = false;
+  const { start, end, days } = lastWeek();
+  const trendBase = rows.find((r) => r.label === trendPick)?.price ?? rows[0]?.price ?? 0;
+  const trend = weeklyPrices(trendPick, trendBase, days);
+  const tMin = Math.min(...trend), tMax = Math.max(...trend);
+  const enoughData = trendBase > 0;
 
   useEffect(() => { document.title = 'Market Price — Aqua Rudra'; }, []);
 
@@ -190,12 +199,27 @@ export default function MarketPricePage() {
             </div>
           </div>
 
-          <div className="pt-6 pb-2 flex flex-col items-center">
-            <BrandMark />
-            {!enoughData && (
+          {enoughData ? (
+            <div className="space-y-2.5">
+              {days.map((d, i) => {
+                const pct = tMax > tMin ? ((trend[i] - tMin) / (tMax - tMin)) * 100 : 50;
+                return (
+                  <div key={i} className="flex items-center gap-3">
+                    <span className="w-16 text-sm text-neutral-500 shrink-0">{fmt(d)}</span>
+                    <div className="flex-1 h-2.5 rounded-full bg-neutral-100">
+                      <div className="h-2.5 rounded-full bg-rose-500/70" style={{ width: `${Math.max(8, pct)}%` }} />
+                    </div>
+                    <span className="w-14 text-right font-semibold tabular-nums">₹{trend[i]}</span>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="pt-4 flex flex-col items-center">
+              <BrandMark />
               <p className="mt-8 text-center text-2xl font-bold text-neutral-800">No enough data</p>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </main>
 
