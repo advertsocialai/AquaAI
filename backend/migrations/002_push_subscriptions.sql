@@ -36,7 +36,9 @@ create policy "own subscriptions delete" on public.push_subscriptions
 
 -- Keep updated_at fresh on upsert/update.
 create or replace function public.touch_push_subscriptions_updated_at()
-returns trigger language plpgsql as $$
+returns trigger language plpgsql
+set search_path = ''  -- pin search_path (Supabase linter 0011): trigger does no unqualified lookups
+as $$
 begin
   new.updated_at = now();
   return new;
