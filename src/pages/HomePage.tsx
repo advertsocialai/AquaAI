@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Fish, Newspaper, Lightbulb, HeartPulse, ArrowRight, Store } from 'lucide-react';
+import { Fish, Image, Lightbulb, HeartPulse, ArrowRight, Store } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { MobileTopBar, MobileTabBar } from '@/components/mobile/MobileChrome';
 
@@ -30,14 +30,16 @@ function FeedBagIcon({ className = '' }: { className?: string }) {
 
 /* ── Card tile (Market rates / Knowledge / Tools) ─────────────────── */
 function Tile({
-  to, label, gradient, Icon,
-}: { to: string; label: string; gradient: string; Icon: React.ElementType }) {
+  to, label, gradient, Icon, tall = false,
+}: { to: string; label: string; gradient: string; Icon: React.ElementType; tall?: boolean }) {
   return (
     <Link
       to={to}
-      className={`flex items-center gap-3 rounded-2xl p-5 min-h-[104px] bg-gradient-to-br ${gradient} active:scale-[0.98] transition`}
+      className={`flex items-center gap-3 rounded-2xl p-5 bg-gradient-to-br ${gradient} active:scale-[0.98] transition ${
+        tall ? 'min-h-[140px]' : 'min-h-[104px]'
+      }`}
     >
-      <Icon className="w-9 h-9 text-neutral-800 shrink-0" />
+      <Icon className={`text-neutral-800 shrink-0 ${tall ? 'w-11 h-11' : 'w-9 h-9'}`} strokeWidth={1.6} />
       <span className="text-lg font-bold leading-tight text-neutral-900">{label}</span>
     </Link>
   );
@@ -84,8 +86,8 @@ export default function HomePage() {
         <section>
           <SectionTitle>Aqua Knowledge</SectionTitle>
           <div className="grid grid-cols-2 gap-4">
-            <Tile to="/knowledge" label="Aqua Updates" Icon={Newspaper} gradient="from-[#a7e0cf] to-[#d6f0e4]" />
-            <Tile to="/knowledge" label="Aqua School" Icon={Lightbulb} gradient="from-[#74c0f0] to-[#a9d8f6]" />
+            <Tile to="/knowledge" label="Aqua Updates" Icon={Image} gradient="from-[#a7e0cf] to-[#d6f0e4]" tall />
+            <Tile to="/knowledge" label="Aqua School" Icon={Lightbulb} gradient="from-[#74c0f0] to-[#a9d8f6]" tall />
           </div>
         </section>
 
