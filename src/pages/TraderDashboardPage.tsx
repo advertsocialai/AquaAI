@@ -11,6 +11,7 @@ import { LivePriceTicker } from '@/components/dashboard/LivePriceTicker';
 import { AnnouncementModal } from '@/components/dashboard/AnnouncementModal';
 import { StoreButtons } from '@/components/StoreButtons';
 import CustomersTableCard from '@/components/CustomersTableCard';
+import { useTraderDashboard } from '@/hooks/useTraderDashboard';
 
 // ── Demo data ──────────────────────────────────────────────────────────────────
 // Replace with Supabase fetches once the trader's session + RLS-scoped queries
@@ -62,6 +63,21 @@ export default function TraderDashboardPage() {
     return 'Good evening';
   });
 
+  // Live data from Supabase (trader tables ship in 003_trader.sql). Falls back
+  // to the sample content below until that migration is applied + data exists.
+  const { data: live } = useTraderDashboard();
+  const summary = live.hasData
+    ? {
+        openLots: live.openLots,
+        todaysVolumeKg: live.todaysVolumeKg,
+        activeSuppliers: live.activeSuppliers,
+        avgMarginPct: live.avgMarginPct,
+        region: live.region ?? BIZ_SUMMARY.region,
+      }
+    : BIZ_SUMMARY;
+  const actions = live.hasData && live.actions.length ? live.actions : TODAYS_ACTIONS;
+  const recent = live.hasData && live.activity.length ? live.activity : RECENT_ACTIVITY;
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Header />
@@ -84,21 +100,21 @@ export default function TraderDashboardPage() {
               <div>
                 <div className="text-xs uppercase tracking-widest text-teal-300 mb-2">{greeting}, S. Prasad Exports</div>
                 <h1 className="text-3xl md:text-4xl font-bold leading-tight">
-                  {BIZ_SUMMARY.openLots} open lots ·{' '}
-                  <span className="text-foreground/60 font-normal">{BIZ_SUMMARY.activeSuppliers} suppliers</span>
+                  {summary.openLots} open lots ·{' '}
+                  <span className="text-foreground/60 font-normal">{summary.activeSuppliers} suppliers</span>
                 </h1>
                 <div className="flex items-center gap-2 text-sm text-foreground/55 mt-2">
                   <MapPin className="w-3.5 h-3.5" />
-                  <span>{BIZ_SUMMARY.region}</span>
+                  <span>{summary.region}</span>
                   <span className="text-foreground/20">·</span>
                   <Calendar className="w-3.5 h-3.5" />
                   <span>{new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'short' })}</span>
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-4 md:gap-6 lg:gap-8 lg:text-right">
-                <Metric label="Open lots"      value={BIZ_SUMMARY.openLots} />
-                <Metric label="Today (kg)"     value={BIZ_SUMMARY.todaysVolumeKg.toLocaleString('en-IN')} />
-                <Metric label="Avg margin"     value={`${BIZ_SUMMARY.avgMarginPct}%`} />
+                <Metric label="Open lots"      value={summary.openLots} />
+                <Metric label="Today (kg)"     value={summary.todaysVolumeKg.toLocaleString('en-IN')} />
+                <Metric label="Avg margin"     value={`${summary.avgMarginPct}%`} />
               </div>
             </div>
           </section>
@@ -113,7 +129,7 @@ export default function TraderDashboardPage() {
               <Bell className="w-5 h-5 text-teal-300" />
             </div>
             <div className="grid md:grid-cols-3 gap-4">
-              {TODAYS_ACTIONS.map((a, i) => {
+              {actions.map((a, i) => {
                 const t = tone[a.kind as keyof typeof tone];
                 return (
                   <motion.div
@@ -190,7 +206,7 @@ export default function TraderDashboardPage() {
               </Link>
             </div>
             <div className="rounded-2xl border border-border bg-card divide-y divide-border">
-              {RECENT_ACTIVITY.map((row, i) => (
+              {recent.map((row, i) => (
                 <div key={i} className="px-5 py-4 flex items-start gap-4">
                   <div className="text-xs text-foreground/40 w-24 shrink-0 pt-0.5">{row.when}</div>
                   <div className="flex-1 min-w-0">
@@ -219,7 +235,7 @@ export default function TraderDashboardPage() {
                 <h2 className="text-xl md:text-2xl font-bold">Supplier settlements</h2>
               </div>
             </div>
-            <CustomersTableCard />
+            <CustomersTableCard customers={live.settlements.length ? live.settlements : undefined} />
           </section>
 
           {/* ── Get the app ──────────────────────────────────────────────── */}

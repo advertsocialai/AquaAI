@@ -28,7 +28,6 @@ const SettingsPage    = lazy(() => import("./pages/SettingsPage"));
 const KycPage         = lazy(() => import("./pages/KycPage"));
 const VerifyPage      = lazy(() => import("./pages/VerifyPage"));
 const ForgotPasswordPage = lazy(() => import("./pages/ForgotPasswordPage"));
-const CareersPage     = lazy(() => import("./pages/CareersPage"));
 const ContactPage     = lazy(() => import("./pages/ContactPage"));
 const KnowledgePage   = lazy(() => import("./pages/KnowledgePage"));
 const KnowledgeArticlePage = lazy(() => import("./pages/KnowledgeArticlePage"));
@@ -54,7 +53,7 @@ function RouteFallback() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
       <div className="flex items-center gap-3 text-foreground/40 text-sm">
-        <div className="w-4 h-4 rounded-full border-2 border-teal-400 border-t-transparent animate-spin" />
+        <div className="w-4 h-4 rounded-full border-2 border-primary border-t-transparent animate-spin" />
         Loading…
       </div>
     </div>
@@ -122,7 +121,6 @@ function AnimatedRoutes() {
           <Route path="/kyc" element={<RequireAuth><PageTransition><KycPage /></PageTransition></RequireAuth>} />
           <Route path="/forgot-password" element={<PageTransition><ForgotPasswordPage /></PageTransition>} />
           <Route path="/verify/:certId" element={<PageTransition><VerifyPage /></PageTransition>} />
-          <Route path="/careers" element={<PageTransition><CareersPage /></PageTransition>} />
           <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
           <Route path="/collaborate" element={<Navigate to="/contact" replace />} />
           <Route path="/knowledge" element={<PageTransition><KnowledgePage /></PageTransition>} />

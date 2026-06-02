@@ -13,10 +13,10 @@ import {
 import CTA from '@/components/CTA';
 import { Gallery4 } from '@/components/Gallery4';
 import FeatureSection from '@/components/FeatureSection';
+import { Feature108 } from '@/components/Feature108';
 import {
   Fish, ArrowRight, PlayCircle, BrainCircuit, IndianRupee,
   ShoppingCart, Truck, LifeBuoy, Shield, Building2, Landmark,
-  Languages, WifiOff, Sparkles,
 } from 'lucide-react';
 
 const MODULES = [
@@ -98,25 +98,6 @@ const Index = () => {
                 <PlayCircle className="w-5 h-5" /> {t('home.ctaSee')}
               </Link>
             </motion.div>
-
-            <motion.div
-              className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-foreground/55"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-            >
-              <span className="inline-flex items-center gap-2">
-                <WifiOff className="w-4 h-4 text-emerald-400" /> {t('home.tagOffline')}
-              </span>
-              <span className="text-foreground/15">·</span>
-              <span className="inline-flex items-center gap-2">
-                <Languages className="w-4 h-4 text-violet-400" /> తెలుగు · हिन्दी · ଓଡ଼ିଆ · বাংলা · English
-              </span>
-              <span className="text-foreground/15">·</span>
-              <span className="inline-flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-teal-400" /> {t('home.tagFree')}
-              </span>
-            </motion.div>
           </div>
         </div>
       </section>
@@ -167,6 +148,7 @@ const Index = () => {
       <BuiltForRoles />
 
       <Gallery4 />
+      <Feature108 />
       <FeatureSection />
 
       <Testimonials />

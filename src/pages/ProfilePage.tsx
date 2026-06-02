@@ -43,7 +43,7 @@ export default function ProfilePage() {
   if (loading || !user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
-        <Loader2 className="w-5 h-5 animate-spin text-teal-400" />
+        <Loader2 className="w-5 h-5 animate-spin text-primary" />
       </div>
     );
   }
@@ -117,15 +117,10 @@ export default function ProfilePage() {
 
         {/* Menu rows */}
         <div className="divide-y divide-border border-y border-border">
-          <MenuRow label="My Favourites" to="/favourites" />
-          <MenuRow label="Change Language" to="/language" />
+          <MenuRow label="How It Works" to="/aquaai" />
+          <MenuRow label="Customer Support" onClick={() => setShowSupport(true)} />
           <MenuRow label="Rate Us" onClick={handleRate} />
           <MenuRow label="Share App" onClick={handleShare} />
-          <MenuRow label="Customer Support" onClick={() => setShowSupport(true)} />
-          <MenuRow label="How It Works" to="/aquaai" />
-          <MenuRow label="About Royye Raju" to="/about" />
-          <MenuRow label="About MAARC" to="/about" />
-          <MenuRow label="Terms & Conditions" to="/terms" />
           <MenuRow label="Privacy Policy" to="/privacy" />
           <MenuRow label="Reset Password" onClick={handleResetPassword} />
           <MenuRow label="Logout" onClick={handleLogout} disabled={busy} />
@@ -137,12 +132,12 @@ export default function ProfilePage() {
           <div className="font-semibold text-foreground/80">Follow Us</div>
           <div className="text-sm text-foreground/60">Visit our website</div>
           <a
-            href="https://matrixseafoods.in"
+            href="https://aquarudra.com"
             target="_blank"
             rel="noopener noreferrer"
             className="text-sky-400 font-medium hover:underline"
           >
-            Matrixseafoods.in
+            Aquarudra.com
           </a>
         </div>
       </div>

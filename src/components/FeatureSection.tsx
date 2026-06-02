@@ -94,9 +94,9 @@ export default function FeatureSection() {
           <Badge variant="secondary" className="px-3 py-1 text-sm">
             Built for your farm
           </Badge>
-          <h3 className="text-lg sm:text-md lg:text-2xl font-normal text-foreground leading-relaxed">
+          <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground leading-snug">
             Everything your pond needs{" "}
-            <span className="text-muted-foreground text-sm sm:text-base lg:text-2xl">
+            <span className="text-muted-foreground font-normal text-base md:text-lg">
               — Aqua Rudra puts diagnostics, prices, advisory, and outbreak alerts
               in one place. On-device AI works offline, in your language, so every
               decision is faster and backed by data.

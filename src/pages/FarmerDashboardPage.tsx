@@ -11,6 +11,7 @@ import { WeatherForecast } from '@/components/dashboard/WeatherForecast';
 import { LivePriceTicker } from '@/components/dashboard/LivePriceTicker';
 import { AnnouncementModal } from '@/components/dashboard/AnnouncementModal';
 import { StoreButtons } from '@/components/StoreButtons';
+import { useFarmerDashboard } from '@/hooks/useFarmerDashboard';
 
 // ── Demo data ──────────────────────────────────────────────────────────────────
 // Replace with Supabase fetches once the farmer's session + RLS-scoped queries
@@ -63,6 +64,24 @@ export default function FarmerDashboardPage() {
     return 'Good evening';
   });
 
+  // Live data from Supabase (RLS-scoped to this farmer). Falls back to the
+  // sample content below when the account has no farm/readings yet.
+  const { data: live } = useFarmerDashboard();
+  const hasFarm = live.farmName !== null;
+  const farmerName = live.farmName ?? 'V. Ramana';
+  const summary = hasFarm
+    ? {
+        ponds: live.ponds,
+        totalAreaAcre: Math.round(live.totalAreaHectares * 2.471 * 10) / 10,
+        activeBatches: live.activeBatches,
+        estStockKg: FARM_SUMMARY.estStockKg,
+        dayOfCycle: live.dayOfCycle ?? FARM_SUMMARY.dayOfCycle,
+        district: live.district ?? FARM_SUMMARY.district,
+      }
+    : FARM_SUMMARY;
+  const actions = hasFarm && live.actions.length ? live.actions : TODAYS_ACTIONS;
+  const recent = hasFarm && live.activity.length ? live.activity : RECENT_ACTIVITY;
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Header />
@@ -83,23 +102,23 @@ export default function FarmerDashboardPage() {
           <section className="rounded-2xl border border-border bg-card p-6 md:p-8">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
               <div>
-                <div className="text-xs uppercase tracking-widest text-teal-300 mb-2">{greeting}, V. Ramana</div>
+                <div className="text-xs uppercase tracking-widest text-teal-300 mb-2">{greeting}, {farmerName}</div>
                 <h1 className="text-3xl md:text-4xl font-bold leading-tight">
-                  Day {FARM_SUMMARY.dayOfCycle} of cycle ·{' '}
-                  <span className="text-foreground/60 font-normal">{FARM_SUMMARY.activeBatches} active batches</span>
+                  Day {summary.dayOfCycle} of cycle ·{' '}
+                  <span className="text-foreground/60 font-normal">{summary.activeBatches} active batches</span>
                 </h1>
                 <div className="flex items-center gap-2 text-sm text-foreground/55 mt-2">
                   <MapPin className="w-3.5 h-3.5" />
-                  <span>{FARM_SUMMARY.district}</span>
+                  <span>{summary.district}</span>
                   <span className="text-foreground/20">·</span>
                   <Calendar className="w-3.5 h-3.5" />
                   <span>{new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'short' })}</span>
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-4 md:gap-6 lg:gap-8 lg:text-right">
-                <Metric label="Ponds"          value={FARM_SUMMARY.ponds} />
-                <Metric label="Area (acre)"    value={FARM_SUMMARY.totalAreaAcre} />
-                <Metric label="Stock (kg)"     value={FARM_SUMMARY.estStockKg.toLocaleString('en-IN')} />
+                <Metric label="Ponds"          value={summary.ponds} />
+                <Metric label="Area (acre)"    value={summary.totalAreaAcre} />
+                <Metric label="Stock (kg)"     value={summary.estStockKg.toLocaleString('en-IN')} />
               </div>
             </div>
           </section>
@@ -114,7 +133,7 @@ export default function FarmerDashboardPage() {
               <Bell className="w-5 h-5 text-teal-300" />
             </div>
             <div className="grid md:grid-cols-3 gap-4">
-              {TODAYS_ACTIONS.map((a, i) => {
+              {actions.map((a, i) => {
                 const t = tone[a.kind as keyof typeof tone];
                 return (
                   <motion.div
@@ -196,7 +215,7 @@ export default function FarmerDashboardPage() {
               </Link>
             </div>
             <div className="rounded-2xl border border-border bg-card divide-y divide-border">
-              {RECENT_ACTIVITY.map((row, i) => (
+              {recent.map((row, i) => (
                 <div key={i} className="px-5 py-4 flex items-start gap-4">
                   <div className="text-xs text-foreground/40 w-24 shrink-0 pt-0.5">{row.when}</div>
                   <div className="flex-1 min-w-0">

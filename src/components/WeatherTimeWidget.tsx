@@ -14,9 +14,9 @@ import {
 const DISTRICTS: Record<string, { lat: number; lng: number; region?: string }> = {
   // ── West Godavari district (Andhra Pradesh) — aquaculture heartland ─────────
   'Bhimavaram':       { lat: 16.5449, lng: 81.5212, region: 'West Godavari' },
-  'Palakollu':        { lat: 16.5167, lng: 81.7333, region: 'West Godavari' },
-  'Narsapur':         { lat: 16.4333, lng: 81.7000, region: 'West Godavari' },
-  'Mogalturu':        { lat: 16.4836, lng: 81.7833, region: 'West Godavari' },
+  'Palacole (Palakollu)': { lat: 16.5167, lng: 81.7333, region: 'West Godavari' },
+  'Narasapuram':      { lat: 16.4333, lng: 81.7000, region: 'West Godavari' },
+  'Mogalthur':        { lat: 16.4836, lng: 81.7833, region: 'West Godavari' },
   'Achanta':          { lat: 16.5658, lng: 81.7464, region: 'West Godavari' },
   'Tanuku':           { lat: 16.7553, lng: 81.6822, region: 'West Godavari' },
   'Tadepalligudem':   { lat: 16.8167, lng: 81.5333, region: 'West Godavari' },
@@ -28,6 +28,10 @@ const DISTRICTS: Record<string, { lat: number; lng: number; region?: string }> =
   'Veeravasaram':     { lat: 16.5500, lng: 81.6000, region: 'West Godavari' },
   'Iragavaram':       { lat: 16.6833, lng: 81.6000, region: 'West Godavari' },
   'Attili':           { lat: 16.7167, lng: 81.6167, region: 'West Godavari' },
+  'Ganapavaram':      { lat: 16.6167, lng: 81.4333, region: 'West Godavari' },
+  'Palacoderu':       { lat: 16.5667, lng: 81.4833, region: 'West Godavari' },
+  'Penumantra':       { lat: 16.7000, lng: 81.6333, region: 'West Godavari' },
+  'Poduru':           { lat: 16.6333, lng: 81.4500, region: 'West Godavari' },
   'Kovvur':           { lat: 17.0167, lng: 81.7333, region: 'West Godavari' },
   'Polavaram':        { lat: 17.2500, lng: 81.6500, region: 'West Godavari' },
   'Bhimadole':        { lat: 16.8500, lng: 81.2667, region: 'West Godavari' },

@@ -806,6 +806,56 @@ export type Database = {
         }
         Relationships: []
       }
+      lots: {
+        Row: {
+          created_at: string
+          district: string | null
+          grade: string | null
+          id: number
+          lot_code: string
+          mandal: string | null
+          price_per_kg: number | null
+          quantity_kg: number
+          species: string | null
+          status: string
+          trader_id: number
+        }
+        Insert: {
+          created_at?: string
+          district?: string | null
+          grade?: string | null
+          id?: number
+          lot_code: string
+          mandal?: string | null
+          price_per_kg?: number | null
+          quantity_kg?: number
+          species?: string | null
+          status?: string
+          trader_id: number
+        }
+        Update: {
+          created_at?: string
+          district?: string | null
+          grade?: string | null
+          id?: number
+          lot_code?: string
+          mandal?: string | null
+          price_per_kg?: number | null
+          quantity_kg?: number
+          species?: string | null
+          status?: string
+          trader_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lots_trader_id_fkey"
+            columns: ["trader_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       market_prices: {
         Row: {
           day: string
@@ -997,6 +1047,57 @@ export type Database = {
           source?: string
         }
         Relationships: []
+      }
+      orders: {
+        Row: {
+          amount: number
+          created_at: string
+          id: number
+          lot_id: number | null
+          margin_pct: number | null
+          quantity_kg: number
+          status: string
+          supplier_name: string | null
+          trader_id: number
+        }
+        Insert: {
+          amount?: number
+          created_at?: string
+          id?: number
+          lot_id?: number | null
+          margin_pct?: number | null
+          quantity_kg?: number
+          status?: string
+          supplier_name?: string | null
+          trader_id: number
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: number
+          lot_id?: number | null
+          margin_pct?: number | null
+          quantity_kg?: number
+          status?: string
+          supplier_name?: string | null
+          trader_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_lot_id_fkey"
+            columns: ["lot_id"]
+            isOneToOne: false
+            referencedRelation: "lots"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "orders_trader_id_fkey"
+            columns: ["trader_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       outbreak_alerts: {
         Row: {
@@ -1422,6 +1523,92 @@ export type Database = {
           title?: string
         }
         Relationships: []
+      }
+      settlements: {
+        Row: {
+          amount: number
+          created_at: string
+          id: number
+          settled_on: string | null
+          status: string
+          supplier_name: string
+          trader_id: number
+        }
+        Insert: {
+          amount?: number
+          created_at?: string
+          id?: number
+          settled_on?: string | null
+          status?: string
+          supplier_name: string
+          trader_id: number
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: number
+          settled_on?: string | null
+          status?: string
+          supplier_name?: string
+          trader_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "settlements_trader_id_fkey"
+            columns: ["trader_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      shipments: {
+        Row: {
+          created_at: string
+          id: number
+          order_id: number | null
+          pickup_by: string | null
+          route: string | null
+          status: string
+          trader_id: number
+          vehicle: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          order_id?: number | null
+          pickup_by?: string | null
+          route?: string | null
+          status?: string
+          trader_id: number
+          vehicle?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          order_id?: number | null
+          pickup_by?: string | null
+          route?: string | null
+          status?: string
+          trader_id?: number
+          vehicle?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shipments_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shipments_trader_id_fkey"
+            columns: ["trader_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       subscriptions: {
         Row: {

@@ -13,7 +13,6 @@ const NAV = [
   { key: 'aquaai',    to: '/aquaai' },
   { key: 'knowledge', to: '/knowledge' },
   { key: 'about',     to: '/about' },
-  { key: 'careers',   to: '/careers' },
   { key: 'contact',   to: '/contact' },
 ];
 
@@ -130,7 +129,7 @@ export function Header() {
                     transition={{ duration: 0.15 }}
                     className="absolute left-0 mt-3 w-64 rounded-xl border border-border bg-popover/95 backdrop-blur-sm overflow-hidden shadow-2xl p-1.5 grid grid-cols-1 gap-0.5"
                   >
-                    {ROLES.map(({ id, label, icon: Icon, accent }) => (
+                    {ROLES.filter((r) => r.id === 'farmer' || r.id === 'trader').map(({ id, label, icon: Icon, accent }) => (
                       <Link
                         key={id}
                         to={DASHBOARD_ROUTE[id]}

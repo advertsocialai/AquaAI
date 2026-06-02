@@ -32,7 +32,6 @@ export function Footer() {
     { label: t('nav.aquaai'),    to: '/aquaai' },
     { label: t('nav.knowledge'), to: '/knowledge' },
     { label: t('nav.about'),     to: '/about' },
-    { label: t('nav.careers'),   to: '/careers' },
     { label: t('nav.contact'),   to: '/contact' },
     { label: 'Founders',         to: '/founders' },
   ];
