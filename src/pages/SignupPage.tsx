@@ -8,6 +8,7 @@ import {
 import { ROLES, type Role } from '@/components/dashboard/RoleSelector';
 import { DASHBOARD_ROUTE } from '@/pages/dashboards/configs';
 import { supabase } from '@/lib/supabase';
+import { TypewriterEffect } from '@/components/ui/typewriter-effect';
 
 const LANGUAGES = ['English', 'తెలుగు (Telugu)', 'ଓଡ଼ିଆ (Odia)', 'বাংলা (Bengali)', 'हिन्दी (Hindi)'];
 const STEPS = ['Role', 'Account', 'Details', 'Done'] as const;
@@ -156,7 +157,14 @@ export default function SignupPage() {
           {/* STEP 2: ACCOUNT (email + password) */}
           {step === 'Account' && (
             <motion.div key="account" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}>
-              <h1 className="text-2xl md:text-3xl font-bold mb-2">Create your account</h1>
+              <TypewriterEffect
+                words={[
+                  { text: 'Create', className: 'text-foreground' },
+                  { text: 'your', className: 'text-foreground' },
+                  { text: 'account', className: 'text-primary' },
+                ]}
+                className="text-2xl md:text-3xl text-left mb-2"
+              />
               <p className="text-sm text-foreground/50 mb-8">Use an email and password you'll remember.</p>
 
               <div className="space-y-4 max-w-md">

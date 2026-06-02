@@ -8,6 +8,9 @@ import {
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { LivePriceTicker } from '@/components/dashboard/LivePriceTicker';
+import { AnnouncementModal } from '@/components/dashboard/AnnouncementModal';
+import { StoreButtons } from '@/components/StoreButtons';
+import CustomersTableCard from '@/components/CustomersTableCard';
 
 // ── Demo data ──────────────────────────────────────────────────────────────────
 // Replace with Supabase fetches once the trader's session + RLS-scoped queries
@@ -62,6 +65,15 @@ export default function TraderDashboardPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Header />
+
+      <AnnouncementModal
+        id="trader-2026-06"
+        title="New: Live buy-side board"
+        description="Real-time mandi prices with margin alerts across the coastal belt — and escrow payments are now live."
+        ctaLabel="View lots"
+        ctaTo="/aquaai#dashboard"
+        showStoreButtons
+      />
 
       <main className="pt-28 pb-20">
         <div className="container mx-auto px-6 lg:px-8 max-w-6xl space-y-10">
@@ -197,6 +209,29 @@ export default function TraderDashboardPage() {
                 </div>
               ))}
             </div>
+          </section>
+
+          {/* ── Recent settlements ───────────────────────────────────────── */}
+          <section>
+            <div className="flex items-end justify-between mb-4">
+              <div>
+                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Solutions</div>
+                <h2 className="text-xl md:text-2xl font-bold">Supplier settlements</h2>
+              </div>
+            </div>
+            <CustomersTableCard />
+          </section>
+
+          {/* ── Get the app ──────────────────────────────────────────────── */}
+          <section className="rounded-2xl border border-border bg-card p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+            <div>
+              <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Mobile app</div>
+              <h2 className="text-xl md:text-2xl font-bold">Trade on the move</h2>
+              <p className="text-sm text-foreground/55 mt-1 max-w-xl">
+                Track lots, approve dispatches, and settle suppliers from your phone — live prices and QC in your pocket.
+              </p>
+            </div>
+            <StoreButtons className="shrink-0" />
           </section>
 
           {/* ── Sign-up CTA ──────────────────────────────────────────────── */}

@@ -8,6 +8,7 @@ import {
 import { supabase } from '@/lib/supabase';
 import { DASHBOARD_ROUTE } from '@/pages/dashboards/configs';
 import type { Role } from '@/components/dashboard/RoleSelector';
+import { TypewriterEffect } from '@/components/ui/typewriter-effect';
 
 type Mode = 'password' | 'otp';
 type OtpChannel = 'phone' | 'email';
@@ -178,7 +179,13 @@ export default function LoginPage() {
         </div>
 
         <div className="my-auto">
-          <h1 className="text-3xl font-bold mb-2">Welcome back</h1>
+          <TypewriterEffect
+            words={[
+              { text: 'Welcome', className: 'text-foreground' },
+              { text: 'back', className: 'text-primary' },
+            ]}
+            className="text-3xl text-left mb-2"
+          />
           <p className="text-sm text-foreground/50 mb-8">Sign in with your email and password</p>
 
           {error && (

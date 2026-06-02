@@ -9,6 +9,8 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { WeatherForecast } from '@/components/dashboard/WeatherForecast';
 import { LivePriceTicker } from '@/components/dashboard/LivePriceTicker';
+import { AnnouncementModal } from '@/components/dashboard/AnnouncementModal';
+import { StoreButtons } from '@/components/StoreButtons';
 
 // ── Demo data ──────────────────────────────────────────────────────────────────
 // Replace with Supabase fetches once the farmer's session + RLS-scoped queries
@@ -64,6 +66,15 @@ export default function FarmerDashboardPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Header />
+
+      <AnnouncementModal
+        id="farmer-2026-06"
+        title="New: AI Disease Detector v2"
+        description="On-device screening is faster — it now flags EHP and white-spot in under 3 seconds, fully offline."
+        ctaLabel="Try it now"
+        ctaTo="/aquaai#dashboard"
+        showStoreButtons
+      />
 
       <main className="pt-28 pb-20">
         <div className="container mx-auto px-6 lg:px-8 max-w-6xl space-y-10">
@@ -204,6 +215,18 @@ export default function FarmerDashboardPage() {
                 </div>
               ))}
             </div>
+          </section>
+
+          {/* ── Get the app ──────────────────────────────────────────────── */}
+          <section className="rounded-2xl border border-border bg-card p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+            <div>
+              <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Mobile app</div>
+              <h2 className="text-xl md:text-2xl font-bold">Take your farm dashboard offline</h2>
+              <p className="text-sm text-foreground/55 mt-1 max-w-xl">
+                Scan, diagnose, and log readings pond-side — even with no signal. Syncs when you're back online.
+              </p>
+            </div>
+            <StoreButtons className="shrink-0" />
           </section>
 
           {/* ── Sign-up CTA ──────────────────────────────────────────────── */}

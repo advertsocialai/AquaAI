@@ -4,28 +4,44 @@
 
 @layer base {
   :root {
-    /* AquaAI design system — clean, clinical, trustworthy. White base.
-       60/30/10: ~60% white+neutrals, ~30% aqua+ocean, ~10% coral (CTA only). */
-    --background: 0 0% 100%;              /* #FFFFFF */
-    --foreground: 198 42% 13%;            /* #13262E text primary */
-    --card: 180 21% 96%;                  /* #F4F8F8 surfaces */
-    --card-foreground: 198 42% 13%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 198 42% 13%;
-    --primary: 173 80% 36%;               /* #12A594 aqua/teal brand */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 166 46% 89%;             /* #D6F0EA teal tint soft fill */
-    --secondary-foreground: 198 42% 13%;
-    --muted: 180 21% 96%;                 /* #F4F8F8 */
-    --muted-foreground: 198 12% 40%;      /* #5A6B72 text secondary */
-    --accent: 166 46% 89%;               /* #D6F0EA */
-    --accent-foreground: 173 80% 36%;
-    --destructive: 4 70% 54%;             /* #DC4338 disease/alert */
-    --destructive-foreground: 0 0% 100%;
-    --border: 180 19% 91%;                /* #E3ECEC */
-    --input: 180 19% 91%;
-    --ring: 173 80% 36%;
-    --radius: 0.5rem;
+    /* Amber dashboard theme (converted from hex to HSL for Tailwind v3). */
+    --background: 0 0% 100%;              /* #ffffff */
+    --foreground: 0 0% 15%;              /* #262626 */
+    --card: 0 0% 100%;                   /* #ffffff */
+    --card-foreground: 0 0% 15%;         /* #262626 */
+    --popover: 0 0% 100%;                /* #ffffff */
+    --popover-foreground: 0 0% 15%;      /* #262626 */
+    --primary: 38 92% 50%;               /* #f59e0b */
+    --primary-foreground: 0 0% 0%;       /* #000000 */
+    --secondary: 220 14% 96%;            /* #f3f4f6 */
+    --secondary-foreground: 215 14% 34%; /* #4b5563 */
+    --muted: 210 20% 98%;                /* #f9fafb */
+    --muted-foreground: 220 9% 46%;      /* #6b7280 */
+    --accent: 48 100% 96%;               /* #fffbeb */
+    --accent-foreground: 23 82% 31%;     /* #92400e */
+    --destructive: 0 84% 60%;            /* #ef4444 */
+    --destructive-foreground: 0 0% 100%; /* #ffffff */
+    --border: 220 13% 91%;               /* #e5e7eb */
+    --input: 220 13% 91%;                /* #e5e7eb */
+    --ring: 38 92% 50%;                  /* #f59e0b */
+    --radius: 0.375rem;
+
+    /* Charts */
+    --chart-1: 38 92% 50%;               /* #f59e0b */
+    --chart-2: 32 95% 44%;               /* #d97706 */
+    --chart-3: 26 90% 37%;               /* #b45309 */
+    --chart-4: 23 82% 31%;               /* #92400e */
+    --chart-5: 22 78% 26%;               /* #78350f */
+
+    /* Sidebar */
+    --sidebar: 210 20% 98%;              /* #f9fafb */
+    --sidebar-foreground: 0 0% 15%;      /* #262626 */
+    --sidebar-primary: 38 92% 50%;       /* #f59e0b */
+    --sidebar-primary-foreground: 0 0% 100%; /* #ffffff */
+    --sidebar-accent: 48 100% 96%;       /* #fffbeb */
+    --sidebar-accent-foreground: 23 82% 31%; /* #92400e */
+    --sidebar-border: 220 13% 91%;       /* #e5e7eb */
+    --sidebar-ring: 38 92% 50%;          /* #f59e0b */
 
     /* Brand extras (not in stock shadcn token set) */
     --ocean: 203 79% 20%;                 /* #0B3D5C headers / nav */
@@ -42,28 +58,43 @@
   }
 
   .dark {
-    /* Deep ocean navy — keeps the dark/premium feel but reads as "water"
-       and is more sunlight-readable than pure black on cheaper phones. */
-    --background: 215 50% 7%;
-    --foreground: 0 0% 100%;
-    --card: 215 35% 11%;
-    --card-foreground: 0 0% 100%;
-    --popover: 215 35% 11%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 0 0% 90%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 55%;
-    --accent: 0 0% 15%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 0 0% 100%;
-    --radius: 0rem;
+    /* Amber dashboard theme — dark mode. */
+    --background: 0 0% 9%;               /* #171717 */
+    --foreground: 0 0% 90%;              /* #e5e5e5 */
+    --card: 0 0% 15%;                    /* #262626 */
+    --card-foreground: 0 0% 90%;         /* #e5e5e5 */
+    --popover: 0 0% 15%;                 /* #262626 */
+    --popover-foreground: 0 0% 90%;      /* #e5e5e5 */
+    --primary: 38 92% 50%;               /* #f59e0b */
+    --primary-foreground: 0 0% 0%;       /* #000000 */
+    --secondary: 0 0% 15%;               /* #262626 */
+    --secondary-foreground: 0 0% 90%;    /* #e5e5e5 */
+    --muted: 0 0% 15%;                   /* #262626 */
+    --muted-foreground: 0 0% 64%;        /* #a3a3a3 */
+    --accent: 23 82% 31%;                /* #92400e */
+    --accent-foreground: 48 97% 77%;     /* #fde68a */
+    --destructive: 0 84% 60%;            /* #ef4444 */
+    --destructive-foreground: 0 0% 100%; /* #ffffff */
+    --border: 0 0% 25%;                  /* #404040 */
+    --input: 0 0% 25%;                   /* #404040 */
+    --ring: 38 92% 50%;                  /* #f59e0b */
+
+    /* Charts */
+    --chart-1: 43 96% 56%;               /* #fbbf24 */
+    --chart-2: 32 95% 44%;               /* #d97706 */
+    --chart-3: 23 82% 31%;               /* #92400e */
+    --chart-4: 26 90% 37%;               /* #b45309 */
+    --chart-5: 23 82% 31%;               /* #92400e */
+
+    /* Sidebar */
+    --sidebar: 0 0% 6%;                  /* #0f0f0f */
+    --sidebar-foreground: 0 0% 90%;      /* #e5e5e5 */
+    --sidebar-primary: 38 92% 50%;       /* #f59e0b */
+    --sidebar-primary-foreground: 0 0% 100%; /* #ffffff */
+    --sidebar-accent: 23 82% 31%;        /* #92400e */
+    --sidebar-accent-foreground: 48 97% 77%; /* #fde68a */
+    --sidebar-border: 0 0% 25%;          /* #404040 */
+    --sidebar-ring: 38 92% 50%;          /* #f59e0b */
   }
 }
 

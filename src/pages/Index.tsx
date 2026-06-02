@@ -10,6 +10,9 @@ import {
   BuiltForRoles, Testimonials,
   MobileAppCta, FaqSection, FinalCta,
 } from '@/components/aquaai-sections';
+import CTA from '@/components/CTA';
+import { Gallery4 } from '@/components/Gallery4';
+import FeatureSection from '@/components/FeatureSection';
 import {
   Fish, ArrowRight, PlayCircle, BrainCircuit, IndianRupee,
   ShoppingCart, Truck, LifeBuoy, Shield, Building2, Landmark,
@@ -163,7 +166,11 @@ const Index = () => {
 
       <BuiltForRoles />
 
+      <Gallery4 />
+      <FeatureSection />
+
       <Testimonials />
+      <CTA />
       <MobileAppCta />
       <FaqSection />
       <FinalCta />
