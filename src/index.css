@@ -4,26 +4,27 @@
 
 @layer base {
   :root {
-    /* Black & white base with blue letters — white background, all text blue. */
-    --background: 0 0% 100%;
-    --foreground: 217 91% 45%;
-    --card: 0 0% 100%;
-    --card-foreground: 217 91% 45%;
+    /* AquaAI design system — clean, clinical, trustworthy. White base.
+       60/30/10: ~60% white+neutrals, ~30% aqua+ocean, ~10% coral (CTA only). */
+    --background: 0 0% 100%;              /* #FFFFFF */
+    --foreground: 198 42% 13%;            /* #13262E text primary */
+    --card: 180 21% 96%;                  /* #F4F8F8 surfaces */
+    --card-foreground: 198 42% 13%;
     --popover: 0 0% 100%;
-    --popover-foreground: 217 91% 45%;
-    --primary: 217 91% 45%;
+    --popover-foreground: 198 42% 13%;
+    --primary: 173 80% 36%;               /* #12A594 aqua/teal brand */
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 217 91% 45%;
-    --muted: 0 0% 95%;
-    --muted-foreground: 217 60% 55%;
-    --accent: 0 0% 96%;
-    --accent-foreground: 217 91% 45%;
-    --destructive: 0 72% 51%;
+    --secondary: 166 46% 89%;             /* #D6F0EA teal tint soft fill */
+    --secondary-foreground: 198 42% 13%;
+    --muted: 180 21% 96%;                 /* #F4F8F8 */
+    --muted-foreground: 198 12% 40%;      /* #5A6B72 text secondary */
+    --accent: 166 46% 89%;               /* #D6F0EA */
+    --accent-foreground: 173 80% 36%;
+    --destructive: 4 70% 54%;             /* #DC4338 disease/alert */
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 88%;
-    --input: 0 0% 88%;
-    --ring: 217 91% 45%;
+    --border: 180 19% 91%;                /* #E3ECEC */
+    --input: 180 19% 91%;
+    --ring: 173 80% 36%;
     --radius: 0.5rem;
 
     /* Brand extras (not in stock shadcn token set) */
