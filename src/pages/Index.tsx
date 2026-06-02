@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { AnnouncementDialog } from '@/components/AnnouncementDialog';
 import { WeatherTimeWidget } from '@/components/WeatherTimeWidget';
 import {
   BuiltForRoles, Testimonials,
@@ -32,6 +33,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <AnnouncementDialog />
       <Header />
 
       {/* Hero */}
