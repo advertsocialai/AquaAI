@@ -9,8 +9,8 @@ import { useAuth } from '@/lib/auth';
 import { supabase } from '@/lib/supabase';
 
 const SUPPORT_PHONE = '+919705713399';
-const SUPPORT_EMAIL = 'support@aquabrahma.in';
-const APP_NAME = 'AquaBrahma';
+const SUPPORT_EMAIL = 'support@aquarudra.com';
+const APP_NAME = 'Aqua Rudra';
 
 export default function ProfilePage() {
   useEffect(() => { document.title = 'Profile — Aqua Rudra'; }, []);
