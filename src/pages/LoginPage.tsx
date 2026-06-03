@@ -82,11 +82,11 @@ export default function LoginPage() {
     const { error: err } = otpChannel === 'phone'
       ? await supabase.auth.signInWithOtp({
           phone: `+91${phone.trim()}`,
-          options: { shouldCreateUser: false },
+          options: { shouldCreateUser: true },
         })
       : await supabase.auth.signInWithOtp({
           email: email.trim().toLowerCase(),
-          options: { shouldCreateUser: false },
+          options: { shouldCreateUser: true },
         });
     setBusy(false);
     if (err) { setError(err.message); return; }
