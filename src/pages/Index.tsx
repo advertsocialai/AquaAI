@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, type ElementType } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
@@ -12,22 +12,32 @@ import {
 } from '@/components/aquaai-sections';
 import CTA from '@/components/CTA';
 import { Gallery4 } from '@/components/Gallery4';
-import FeatureSection from '@/components/FeatureSection';
 import { Feature108 } from '@/components/Feature108';
+import { ServiceProviders } from '@/components/ServiceProviders';
 import {
-  Fish, ArrowRight, PlayCircle, BrainCircuit, IndianRupee,
-  ShoppingCart, Truck, LifeBuoy, Shield, Building2, Landmark,
+  ArrowRight, PlayCircle, IndianRupee,
+  Truck, LifeBuoy, Fish, Calculator,
 } from 'lucide-react';
 
-const MODULES = [
-  { icon: BrainCircuit, key: 'diagnostics',  accent: '#a78bfa' },
-  { icon: IndianRupee,  key: 'pricing',      accent: '#34d399' },
-  { icon: ShoppingCart, key: 'marketplace',  accent: '#fb923c' },
-  { icon: Truck,        key: 'logistics',    accent: '#f472b6' },
+// Inline shrimp glyph (lucide has no shrimp icon).
+function ShrimpIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"
+      strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <path d="M19 7c-3 0-4 2-7 2H7a4 4 0 0 0 0 8h6c4 0 6-3 6-6" />
+      <path d="M7 17c-2 0-4-1-4-3" />
+      <path d="M19 7c1-1 1-3 0-4" />
+      <circle cx="16" cy="10" r="0.6" fill="currentColor" />
+    </svg>
+  );
+}
+
+const MODULES: { icon: ElementType; key: string; accent: string; to?: string; label?: string; desc?: string }[] = [
+  { icon: IndianRupee,  key: 'pricing',      accent: '#34d399', to: '/rates' },
+  { icon: Truck,        key: 'logistics',    accent: '#f472b6', to: '/#provider-transporters' },
   { icon: LifeBuoy,     key: 'advisory',     accent: '#facc15' },
-  { icon: Building2,    key: 'b2b',          accent: '#a78bfa' },
-  { icon: Shield,       key: 'surveillance', accent: '#f87171' },
-  { icon: Landmark,     key: 'risk',         accent: '#facc15' },
+  { icon: Calculator,   key: 'tools',        accent: '#0ea5e9', to: '/aquaai#dashboard',
+    label: 'Aqua Tools', desc: 'Survival rate, feed/FCR and stocking calculators for every pond.' },
 ];
 
 const Index = () => {
@@ -47,16 +57,6 @@ const Index = () => {
 
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl">
-            <motion.div
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-teal-400/30 bg-teal-400/10 text-teal-300 text-sm tracking-widest uppercase mb-8"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <Fish className="w-4 h-4" />
-              {t('home.tagline')}
-            </motion.div>
-
             <motion.h1
               className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] mb-8"
               initial={{ opacity: 0, y: 20 }}
@@ -109,6 +109,30 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Market rates */}
+      <section className="border-t border-border py-12">
+        <div className="container mx-auto px-6 lg:px-8 max-w-3xl">
+          <div className="text-sm text-teal-300 uppercase tracking-widest mb-2 text-center">Market rates</div>
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-6">Today's farm-gate rates</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Link
+              to="/rates"
+              className="flex items-center gap-3 rounded-2xl p-6 border border-teal-400/30 bg-gradient-to-br from-teal-400/15 to-teal-300/5 hover:border-teal-400/50 active:scale-[0.99] transition"
+            >
+              <ShrimpIcon className="w-10 h-10 text-teal-600 shrink-0" />
+              <span className="text-lg font-bold text-foreground">Shrimp Rates</span>
+            </Link>
+            <Link
+              to="/rates?tab=fish"
+              className="flex items-center gap-3 rounded-2xl p-6 border border-sky-400/30 bg-gradient-to-br from-sky-400/15 to-cyan-300/5 hover:border-sky-400/50 active:scale-[0.99] transition"
+            >
+              <Fish className="w-10 h-10 text-sky-600 shrink-0" strokeWidth={1.6} />
+              <span className="text-lg font-bold text-foreground">Fish Rates</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Module highlights grid */}
       <section className="py-20 border-t border-border">
         <div className="container mx-auto px-6 lg:px-8 max-w-6xl">
@@ -127,7 +151,7 @@ const Index = () => {
                 transition={{ delay: i * 0.05 }}
               >
                 <Link
-                  to={`/aquaai#${m.key}`}
+                  to={m.to ?? `/aquaai#${m.key}`}
                   className="block h-full p-6 rounded-2xl border border-border bg-card hover:bg-muted hover:border-teal-400/40 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400/50"
                 >
                   <div
@@ -136,8 +160,8 @@ const Index = () => {
                   >
                     <m.icon className="w-6 h-6" style={{ color: m.accent }} />
                   </div>
-                  <div className="text-lg font-semibold text-foreground mb-2">{t(`modules.${m.key}`)}</div>
-                  <p className="text-sm text-foreground/65 leading-relaxed">{t(`modules.${m.key}D`)}</p>
+                  <div className="text-lg font-semibold text-foreground mb-2">{t(`modules.${m.key}`, m.label ? { defaultValue: m.label } : undefined)}</div>
+                  <p className="text-sm text-foreground/65 leading-relaxed">{t(`modules.${m.key}D`, m.desc ? { defaultValue: m.desc } : undefined)}</p>
                 </Link>
               </motion.div>
             ))}
@@ -147,9 +171,10 @@ const Index = () => {
 
       <BuiltForRoles />
 
+      <ServiceProviders />
+
       <Gallery4 />
       <Feature108 />
-      <FeatureSection />
 
       <Testimonials />
       <CTA />

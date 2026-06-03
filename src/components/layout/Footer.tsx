@@ -2,10 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
-  Mail, MapPin, Phone, Facebook, Instagram, Youtube,
-  Send, Check, ArrowRight,
+  Mail, MapPin, Phone, Facebook, Instagram, Youtube, Send, Check,
 } from 'lucide-react';
-import atomLogo from '@/assets/atom-logo.svg';
 import { supabase } from '@/lib/supabase';
 
 // Placeholder URLs until verified handles exist on each platform.
@@ -16,7 +14,6 @@ const SOCIAL = {
 };
 
 const PRIMARY_EMAIL   = 'info@aquarudra.com';
-const SUPPORT_EMAIL   = 'aquaai3366@gmail.com';
 const PRIMARY_PHONE   = '+91 95532 82325';
 
 const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=in.aquai.mobile';
@@ -29,22 +26,9 @@ export function Footer() {
 
   const QUICK_LINKS = [
     { label: t('nav.home'),      to: '/' },
-    { label: t('nav.aquaai'),    to: '/aquaai' },
-    { label: t('nav.knowledge'), to: '/knowledge' },
     { label: t('nav.about'),     to: '/about' },
+    { label: t('nav.knowledge'), to: '/knowledge' },
     { label: t('nav.contact'),   to: '/contact' },
-    { label: 'Founders',         to: '/founders' },
-  ];
-
-  const ACCOUNT_LINKS = [
-    { label: t('common.signIn'), to: '/login' },
-    { label: t('common.signUp'), to: '/signup' },
-    { label: 'Forgot password',  to: '/forgot-password' },
-  ];
-
-  const LEGAL_LINKS = [
-    { label: t('footer.privacy'), to: '/privacy' },
-    { label: t('footer.terms'),   to: '/terms' },
   ];
 
   // Matches the DB-level CHECK constraint so client + server agree on validity.
@@ -54,11 +38,6 @@ export function Footer() {
     e.preventDefault();
     const clean = email.trim().toLowerCase().slice(0, 254);
     if (clean.length < 5 || !EMAIL_RE.test(clean)) return;
-
-    // Direct insert into Supabase. RLS policy enforces format server-side too,
-    // and Prefer: return=minimal (supabase-js default) keeps anon out of SELECT.
-    // `newsletter_subscribers` isn't in the generated Database types yet, so
-    // cast the table accessor (same pattern as src/lib/push.ts).
     if (supabase) {
       const { error } = await (supabase.from('newsletter_subscribers' as never) as never as {
         insert: (v: unknown) => Promise<{ error: { code?: string } | null }>;
@@ -75,50 +54,14 @@ export function Footer() {
 
   return (
     <footer className="border-t border-border bg-background">
-      {/* Top: newsletter */}
-      <div className="border-b border-border">
-        <div className="mx-auto w-full max-w-5xl px-5 sm:px-6 lg:px-8 py-8 md:py-10 grid md:grid-cols-2 gap-6 md:gap-8 items-center">
-          <div>
-            <div className="text-xs uppercase tracking-widest text-teal-300 mb-2">{t('footer.subscribe')}</div>
-            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2 leading-tight">{t('footer.tagline')}</h3>
-            <p className="text-sm sm:text-base text-foreground/70">{t('footer.subscribeSub')}</p>
-          </div>
-          <form onSubmit={subscribe} className="flex items-center gap-2 w-full md:max-w-md md:ml-auto">
-            <div className="flex items-center gap-2 flex-1 min-w-0 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
-              <Mail className="w-4 h-4 text-teal-400 shrink-0" />
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="your@email.in"
-                autoComplete="email"
-                spellCheck={false}
-                maxLength={254}
-                required
-                className="bg-transparent outline-none text-foreground text-sm flex-1 min-w-0 placeholder:text-foreground/30"
-              />
-            </div>
-            <button
-              type="submit"
-              disabled={subscribed}
-              className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-60 text-black font-semibold text-sm shrink-0"
-            >
-              {subscribed ? <><Check className="w-4 h-4" /> Subscribed</> : <><Send className="w-4 h-4" /> Subscribe</>}
-            </button>
-          </form>
-        </div>
-      </div>
+      <div className="mx-auto w-full max-w-6xl px-5 sm:px-6 lg:px-8 py-12 md:py-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-8 md:gap-x-12">
 
-      {/* Main footer grid — 3 columns on lg, 1 on mobile */}
-      <div className="mx-auto w-full max-w-5xl px-5 sm:px-6 lg:px-8 py-10 md:py-12 grid grid-cols-1 lg:grid-cols-3 gap-y-10 gap-x-8 md:gap-x-12">
-        {/* Brand + apps + social */}
+        {/* Col 1 — brand + app badges */}
         <div className="space-y-4">
           <Link to="/" className="inline-flex items-center gap-3">
-            <img src={atomLogo} alt="Aqua Rudra" className="w-8 h-8 object-contain text-teal-300" />
             <span className="text-lg font-bold text-foreground tracking-wider">AQUA<span className="font-light"> RUDRA</span></span>
           </Link>
-          <p className="text-sm text-foreground/70 leading-relaxed max-w-sm">{t('footer.brandLine')}</p>
-          <div className="flex items-center gap-2 pt-1">
+          <div className="flex flex-col gap-2 pt-1 w-fit">
             <a
               href={PLAY_STORE_URL}
               target="_blank"
@@ -150,14 +93,29 @@ export function Footer() {
               </div>
             </a>
           </div>
-          <div className="flex items-center gap-4 pt-2">
-            <a href={SOCIAL.facebook}  target="_blank" rel="noopener noreferrer" aria-label="Facebook"  className="text-foreground/60 hover:text-teal-300 transition"><Facebook  className="w-4 h-4" /></a>
-            <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-foreground/60 hover:text-teal-300 transition"><Instagram className="w-4 h-4" /></a>
-            <a href={SOCIAL.youtube}   target="_blank" rel="noopener noreferrer" aria-label="YouTube"   className="text-foreground/60 hover:text-teal-300 transition"><Youtube   className="w-4 h-4" /></a>
-          </div>
+          <p className="text-sm text-foreground/70 leading-relaxed max-w-xs">{t('footer.brandLine')}</p>
         </div>
 
-        {/* Quick links */}
+        {/* Col 2 — Get in touch */}
+        <div>
+          <div className="text-xs uppercase tracking-widest text-teal-300 mb-4">{t('footer.getInTouch')}</div>
+          <ul className="space-y-2.5 text-sm">
+            <li className="flex items-start gap-2.5 text-foreground/75">
+              <Phone className="w-4 h-4 mt-0.5 text-teal-400 shrink-0" />
+              <a href={`tel:${PRIMARY_PHONE.replace(/\s/g, '')}`} className="hover:text-foreground transition">{PRIMARY_PHONE}</a>
+            </li>
+            <li className="flex items-start gap-2.5 text-foreground/75">
+              <Mail className="w-4 h-4 mt-0.5 text-teal-400 shrink-0" />
+              <a href={`mailto:${PRIMARY_EMAIL}`} className="hover:text-foreground transition break-all">{PRIMARY_EMAIL}</a>
+            </li>
+            <li className="flex items-start gap-2.5 text-foreground/75">
+              <MapPin className="w-4 h-4 mt-0.5 text-teal-400 shrink-0" />
+              <span>Andhra Pradesh, India</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* Col 3 — Quick links */}
         <div>
           <div className="text-xs uppercase tracking-widest text-teal-300 mb-4">{t('footer.quickLinks')}</div>
           <ul className="space-y-2.5">
@@ -171,48 +129,37 @@ export function Footer() {
           </ul>
         </div>
 
-        {/* Get in touch */}
+        {/* Col 4 — Connect with us */}
         <div>
-          <div className="text-xs uppercase tracking-widest text-teal-300 mb-4">{t('footer.getInTouch')}</div>
-          <ul className="space-y-2.5 text-sm">
-            <li className="flex items-start gap-2.5 text-foreground/75">
-              <Phone className="w-4 h-4 mt-0.5 text-teal-400 shrink-0" />
-              <a href={`tel:${PRIMARY_PHONE.replace(/\s/g, '')}`} className="hover:text-foreground transition">{PRIMARY_PHONE}</a>
-            </li>
-            <li className="flex items-start gap-2.5 text-foreground/75">
-              <Mail className="w-4 h-4 mt-0.5 text-teal-400 shrink-0" />
-              <a href={`mailto:${PRIMARY_EMAIL}`} className="hover:text-foreground transition break-all">{PRIMARY_EMAIL}</a>
-            </li>
-            <li className="flex items-start gap-2.5 text-foreground/75">
-              <Mail className="w-4 h-4 mt-0.5 text-teal-400 shrink-0" />
-              <a href={`mailto:${SUPPORT_EMAIL}`} className="hover:text-foreground transition break-all">{SUPPORT_EMAIL}</a>
-            </li>
-            <li className="flex items-start gap-2.5 text-foreground/75">
-              <MapPin className="w-4 h-4 mt-0.5 text-teal-400 shrink-0" />
-              <span>Andhra Pradesh, India</span>
-            </li>
-          </ul>
-          <Link
-            to="/contact"
-            className="inline-flex items-center gap-1.5 mt-4 text-sm text-teal-400 hover:underline"
-          >
-            {t('footer.sendMessage')} <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-      </div>
-
-      {/* Bottom strip */}
-      <div className="border-t border-border">
-        <div className="mx-auto w-full max-w-5xl px-5 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs sm:text-sm text-foreground/60">
-          <div>© {new Date().getFullYear()} {t('footer.copyright')}</div>
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-            {ACCOUNT_LINKS.map((l) => (
-              <Link key={l.label} to={l.to} className="hover:text-foreground transition">{l.label}</Link>
-            ))}
-            <span className="text-foreground/20" aria-hidden>•</span>
-            {LEGAL_LINKS.map((l) => (
-              <Link key={l.label} to={l.to} className="hover:text-foreground transition">{l.label}</Link>
-            ))}
+          <div className="text-xs uppercase tracking-widest text-teal-300 mb-4">Connect with us</div>
+          <form onSubmit={subscribe} className="flex items-center gap-2 mb-5">
+            <div className="flex items-center gap-2 flex-1 min-w-0 px-3 py-2.5 rounded-lg border border-border bg-card focus-within:border-teal-400/40">
+              <Mail className="w-4 h-4 text-teal-400 shrink-0" />
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your@email.in"
+                autoComplete="email"
+                spellCheck={false}
+                maxLength={254}
+                required
+                className="bg-transparent outline-none text-foreground text-sm flex-1 min-w-0 placeholder:text-foreground/30"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={subscribed}
+              aria-label="Subscribe"
+              className="inline-flex items-center justify-center p-2.5 rounded-lg bg-teal-500 hover:bg-teal-400 disabled:opacity-60 text-black shrink-0"
+            >
+              {subscribed ? <Check className="w-4 h-4" /> : <Send className="w-4 h-4" />}
+            </button>
+          </form>
+          <div className="flex items-center gap-4">
+            <a href={SOCIAL.facebook}  target="_blank" rel="noopener noreferrer" aria-label="Facebook"  className="text-foreground/60 hover:text-teal-300 transition"><Facebook  className="w-5 h-5" /></a>
+            <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-foreground/60 hover:text-teal-300 transition"><Instagram className="w-5 h-5" /></a>
+            <a href={SOCIAL.youtube}   target="_blank" rel="noopener noreferrer" aria-label="YouTube"   className="text-foreground/60 hover:text-teal-300 transition"><Youtube   className="w-5 h-5" /></a>
           </div>
         </div>
       </div>

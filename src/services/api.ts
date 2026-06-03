@@ -214,4 +214,78 @@ export async function askAssistant(question: string, lang: string = 'en'): Promi
   }
 }
 
+// ── Service-provider requests ────────────────────────────────────────────────
+
+export type ServiceRequestPayload = {
+  providerId: string;
+  values: Record<string, string>;
+  timestamp: string;
+};
+
+export type ServiceRequestResult = { ok: boolean; queued?: boolean };
+
+const SR_QUEUE_KEY = 'aquai-service-request-queue';
+
+function queueServiceRequest(req: ServiceRequestPayload): void {
+  try {
+    const q: ServiceRequestPayload[] = JSON.parse(localStorage.getItem(SR_QUEUE_KEY) || '[]');
+    q.push(req);
+    localStorage.setItem(SR_QUEUE_KEY, JSON.stringify(q));
+  } catch {
+    /* storage unavailable — nothing else we can do */
+  }
+}
+
+async function postServiceRequest(req: ServiceRequestPayload): Promise<boolean> {
+  const res = await fetch(`${API_BASE}/service-requests`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(req),
+  });
+  if (!res.ok) throw new Error(`bad status ${res.status}`);
+  return true;
+}
+
+/**
+ * Submit a service-provider request. Mock-first: returns a stubbed success in
+ * stubs mode. Offline-safe: if the network send fails, the request is queued in
+ * localStorage and `queued: true` is returned (caller shows "will send later").
+ */
+export async function submitServiceRequest(req: ServiceRequestPayload): Promise<ServiceRequestResult> {
+  if (stubsMode()) {
+    return delay({ ok: true }, 400);
+  }
+  try {
+    await postServiceRequest(req);
+    return { ok: true };
+  } catch {
+    queueServiceRequest(req);
+    return { ok: false, queued: true };
+  }
+}
+
+/** Resend any queued requests (call on app load + on the window 'online' event). */
+export async function flushServiceRequestQueue(): Promise<void> {
+  let q: ServiceRequestPayload[];
+  try {
+    q = JSON.parse(localStorage.getItem(SR_QUEUE_KEY) || '[]');
+  } catch {
+    return;
+  }
+  if (!q.length) return;
+  const remaining: ServiceRequestPayload[] = [];
+  for (const req of q) {
+    try {
+      await postServiceRequest(req);
+    } catch {
+      remaining.push(req);
+    }
+  }
+  try {
+    localStorage.setItem(SR_QUEUE_KEY, JSON.stringify(remaining));
+  } catch {
+    /* ignore */
+  }
+}
+
 export const __config = { API_BASE };

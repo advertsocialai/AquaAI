@@ -8,6 +8,7 @@ import {
   BuiltForRoles, Testimonials,
   MobileAppCta, FaqSection, FinalCta,
 } from '@/components/aquaai-sections';
+import { ServiceProviders } from '@/components/ServiceProviders';
 
 // ── Main page ──────────────────────────────────────────────────────────────────
 
@@ -53,6 +54,8 @@ const AquaAIPage = () => {
       </section>
 
       <BuiltForRoles />
+
+      <ServiceProviders />
 
       {/* Unified Dashboard — 6 modules × 8 roles */}
       <section id="dashboard" className="py-24 border-t border-border">

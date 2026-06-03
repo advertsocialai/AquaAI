@@ -122,7 +122,7 @@ export default function SignupPage() {
               <h1 className="text-2xl md:text-3xl font-bold mb-2">Which best describes you?</h1>
               <p className="text-sm text-foreground/50 mb-8">Each role unlocks a different dashboard, tools and permissions.</p>
               <div className="grid sm:grid-cols-2 gap-3 mb-8">
-                {ROLES.map(({ id, label, icon: Icon, accent }) => {
+                {ROLES.filter((r) => r.id === 'farmer' || r.id === 'trader').map(({ id, label, icon: Icon, accent }) => {
                   const selected = role === id;
                   return (
                     <button

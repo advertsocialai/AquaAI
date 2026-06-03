@@ -2,7 +2,7 @@ import { lazy, Suspense, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import {
-  KeyRound, BrainCircuit, IndianRupee, ShoppingCart, Truck, LifeBuoy,
+  KeyRound, BrainCircuit, IndianRupee, Truck, LifeBuoy,
   Building2, Shield, Landmark, Calculator, BookOpen, MessageSquare,
   FileText, Settings, Loader2,
 } from 'lucide-react';
@@ -16,7 +16,6 @@ import { WeatherForecast } from './WeatherForecast';
 // PDFs, leaflet) are only fetched when the user opens that tab.
 const OnboardingModule  = lazy(() => import('./OnboardingModule').then((m) => ({ default: m.OnboardingModule })));
 const PricingModule     = lazy(() => import('./PricingModule').then((m)    => ({ default: m.PricingModule })));
-const MarketplaceModule = lazy(() => import('./MarketplaceModule').then((m)=> ({ default: m.MarketplaceModule })));
 const LogisticsModule   = lazy(() => import('./LogisticsModule').then((m)  => ({ default: m.LogisticsModule })));
 const AdvisoryModule    = lazy(() => import('./AdvisoryModule').then((m)   => ({ default: m.AdvisoryModule })));
 const B2BPortalModule   = lazy(() => import('./B2BPortalModule').then((m)  => ({ default: m.B2BPortalModule })));
@@ -31,7 +30,7 @@ const AdminModule       = lazy(() => import('./AdminModule').then((m)      => ({
 const DiagnosticsModule = lazy(() => import('./DiagnosticsLazy'));
 
 type TabId =
-  | 'onboarding' | 'diagnostics' | 'pricing' | 'marketplace'
+  | 'onboarding' | 'diagnostics' | 'pricing'
   | 'logistics' | 'advisory' | 'b2b' | 'surveillance' | 'risk'
   | 'calculators' | 'knowledge' | 'community' | 'reports' | 'admin';
 
@@ -39,7 +38,6 @@ const TABS: { id: TabId; label: string; short: string; icon: React.ElementType; 
   { id: 'onboarding',   label: 'Onboarding',   short: 'M1', icon: KeyRound,     accent: '#38bdf8' },
   { id: 'diagnostics',  label: 'Diagnostics',  short: 'M2', icon: BrainCircuit, accent: '#a78bfa' },
   { id: 'pricing',      label: 'Pricing',      short: 'M3', icon: IndianRupee,  accent: '#34d399' },
-  { id: 'marketplace',  label: 'Marketplace',  short: 'M4', icon: ShoppingCart, accent: '#fb923c' },
   { id: 'logistics',    label: 'Logistics',    short: 'M5', icon: Truck,        accent: '#f472b6' },
   { id: 'advisory',     label: 'Advisory',     short: 'M6', icon: LifeBuoy,     accent: '#facc15' },
   { id: 'calculators',  label: 'Calculators',  short: 'CALC',icon: Calculator,  accent: '#38bdf8' },
@@ -53,12 +51,12 @@ const TABS: { id: TabId; label: string; short: string; icon: React.ElementType; 
 ];
 
 const ROLE_ACCESS: Record<Role, { default: TabId; tabs: TabId[] }> = {
-  farmer:      { default: 'advisory',     tabs: ['onboarding', 'diagnostics', 'pricing', 'marketplace', 'logistics', 'advisory', 'calculators', 'knowledge', 'community', 'reports', 'admin'] },
-  vle:         { default: 'diagnostics',  tabs: ['onboarding', 'diagnostics', 'pricing', 'marketplace', 'logistics', 'advisory', 'calculators', 'knowledge', 'community', 'reports', 'admin'] },
-  hatchery:    { default: 'b2b',          tabs: ['onboarding', 'b2b', 'diagnostics', 'marketplace', 'logistics', 'advisory', 'calculators', 'knowledge', 'community', 'reports', 'admin'] },
+  farmer:      { default: 'advisory',     tabs: ['onboarding', 'diagnostics', 'pricing', 'logistics', 'advisory', 'calculators', 'knowledge', 'community', 'reports', 'admin'] },
+  vle:         { default: 'diagnostics',  tabs: ['onboarding', 'diagnostics', 'pricing', 'logistics', 'advisory', 'calculators', 'knowledge', 'community', 'reports', 'admin'] },
+  hatchery:    { default: 'b2b',          tabs: ['onboarding', 'b2b', 'diagnostics', 'logistics', 'advisory', 'calculators', 'knowledge', 'community', 'reports', 'admin'] },
   transporter: { default: 'logistics',    tabs: ['onboarding', 'logistics', 'advisory', 'knowledge', 'reports', 'admin'] },
-  supplier:    { default: 'marketplace',  tabs: ['onboarding', 'marketplace', 'logistics', 'pricing', 'knowledge', 'reports', 'admin'] },
-  trader:      { default: 'pricing',      tabs: ['onboarding', 'pricing', 'b2b', 'marketplace', 'logistics', 'knowledge', 'reports', 'admin'] },
+  supplier:    { default: 'logistics',    tabs: ['onboarding', 'logistics', 'pricing', 'knowledge', 'reports', 'admin'] },
+  trader:      { default: 'pricing',      tabs: ['onboarding', 'pricing', 'b2b', 'logistics', 'knowledge', 'reports', 'admin'] },
   bank:        { default: 'risk',         tabs: ['onboarding', 'risk', 'pricing', 'advisory', 'knowledge', 'reports', 'admin'] },
   govt:        { default: 'surveillance', tabs: ['onboarding', 'surveillance', 'advisory', 'knowledge', 'community', 'reports', 'admin'] },
 };
@@ -156,7 +154,6 @@ export function AquaDashboard() {
                 {id === 'onboarding'   && <OnboardingModule role={role} />}
                 {id === 'diagnostics'  && <DiagnosticsModule />}
                 {id === 'pricing'      && <PricingModule />}
-                {id === 'marketplace'  && <MarketplaceModule />}
                 {id === 'logistics'    && <LogisticsModule />}
                 {id === 'advisory'     && <AdvisoryModule />}
                 {id === 'b2b'          && <B2BPortalModule />}

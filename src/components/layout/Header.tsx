@@ -111,7 +111,12 @@ export function Header() {
                 {t(`nav.${item.key}`)}
               </Link>
             ))}
-            <div data-dashboards className="relative">
+            <div
+              data-dashboards
+              className="relative"
+              onMouseEnter={() => setDashOpen(true)}
+              onMouseLeave={() => setDashOpen(false)}
+            >
               <button
                 type="button"
                 onClick={() => setDashOpen((v) => !v)}
@@ -159,7 +164,12 @@ export function Header() {
               <Download className="w-4 h-4" /> {t('common.downloadApp')}
             </button>
             {session ? (
-              <div data-account className="relative">
+              <div
+                data-account
+                className="relative"
+                onMouseEnter={() => setAcctOpen(true)}
+                onMouseLeave={() => setAcctOpen(false)}
+              >
                 <button
                   type="button"
                   onClick={() => setAcctOpen((v) => !v)}
@@ -219,7 +229,12 @@ export function Header() {
                 </AnimatePresence>
               </div>
             ) : (
-            <div data-getstarted className="relative">
+            <div
+              data-getstarted
+              className="relative"
+              onMouseEnter={() => setStartOpen(true)}
+              onMouseLeave={() => setStartOpen(false)}
+            >
               <button
                 type="button"
                 onClick={() => setStartOpen((v) => !v)}

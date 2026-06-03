@@ -22,6 +22,7 @@ from app.api.v1 import risk
 from app.api.v1 import newsletter
 from app.api.v1 import contact
 from app.api.v1 import push
+from app.api.v1 import service_requests
 
 app = FastAPI(
     title=settings.app_name,
@@ -74,6 +75,7 @@ app.include_router(risk.router, prefix=PREFIX)              # Bank/insurer risk 
 app.include_router(newsletter.router, prefix=PREFIX)        # Footer newsletter subscribe
 app.include_router(contact.router, prefix=PREFIX)           # Contact form (web + mobile)
 app.include_router(push.router, prefix=PREFIX)              # Web push (VAPID) config + send
+app.include_router(service_requests.router, prefix=PREFIX)  # Service-provider requests (stub)
 app.include_router(metrics_router.router)                   # /metrics for Prometheus
 
 

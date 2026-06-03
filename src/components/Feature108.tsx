@@ -62,20 +62,6 @@ const Feature108 = ({
         imageAlt: "Live market prices",
       },
     },
-    {
-      value: "tab-3",
-      icon: <Layout className="h-auto w-4 shrink-0" />,
-      label: "Marketplace",
-      content: {
-        badge: "Verified & escrowed",
-        title: "Trade with people you can trust.",
-        description:
-          "Buy and sell with KYC-checked farmers and traders, MPEDA-grade QC certificates, and escrow-backed payments end-to-end.",
-        buttonText: "Explore the marketplace",
-        imageSrc: heroBg,
-        imageAlt: "Verified marketplace",
-      },
-    },
   ],
 }: Feature108Props) => {
   return (

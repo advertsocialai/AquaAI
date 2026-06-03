@@ -11,8 +11,8 @@ import {
 // ─── Built-for roles ───────────────────────────────────────────────────────────
 
 const MAIN_ROLES = [
-  { id: 'farmer', icon: User,      accent: '#34d399' },
-  { id: 'trader', icon: Briefcase, accent: '#f472b6' },
+  { id: 'farmer', icon: User,      accent: '#34d399', to: '/farmer' },
+  { id: 'trader', icon: Briefcase, accent: '#f472b6', to: '/trader' },
 ];
 
 const SERVICE_ROLES = [
@@ -22,31 +22,49 @@ const SERVICE_ROLES = [
   { id: 'resources',   icon: BookOpen,  accent: '#facc15' },
 ];
 
-type RoleCard = { id: string; icon: React.ElementType; accent: string };
+type RoleCard = { id: string; icon: React.ElementType; accent: string; to?: string };
 
 function RoleGrid({ items, cols }: { items: RoleCard[]; cols: string }) {
   const { t } = useTranslation();
   return (
     <div className={`grid gap-5 max-w-4xl mx-auto ${cols}`}>
-      {items.map(({ id, icon: Icon, accent }, i) => (
-        <motion.div
-          key={id}
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: i * 0.04 }}
-          className="p-6 rounded-2xl border border-border bg-card hover:bg-muted transition"
-        >
-          <div
-            className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-            style={{ background: `${accent}22`, border: `1px solid ${accent}44` }}
+      {items.map(({ id, icon: Icon, accent, to }, i) => {
+        const content = (
+          <>
+            <div
+              className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+              style={{ background: `${accent}22`, border: `1px solid ${accent}44` }}
+            >
+              <Icon className="w-6 h-6" style={{ color: accent }} />
+            </div>
+            <div className="text-base font-semibold text-foreground mb-2">{t(`roles.${id}`)}</div>
+            <div className="text-sm text-foreground/65 leading-relaxed">{t(`roleDesc.${id}`)}</div>
+            {to && (
+              <div className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-teal-300">
+                {t('common.getStarted')} <ArrowRight className="w-3.5 h-3.5" />
+              </div>
+            )}
+          </>
+        );
+        const cardCls = 'block h-full p-6 rounded-2xl border border-border bg-card transition';
+        return (
+          <motion.div
+            key={id}
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.04 }}
           >
-            <Icon className="w-6 h-6" style={{ color: accent }} />
-          </div>
-          <div className="text-base font-semibold text-foreground mb-2">{t(`roles.${id}`)}</div>
-          <div className="text-sm text-foreground/65 leading-relaxed">{t(`roleDesc.${id}`)}</div>
-        </motion.div>
-      ))}
+            {to ? (
+              <Link to={to} className={`${cardCls} hover:bg-muted hover:border-teal-400/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400/50`}>
+                {content}
+              </Link>
+            ) : (
+              <div className={`${cardCls} hover:bg-muted`}>{content}</div>
+            )}
+          </motion.div>
+        );
+      })}
     </div>
   );
 }
@@ -63,14 +81,6 @@ export function BuiltForRoles() {
         </div>
 
         <RoleGrid items={MAIN_ROLES} cols="sm:grid-cols-2 max-w-2xl" />
-
-        <div className="mt-20">
-          <div className="text-center mb-10">
-            <div className="text-sm text-teal-300 uppercase tracking-widest mb-3">{t('aquaServices.head')}</div>
-            <h3 className="text-2xl md:text-3xl font-bold leading-tight">{t('aquaServices.title')}</h3>
-          </div>
-          <RoleGrid items={SERVICE_ROLES} cols="sm:grid-cols-2 md:grid-cols-4" />
-        </div>
       </div>
     </section>
   );

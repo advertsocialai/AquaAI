@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ChevronDown, CalendarDays } from 'lucide-react';
-import { MobileTopBar, MobileTabBar } from '@/components/mobile/MobileChrome';
+import { MobileTopBar } from '@/components/mobile/MobileChrome';
 import { BrandMark } from '@/components/mobile/BrandMark';
 import { supabase } from '@/lib/supabase';
 
@@ -9,8 +9,8 @@ import { supabase } from '@/lib/supabase';
  * Live prices are fetched from the Supabase `market_prices` table; these
  * values are the offline/empty-DB fallback and the seed source. */
 
-const LOCATIONS = ['Andhra Pradesh', 'West Bengal', 'India'] as const;
-const LOC_MULT: Record<string, number> = { 'Andhra Pradesh': 1, 'West Bengal': 0.94, India: 0.97 };
+const LOCATIONS = ['Andhra Pradesh'] as const;
+const LOC_MULT: Record<string, number> = { 'Andhra Pradesh': 1 };
 
 const SHRIMP_SPECIES = ['Vannamei', 'Tiger Prawn'] as const;
 const SHRIMP_COUNTS = [20, 25, 30, 40, 45, 50, 60, 70, 80, 90, 100];
@@ -167,7 +167,7 @@ export default function MarketPricePage() {
       <MobileTopBar title="Market Price" />
 
       {/* Tabs */}
-      <div className="max-w-md mx-auto border-b border-neutral-200">
+      <div className="max-w-6xl mx-auto border-b border-neutral-200">
         <div className="grid grid-cols-2 text-center">
           {(['shrimp', 'fish'] as const).map((t) => (
             <button
@@ -182,16 +182,17 @@ export default function MarketPricePage() {
         </div>
       </div>
 
-      <main className="max-w-md mx-auto px-5 pt-5 pb-28">
-        <h2 className="text-xl font-medium text-neutral-800 mb-3">Today's Count Prices</h2>
-
+      <main className="max-w-6xl mx-auto px-5 sm:px-8 pt-6 pb-28">
         {/* Species + location dropdowns */}
-        <div className="flex gap-3 mb-4">
+        <div className="flex gap-3 mb-6 max-w-xl">
           <Dropdown value={species} options={speciesOptions} onChange={setSpecies} />
           <Dropdown value={location} options={LOCATIONS} onChange={setLocation} />
         </div>
 
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
         {/* Price table */}
+        <div>
+        <h2 className="text-xl font-medium text-neutral-800 mb-3">Today's Count Prices</h2>
         <div className="relative overflow-hidden rounded-md ring-1 ring-neutral-900">
           {/* subtle brand watermark */}
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center select-none">
@@ -214,9 +215,10 @@ export default function MarketPricePage() {
             </tbody>
           </table>
         </div>
+        </div>
 
         {/* Weekly trend */}
-        <div className="mt-10">
+        <div>
           <h2 className="text-xl font-medium text-neutral-800 mb-3">Weekly Count Prices</h2>
           <div className="flex gap-3 mb-5">
             <Dropdown value={trendPick} options={trendOptions} onChange={setTrendPick} />
@@ -248,9 +250,8 @@ export default function MarketPricePage() {
             </div>
           )}
         </div>
+        </div>
       </main>
-
-      <MobileTabBar active="rates" />
     </div>
   );
 }

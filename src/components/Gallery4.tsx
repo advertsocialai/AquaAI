@@ -46,14 +46,6 @@ const data: Gallery4Item[] = [
     image: heroBg,
   },
   {
-    id: "marketplace",
-    title: "Verified Marketplace",
-    description:
-      "Buy and sell with KYC-checked farmers and traders, MPEDA-grade QC certificates, and escrow-backed payments.",
-    href: "/aquaai#dashboard",
-    image: heroBg,
-  },
-  {
     id: "logistics",
     title: "Cold-Chain Logistics",
     description:

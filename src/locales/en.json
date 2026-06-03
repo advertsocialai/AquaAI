@@ -111,7 +111,7 @@
     "tagline": "India's Aquaculture Intelligence Platform",
     "hero1": "Decoding aquaculture,",
     "hero2": "one pond at a time.",
-    "subtitle": "PCR-grade AI diagnostics. Live mandi pricing. Verified marketplace. Logistics. Crop advisory. Government surveillance. In 6 Indian languages — on a ₹8,000 Android phone, fully offline.",
+    "subtitle": "AI-powered disease detection, live market prices, a verified marketplace, and logistics support — backed by expert guidance and official outbreak alerts.",
     "ctaStart": "Get started free",
     "ctaSee": "See the platform",
     "tagOffline": "Works fully offline",
@@ -136,7 +136,13 @@
     "surveillance": "Surveillance",
     "surveillanceD": "MPEDA / NSPAAD outbreak heatmap, compliance dashboard for officers.",
     "risk": "Risk Scoring",
-    "riskD": "Farm-risk Band A-D API for bank underwriting + insurance claims."
+    "riskD": "Farm-risk Band A-D API for bank underwriting + insurance claims.",
+    "survival": "Survival Calculator",
+    "survivalD": "Estimate pond survival from stocking, mortality and sampling counts.",
+    "feed": "Feed Calculator",
+    "feedD": "Plan daily feed and FCR by biomass, count and growth stage.",
+    "tools": "Aqua Tools",
+    "toolsD": "Survival rate, feed/FCR and stocking calculators for every pond."
   },
   "stats": {
     "aiModels": "AI Models",
@@ -155,7 +161,7 @@
     "github": "GitHub",
     "privacy": "Privacy",
     "terms": "Terms",
-    "brandLine": "India's AI-powered aquaculture intelligence platform. Live pricing, PCR-grade diagnostics, verified marketplace, logistics and government surveillance — in 6 Indian languages.",
+    "brandLine": "AI-powered disease detection, live market prices, a verified marketplace, and logistics support — backed by expert guidance and official outbreak alerts.",
     "quickLinks": "Quick Links",
     "platform": "Platform",
     "getInTouch": "Get in touch",
@@ -235,5 +241,147 @@
     "perfHead": "Performance",
     "perfTitle": "Model Accuracy Targets",
     "perfSub": "Validated against PCR-confirmed test sets and manual count ground truth."
+  },
+  "serviceProviders": {
+    "eyebrow": "Supply chain",
+    "title": "Service providers that keep the chain moving",
+    "submit": "Submit request",
+    "sent": "Request sent",
+    "call": "Call us",
+    "selectPlaceholder": "Select…",
+    "offlineQueued": "Will send when back online",
+    "providers": {
+      "transporters": {
+        "title": "Transporters",
+        "desc": "Move live seed, broodstock and harvest safely — on time, in the right conditions.",
+        "fields": {
+          "serviceType": {
+            "label": "Service type",
+            "options": {
+              "plTransport": "Live seed (PL) transport",
+              "broodstock": "Live broodstock",
+              "harvest": "Harvest to processor",
+              "reefer": "Cold-chain reefer"
+            }
+          },
+          "loadSize": {
+            "label": "Load size",
+            "options": {
+              "under1MT": "Under 1 MT",
+              "mt1to5": "1–5 MT",
+              "mt5to15": "5–15 MT",
+              "over15MT": "Over 15 MT"
+            }
+          },
+          "whenNeeded": {
+            "label": "When needed",
+            "options": {
+              "today": "Today",
+              "within2days": "Within 2 days",
+              "thisWeek": "This week",
+              "scheduleLater": "Schedule later"
+            }
+          }
+        }
+      },
+      "lab": {
+        "title": "Lab & Equipment",
+        "desc": "PCR/EHP screening, water tests, kit rentals and equipment to buy.",
+        "fields": {
+          "service": {
+            "label": "Service",
+            "options": {
+              "pcrEhp": "PCR / EHP screening",
+              "waterTest": "Water quality test",
+              "rental": "Microscope / kit rental",
+              "buy": "Buy equipment"
+            }
+          },
+          "sample": {
+            "label": "Sample / item",
+            "options": {
+              "postLarvae": "Post-larvae",
+              "water": "Water",
+              "tissue": "Tissue",
+              "feed": "Feed",
+              "na": "Not applicable"
+            }
+          },
+          "turnaround": {
+            "label": "Turnaround",
+            "options": {
+              "sameDay": "Same day",
+              "h24": "24 hours",
+              "d2to3": "2–3 days"
+            }
+          }
+        }
+      },
+      "oxygen": {
+        "title": "Oxygen Supply",
+        "desc": "Liquid oxygen, cylinders, aerators and emergency oxygen for your ponds.",
+        "fields": {
+          "product": {
+            "label": "Product",
+            "options": {
+              "liquidOxygen": "Liquid oxygen",
+              "cylinders": "Oxygen cylinders",
+              "aerator": "Aerator",
+              "emergency": "Emergency oxygen"
+            }
+          },
+          "pondSize": {
+            "label": "Pond size",
+            "options": {
+              "under1ac": "Under 1 acre",
+              "ac1to3": "1–3 acres",
+              "ac3to10": "3–10 acres",
+              "over10ac": "Over 10 acres"
+            }
+          },
+          "urgency": {
+            "label": "Urgency",
+            "options": {
+              "emergencyNow": "Emergency — now",
+              "today": "Today",
+              "scheduled": "Scheduled"
+            }
+          }
+        }
+      },
+      "resources": {
+        "title": "Resources / Inputs",
+        "desc": "Feed, probiotics, lime & minerals, liners and other pond inputs.",
+        "fields": {
+          "resource": {
+            "label": "Resource",
+            "options": {
+              "feed": "Feed",
+              "probiotics": "Probiotics & supplements",
+              "limeMinerals": "Lime & minerals",
+              "liners": "Pond liners",
+              "other": "Other inputs"
+            }
+          },
+          "species": {
+            "label": "Species",
+            "options": {
+              "vannamei": "Vannamei",
+              "tiger": "Tiger prawn",
+              "scampi": "Freshwater prawn (scampi)",
+              "fish": "Fish"
+            }
+          },
+          "quantity": {
+            "label": "Quantity",
+            "options": {
+              "small": "Small (1 pond)",
+              "medium": "Medium",
+              "bulk": "Bulk / multi-pond"
+            }
+          }
+        }
+      }
+    }
   }
 }
