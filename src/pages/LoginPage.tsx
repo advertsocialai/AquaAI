@@ -27,7 +27,7 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const from = (location.state as { from?: string } | null)?.from;
-  const [mode, setMode] = useState<Mode>('password');
+  const [mode, setMode] = useState<Mode>('otp');
   const [otpChannel, setOtpChannel] = useState<OtpChannel>('phone');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -186,7 +186,7 @@ export default function LoginPage() {
             ]}
             className="text-3xl text-left mb-2"
           />
-          <p className="text-sm text-foreground/50 mb-8">Sign in with your email and password</p>
+          <p className="text-sm text-foreground/50 mb-8">Sign in with your mobile number</p>
 
           {error && (
             <div className="mb-4 px-4 py-2.5 rounded-lg border border-red-400/30 bg-red-400/10 text-red-300 text-xs inline-flex items-center gap-2">

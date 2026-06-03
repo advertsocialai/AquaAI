@@ -31,6 +31,7 @@ export default function SignupPage() {
 
   const [step, setStep] = useState<StepId>('Role');
   const [role, setRole] = useState<Role | null>(null);
+  const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [lang, setLang] = useState(LANGUAGES[0]);
@@ -44,7 +45,8 @@ export default function SignupPage() {
   const next = () => setStep(STEPS[Math.min(idx + 1, STEPS.length - 1)]);
   const prev = () => setStep(STEPS[Math.max(idx - 1, 0)]);
 
-  const emailValid = /^\S+@\S+\.\S+$/.test(email.trim());
+  const phoneValid = /^[6-9]\d{9}$/.test(phone.trim());
+  const emailValid = email.trim() === '' || /^\S+@\S+\.\S+$/.test(email.trim());
   const pwOk = password.length >= 8 && /[A-Z]/.test(password) && /\d/.test(password);
 
   async function createAccount() {
@@ -52,11 +54,12 @@ export default function SignupPage() {
     if (!supabase) { setError('Authentication is not configured.'); return; }
     setBusy(true);
     setError(null);
+    // Phone-primary signup; email is optional (kept in metadata).
     const { error: err } = await supabase.auth.signUp({
-      email: email.trim().toLowerCase(),
+      phone: `+91${phone.trim()}`,
       password,
       options: {
-        data: { name, role, lang, kyc_ref: kyc, location },
+        data: { name, role, lang, kyc_ref: kyc, location, email: email.trim().toLowerCase() || null },
       },
     });
     setBusy(false);
@@ -165,20 +168,25 @@ export default function SignupPage() {
                 ]}
                 className="text-2xl md:text-3xl text-left mb-2"
               />
-              <p className="text-sm text-foreground/50 mb-8">Use an email and password you'll remember.</p>
+              <p className="text-sm text-foreground/50 mb-8">Use your mobile number and a password. Email is optional.</p>
 
               <div className="space-y-4 max-w-md">
-                <div className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
-                  <Mail className="w-4 h-4 text-teal-400" />
-                  <input
-                    autoFocus
-                    type="email"
-                    autoComplete="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@example.com"
-                    className="bg-transparent outline-none text-foreground flex-1 text-sm"
-                  />
+                <div>
+                  <span className="text-xs text-foreground/40 uppercase tracking-widest">Mobile number</span>
+                  <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                    <span className="text-sm text-foreground/70 font-medium select-none">+91</span>
+                    <input
+                      autoFocus
+                      type="tel"
+                      inputMode="numeric"
+                      autoComplete="tel-national"
+                      maxLength={10}
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
+                      placeholder="98765 43210"
+                      className="bg-transparent outline-none text-foreground flex-1 text-sm"
+                    />
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
@@ -198,6 +206,18 @@ export default function SignupPage() {
                   </div>
                 )}
 
+                <div className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                  <Mail className="w-4 h-4 text-foreground/40" />
+                  <input
+                    type="email"
+                    autoComplete="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Email (optional)"
+                    className="bg-transparent outline-none text-foreground flex-1 text-sm"
+                  />
+                </div>
+
                 <div className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card">
                   <Languages className="w-4 h-4 text-violet-400" />
                   <select value={lang} onChange={(e) => setLang(e.target.value)} className="bg-transparent outline-none text-foreground flex-1 text-sm">
@@ -212,7 +232,7 @@ export default function SignupPage() {
                 </button>
                 <button
                   onClick={next}
-                  disabled={!emailValid || !pwOk}
+                  disabled={!phoneValid || !pwOk || !emailValid}
                   className="px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm inline-flex items-center gap-2"
                 >
                   Continue <ArrowRight className="w-4 h-4" />

@@ -6,7 +6,7 @@ import {
   Building2, Shield, Landmark, Calculator, BookOpen, MessageSquare,
   FileText, Settings, Loader2,
 } from 'lucide-react';
-import { RoleSelector, type Role } from './RoleSelector';
+import { type Role } from './RoleSelector';
 import { KpiDashboard } from './KpiDashboard';
 import { LivePriceTicker } from './LivePriceTicker';
 import { WeatherForecast } from './WeatherForecast';
@@ -97,16 +97,6 @@ export function AquaDashboard() {
 
   return (
     <div className="space-y-6">
-      <div className="p-5 rounded-2xl border border-border bg-card backdrop-blur-sm">
-        <div className="flex items-center justify-between mb-3">
-          <div className="text-[11px] uppercase tracking-widest text-foreground/30">View As</div>
-          <div className="text-[11px] text-foreground/30">
-            {visibleTabs.length} module{visibleTabs.length === 1 ? '' : 's'} available · default: {TABS.find(t => t.id === ROLE_ACCESS[role].default)?.label}
-          </div>
-        </div>
-        <RoleSelector role={role} onChange={setRole} />
-      </div>
-
       <LivePriceTicker />
 
       {/* 7-day weather forecast with rain alarm */}
