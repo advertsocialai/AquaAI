@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
-import { AquaDashboard } from '@/components/dashboard/AquaDashboard';
 import {
   BuiltForRoles, Testimonials,
   MobileAppCta, FaqSection, FinalCta,
@@ -56,21 +55,6 @@ const AquaAIPage = () => {
       <BuiltForRoles />
 
       <ServiceProviders />
-
-      {/* Unified Dashboard — 6 modules × 8 roles */}
-      <section id="dashboard" className="py-24 border-t border-border">
-        <div className="container mx-auto px-6 lg:px-8">
-          <motion.div className="mb-12"
-            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <div className="text-sm text-teal-300 uppercase tracking-widest mb-4">{t('aquaai_page.dashboardHead')}</div>
-            <h2 className="text-4xl md:text-5xl font-bold leading-tight">{t('aquaai_page.dashboardTitle')}<br />
-              <span className="text-foreground/40">{t('aquaai_page.dashboardModules')}</span>
-            </h2>
-            <p className="text-base md:text-lg text-foreground/65 mt-4 max-w-2xl leading-relaxed">{t('aquaai_page.dashboardSub')}</p>
-          </motion.div>
-          <AquaDashboard />
-        </div>
-      </section>
 
       <Testimonials />
       <MobileAppCta />

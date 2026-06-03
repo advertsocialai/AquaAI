@@ -91,9 +91,9 @@ const Feature108 = ({
               <TabsContent
                 key={tab.value}
                 value={tab.value}
-                className="grid place-items-center gap-20 lg:grid-cols-2 lg:gap-10"
+                className="max-w-2xl mx-auto text-center flex flex-col items-center gap-5"
               >
-                <div className="flex flex-col gap-5">
+                <div className="flex flex-col items-center gap-5">
                   <Badge variant="outline" className="w-fit bg-background">
                     {tab.content.badge}
                   </Badge>
@@ -107,11 +107,6 @@ const Feature108 = ({
                     {tab.content.buttonText}
                   </Button>
                 </div>
-                <img
-                  src={tab.content.imageSrc}
-                  alt={tab.content.imageAlt}
-                  className="rounded-xl"
-                />
               </TabsContent>
             ))}
           </div>

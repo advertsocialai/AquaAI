@@ -4,7 +4,6 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 import en from '@/locales/en.json';
 import te from '@/locales/te.json';
-import ta from '@/locales/ta.json';
 import hi from '@/locales/hi.json';
 import od from '@/locales/od.json';
 import bn from '@/locales/bn.json';
@@ -24,7 +23,6 @@ i18n
     resources: {
       en: { translation: en },
       te: { translation: te },
-      ta: { translation: ta },
       hi: { translation: hi },
       od: { translation: od },
       bn: { translation: bn },

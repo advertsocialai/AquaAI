@@ -9,38 +9,38 @@ import {
 } from 'lucide-react';
 
 const IMPACT = [
-  { icon: Leaf,       text: 'Dedicated to environmentally friendly practices for a sustainable future.' },
-  { icon: Lightbulb,  text: 'Leading with cutting-edge AI solutions — PCR-validated diagnostics, on-device inference.' },
-  { icon: BarChart3,  text: 'Providing farmers with timely market data for strategic crop sales.' },
-  { icon: Heart,      text: 'Prioritising aqua farmers at the core of our approach — VLEs and farmers earn first.' },
-  { icon: Wrench,     text: 'Providing technical assistance throughout the farming cycle, in 6 languages.' },
-  { icon: MessageCircleQuestion, text: 'Knowledge sharing — articles, videos, courses, expert Q&A.' },
+  { icon: Leaf,       text: 'Farming that protects the water and the coast for the long term.' },
+  { icon: Lightbulb,  text: 'AI disease checks right at the pond — results in seconds, even offline.' },
+  { icon: BarChart3,  text: 'Live market prices, so you sell at the right time for the best value.' },
+  { icon: Heart,      text: 'Farmers come first — the app is built around what you actually need.' },
+  { icon: Wrench,     text: 'Help through the whole crop cycle, in your own language.' },
+  { icon: MessageCircleQuestion, text: 'Learn as you go — simple guides, videos and expert answers.' },
 ];
 
 const CHALLENGES = [
   {
-    challenge: 'Limited Input Access',
-    challengeBody: 'Farmers face challenges in accessing quality inputs for aquaculture production.',
-    solution: 'Streamlined Input Chain',
-    solutionBody: 'Aqua Rudra builds an integrated supply chain for reliable access to quality feed, seed and other inputs from MPEDA-certified hatcheries.',
+    challenge: 'Hard to get good inputs',
+    challengeBody: 'Quality seed, feed and supplies are often hard to find and hard to trust.',
+    solution: 'Reliable supply',
+    solutionBody: 'Aqua Rudra connects you to checked suppliers, so you get quality seed, feed and inputs you can rely on.',
   },
   {
-    challenge: 'Disease Outbreaks & Management',
-    challengeBody: 'Disease outbreaks (EHP / WSSV / AHPND) in ponds can lead to significant losses for farmers, impacting their livelihoods.',
-    solution: 'Effective Disease Management',
-    solutionBody: 'Aqua Rudra implements disease surveillance, diagnosis tools and effective treatments with early warnings and management systems — PCR-grade AI in 30 seconds.',
+    challenge: 'Disease can wipe out a crop',
+    challengeBody: 'Diseases like EHP, white spot and white gut can destroy a pond and your income.',
+    solution: 'Catch disease early',
+    solutionBody: 'Snap a photo and Aqua Rudra flags the disease risk in seconds — so you can act before it spreads.',
   },
   {
-    challenge: 'Environmental Sustainability',
-    challengeBody: 'Unsustainable farming practices harm the environment through water pollution and habitat degradation.',
-    solution: 'Sustainable Farming Practices',
-    solutionBody: 'Aqua Rudra supports sustainable farming with efficient resource utilisation, water management, and OIE/WOAH-aligned disease standards.',
+    challenge: 'Harm to the environment',
+    challengeBody: 'Poor practices pollute the water and damage the coast.',
+    solution: 'Farm sustainably',
+    solutionBody: 'Aqua Rudra helps you use water and inputs wisely and follow safe, recognised standards.',
   },
   {
-    challenge: 'Limited Technical Expertise',
-    challengeBody: 'Many farmers lack technical expertise to adopt modern aquaculture practices.',
-    solution: 'Technical and Knowledge Sharing',
-    solutionBody: 'Aqua Rudra shares expertise, offers technical support and fosters skill development, empowering farmers to excel in aquaculture practices.',
+    challenge: 'Little technical help',
+    challengeBody: 'Many farmers do not have easy access to expert guidance.',
+    solution: 'Guidance in your language',
+    solutionBody: 'Get plain advice, technical support and simple learning — so you can farm with confidence.',
   },
 ];
 
@@ -65,10 +65,8 @@ export default function AboutPage() {
           </motion.div>
           <h1 className="text-4xl md:text-6xl font-bold mb-4">Empowering farmers,<br />transforming aquaculture</h1>
           <p className="text-base text-foreground/60 max-w-3xl mx-auto leading-relaxed">
-            Aqua Rudra's journey is rooted in our unwavering commitment to aquaculture excellence.
-            Through rigorous research and AI engineering, we've crafted solutions tailored to
-            address farmers' unique challenges — from PCR-validated AI diagnostics to live mandi
-            pricing to a verified marketplace.
+            AI-powered disease detection, live market prices, a verified marketplace, and logistics
+            support — backed by expert guidance and official outbreak alerts.
           </p>
         </div>
       </section>
@@ -77,13 +75,12 @@ export default function AboutPage() {
       <section className="py-16 border-t border-border">
         <div className="container mx-auto px-6 lg:px-8 max-w-3xl">
           <p className="text-base text-foreground/70 leading-relaxed mb-4">
-            Our story transcends technology — it's about fostering a robust community and
-            meaningful connections. We believe in the power of collaboration and partnerships
-            to shape a brighter future for aquaculture.
+            Aqua Rudra is more than an app — it's a community. We work closely with farmers,
+            technicians and partners to make aquaculture stronger, together.
           </p>
           <p className="text-base text-foreground/70 leading-relaxed">
-            Join us on this transformative journey, where together we're making a lasting
-            impact in the world of farming, across 5 coastal states and 6 Indian languages.
+            Join us across India's coastal states, in 6 Indian languages, as we help make
+            farming safer, fairer and more profitable.
           </p>
         </div>
       </section>
@@ -95,9 +92,8 @@ export default function AboutPage() {
             <div className="text-xs text-teal-300 uppercase tracking-widest mb-3">Our Impact</div>
             <h2 className="text-3xl md:text-4xl font-bold mb-3">Driving progress in aquaculture</h2>
             <p className="text-sm text-foreground/60 max-w-2xl mx-auto">
-              Over time, Aqua Rudra has made a measurable impact in aquaculture — helping farmers
-              and changing the way they work. We operate in many languages, breaking barriers
-              and transforming aquaculture nationwide. Here are some pivotal milestones:
+              Aqua Rudra changes how farmers work — clearer decisions, fewer losses, and support
+              in your own language. Here's the difference it makes:
             </p>
           </div>
           <div className="grid md:grid-cols-2 gap-4">
@@ -124,10 +120,10 @@ export default function AboutPage() {
       <section className="py-20 border-t border-border">
         <div className="container mx-auto px-6 lg:px-8 max-w-5xl">
           <div className="text-center mb-12">
-            <div className="text-xs text-teal-300 uppercase tracking-widest mb-3">Our Change in Industry</div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-3">Aquaculture challenges & Aqua Rudra's solutions</h2>
+            <div className="text-xs text-teal-300 uppercase tracking-widest mb-3">What we solve</div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-3">Real problems, simple solutions</h2>
             <p className="text-sm text-foreground/60 max-w-2xl mx-auto">
-              Tackling obstacles — our journey of incremental solutions.
+              The everyday problems farmers face — and how Aqua Rudra helps with each one.
             </p>
           </div>
 
@@ -168,17 +164,14 @@ export default function AboutPage() {
           <div className="text-xs text-teal-300 uppercase tracking-widest mb-3">
             Embracing Challenges, Strengthening Ties
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Breaking barriers, connecting communities</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Built for every Indian farmer</h2>
           <p className="text-base text-foreground/70 leading-relaxed mb-4">
-            At Aqua Rudra, we are dismantling language barriers and empowering Indian farmers
-            through our multilingual platform. India's diversity boasts a vibrant tapestry of
-            languages and we recognise the significance of offering accessible resources to
-            farmers from various linguistic backgrounds.
+            India speaks many languages, and every farmer deserves tools they can actually
+            understand. So we removed the language barrier.
           </p>
           <p className="text-base text-foreground/70 leading-relaxed mb-8">
-            Our platform is thoughtfully designed to cater to multiple Indian languages,
-            ensuring that farmers from different states and regions can effortlessly access
-            the knowledge, tools and support required for thriving in aquaculture.
+            Aqua Rudra works in 6 Indian languages, so farmers in every coastal state can use
+            the knowledge, tools and support they need — in their own language.
           </p>
           <div className="inline-flex flex-wrap items-center gap-2 justify-center">
             {['English', 'తెలుగు', 'தமிழ்', 'हिन्दी', 'ଓଡ଼ିଆ', 'বাংলা'].map((lang) => (
@@ -193,9 +186,9 @@ export default function AboutPage() {
       {/* CTA */}
       <section className="py-20 border-t border-border">
         <div className="container mx-auto px-6 lg:px-8 max-w-3xl text-center">
-          <h2 className="text-3xl font-bold mb-4">Be part of the journey</h2>
+          <h2 className="text-3xl font-bold mb-4">Get started with Aqua Rudra</h2>
           <p className="text-foreground/60 mb-8">
-            Join 50,000+ farmers, hatcheries, transporters, banks and government bodies on Aqua Rudra.
+            Join farmers and traders across coastal India. Free to try — sign up in a few minutes.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link
