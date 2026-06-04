@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
-  Calculator, Fish, Fan, Droplets, Beaker, Layers, IndianRupee, HeartPulse,
+  Calculator, Fish, Fan, Droplets, Beaker, Layers, IndianRupee, HeartPulse, ChevronLeft,
 } from 'lucide-react';
 
 type CalcId = 'survival' | 'feed' | 'count' | 'aeration' | 'lime' | 'volume' | 'pnl';
@@ -399,21 +399,22 @@ function PnLCalc() {
 
 export function CalculatorsModule() {
   const [active, setActive] = useState<CalcId>('survival');
+  const [mobileOpen, setMobileOpen] = useState(false); // master→detail on small screens
   const activeMeta = CALCS.find((c) => c.id === active)!;
 
   return (
-    <div className="grid lg:grid-cols-4 gap-6">
-      {/* Sidebar */}
-      <div className="lg:col-span-1">
+    <div className="lg:grid lg:grid-cols-4 lg:gap-6">
+      {/* Sidebar list — full width on mobile (hidden once a calc is opened) */}
+      <div className={`lg:col-span-1 lg:block ${mobileOpen ? 'hidden' : 'block'}`}>
         <div className="space-y-2">
           {CALCS.map(({ id, label, icon: Icon, accent, desc }) => {
             const sel = id === active;
             return (
               <button
                 key={id}
-                onClick={() => setActive(id)}
+                onClick={() => { setActive(id); setMobileOpen(true); }}
                 className={`w-full flex items-start gap-3 p-3 rounded-xl border text-left transition ${
-                  sel ? 'border-border bg-card' : 'border-border bg-card hover:bg-muted'
+                  sel ? 'border-border bg-card lg:bg-muted' : 'border-border bg-card hover:bg-muted'
                 }`}
               >
                 <div className="p-2 rounded-lg shrink-0" style={{ background: `${accent}22` }}>
@@ -429,13 +430,23 @@ export function CalculatorsModule() {
         </div>
       </div>
 
-      {/* Active calculator */}
+      {/* Active calculator — opens in place on mobile, side-by-side on desktop */}
       <motion.div
         key={active}
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        className="lg:col-span-3 p-6 rounded-2xl border border-border bg-card"
+        className={`lg:col-span-3 p-5 md:p-6 rounded-2xl border border-border bg-card mt-4 lg:mt-0 ${
+          mobileOpen ? 'block' : 'hidden'
+        } lg:block`}
       >
+        {/* Mobile-only back to the calculator list */}
+        <button
+          onClick={() => setMobileOpen(false)}
+          className="lg:hidden inline-flex items-center gap-1 text-sm text-foreground/60 hover:text-foreground mb-4"
+        >
+          <ChevronLeft className="w-4 h-4" /> All calculators
+        </button>
+
         <div className="flex items-center gap-3 mb-6">
           <div className="p-2 rounded-lg" style={{ background: `${activeMeta.accent}22` }}>
             <Calculator className="w-4 h-4" style={{ color: activeMeta.accent }} />
