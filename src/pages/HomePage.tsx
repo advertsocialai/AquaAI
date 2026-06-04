@@ -1,49 +1,10 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Fish, Image, Lightbulb, HeartPulse, ArrowRight, Store } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { MobileTopBar, MobileTabBar } from '@/components/mobile/MobileChrome';
-
-/* ── Small inline icons not in lucide ─────────────────────────────── */
-function ShrimpIcon({ className = '' }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"
-      strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <path d="M19 7c-3 0-4 2-7 2H7a4 4 0 0 0 0 8h6c4 0 6-3 6-6" />
-      <path d="M7 17c-2 0-4-1-4-3" />
-      <path d="M19 7c1-1 1-3 0-4" />
-      <circle cx="16" cy="10" r="0.6" fill="currentColor" />
-    </svg>
-  );
-}
-function FeedBagIcon({ className = '' }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"
-      strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <path d="M8 4c0 2-2 2-2 5 0 6 1 11 6 11s6-5 6-11c0-3-2-3-2-5" />
-      <path d="M8 4h8" />
-      <path d="M10 11a2 2 0 0 0 4 0" />
-      <path d="M11.5 13.5h1" />
-    </svg>
-  );
-}
-
-/* ── Card tile (Market rates / Knowledge / Tools) ─────────────────── */
-function Tile({
-  to, label, gradient, Icon, tall = false,
-}: { to: string; label: string; gradient: string; Icon: React.ElementType; tall?: boolean }) {
-  return (
-    <Link
-      to={to}
-      className={`flex items-center gap-3 rounded-2xl p-5 bg-gradient-to-br ${gradient} active:scale-[0.98] transition ${
-        tall ? 'min-h-[140px]' : 'min-h-[104px]'
-      }`}
-    >
-      <Icon className={`text-neutral-800 shrink-0 ${tall ? 'w-11 h-11' : 'w-9 h-9'}`} strokeWidth={1.6} />
-      <span className="text-lg font-bold leading-tight text-neutral-900">{label}</span>
-    </Link>
-  );
-}
+import { MarketPriceBoard } from '@/components/market/MarketPriceBoard';
+import { CalculatorsModule } from '@/components/dashboard/CalculatorsModule';
+import { ShopBoard } from '@/components/shop/ShopBoard';
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-base font-medium text-neutral-700 mb-3">{children}</h2>;
@@ -73,50 +34,28 @@ export default function HomePage() {
           </div>
         )}
 
-        {/* Market rates */}
+        {/* Live Rates dashboard */}
         <section>
-          <SectionTitle>Market rates</SectionTitle>
-          <div className="grid grid-cols-2 gap-4">
-            <Tile to="/rates" label="Shrimp Rates" Icon={ShrimpIcon} gradient="from-[#f4a99b] to-[#f8cfc6]" />
-            <Tile to="/rates?tab=fish" label="Fish Rates" Icon={Fish} gradient="from-[#f6b8d0] to-[#fbdce8]" />
+          <SectionTitle>Live Rates</SectionTitle>
+          <div className="rounded-2xl bg-white border border-neutral-200 p-4 overflow-hidden">
+            <MarketPriceBoard />
           </div>
         </section>
 
-        {/* Aqua Knowledge */}
-        <section>
-          <SectionTitle>Aqua Knowledge</SectionTitle>
-          <div className="grid grid-cols-2 gap-4">
-            <Tile to="/knowledge" label="Aqua Updates" Icon={Image} gradient="from-[#a7e0cf] to-[#d6f0e4]" tall />
-            <Tile to="/knowledge" label="Aqua School" Icon={Lightbulb} gradient="from-[#74c0f0] to-[#a9d8f6]" tall />
-          </div>
-        </section>
-
-        {/* Aqua Tools */}
+        {/* Aqua Tools dashboard */}
         <section>
           <SectionTitle>Aqua Tools</SectionTitle>
-          <div className="grid grid-cols-2 gap-4">
-            <Tile to="/aquaai#dashboard" label="Survival Calculator" Icon={HeartPulse} gradient="from-[#d6edb6] to-[#e8f4d4]" />
-            <Tile to="/aquaai#dashboard" label="Feed Calculator" Icon={FeedBagIcon} gradient="from-[#fbe6a6] to-[#fdf3d0]" />
+          <div className="rounded-2xl bg-white border border-neutral-200 p-4">
+            <CalculatorsModule />
           </div>
         </section>
 
-        {/* Shop Farm */}
+        {/* Shop Farm dashboard */}
         <section>
           <SectionTitle>Shop Farm</SectionTitle>
-          <Link
-            to="/shop"
-            className="block rounded-2xl p-6 bg-gradient-to-br from-[#d7eebb] to-[#eaf5d8] active:scale-[0.99] transition relative overflow-hidden"
-          >
-            <div className="max-w-[62%]">
-              <h3 className="text-xl font-bold">Shop Farm Products</h3>
-              <p className="mt-2 text-neutral-700 leading-snug">
-                Shop your aquaculture needs including selling your shrimp at your
-                farm gate now with Shop@Farm
-              </p>
-              <ArrowRight className="w-6 h-6 mt-6 text-neutral-900" />
-            </div>
-            <Store className="absolute right-4 bottom-6 w-28 h-28 text-teal-600/70" strokeWidth={1.2} />
-          </Link>
+          <div className="rounded-2xl bg-white border border-neutral-200 p-4">
+            <ShopBoard />
+          </div>
         </section>
 
         {/* Know about diseases */}
