@@ -102,6 +102,24 @@ export function useFarmerDashboard() {
         const readings = wqRes.data ?? [];
         const outbreaks = outbreakRes.data ?? [];
 
+        // On-device history for this farmer's batches (counting, diagnosis,
+        // grading, QC) — RLS-scoped; empty when none / not permitted.
+        const batchIds = batches.map((b) => b.id);
+        const [countRes, diagRes, gradeRes, qcRes] = await Promise.all([
+          sb.from('counting_sessions').select('id,total_count,extrapolated_count,synced_at')
+            .in('batch_id', batchIds).order('synced_at', { ascending: false }).limit(5),
+          sb.from('diagnosis_sessions').select('id,hard_fail_disease,synced_at')
+            .in('batch_id', batchIds).order('synced_at', { ascending: false }).limit(5),
+          sb.from('grading_sessions').select('id,composite_grade,count_mismatch,synced_at')
+            .in('batch_id', batchIds).order('synced_at', { ascending: false }).limit(5),
+          sb.from('qc_certificates').select('certificate_id,grade,is_valid,created_at')
+            .in('batch_id', batchIds).order('created_at', { ascending: false }).limit(5),
+        ]);
+        const counts = countRes.data ?? [];
+        const diags = diagRes.data ?? [];
+        const grades = gradeRes.data ?? [];
+        const qcs = qcRes.data ?? [];
+
         const stocked = batches.filter((b) => b.is_stocked && b.stocked_at);
         const latestStocked = stocked
           .map((b) => new Date(b.stocked_at as string).getTime())
@@ -142,13 +160,43 @@ export function useFarmerDashboard() {
           });
         });
 
-        // ── Recent activity ──────────────────────────────────────────────
-        const activity: DashActivity[] = readings.slice(0, 5).map((r) => ({
-          when: relativeTime(r.recorded_at as string),
-          what: 'Water quality reading',
-          detail: `DO ${Number(r.dissolved_oxygen_mgl ?? 0).toFixed(1)} ppm · pH ${Number(r.ph ?? 0).toFixed(1)}`,
-          status: r.any_alert ? ('alert' as const) : ('ok' as const),
-        }));
+        // ── Recent activity — merged real history, newest first ──────────
+        type Item = DashActivity & { ts: number };
+        const items: Item[] = [];
+        const add = (iso: string | null, what: string, detail: string, status: 'ok' | 'alert') => {
+          if (!iso) return;
+          const ts = Date.parse(iso);
+          if (!Number.isFinite(ts)) return;
+          items.push({ ts, when: relativeTime(iso), what, detail, status });
+        };
+        readings.forEach((r) => add(
+          r.recorded_at as string, 'Water quality reading',
+          `DO ${Number(r.dissolved_oxygen_mgl ?? 0).toFixed(1)} ppm · pH ${Number(r.ph ?? 0).toFixed(1)}`,
+          r.any_alert ? 'alert' : 'ok',
+        ));
+        counts.forEach((c) => add(
+          c.synced_at as string, 'Seed count',
+          `${Number(c.total_count ?? c.extrapolated_count ?? 0).toLocaleString('en-IN')} PLs`, 'ok',
+        ));
+        diags.forEach((d) => add(
+          d.synced_at as string, 'Disease screen',
+          d.hard_fail_disease ? `${d.hard_fail_disease} flagged` : 'No condition flagged',
+          d.hard_fail_disease ? 'alert' : 'ok',
+        ));
+        grades.forEach((g) => add(
+          g.synced_at as string, 'Grading',
+          g.composite_grade ? `Grade ${g.composite_grade}` : 'Completed',
+          g.count_mismatch ? 'alert' : 'ok',
+        ));
+        qcs.forEach((q) => add(
+          q.created_at as string, 'QC certificate issued',
+          `${q.certificate_id ?? ''}${q.grade ? ` · Grade ${q.grade}` : ''}`.trim(),
+          q.is_valid === false ? 'alert' : 'ok',
+        ));
+        const activity: DashActivity[] = items
+          .sort((a, b) => b.ts - a.ts)
+          .slice(0, 6)
+          .map(({ when, what, detail, status }) => ({ when, what, detail, status }));
 
         if (!cancelled) {
           setData({
