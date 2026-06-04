@@ -320,7 +320,7 @@ export function Header() {
                   <LayoutDashboard className="w-3.5 h-3.5" /> Dashboards
                 </div>
                 <div className="grid grid-cols-2 gap-2">
-                  {ROLES.map(({ id, label, icon: Icon, accent }) => (
+                  {ROLES.filter((r) => !['vle', 'hatchery', 'bank', 'govt'].includes(r.id)).map(({ id, label, icon: Icon, accent }) => (
                     <Link
                       key={id}
                       to={DASHBOARD_ROUTE[id]}

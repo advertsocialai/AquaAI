@@ -50,7 +50,7 @@ const Index = () => {
       <Header />
 
       {/* Hero */}
-      <section className="relative min-h-[92svh] flex items-center overflow-hidden pt-20">
+      <section className="relative overflow-hidden pt-24 md:pt-28 pb-12 md:pb-20">
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-background to-violet-500/10" />
         </div>
