@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
-import { WeatherForecast } from '@/components/dashboard/WeatherForecast';
+import { WeatherTimeWidget } from '@/components/WeatherTimeWidget';
 import { LivePriceTicker } from '@/components/dashboard/LivePriceTicker';
 import { AnnouncementModal } from '@/components/dashboard/AnnouncementModal';
 import { StoreButtons } from '@/components/StoreButtons';
@@ -183,9 +183,9 @@ export default function FarmerDashboardPage() {
             </div>
           </section>
 
-          {/* ── Weather ──────────────────────────────────────────────────── */}
+          {/* ── Weather (same widget as the home page) ───────────────────── */}
           <section className="rounded-2xl border border-border bg-card p-5 md:p-6">
-            <WeatherForecast />
+            <WeatherTimeWidget />
           </section>
 
           {/* ── Live prices ──────────────────────────────────────────────── */}
