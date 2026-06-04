@@ -8,7 +8,7 @@ import {
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { WeatherTimeWidget } from '@/components/WeatherTimeWidget';
-import { LivePriceTicker } from '@/components/dashboard/LivePriceTicker';
+import { MarketPriceBoard } from '@/components/market/MarketPriceBoard';
 import { AnnouncementModal } from '@/components/dashboard/AnnouncementModal';
 import { StoreButtons } from '@/components/StoreButtons';
 import { useFarmerDashboard } from '@/hooks/useFarmerDashboard';
@@ -195,17 +195,15 @@ export default function FarmerDashboardPage() {
             <WeatherTimeWidget />
           </section>
 
-          {/* ── Live prices ──────────────────────────────────────────────── */}
+          {/* ── Live rates (full board, same as home / rates) ────────────── */}
           <section className="rounded-2xl border border-border bg-card p-5 md:p-6">
-            <div className="flex items-end justify-between mb-4">
-              <div>
-                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Live mandi prices</div>
-                <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
-                  <TrendingUp className="w-5 h-5 text-emerald-300" /> What your pond is worth today
-                </h2>
-              </div>
+            <div className="mb-4">
+              <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Live mandi prices</div>
+              <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
+                <TrendingUp className="w-5 h-5 text-emerald-300" /> What your pond is worth today
+              </h2>
             </div>
-            <LivePriceTicker />
+            <MarketPriceBoard />
           </section>
 
           {/* ── Recent activity ──────────────────────────────────────────── */}
