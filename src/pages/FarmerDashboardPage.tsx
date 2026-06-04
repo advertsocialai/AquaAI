@@ -12,6 +12,7 @@ import { LivePriceTicker } from '@/components/dashboard/LivePriceTicker';
 import { AnnouncementModal } from '@/components/dashboard/AnnouncementModal';
 import { StoreButtons } from '@/components/StoreButtons';
 import { useFarmerDashboard } from '@/hooks/useFarmerDashboard';
+import { useAuth } from '@/lib/auth';
 
 // ── Demo data ──────────────────────────────────────────────────────────────────
 // Replace with Supabase fetches once the farmer's session + RLS-scoped queries
@@ -68,7 +69,13 @@ export default function FarmerDashboardPage() {
   // sample content below when the account has no farm/readings yet.
   const { data: live } = useFarmerDashboard();
   const hasFarm = live.farmName !== null;
-  const farmerName = live.farmName ?? 'V. Ramana';
+  // Greeting name comes from the signed-in user's profile name.
+  const { user } = useAuth();
+  const farmerName =
+    (user?.user_metadata?.name as string | undefined)?.trim() ||
+    user?.email?.split('@')[0] ||
+    live.farmName ||
+    'Farmer';
   const summary = hasFarm
     ? {
         ponds: live.ponds,
