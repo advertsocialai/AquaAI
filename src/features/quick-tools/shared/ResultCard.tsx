@@ -32,6 +32,9 @@ export function ResultCard({ result }: { result: ToolResult }) {
             Invoice mismatch: counted {result.invoiceMismatch.got.toLocaleString('en-IN')} vs invoiced {result.invoiceMismatch.expected.toLocaleString('en-IN')}.
           </div>
         )}
+        <p className="mt-4 text-xs text-amber-600">
+          ⚠ Preview — AI model is still being calibrated. Verify a sample manually before decisions.
+        </p>
       </div>
     );
   }
@@ -55,8 +58,8 @@ export function ResultCard({ result }: { result: ToolResult }) {
             </div>
           ))}
         </div>
-        <p className="mt-4 text-xs text-neutral-400">
-          Screening only — not a diagnosis. {Math.round(result.confidence * 100)}% confidence.
+        <p className="mt-4 text-xs text-amber-600">
+          ⚠ Preview screening — not a diagnosis and not yet calibrated. Always confirm with a PCR/RPA lab.
         </p>
       </div>
     );

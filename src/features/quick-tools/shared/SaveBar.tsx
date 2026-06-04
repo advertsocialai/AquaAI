@@ -1,14 +1,22 @@
-import { useState } from 'react';
-import { Check, Save, QrCode, WifiOff, RotateCcw } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Check, Save, QrCode, WifiOff, RotateCcw, Loader2 } from 'lucide-react';
+import { useAuth } from '@/lib/auth';
 import type { ToolId, ToolRecord, ToolResult } from '@/features/quick-tools/types';
-import { saveRecord } from './records';
+import { saveRecord, flushUnsynced } from './records';
 
-/** Save → generates a certificate + QR link, adds to records. Queues if offline. */
+/** Save → certificate + QR, stored in Supabase (tool_scans). Queues offline. */
 export function SaveBar({ tool, result, onReset }: { tool: ToolId; result: ToolResult; onReset: () => void }) {
+  const { user } = useAuth();
   const [rec, setRec] = useState<ToolRecord | null>(null);
+  const [busy, setBusy] = useState(false);
 
-  function save() {
-    setRec(saveRecord(tool, result));
+  // Flush any offline-queued scans when this view opens.
+  useEffect(() => { void flushUnsynced(user?.id); }, [user]);
+
+  async function save() {
+    setBusy(true);
+    setRec(await saveRecord(tool, result, user?.id));
+    setBusy(false);
   }
 
   if (rec) {
@@ -42,9 +50,10 @@ export function SaveBar({ tool, result, onReset }: { tool: ToolId; result: ToolR
     <div className="flex gap-3">
       <button
         onClick={save}
-        className="flex-1 inline-flex items-center justify-center gap-2 rounded-2xl bg-rose-600 hover:bg-rose-500 text-white font-semibold py-4 text-lg active:scale-[0.99] transition"
+        disabled={busy}
+        className="flex-1 inline-flex items-center justify-center gap-2 rounded-2xl bg-rose-600 hover:bg-rose-500 disabled:opacity-60 text-white font-semibold py-4 text-lg active:scale-[0.99] transition"
       >
-        <Save className="w-5 h-5" /> Save
+        {busy ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />} Save
       </button>
       <button
         onClick={onReset}
