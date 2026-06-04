@@ -7,7 +7,7 @@ import {
   Search, Clock, ArrowRight, Mail, BookOpen, ChevronLeft, ChevronRight,
 } from 'lucide-react';
 
-type Article = {
+export type Article = {
   slug: string;
   title: string;
   excerpt: string;
@@ -17,7 +17,8 @@ type Article = {
   publishedAt: string;
 };
 
-const ARTICLES: Article[] = [
+// eslint-disable-next-line react-refresh/only-export-components
+export const ARTICLES: Article[] = [
   {
     slug: 'summer-strategies-vannamei-pond',
     title: 'Summer Strategies: Enhancing Vannamei Shrimp Pond Management',

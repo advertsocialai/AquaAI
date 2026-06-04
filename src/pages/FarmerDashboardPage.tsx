@@ -4,7 +4,9 @@ import { motion } from 'framer-motion';
 import {
   Camera, Microscope, Droplets, Bell, ArrowRight, MapPin, Calendar,
   TrendingUp, Activity, BookOpen, Calculator, ShieldCheck,
+  IndianRupee, Wrench, Store, Truck, Newspaper,
 } from 'lucide-react';
+import { ARTICLES } from '@/pages/KnowledgePage';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { WeatherTimeWidget } from '@/components/WeatherTimeWidget';
@@ -39,6 +41,10 @@ const QUICK_TOOLS = [
   { icon: Droplets,   label: 'Water quality',    sub: 'Sample → grade',     to: '/aquaai#dashboard', accent: 'text-teal-300',     bg: 'bg-teal-400/10' },
   { icon: Calculator, label: 'Calculators',      sub: 'FCR · stocking',     to: '/aquaai#dashboard', accent: 'text-violet-300',   bg: 'bg-violet-400/10' },
   { icon: BookOpen,   label: 'Knowledge',        sub: 'Articles · schemes', to: '/knowledge',        accent: 'text-amber-300',    bg: 'bg-amber-400/10' },
+  { icon: IndianRupee,label: 'Live Rates',       sub: 'Mandi + FOB',        to: '/rates',            accent: 'text-emerald-300',  bg: 'bg-emerald-400/10' },
+  { icon: Wrench,     label: 'Aqua Tools',       sub: 'Survival · feed',    to: '/tools',            accent: 'text-sky-300',      bg: 'bg-sky-400/10' },
+  { icon: Store,      label: 'Shop Farm',        sub: 'Inputs · sell',      to: '/shop',             accent: 'text-lime-300',     bg: 'bg-lime-400/10' },
+  { icon: Truck,      label: 'Logistics',        sub: 'Transport · O₂',     to: '/logistics',        accent: 'text-orange-300',   bg: 'bg-orange-400/10' },
   { icon: ShieldCheck,label: 'Certificates',     sub: 'QC · lineage',       to: '/verify/QC-2026-04421', accent: 'text-sky-300',  bg: 'bg-sky-400/10' },
 ];
 
@@ -165,13 +171,10 @@ export default function FarmerDashboardPage() {
             </div>
           </section>
 
-          {/* ── Quick AI tools ───────────────────────────────────────────── */}
+          {/* ── Quick tools ──────────────────────────────────────────────── */}
           <section>
-            <div className="flex items-end justify-between mb-4">
-              <div>
-                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Quick tools</div>
-                <h2 className="text-xl md:text-2xl font-bold">On-device AI · works offline</h2>
-              </div>
+            <div className="mb-4">
+              <h2 className="text-xl md:text-2xl font-bold">Quick tools</h2>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
               {QUICK_TOOLS.map((tool) => (
@@ -185,6 +188,39 @@ export default function FarmerDashboardPage() {
                   </div>
                   <div className="text-sm font-semibold text-foreground leading-tight">{tool.label}</div>
                   <div className="text-[11px] text-foreground/50 mt-0.5">{tool.sub}</div>
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          {/* ── Aqua News ────────────────────────────────────────────────── */}
+          <section>
+            <div className="flex items-end justify-between mb-4">
+              <div>
+                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Aqua news</div>
+                <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
+                  <Newspaper className="w-5 h-5 text-teal-300" /> Latest for your farm
+                </h2>
+              </div>
+              <Link to="/knowledge" className="text-xs text-teal-300 hover:underline inline-flex items-center gap-1">
+                All news <ArrowRight className="w-3 h-3" />
+              </Link>
+            </div>
+            <div className="grid sm:grid-cols-3 gap-4">
+              {ARTICLES.slice(0, 3).map((a) => (
+                <Link
+                  key={a.slug}
+                  to={`/knowledge/${a.slug}`}
+                  className="rounded-2xl border border-border bg-card overflow-hidden hover:bg-muted transition"
+                >
+                  <div className="aspect-[16/9] bg-muted overflow-hidden">
+                    <img src={a.hero} alt={a.title} loading="lazy" className="w-full h-full object-cover" />
+                  </div>
+                  <div className="p-4">
+                    <div className="text-[11px] uppercase tracking-widest text-teal-300 mb-1">{a.category}</div>
+                    <div className="text-sm font-semibold text-foreground leading-snug line-clamp-2">{a.title}</div>
+                    <div className="text-[11px] text-foreground/50 mt-1">{a.readMin} min read</div>
+                  </div>
                 </Link>
               ))}
             </div>
