@@ -76,10 +76,10 @@ function Dropdown({
     <div ref={ref} className="relative flex-1 min-w-0">
       <button
         onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-center justify-between gap-2 rounded-xl border border-neutral-200 bg-white px-4 py-3.5"
+        className="w-full flex items-center justify-between gap-2 rounded-xl border border-teal-600/20 bg-white px-4 py-3.5 hover:border-teal-600/40 transition"
       >
         <span className="font-medium text-neutral-900 truncate">{value}</span>
-        <ChevronDown className={`w-5 h-5 text-rose-600 shrink-0 transition ${open ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-5 h-5 text-teal-600 shrink-0 transition ${open ? 'rotate-180' : ''}`} />
       </button>
       {open && (
         <div className="absolute left-0 top-full mt-2 min-w-full z-40 rounded-2xl bg-white shadow-xl ring-1 ring-black/5 py-1.5">
@@ -87,7 +87,7 @@ function Dropdown({
             <button
               key={o}
               onClick={() => { onChange(o); setOpen(false); }}
-              className={`w-full text-left px-5 py-3 text-lg hover:bg-neutral-50 ${o === value ? 'text-rose-600 font-semibold' : 'text-neutral-900'}`}
+              className={`w-full text-left px-5 py-3 text-lg hover:bg-teal-50 ${o === value ? 'text-teal-700 font-semibold' : 'text-neutral-900'}`}
             >
               {o}
             </button>
@@ -154,17 +154,18 @@ export function MarketPriceBoard({ initialTab = 'shrimp' }: { initialTab?: 'shri
 
   return (
     <div>
-      {/* Tabs */}
-      <div className="border-b border-neutral-200">
-        <div className="grid grid-cols-2 text-center">
+      {/* Tabs — segmented control */}
+      <div className="flex justify-center">
+        <div className="inline-flex rounded-full bg-neutral-100 p-1">
           {(['shrimp', 'fish'] as const).map((t) => (
             <button
               key={t}
               onClick={() => setTab(t)}
-              className={`relative py-4 text-xl ${tab === t ? 'font-semibold text-neutral-900' : 'text-neutral-600'}`}
+              className={`px-7 py-2 rounded-full text-base font-semibold transition ${
+                tab === t ? 'bg-white text-teal-700 shadow-sm' : 'text-neutral-500 hover:text-neutral-700'
+              }`}
             >
               {t === 'shrimp' ? 'Shrimp' : 'Fish'}
-              {tab === t && <span className="absolute -bottom-px left-0 right-0 h-0.5 bg-rose-600" />}
             </button>
           ))}
         </div>
@@ -177,55 +178,60 @@ export function MarketPriceBoard({ initialTab = 'shrimp' }: { initialTab?: 'shri
           <Dropdown value={location} options={LOCATIONS} onChange={setLocation} />
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-          {/* Price table */}
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-start">
+          {/* Today's prices — branded card list */}
           <div>
-            <h2 className="text-xl font-medium text-neutral-800 mb-3">Today's Count Prices</h2>
-            <div className="relative overflow-hidden rounded-md ring-1 ring-neutral-900">
-              <div className="pointer-events-none absolute inset-0 flex items-center justify-center select-none">
-                <span className="text-3xl font-extrabold text-rose-500/10 -rotate-12">Aqua Rudra</span>
+            <h2 className="text-lg font-semibold text-neutral-800 mb-3">Today's Count Prices</h2>
+            <div className="rounded-2xl overflow-hidden ring-1 ring-teal-600/15 shadow-sm">
+              <div className="flex items-center justify-between px-5 py-3 bg-gradient-to-r from-teal-700 to-teal-500 text-white text-sm font-semibold uppercase tracking-wide">
+                <span>Count</span>
+                <span>Today's Price</span>
               </div>
-              <table className="relative w-full border-collapse">
-                <thead>
-                  <tr className="bg-[#0e2e38] text-white text-left">
-                    <th className="w-1/2 px-6 py-5 text-lg font-bold border border-neutral-900">Count</th>
-                    <th className="px-6 py-5 text-lg font-bold border border-neutral-900">Today's Count Prices</th>
-                  </tr>
-                </thead>
-                <tbody className="text-center">
-                  {rows.map((r) => (
-                    <tr key={r.label}>
-                      <td className="px-6 py-4 text-lg border border-neutral-900 bg-white/80">{r.label}</td>
-                      <td className="px-6 py-4 text-lg border border-neutral-900 bg-white/80">₹{r.price}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <div className="divide-y divide-neutral-100 bg-white">
+                {rows.map((r, i) => (
+                  <div
+                    key={r.label}
+                    className={`flex items-center justify-between px-5 py-3.5 ${i % 2 ? 'bg-teal-50/40' : 'bg-white'}`}
+                  >
+                    <span className="font-medium text-neutral-700">{r.label}</span>
+                    <span className="inline-flex items-center rounded-full bg-teal-50 text-teal-700 font-bold px-3 py-1 tabular-nums">
+                      ₹{r.price}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
           {/* Weekly trend */}
           <div>
-            <h2 className="text-xl font-medium text-neutral-800 mb-3">Weekly Count Prices</h2>
+            <h2 className="text-lg font-semibold text-neutral-800 mb-3">Weekly Trend</h2>
             <div className="flex gap-3 mb-5">
               <Dropdown value={trendPick} options={trendOptions} onChange={setTrendPick} />
-              <div className="flex-1 flex items-center justify-between gap-2 rounded-xl bg-neutral-100 px-4 py-3.5">
+              <div className="flex-1 flex items-center justify-between gap-2 rounded-xl border border-teal-600/20 bg-white px-4 py-3.5">
                 <span className="font-medium text-neutral-800 truncate">{fmt(start)} – {fmt(end)}</span>
-                <CalendarDays className="w-5 h-5 text-rose-600 shrink-0" />
+                <CalendarDays className="w-5 h-5 text-teal-600 shrink-0" />
               </div>
             </div>
 
             {enoughData ? (
-              <div className="space-y-2.5">
+              <div className="rounded-2xl ring-1 ring-teal-600/15 bg-white shadow-sm p-4 space-y-3">
                 {days.map((d, i) => {
                   const pct = tMax > tMin ? ((trend[i] - tMin) / (tMax - tMin)) * 100 : 50;
+                  const peak = trend[i] === tMax;
                   return (
                     <div key={i} className="flex items-center gap-3">
                       <span className="w-16 text-sm text-neutral-500 shrink-0">{fmt(d)}</span>
-                      <div className="flex-1 h-2.5 rounded-full bg-neutral-100">
-                        <div className="h-2.5 rounded-full bg-rose-500/70" style={{ width: `${Math.max(8, pct)}%` }} />
+                      <div className="flex-1 h-2.5 rounded-full bg-neutral-100 overflow-hidden">
+                        <div
+                          className="h-2.5 rounded-full"
+                          style={{
+                            width: `${Math.max(8, pct)}%`,
+                            background: peak ? 'hsl(var(--coral))' : 'hsl(var(--primary))',
+                          }}
+                        />
                       </div>
-                      <span className="w-14 text-right font-semibold tabular-nums">₹{trend[i]}</span>
+                      <span className="w-14 text-right font-semibold tabular-nums text-neutral-800">₹{trend[i]}</span>
                     </div>
                   );
                 })}
