@@ -80,17 +80,22 @@ function CalcNote({ children }: { children: React.ReactNode }) {
   );
 }
 
-/* Full-width labelled-placeholder input matching the calculator design. */
-function BigInput({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
+/* Full-width labelled-placeholder input with an optional unit hint on the right. */
+function BigInput({ label, value, onChange, unit }: {
+  label: string; value: string; onChange: (v: string) => void; unit?: string;
+}) {
   return (
-    <input
-      type="text"
-      inputMode="decimal"
-      value={value}
-      onChange={(e) => onChange(e.target.value.replace(/[^0-9.]/g, ''))}
-      placeholder={label}
-      className="w-full rounded-xl border border-border bg-card px-4 py-3.5 text-foreground outline-none focus:border-rose-400/50 placeholder:text-foreground/50"
-    />
+    <div className="flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-3.5 focus-within:border-rose-400/50">
+      <input
+        type="text"
+        inputMode="decimal"
+        value={value}
+        onChange={(e) => onChange(e.target.value.replace(/[^0-9.]/g, ''))}
+        placeholder={label}
+        className="flex-1 min-w-0 bg-transparent text-foreground outline-none placeholder:text-foreground/50"
+      />
+      {unit && <span className="shrink-0 text-sm text-foreground/45">{unit}</span>}
+    </div>
   );
 }
 
@@ -142,7 +147,8 @@ function CountCalc() {
   const [sample, setSample] = useState('25');
   const [sampleVol, setSampleVol] = useState('1');
   const [pondVol, setPondVol] = useState('200');
-  const extrapolated = Math.round((num(sample) / num(sampleVol)) * num(pondVol));
+  const sv = num(sampleVol);
+  const extrapolated = sv > 0 ? Math.round((num(sample) / sv) * num(pondVol)) : 0;
   return (
     <div className="grid md:grid-cols-2 gap-6">
       <div className="space-y-3">
@@ -191,10 +197,10 @@ function SurvivalCalc() {
       <p className="mt-6 mb-3 text-sm font-medium text-foreground/70">Enter details to get survival rate</p>
       <div className="space-y-3 max-w-xl">
         <BigInput label="Initial number of stocking" value={stocking} onChange={setStocking} />
-        <BigInput label="Total Feed per day" value={feedPerDay} onChange={setFeedPerDay} />
-        <BigInput label="Average Shrimp count" value={count} onChange={setCount} />
-        <BigInput label="Average Body Weight" value={abw} onChange={setAbw} />
-        <BigInput label="Feed Percentage" value={feedPct} onChange={setFeedPct} />
+        <BigInput label="Total Feed per day" value={feedPerDay} onChange={setFeedPerDay} unit="(in kg)" />
+        <BigInput label="Average Shrimp count" value={count} onChange={setCount} unit="(per/Kg)" />
+        <BigInput label="Average Body Weight" value={abw} onChange={setAbw} unit="(gm/piece)" />
+        <BigInput label="Feed Percentage" value={feedPct} onChange={setFeedPct} unit="(%)" />
         <button
           onClick={calculate}
           className="w-full rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold py-3.5 transition"
@@ -247,9 +253,9 @@ function FeedCalc() {
       <p className="mt-6 mb-3 text-sm font-medium text-foreground/70">Enter details to get feed quantity</p>
       <div className="space-y-3 max-w-xl">
         <BigInput label="Initial number of stocking" value={stocking} onChange={setStocking} />
-        <BigInput label="Average Shrimp count" value={count} onChange={setCount} />
-        <BigInput label="Average Body Weight" value={abw} onChange={setAbw} />
-        <BigInput label="Feed Percentage" value={feedPct} onChange={setFeedPct} />
+        <BigInput label="Average Shrimp count" value={count} onChange={setCount} unit="(per/Kg)" />
+        <BigInput label="Average Body Weight" value={abw} onChange={setAbw} unit="(gm/piece)" />
+        <BigInput label="Feed Percentage" value={feedPct} onChange={setFeedPct} unit="(%)" />
         <button
           onClick={calculate}
           className="w-full rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold py-3.5 transition"
