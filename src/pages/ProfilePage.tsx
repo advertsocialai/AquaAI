@@ -108,7 +108,7 @@ export default function ProfilePage() {
           <Link to="/profile/details" className="w-24 h-24 rounded-2xl bg-muted overflow-hidden flex items-center justify-center shrink-0">
             {avatarUrl
               ? <img src={avatarUrl} alt={name} className="w-full h-full object-cover" />
-              : <span className="text-4xl font-bold text-rose-600">{initial}</span>}
+              : <span className="text-4xl font-bold text-emerald-500">{initial}</span>}
           </Link>
           <div className="mt-3 text-2xl font-bold">{name}</div>
           {mobile && <div className="text-foreground/60">Mobile: {mobile}</div>}
