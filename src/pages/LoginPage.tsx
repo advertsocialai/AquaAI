@@ -203,7 +203,7 @@ export default function LoginPage() {
                 mode === 'password' ? 'bg-teal-500 text-black' : 'text-foreground/60 hover:text-foreground'
               }`}
             >
-              <Lock className="w-3.5 h-3.5" /> Password
+              <Lock className="w-3.5 h-3.5" /> Mail login
             </button>
             <button
               type="button"
@@ -212,7 +212,7 @@ export default function LoginPage() {
                 mode === 'otp' ? 'bg-teal-500 text-black' : 'text-foreground/60 hover:text-foreground'
               }`}
             >
-              <KeyRound className="w-3.5 h-3.5" /> OTP code
+              <KeyRound className="w-3.5 h-3.5" /> Mobile login
             </button>
           </div>
 
