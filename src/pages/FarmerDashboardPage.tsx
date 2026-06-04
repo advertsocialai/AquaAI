@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Camera, Microscope, Droplets, Bell, ArrowRight, MapPin, Calendar,
-  TrendingUp, Activity, BookOpen, Calculator,
+  TrendingUp, Activity, BookOpen, Calculator, ShieldCheck,
   IndianRupee, Wrench, Store, Truck, Newspaper,
 } from 'lucide-react';
 import { ARTICLES } from '@/pages/KnowledgePage';
@@ -61,6 +61,41 @@ const tone = {
   info:    { bar: 'border-teal-400/40',    icon: 'text-teal-300',    chip: 'bg-teal-400/10' },
 };
 
+// Demo fallbacks (shown until the account has live farm/readings data).
+const DEMO_PONDS = [
+  { label: 'Pond 1', areaSqm: 4000, docDays: 86, doMgl: 5.2, ph: 7.9, alert: false },
+  { label: 'Pond 2', areaSqm: 3500, docDays: 86, doMgl: 3.4, ph: 7.8, alert: true },
+  { label: 'Pond 3', areaSqm: 4200, docDays: 54, doMgl: 6.0, ph: 8.0, alert: false },
+  { label: 'Pond 4', areaSqm: 3800, docDays: 54, doMgl: 5.8, ph: 7.7, alert: false },
+];
+const DEMO_TREND = [
+  { at: '2026-05-28', doMgl: 5.6, ph: 8.0 }, { at: '2026-05-29', doMgl: 5.2, ph: 7.9 },
+  { at: '2026-05-30', doMgl: 4.8, ph: 7.9 }, { at: '2026-05-31', doMgl: 4.3, ph: 7.8 },
+  { at: '2026-06-01', doMgl: 3.9, ph: 7.8 }, { at: '2026-06-02', doMgl: 4.6, ph: 7.9 },
+  { at: '2026-06-03', doMgl: 5.1, ph: 8.0 },
+];
+const DEMO_OUTBREAKS = [
+  { disease: 'EHP', place: 'Bhimavaram', severity: 'moderate', km: 9, when: 'last 24 h' },
+  { disease: 'White Spot', place: 'Palakollu', severity: 'high', km: 22, when: '2 d ago' },
+];
+const DEMO_HARVEST = { harvestDate: '12 Jul', daysLeft: 34 };
+
+/* Minimal DO sparkline with a 4 ppm safe-line. */
+function Sparkline({ points }: { points: number[] }) {
+  const w = 320, h = 64, pad = 6;
+  const lo = Math.min(...points, 3.5), hi = Math.max(...points, 8);
+  const x = (i: number) => pad + (i * (w - 2 * pad)) / Math.max(1, points.length - 1);
+  const y = (v: number) => pad + (1 - (v - lo) / (hi - lo || 1)) * (h - 2 * pad);
+  const d = points.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)} ${y(v).toFixed(1)}`).join(' ');
+  return (
+    <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-16" preserveAspectRatio="none">
+      <line x1={pad} x2={w - pad} y1={y(4)} y2={y(4)} stroke="hsl(var(--destructive))" strokeOpacity="0.4" strokeDasharray="4 4" strokeWidth="1" />
+      <path d={d} fill="none" stroke="hsl(var(--primary))" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      {points.map((v, i) => <circle key={i} cx={x(i)} cy={y(v)} r="2.5" fill="hsl(var(--primary))" />)}
+    </svg>
+  );
+}
+
 export default function FarmerDashboardPage() {
   useEffect(() => { document.title = 'Farmer Dashboard — Aqua Rudra'; }, []);
 
@@ -94,6 +129,10 @@ export default function FarmerDashboardPage() {
     : FARM_SUMMARY;
   const actions = hasFarm && live.actions.length ? live.actions : TODAYS_ACTIONS;
   const recent = hasFarm && live.activity.length ? live.activity : RECENT_ACTIVITY;
+  const pondCards = hasFarm && live.pondCards.length ? live.pondCards : DEMO_PONDS;
+  const trend = live.trend.length ? live.trend : DEMO_TREND;
+  const outbreaks = hasFarm && live.outbreaks.length ? live.outbreaks : DEMO_OUTBREAKS;
+  const harvest = live.harvest ?? DEMO_HARVEST;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -171,9 +210,62 @@ export default function FarmerDashboardPage() {
             </div>
           </section>
 
+          {/* ── Nearby disease alerts ────────────────────────────────────── */}
+          <section>
+            <div className="flex items-end justify-between mb-4">
+              <div>
+                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Surveillance</div>
+                <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
+                  <MapPin className="w-5 h-5 text-amber-300" /> Nearby disease alerts
+                </h2>
+              </div>
+            </div>
+            {outbreaks.length === 0 ? (
+              <div className="rounded-2xl border border-emerald-400/30 bg-emerald-400/5 p-5 text-sm text-emerald-200">
+                No outbreaks reported near you.
+              </div>
+            ) : (
+              <div className="grid md:grid-cols-2 gap-4">
+                {outbreaks.map((o, i) => (
+                  <div key={i} className="p-5 rounded-2xl border border-amber-400/40 bg-card">
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="text-sm font-semibold text-foreground">{o.disease} · {o.place}</div>
+                      <span className="text-[10px] uppercase tracking-widest px-2 py-1 rounded-full text-amber-300 bg-amber-400/10">
+                        {o.severity}
+                      </span>
+                    </div>
+                    <div className="text-xs text-foreground/55 mt-1">
+                      {o.km != null ? `${o.km} km away` : 'in your district'} · {o.when}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+
           {/* ── Weather (same widget as the home page) ───────────────────── */}
           <section className="rounded-2xl border border-border bg-card p-5 md:p-6">
             <WeatherTimeWidget />
+          </section>
+
+          {/* ── Water-quality trend ──────────────────────────────────────── */}
+          <section className="rounded-2xl border border-border bg-card p-5 md:p-6">
+            <div className="flex items-end justify-between mb-4">
+              <div>
+                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Water quality</div>
+                <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
+                  <Droplets className="w-5 h-5 text-teal-300" /> Dissolved O₂ trend
+                </h2>
+              </div>
+              <div className="text-right">
+                <div className="text-2xl font-bold tabular-nums">{trend[trend.length - 1].doMgl.toFixed(1)}<span className="text-sm font-normal text-foreground/40"> ppm</span></div>
+                <div className="text-[11px] text-foreground/45">latest · pH {trend[trend.length - 1].ph.toFixed(1)}</div>
+              </div>
+            </div>
+            <Sparkline points={trend.map((t) => t.doMgl)} />
+            <div className="mt-2 text-[11px] text-foreground/45">
+              Dashed line = 4 ppm safe minimum. Last {trend.length} readings.
+            </div>
           </section>
 
           {/* ── Live rates (full board, same as home / rates) ────────────── */}
@@ -185,6 +277,61 @@ export default function FarmerDashboardPage() {
               </h2>
             </div>
             <MarketPriceBoard />
+          </section>
+
+          {/* ── Your ponds ───────────────────────────────────────────────── */}
+          <section>
+            <div className="mb-4">
+              <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Ponds</div>
+              <h2 className="text-xl md:text-2xl font-bold">Your ponds</h2>
+            </div>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              {pondCards.map((p, i) => (
+                <div key={i} className={`p-5 rounded-2xl border bg-card ${p.alert ? 'border-rose-400/40' : 'border-border'}`}>
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="font-semibold text-foreground">{p.label}</div>
+                    <span className={`text-[10px] uppercase tracking-widest px-2 py-1 rounded-full ${
+                      p.alert ? 'text-rose-300 bg-rose-400/10' : 'text-emerald-300 bg-emerald-400/10'
+                    }`}>
+                      {p.alert ? 'Check' : 'OK'}
+                    </span>
+                  </div>
+                  <div className="text-xs text-foreground/50 mt-1">
+                    {p.docDays != null ? `Day ${p.docDays}` : 'Not stocked'} · {(p.areaSqm / 4047).toFixed(2)} ac
+                  </div>
+                  <div className="mt-4 grid grid-cols-2 gap-2">
+                    <div>
+                      <div className="text-[11px] text-foreground/45">DO</div>
+                      <div className="font-bold tabular-nums">{p.doMgl != null ? p.doMgl.toFixed(1) : '—'}<span className="text-[10px] font-normal text-foreground/40"> ppm</span></div>
+                    </div>
+                    <div>
+                      <div className="text-[11px] text-foreground/45">pH</div>
+                      <div className="font-bold tabular-nums">{p.ph != null ? p.ph.toFixed(1) : '—'}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* ── Harvest readiness ────────────────────────────────────────── */}
+          <section className="rounded-2xl border border-border bg-card p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+            <div>
+              <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Harvest readiness</div>
+              <h2 className="text-xl md:text-2xl font-bold">
+                {harvest.daysLeft > 0 ? `~${harvest.daysLeft} days to harvest` : 'Ready to harvest'}
+              </h2>
+              <p className="text-sm text-foreground/55 mt-1 max-w-xl">
+                Target harvest around <span className="font-semibold text-foreground/80">{harvest.harvestDate}</span> (≈120-day cycle).
+                Check live rates to time your sale.
+              </p>
+            </div>
+            <Link
+              to="/rates"
+              className="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-emerald-400/40 text-emerald-300 hover:bg-emerald-400/10 font-semibold text-sm transition"
+            >
+              View live rates <ArrowRight className="w-4 h-4" />
+            </Link>
           </section>
 
           {/* ── Quick tools ──────────────────────────────────────────────── */}

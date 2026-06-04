@@ -14,6 +14,13 @@ export type DashActivity = {
   detail: string;
   status: 'ok' | 'alert';
 };
+export type PondCard = {
+  label: string; areaSqm: number; docDays: number | null;
+  doMgl: number | null; ph: number | null; alert: boolean;
+};
+export type TrendPoint = { at: string; doMgl: number; ph: number };
+export type OutbreakItem = { disease: string; place: string; severity: string; km: number | null; when: string };
+export type Harvest = { harvestDate: string; daysLeft: number };
 
 export type FarmerDashboardData = {
   farmName: string | null;
@@ -24,11 +31,16 @@ export type FarmerDashboardData = {
   dayOfCycle: number | null;
   actions: DashAction[];
   activity: DashActivity[];
+  pondCards: PondCard[];
+  trend: TrendPoint[];
+  outbreaks: OutbreakItem[];
+  harvest: Harvest | null;
 };
 
 const EMPTY: FarmerDashboardData = {
   farmName: null, district: null, ponds: 0, totalAreaHectares: 0,
   activeBatches: 0, dayOfCycle: null, actions: [], activity: [],
+  pondCards: [], trend: [], outbreaks: [], harvest: null,
 };
 
 function relativeTime(iso: string): string {
@@ -86,7 +98,7 @@ export function useFarmerDashboard() {
 
         const [pondsRes, batchesRes, wqRes, outbreakRes] = await Promise.all([
           sb.from('ponds').select('id,area_sqm,is_active').in('farm_id', farmIds),
-          sb.from('batches').select('id,stocked_at,is_stocked,batch_code').in('farm_id', farmIds),
+          sb.from('batches').select('id,stocked_at,is_stocked,batch_code,pond_id').in('farm_id', farmIds),
           sb.from('water_quality_readings')
             .select('id,pond_id,dissolved_oxygen_mgl,ph,any_alert,alert_details,recorded_at')
             .in('farm_id', farmIds).order('recorded_at', { ascending: false }).limit(10),
@@ -198,6 +210,53 @@ export function useFarmerDashboard() {
           .slice(0, 6)
           .map(({ when, what, detail, status }) => ({ when, what, detail, status }));
 
+        // ── Pond-by-pond cards ───────────────────────────────────────────
+        const pondCards: PondCard[] = ponds.map((p, i) => {
+          const b = batches.find((bb) => bb.pond_id === p.id && bb.is_stocked && bb.stocked_at);
+          const doc = b?.stocked_at
+            ? Math.max(1, Math.round((Date.now() - new Date(b.stocked_at as string).getTime()) / 86_400_000))
+            : null;
+          const r = readings.find((rr) => rr.pond_id === p.id);
+          return {
+            label: `Pond ${i + 1}`,
+            areaSqm: Number(p.area_sqm ?? 0),
+            docDays: doc,
+            doMgl: r ? Number(r.dissolved_oxygen_mgl ?? 0) : null,
+            ph: r ? Number(r.ph ?? 0) : null,
+            alert: Boolean(r?.any_alert),
+          };
+        });
+
+        // ── Water-quality trend (oldest → newest) ────────────────────────
+        const trend: TrendPoint[] = [...readings]
+          .reverse()
+          .slice(-14)
+          .map((r) => ({
+            at: r.recorded_at as string,
+            doMgl: Number(r.dissolved_oxygen_mgl ?? 0),
+            ph: Number(r.ph ?? 0),
+          }));
+
+        // ── Nearby disease alerts ────────────────────────────────────────
+        const outbreakItems: OutbreakItem[] = outbreaks.map((o) => ({
+          disease: o.disease ?? 'Disease',
+          place: o.mandal ?? o.district ?? farm.district ?? '',
+          severity: o.severity ?? 'alert',
+          km: o.radius_km != null ? Number(o.radius_km) : null,
+          when: relativeTime(o.created_at as string),
+        }));
+
+        // ── Harvest readiness (target ~120-day cycle) ────────────────────
+        const harvest: Harvest | null = latestStocked
+          ? (() => {
+              const hd = new Date(latestStocked + 120 * 86_400_000);
+              return {
+                harvestDate: hd.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }),
+                daysLeft: Math.round((hd.getTime() - Date.now()) / 86_400_000),
+              };
+            })()
+          : null;
+
         if (!cancelled) {
           setData({
             farmName: farm.name ?? null,
@@ -208,6 +267,10 @@ export function useFarmerDashboard() {
             dayOfCycle,
             actions,
             activity,
+            pondCards,
+            trend,
+            outbreaks: outbreakItems,
+            harvest,
           });
           setLoading(false);
         }
