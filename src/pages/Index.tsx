@@ -109,30 +109,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Market rates */}
-      <section className="border-t border-border py-12">
-        <div className="container mx-auto px-6 lg:px-8 max-w-3xl">
-          <div className="text-sm text-teal-300 uppercase tracking-widest mb-2 text-center">Market rates</div>
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-6">Today's farm-gate rates</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Link
-              to="/rates"
-              className="flex items-center gap-3 rounded-2xl p-6 border border-teal-400/30 bg-gradient-to-br from-teal-400/15 to-teal-300/5 hover:border-teal-400/50 active:scale-[0.99] transition"
-            >
-              <ShrimpIcon className="w-10 h-10 text-teal-600 shrink-0" />
-              <span className="text-lg font-bold text-foreground">Shrimp Rates</span>
-            </Link>
-            <Link
-              to="/rates?tab=fish"
-              className="flex items-center gap-3 rounded-2xl p-6 border border-sky-400/30 bg-gradient-to-br from-sky-400/15 to-cyan-300/5 hover:border-sky-400/50 active:scale-[0.99] transition"
-            >
-              <Fish className="w-10 h-10 text-sky-600 shrink-0" strokeWidth={1.6} />
-              <span className="text-lg font-bold text-foreground">Fish Rates</span>
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* Module highlights grid */}
       <section className="py-20 border-t border-border">
         <div className="container mx-auto px-6 lg:px-8 max-w-6xl">
