@@ -4,12 +4,14 @@ import { useTranslation } from 'react-i18next';
 import {
   Mail, MapPin, Phone, Facebook, Instagram, Youtube, Send, Check,
 } from 'lucide-react';
+import { WhatsappIcon } from '@/components/icons/WhatsappIcon';
 import { supabase } from '@/lib/supabase';
 
 // Placeholder URLs until verified handles exist on each platform.
 const SOCIAL = {
   facebook:  'https://facebook.com/aquarudra',
-  instagram: 'https://instagram.com/aquarudra',
+  instagram: 'https://www.instagram.com/aquarudra',
+  whatsapp:  'https://wa.me/919705713399',
   youtube:   'https://youtube.com/@aquarudra',
 };
 
@@ -159,6 +161,7 @@ export function Footer() {
           <div className="flex items-center gap-4">
             <a href={SOCIAL.facebook}  target="_blank" rel="noopener noreferrer" aria-label="Facebook"  className="text-foreground/60 hover:text-teal-300 transition"><Facebook  className="w-5 h-5" /></a>
             <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-foreground/60 hover:text-teal-300 transition"><Instagram className="w-5 h-5" /></a>
+            <a href={SOCIAL.whatsapp}  target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"  className="text-foreground/60 hover:text-teal-300 transition"><WhatsappIcon className="w-5 h-5" /></a>
             <a href={SOCIAL.youtube}   target="_blank" rel="noopener noreferrer" aria-label="YouTube"   className="text-foreground/60 hover:text-teal-300 transition"><Youtube   className="w-5 h-5" /></a>
           </div>
         </div>

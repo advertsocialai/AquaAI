@@ -2,9 +2,13 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  ChevronRight, Trash2, Loader2, AlertTriangle, X, Phone, Mail, Headphones,
+  ChevronRight, Trash2, Loader2, AlertTriangle, X, Phone, Mail, Headphones, Instagram,
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { WhatsappIcon } from '@/components/icons/WhatsappIcon';
+
+const INSTAGRAM_URL = 'https://www.instagram.com/aquarudra';
+const WHATSAPP_URL = 'https://wa.me/919705713399';
 import { useAuth } from '@/lib/auth';
 import { supabase } from '@/lib/supabase';
 
@@ -130,6 +134,16 @@ export default function ProfilePage() {
         {/* Footer */}
         <div className="text-center mt-12 space-y-1.5">
           <div className="font-semibold text-foreground/80">Follow Us</div>
+          <div className="flex items-center justify-center gap-5 py-1">
+            <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+               className="text-foreground/60 hover:text-rose-600 transition">
+              <Instagram className="w-6 h-6" />
+            </a>
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
+               className="text-foreground/60 hover:text-emerald-600 transition">
+              <WhatsappIcon className="w-6 h-6" />
+            </a>
+          </div>
           <div className="text-sm text-foreground/60">Visit our website</div>
           <a
             href="https://aquarudra.com"
