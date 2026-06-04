@@ -278,59 +278,61 @@ function FeedCalc() {
   );
 }
 
-// ── Aeration HP ────────────────────────────────────────────────────────────────
+// ── Aeration HP ──────────────────────────────────────────────────────────────
+// Standard: aerators are sized to standing biomass — ~1 HP of paddlewheel
+// supports 400–500 kg of shrimp (CAA / CIBA guideline). HP = biomass ÷ kg-per-HP.
 function AerationCalc() {
-  const [acres, setAcres] = useState('2');
-  const [density, setDensity] = useState('40');
-  const [doTarget, setDoTarget] = useState('5');
-  const baseHpPerAcre = 1 + Math.max(0, (num(density) - 20) / 10) + Math.max(0, (num(doTarget) - 4) * 0.4);
-  const totalHp = baseHpPerAcre * num(acres);
+  const [biomass, setBiomass] = useState('');   // standing biomass (kg)
+  const [kgPerHp, setKgPerHp] = useState('500'); // support per HP (CAA norm 400–500)
+  const k = num(kgPerHp) > 0 ? num(kgPerHp) : 500;
+  const hp = num(biomass) / k;
+  const wheels = Math.ceil(hp);
   return (
     <div className="grid md:grid-cols-2 gap-6">
       <div className="space-y-3">
-        <NumberInput label="Pond area" value={acres} onChange={setAcres} unit="acres" />
-        <NumberInput label="Stocking density" value={density} onChange={setDensity} unit="PL/m²" />
-        <NumberInput label="Min DO target" value={doTarget} onChange={setDoTarget} unit="mg/L" />
+        <NumberInput label="Standing biomass" value={biomass} onChange={setBiomass} unit="kg" />
+        <NumberInput label="Support per HP" value={kgPerHp} onChange={setKgPerHp} unit="kg/HP" />
       </div>
       <div className="p-5 rounded-2xl border border-border bg-card">
-        <FieldRow label="HP per acre" value={baseHpPerAcre.toFixed(1)} unit="HP" />
-        <FieldRow label="Total HP" value={totalHp.toFixed(1)} unit="HP" />
-        <FieldRow label="≈ Paddle wheels (1HP each)" value={Math.ceil(totalHp).toString()} />
-        <div className="text-[11px] text-foreground/30 mt-3">Add 20-30% margin for monsoon DO crashes. PSA O₂ recommended above 60 PL/m².</div>
+        <FieldRow label="Aeration required" value={hp.toFixed(1)} unit="HP" />
+        <FieldRow label="Paddlewheels (≈1 HP each)" value={Number.isFinite(wheels) ? wheels.toString() : '0'} />
+        <div className="text-[11px] text-foreground/40 mt-3">
+          Standard: ~1 HP per 400–500 kg standing biomass (CAA / CIBA). Add 20–30% margin for monsoon DO crashes.
+        </div>
       </div>
     </div>
   );
 }
 
 // ── Lime ───────────────────────────────────────────────────────────────────────
+// Standard: agricultural-lime dose is set by pond-bottom soil pH (CIBA guideline).
+// kg/acre ≈ kg/ha ÷ 2.471.
+function limePerAcre(ph: number): number {
+  if (ph >= 6.6) return 100;   // maintenance
+  if (ph >= 6.1) return 200;   // ~500 kg/ha
+  if (ph >= 5.6) return 400;   // ~1,000 kg/ha
+  if (ph >= 5.1) return 800;   // ~2,000 kg/ha
+  if (ph >= 4.5) return 1200;  // ~3,000 kg/ha
+  return 1600;                 // <4.5 → ~4,000 kg/ha
+}
 function LimeCalc() {
   const [acres, setAcres] = useState('1');
-  const [phDelta, setPhDelta] = useState('1');
-  const [soilType, setSoilType] = useState('clay');
-  const multiplier = soilType === 'sandy' ? 60 : soilType === 'loam' ? 90 : 140;
-  const kgPerAcre = num(phDelta) * multiplier;
-  const total = kgPerAcre * num(acres);
+  const [soilPh, setSoilPh] = useState('6.0');
+  const perAcre = limePerAcre(num(soilPh));
+  const total = perAcre * num(acres);
   return (
     <div className="grid md:grid-cols-2 gap-6">
       <div className="space-y-3">
+        <NumberInput label="Pond bottom soil pH" value={soilPh} onChange={setSoilPh} unit="pH" />
         <NumberInput label="Pond area" value={acres} onChange={setAcres} unit="acres" />
-        <NumberInput label="Target pH increase" value={phDelta} onChange={setPhDelta} unit="ΔpH" />
-        <label className="block">
-          <span className="text-[11px] uppercase tracking-widest text-foreground/40">Soil type</span>
-          <div className="mt-1.5 px-3 py-2.5 rounded-xl border border-border bg-card">
-            <select value={soilType} onChange={(e) => setSoilType(e.target.value)} className="w-full bg-transparent text-foreground outline-none text-sm">
-              <option value="sandy" className="bg-background">Sandy</option>
-              <option value="loam" className="bg-background">Loam</option>
-              <option value="clay" className="bg-background">Clay</option>
-            </select>
-          </div>
-        </label>
       </div>
       <div className="p-5 rounded-2xl border border-border bg-card">
-        <FieldRow label="Ag lime per acre" value={kgPerAcre.toFixed(0)} unit="kg" />
+        <FieldRow label="Ag lime per acre" value={perAcre.toFixed(0)} unit="kg" />
         <FieldRow label="Total ag lime" value={total.toFixed(0)} unit="kg" />
         <FieldRow label="Est. cost (₹12/kg)" value={`₹${(total * 12).toLocaleString('en-IN')}`} />
-        <div className="text-[11px] text-foreground/30 mt-3">For EHP eradication, switch to quicklime (CaO) and target pH &gt; 12.</div>
+        <div className="text-[11px] text-foreground/40 mt-3">
+          Dose by pond-bottom soil pH (CIBA guideline). For EHP eradication use quicklime (CaO) at 2,000 kg/acre.
+        </div>
       </div>
     </div>
   );
