@@ -23,6 +23,7 @@ const PrivacyPage     = lazy(() => import("./pages/PrivacyPage"));
 const TermsPage       = lazy(() => import("./pages/TermsPage"));
 const AquaAIPage      = lazy(() => import("./pages/AquaAIPage"));
 const AquaToolsPage   = lazy(() => import("./pages/AquaToolsPage"));
+const LogisticsPage   = lazy(() => import("./pages/LogisticsPage"));
 const LoginPage       = lazy(() => import("./pages/LoginPage"));
 const SignupPage      = lazy(() => import("./pages/SignupPage"));
 const SettingsPage    = lazy(() => import("./pages/SettingsPage"));
@@ -98,6 +99,7 @@ function AnimatedRoutes() {
           <Route path="/terms" element={<PageTransition><TermsPage /></PageTransition>} />
           <Route path="/aquaai" element={<PageTransition><AquaAIPage /></PageTransition>} />
           <Route path="/tools" element={<PageTransition><AquaToolsPage /></PageTransition>} />
+          <Route path="/logistics" element={<PageTransition><LogisticsPage /></PageTransition>} />
           <Route path="/farmer" element={<RequireAuth role="farmer"><PageTransition><FarmerDashboardPage /></PageTransition></RequireAuth>} />
           <Route path="/trader" element={<RequireAuth role="trader"><PageTransition><TraderDashboardPage /></PageTransition></RequireAuth>} />
           <Route path="/vle" element={<RequireAuth role="vle"><PageTransition><RoleDashboard role="vle" /></PageTransition></RequireAuth>} />

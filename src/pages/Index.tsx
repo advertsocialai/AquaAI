@@ -34,7 +34,7 @@ function ShrimpIcon({ className = '' }: { className?: string }) {
 
 const MODULES: { icon: ElementType; key: string; accent: string; to?: string; label?: string; desc?: string }[] = [
   { icon: IndianRupee,  key: 'pricing',      accent: '#34d399', to: '/rates' },
-  { icon: Truck,        key: 'logistics',    accent: '#f472b6', to: '/#provider-transporters' },
+  { icon: Truck,        key: 'logistics',    accent: '#f472b6', to: '/logistics' },
   { icon: LifeBuoy,     key: 'advisory',     accent: '#facc15' },
   { icon: Calculator,   key: 'tools',        accent: '#0ea5e9', to: '/tools',
     label: 'Aqua Tools', desc: 'Survival rate, feed/FCR and stocking calculators for every pond.' },
