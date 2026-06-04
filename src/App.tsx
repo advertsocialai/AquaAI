@@ -48,6 +48,9 @@ const LanguagePage = lazy(() => import("./pages/LanguagePage"));
 const FavouritesPage = lazy(() => import("./pages/FavouritesPage"));
 const ShopPage = lazy(() => import("./pages/ShopPage"));
 const ProductDetailPage = lazy(() => import("./pages/ProductDetailPage"));
+const SeedTool = lazy(() => import("./features/quick-tools/seed/SeedTool"));
+const DiseaseTool = lazy(() => import("./features/quick-tools/disease/DiseaseTool"));
+const WaterTool = lazy(() => import("./features/quick-tools/water/WaterTool"));
 
 const queryClient = new QueryClient();
 
@@ -100,6 +103,9 @@ function AnimatedRoutes() {
           <Route path="/aquaai" element={<PageTransition><AquaAIPage /></PageTransition>} />
           <Route path="/tools" element={<PageTransition><AquaToolsPage /></PageTransition>} />
           <Route path="/logistics" element={<PageTransition><LogisticsPage /></PageTransition>} />
+          <Route path="/tools/seed" element={<RequireAuth><PageTransition><SeedTool /></PageTransition></RequireAuth>} />
+          <Route path="/tools/disease" element={<RequireAuth><PageTransition><DiseaseTool /></PageTransition></RequireAuth>} />
+          <Route path="/tools/water" element={<RequireAuth><PageTransition><WaterTool /></PageTransition></RequireAuth>} />
           <Route path="/farmer" element={<RequireAuth role="farmer"><PageTransition><FarmerDashboardPage /></PageTransition></RequireAuth>} />
           <Route path="/trader" element={<RequireAuth role="trader"><PageTransition><TraderDashboardPage /></PageTransition></RequireAuth>} />
           <Route path="/vle" element={<RequireAuth role="vle"><PageTransition><RoleDashboard role="vle" /></PageTransition></RequireAuth>} />

@@ -36,9 +36,9 @@ const TODAYS_ACTIONS = [
 ];
 
 const QUICK_TOOLS = [
-  { icon: Microscope, label: 'Disease detector', sub: 'Snap a sample',     to: '/aquaai#dashboard', accent: 'text-rose-300',     bg: 'bg-rose-400/10' },
-  { icon: Camera,     label: 'Seed counter',     sub: 'Tray photo → count', to: '/aquaai#dashboard', accent: 'text-emerald-300',  bg: 'bg-emerald-400/10' },
-  { icon: Droplets,   label: 'Water quality',    sub: 'Sample → grade',     to: '/aquaai#dashboard', accent: 'text-teal-300',     bg: 'bg-teal-400/10' },
+  { icon: Microscope, label: 'Disease detector', sub: 'Snap a sample',     to: '/tools/disease', accent: 'text-rose-300',     bg: 'bg-rose-400/10' },
+  { icon: Camera,     label: 'Seed counter',     sub: 'Tray photo → count', to: '/tools/seed',    accent: 'text-emerald-300',  bg: 'bg-emerald-400/10' },
+  { icon: Droplets,   label: 'Water quality',    sub: 'Sample → grade',     to: '/tools/water',   accent: 'text-teal-300',     bg: 'bg-teal-400/10' },
   { icon: BookOpen,   label: 'Knowledge',        sub: 'Articles · schemes', to: '/knowledge',        accent: 'text-amber-300',    bg: 'bg-amber-400/10' },
   { icon: IndianRupee,label: 'Live Rates',       sub: 'Mandi + FOB',        to: '/rates',            accent: 'text-emerald-300',  bg: 'bg-emerald-400/10' },
   { icon: Wrench,     label: 'Aqua Tools',       sub: 'Survival · feed',    to: '/tools',            accent: 'text-sky-300',      bg: 'bg-sky-400/10' },
