@@ -1755,6 +1755,33 @@ export type Database = {
           },
         ]
       }
+      tool_scans: {
+        Row: {
+          certificate_id: string
+          created_at: string
+          id: string
+          result: Json
+          tool: string
+          user_id: string
+        }
+        Insert: {
+          certificate_id: string
+          created_at?: string
+          id?: string
+          result: Json
+          tool: string
+          user_id: string
+        }
+        Update: {
+          certificate_id?: string
+          created_at?: string
+          id?: string
+          result?: Json
+          tool?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       training_data_submissions: {
         Row: {
           annotation_data: Json | null
@@ -1959,6 +1986,50 @@ export type Database = {
             columns: ["recorded_by"]
             isOneToOne: false
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      weather_alert_log: {
+        Row: {
+          channel: string | null
+          created_at: string
+          detail: string | null
+          id: number
+          kind: string | null
+          message: string | null
+          mobile: string | null
+          ok: boolean
+          profile_id: string | null
+        }
+        Insert: {
+          channel?: string | null
+          created_at?: string
+          detail?: string | null
+          id?: number
+          kind?: string | null
+          message?: string | null
+          mobile?: string | null
+          ok?: boolean
+          profile_id?: string | null
+        }
+        Update: {
+          channel?: string | null
+          created_at?: string
+          detail?: string | null
+          id?: number
+          kind?: string | null
+          message?: string | null
+          mobile?: string | null
+          ok?: boolean
+          profile_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "weather_alert_log_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]

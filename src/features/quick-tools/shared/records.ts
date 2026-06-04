@@ -27,9 +27,12 @@ function markSynced(certificateId: string) {
 /** Insert one record into Supabase. Returns true on success. */
 async function pushOne(rec: ToolRecord, userId: string): Promise<boolean> {
   if (!supabase || !userId || (typeof navigator !== 'undefined' && !navigator.onLine)) return false;
-  const { error } = await (supabase.from('tool_scans' as never) as never as {
-    insert: (v: unknown) => Promise<{ error: { message?: string } | null }>;
-  }).insert({ user_id: userId, tool: rec.tool, certificate_id: rec.certificateId, result: rec.result });
+  const { error } = await supabase.from('tool_scans').insert({
+    user_id: userId,
+    tool: rec.tool,
+    certificate_id: rec.certificateId,
+    result: rec.result,
+  });
   if (error) return false;
   markSynced(rec.certificateId);
   return true;
