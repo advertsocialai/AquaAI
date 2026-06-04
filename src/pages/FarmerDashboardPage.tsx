@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Camera, Microscope, Droplets, Bell, ArrowRight, MapPin, Calendar,
-  TrendingUp, Activity, BookOpen, Calculator, ShieldCheck,
+  TrendingUp, Activity, BookOpen, Calculator,
   IndianRupee, Wrench, Store, Truck, Newspaper,
 } from 'lucide-react';
 import { ARTICLES } from '@/pages/KnowledgePage';
@@ -171,6 +171,22 @@ export default function FarmerDashboardPage() {
             </div>
           </section>
 
+          {/* ── Weather (same widget as the home page) ───────────────────── */}
+          <section className="rounded-2xl border border-border bg-card p-5 md:p-6">
+            <WeatherTimeWidget />
+          </section>
+
+          {/* ── Live rates (full board, same as home / rates) ────────────── */}
+          <section className="rounded-2xl border border-border bg-card p-5 md:p-6">
+            <div className="mb-4">
+              <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Live mandi prices</div>
+              <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
+                <TrendingUp className="w-5 h-5 text-emerald-300" /> What your pond is worth today
+              </h2>
+            </div>
+            <MarketPriceBoard />
+          </section>
+
           {/* ── Quick tools ──────────────────────────────────────────────── */}
           <section>
             <div className="mb-4">
@@ -226,22 +242,6 @@ export default function FarmerDashboardPage() {
             </div>
           </section>
 
-          {/* ── Weather (same widget as the home page) ───────────────────── */}
-          <section className="rounded-2xl border border-border bg-card p-5 md:p-6">
-            <WeatherTimeWidget />
-          </section>
-
-          {/* ── Live rates (full board, same as home / rates) ────────────── */}
-          <section className="rounded-2xl border border-border bg-card p-5 md:p-6">
-            <div className="mb-4">
-              <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Live mandi prices</div>
-              <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-emerald-300" /> What your pond is worth today
-              </h2>
-            </div>
-            <MarketPriceBoard />
-          </section>
-
           {/* ── Recent activity ──────────────────────────────────────────── */}
           <section>
             <div className="flex items-end justify-between mb-4">
@@ -287,25 +287,6 @@ export default function FarmerDashboardPage() {
               </p>
             </div>
             <StoreButtons className="shrink-0" />
-          </section>
-
-          {/* ── Sign-up CTA ──────────────────────────────────────────────── */}
-          <section className="rounded-2xl border border-primary/30 bg-primary/[0.04] p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
-            <div>
-              <div className="text-xs uppercase tracking-widest text-teal-300 mb-1 inline-flex items-center gap-2">
-                <ShieldCheck className="w-3.5 h-3.5" /> Verified farmer account
-              </div>
-              <h2 className="text-xl md:text-2xl font-bold">Get your full farm dashboard</h2>
-              <p className="text-sm text-foreground/55 mt-1 max-w-xl">
-                Create a free account to save ponds, track batches, and get outbreak alerts for your district.
-              </p>
-            </div>
-            <Link
-              to="/signup"
-              className="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-coral hover:bg-coral-hover text-coral-foreground font-semibold text-sm transition"
-            >
-              Sign up as Farmer <ArrowRight className="w-4 h-4" />
-            </Link>
           </section>
         </div>
       </main>
