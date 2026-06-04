@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Camera, Microscope, Droplets, Bell, ArrowRight, MapPin, Calendar,
-  TrendingUp, Activity, BookOpen, ShieldCheck,
+  TrendingUp, Activity, BookOpen,
   IndianRupee, Wrench, Store, Truck, Newspaper,
 } from 'lucide-react';
 import { ARTICLES } from '@/pages/KnowledgePage';
@@ -44,7 +44,6 @@ const QUICK_TOOLS = [
   { icon: Wrench,     label: 'Aqua Tools',       sub: 'Survival · feed',    to: '/tools',            accent: 'text-sky-300',      bg: 'bg-sky-400/10' },
   { icon: Store,      label: 'Shop Farm',        sub: 'Inputs · sell',      to: '/shop',             accent: 'text-lime-300',     bg: 'bg-lime-400/10' },
   { icon: Truck,      label: 'Logistics',        sub: 'Transport · O₂',     to: '/logistics',        accent: 'text-orange-300',   bg: 'bg-orange-400/10' },
-  { icon: ShieldCheck,label: 'Certificates',     sub: 'QC · lineage',       to: '/verify/QC-2026-04421', accent: 'text-sky-300',  bg: 'bg-sky-400/10' },
 ];
 
 const RECENT_ACTIVITY = [
