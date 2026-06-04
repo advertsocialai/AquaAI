@@ -13,7 +13,6 @@ import {
 import CTA from '@/components/CTA';
 import { Gallery4 } from '@/components/Gallery4';
 import { Feature108 } from '@/components/Feature108';
-import { ServiceProviders } from '@/components/ServiceProviders';
 import {
   ArrowRight, PlayCircle, IndianRupee,
   Truck, LifeBuoy, Fish, Calculator,
@@ -146,8 +145,6 @@ const Index = () => {
       </section>
 
       <BuiltForRoles />
-
-      <ServiceProviders />
 
       <Gallery4 />
       <Feature108 />
