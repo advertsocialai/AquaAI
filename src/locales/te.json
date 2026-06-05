@@ -1013,7 +1013,8 @@
     "kycBankLabel": "సంస్థాగత ID + API",
     "kycBankHint": "భాగస్వామ్య బృందం ద్వారా ఆన్‌బోర్డింగ్",
     "kycGovtLabel": "ప్రభుత్వ ID + అధికార పరిధి",
-    "kycGovtHint": "అధికారి ఇమెయిల్ డొమైన్ ధృవీకరించబడింది"
+    "kycGovtHint": "అధికారి ఇమెయిల్ డొమైన్ ధృవీకరించబడింది",
+    "stepVerify": "ధృవీకరించండి"
   },
   "traderDashboardPage": {
     "documentTitle": "ట్రేడర్ డ్యాష్‌బోర్డ్ — Aqua Rudra",

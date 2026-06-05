@@ -871,7 +871,8 @@
     "kycBankLabel": "প্রাতিষ্ঠানিক আইডি + এপিআই",
     "kycBankHint": "অংশীদারিত্ব দলের মাধ্যমে অনবোর্ডিং",
     "kycGovtLabel": "সরকারি আইডি + এখতিয়ার",
-    "kycGovtHint": "অফিসার ইমেল ডোমেন যাচাইকৃত"
+    "kycGovtHint": "অফিসার ইমেল ডোমেন যাচাইকৃত",
+    "stepVerify": "যাচাই করুন"
   },
   "traderDashboardPage": {
     "documentTitle": "ট্রেডার ড্যাশবোর্ড — Aqua Rudra",

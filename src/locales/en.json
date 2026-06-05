@@ -1013,7 +1013,8 @@
     "kycBankLabel": "Institutional ID + API",
     "kycBankHint": "Onboarding via partnerships team",
     "kycGovtLabel": "Govt ID + jurisdiction",
-    "kycGovtHint": "Officer email domain verified"
+    "kycGovtHint": "Officer email domain verified",
+    "stepVerify": "Verify"
   },
   "traderDashboardPage": {
     "documentTitle": "Trader Dashboard — Aqua Rudra",
