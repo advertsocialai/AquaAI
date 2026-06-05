@@ -73,3 +73,9 @@ supabase/.temp/
 
 # Test coverage reports
 coverage/
+
+# Python test coverage
+.coverage
+backend/.coverage
+htmlcov/
+.pytest_cache/
