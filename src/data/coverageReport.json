@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-06-05T03:05:11.970Z",
+  "generatedAt": "2026-06-05T03:12:57.380Z",
   "frameworks": [
     {
       "name": "Frontend",
       "tool": "Vitest + v8",
       "totals": {
         "statements": 77.9,
-        "branches": 55.7,
+        "branches": 56,
         "functions": 73.1,
         "lines": 81.1
       },
@@ -113,12 +113,16 @@
       "name": "Backend",
       "tool": "pytest + coverage.py",
       "totals": {
-        "statements": 100,
-        "branches": 100,
-        "functions": 100,
-        "lines": 100
+        "statements": 65,
+        "branches": 65,
+        "functions": 65,
+        "lines": 65
       },
       "files": [
+        {
+          "name": "app/api/v1/auth.py",
+          "pct": 44.2
+        },
         {
           "name": "app/core/auth.py",
           "pct": 100
