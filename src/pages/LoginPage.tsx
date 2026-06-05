@@ -4,9 +4,10 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   ShieldCheck, Activity, IndianRupee,
-  BadgeCheck, ArrowRight, Fish, AlertCircle, Loader2, KeyRound, Smartphone,
+  BadgeCheck, ArrowRight, Fish, AlertCircle, Loader2, Lock, Smartphone,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { phoneToEmail } from '@/lib/phoneAuth';
 import { DASHBOARD_ROUTE } from '@/pages/dashboards/configs';
 import type { Role } from '@/components/dashboard/RoleSelector';
 import { TypewriterEffect } from '@/components/ui/typewriter-effect';
@@ -27,8 +28,7 @@ export default function LoginPage() {
   const location = useLocation();
   const from = (location.state as { from?: string } | null)?.from;
   const [phone, setPhone] = useState('');
-  const [otp, setOtp] = useState('');
-  const [otpSent, setOtpSent] = useState(false);
+  const [password, setPassword] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [propIdx, setPropIdx] = useState(0);
@@ -47,36 +47,26 @@ export default function LoginPage() {
     navigate(from ?? (role ? DASHBOARD_ROUTE[role] : '/aquaai#dashboard'), { replace: true });
   }
 
-  // OTP: send a 6-digit code to the mobile number (+91).
-  async function sendOtp(e: React.FormEvent) {
+  // Mobile + password sign-in (via the email/password provider, no SMS).
+  async function signIn(e: React.FormEvent) {
     e.preventDefault();
-    if (!phoneValid) return;
+    if (!phoneValid || password.length < 1) return;
     if (!supabase) { setError(t('loginPage.errAuthNotConfigured')); return; }
     setBusy(true);
     setError(null);
-    const { error: err } = await supabase.auth.signInWithOtp({
-      phone: `+91${phone.trim()}`,
-      options: { shouldCreateUser: true },
+    const { data, error: err } = await supabase.auth.signInWithPassword({
+      email: phoneToEmail(phone),
+      password,
     });
     setBusy(false);
-    if (err) { setError(err.message); return; }
-    setOtpSent(true);
-  }
-
-  // OTP: verify the typed code and sign in.
-  async function verifyOtp(e: React.FormEvent) {
-    e.preventDefault();
-    if (otp.trim().length < 6) return;
-    if (!supabase) { setError(t('loginPage.errAuthNotConfigured')); return; }
-    setBusy(true);
-    setError(null);
-    const { data, error: err } = await supabase.auth.verifyOtp({
-      phone: `+91${phone.trim()}`,
-      token: otp.trim(),
-      type: 'sms',
-    });
-    setBusy(false);
-    if (err) { setError(err.message === 'Token has expired or is invalid' ? t('loginPage.errCodeInvalid') : err.message); return; }
+    if (err) {
+      setError(
+        /invalid login credentials/i.test(err.message)
+          ? t('loginPage.errInvalidCredentials', 'Wrong mobile number or password.')
+          : err.message,
+      );
+      return;
+    }
     goToDashboard(data.user);
   }
 
@@ -155,88 +145,57 @@ export default function LoginPage() {
             </div>
           )}
 
-          {!otpSent && (
-            <motion.form
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              onSubmit={sendOtp}
-              className="space-y-4"
-            >
-              <label className="block">
-                <span className="text-xs text-foreground/40 uppercase tracking-widest">{t('loginPage.mobileNumberLabel')}</span>
-                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
-                  <Smartphone className="w-4 h-4 text-teal-400" />
-                  <span className="text-sm text-foreground/70 font-medium select-none">+91</span>
-                  <input
-                    autoFocus
-                    type="tel"
-                    inputMode="numeric"
-                    autoComplete="tel-national"
-                    maxLength={10}
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
-                    placeholder="98765 43210"
-                    className="bg-transparent outline-none text-foreground flex-1 text-sm"
-                  />
-                </div>
-              </label>
-
-              <button
-                type="submit"
-                disabled={!phoneValid || busy}
-                className="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm transition flex items-center justify-center gap-2"
-              >
-                {busy ? <><Loader2 className="w-4 h-4 animate-spin" /> {t('loginPage.sendingCode')}</> : <>{t('loginPage.sendMeACode')} <ArrowRight className="w-4 h-4" /></>}
-              </button>
-              <p className="text-[11px] text-foreground/40 text-center">
-                {t('loginPage.otpHelper', { target: t('loginPage.otpTargetMobile') })}
-              </p>
-            </motion.form>
-          )}
-
-          {otpSent && (
-            <motion.form
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              onSubmit={verifyOtp}
-              className="space-y-4"
-            >
-              <p className="text-sm text-foreground/60">
-                {t('loginPage.enterCodePrefix')} <span className="text-foreground font-medium">+91 {phone}</span>{t('loginPage.enterCodeSuffix')}
-              </p>
-              <label className="block">
-                <span className="text-xs text-foreground/40 uppercase tracking-widest">{t('loginPage.verificationCodeLabel')}</span>
-                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
-                  <KeyRound className="w-4 h-4 text-teal-400" />
-                  <input
-                    autoFocus
-                    inputMode="numeric"
-                    autoComplete="one-time-code"
-                    maxLength={6}
-                    value={otp}
-                    onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
-                    placeholder="000000"
-                    className="bg-transparent outline-none text-foreground flex-1 text-sm tracking-[0.5em] font-mono"
-                  />
-                </div>
-              </label>
-              <button
-                type="submit"
-                disabled={otp.length < 6 || busy}
-                className="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm transition flex items-center justify-center gap-2"
-              >
-                {busy ? <><Loader2 className="w-4 h-4 animate-spin" /> {t('loginPage.verifying')}</> : <>{t('loginPage.verifyAndSignIn')} <ShieldCheck className="w-4 h-4" /></>}
-              </button>
-              <div className="flex items-center justify-between text-xs">
-                <button type="button" onClick={() => { setOtpSent(false); setOtp(''); setError(null); }} className="text-foreground/50 hover:text-foreground">
-                  {t('loginPage.useDifferentNumber')}
-                </button>
-                <button type="button" onClick={sendOtp} disabled={busy} className="text-teal-400 hover:underline disabled:opacity-40">
-                  {t('loginPage.resendCode')}
-                </button>
+          <motion.form
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            onSubmit={signIn}
+            className="space-y-4"
+          >
+            <label className="block">
+              <span className="text-xs text-foreground/40 uppercase tracking-widest">{t('loginPage.mobileNumberLabel')}</span>
+              <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                <Smartphone className="w-4 h-4 text-teal-400" />
+                <span className="text-sm text-foreground/70 font-medium select-none">+91</span>
+                <input
+                  autoFocus
+                  type="tel"
+                  inputMode="numeric"
+                  autoComplete="tel-national"
+                  maxLength={10}
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
+                  placeholder="98765 43210"
+                  className="bg-transparent outline-none text-foreground flex-1 text-sm"
+                />
               </div>
-            </motion.form>
-          )}
+            </label>
+
+            <label className="block">
+              <span className="text-xs text-foreground/40 uppercase tracking-widest">{t('loginPage.passwordLabel', 'Password')}</span>
+              <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                <Lock className="w-4 h-4 text-teal-400" />
+                <input
+                  type="password"
+                  autoComplete="current-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder={t('loginPage.passwordPlaceholder', 'Your password')}
+                  className="bg-transparent outline-none text-foreground flex-1 text-sm"
+                />
+              </div>
+            </label>
+
+            <button
+              type="submit"
+              disabled={!phoneValid || password.length < 1 || busy}
+              className="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm transition flex items-center justify-center gap-2"
+            >
+              {busy ? <><Loader2 className="w-4 h-4 animate-spin" /> {t('loginPage.verifying')}</> : <>{t('loginPage.verifyAndSignIn')} <ShieldCheck className="w-4 h-4" /></>}
+            </button>
+            <p className="text-[11px] text-foreground/40 text-center">
+              {t('loginPage.signInWithPasswordHelper', 'Sign in with the mobile number and password you registered.')}
+            </p>
+          </motion.form>
 
           <div className="mt-10 pt-6 border-t border-border text-sm text-foreground/50">
             {t('loginPage.newToBrand')}{' '}

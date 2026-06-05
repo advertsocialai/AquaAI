@@ -3,12 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Fish, ArrowRight, ArrowLeft, Check, Mail, Lock,
-  Languages, MapPin, BadgeCheck, AlertCircle, Loader2,
+  Fish, ArrowRight, ArrowLeft, Check, Lock,
+  Languages, MapPin, AlertCircle, Loader2,
 } from 'lucide-react';
 import { ROLES, type Role } from '@/components/dashboard/RoleSelector';
 import { DASHBOARD_ROUTE } from '@/pages/dashboards/configs';
 import { supabase } from '@/lib/supabase';
+import { phoneToEmail } from '@/lib/phoneAuth';
 import { TypewriterEffect } from '@/components/ui/typewriter-effect';
 
 const LANGUAGES = ['English', 'తెలుగు (Telugu)', 'ଓଡ଼ିଆ (Odia)', 'বাংলা (Bengali)', 'हिन्दी (Hindi)'];
@@ -41,10 +42,8 @@ export default function SignupPage() {
   const [step, setStep] = useState<StepId>('Role');
   const [role, setRole] = useState<Role | null>(null);
   const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [lang, setLang] = useState(LANGUAGES[0]);
-  const [kyc, setKyc] = useState('');
   const [location, setLocation] = useState('');
   const [name, setName] = useState('');
   const [busy, setBusy] = useState(false);
@@ -55,7 +54,6 @@ export default function SignupPage() {
   const prev = () => setStep(STEPS[Math.max(idx - 1, 0)]);
 
   const phoneValid = /^[6-9]\d{9}$/.test(phone.trim());
-  const emailValid = email.trim() === '' || /^\S+@\S+\.\S+$/.test(email.trim());
   const pwOk = password.length >= 8 && /[A-Z]/.test(password) && /\d/.test(password);
 
   async function createAccount() {
@@ -63,20 +61,28 @@ export default function SignupPage() {
     if (!supabase) { setError(t('signupPage.errorAuthNotConfigured')); return; }
     setBusy(true);
     setError(null);
-    // Phone-primary signup; email is optional (kept in metadata).
-    const { error: err } = await supabase.auth.signUp({
-      phone: `+91${phone.trim()}`,
+    // Mobile + password signup via the email/password provider (no SMS gateway
+    // needed). The mobile number is the identity; the real email is optional.
+    const loginEmail = phoneToEmail(phone);
+    const { data, error: err } = await supabase.auth.signUp({
+      email: loginEmail,
       password,
       options: {
-        data: { name, role, lang, kyc_ref: kyc, location, email: email.trim().toLowerCase() || null },
+        data: { name, role, lang, phone: `+91${phone.trim()}`, location },
       },
     });
-    setBusy(false);
     if (err) {
+      setBusy(false);
       setError(err.message);
       setStep('Account');
       return;
     }
+    // If the project still requires email confirmation, signUp returns no
+    // session — sign in with the password to establish one immediately.
+    if (!data.session) {
+      await supabase.auth.signInWithPassword({ email: loginEmail, password });
+    }
+    setBusy(false);
     setStep('Done');
   }
 
@@ -215,18 +221,6 @@ export default function SignupPage() {
                   </div>
                 )}
 
-                <div className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
-                  <Mail className="w-4 h-4 text-foreground/40" />
-                  <input
-                    type="email"
-                    autoComplete="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder={t('signupPage.emailPlaceholder')}
-                    className="bg-transparent outline-none text-foreground flex-1 text-sm"
-                  />
-                </div>
-
                 <div className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card">
                   <Languages className="w-4 h-4 text-violet-400" />
                   <select value={lang} onChange={(e) => setLang(e.target.value)} className="bg-transparent outline-none text-foreground flex-1 text-sm">
@@ -241,7 +235,7 @@ export default function SignupPage() {
                 </button>
                 <button
                   onClick={next}
-                  disabled={!phoneValid || !pwOk || !emailValid}
+                  disabled={!phoneValid || !pwOk}
                   className="px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm inline-flex items-center gap-2"
                 >
                   {t('signupPage.continue')} <ArrowRight className="w-4 h-4" />
@@ -268,19 +262,6 @@ export default function SignupPage() {
                 </label>
 
                 <label className="block">
-                  <span className="text-[11px] uppercase tracking-widest text-foreground/40">{t(KYC_FIELDS[role].labelKey)}</span>
-                  <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
-                    <BadgeCheck className="w-4 h-4 text-teal-400" />
-                    <input
-                      value={kyc}
-                      onChange={(e) => setKyc(e.target.value)}
-                      placeholder={t(KYC_FIELDS[role].hintKey)}
-                      className="bg-transparent outline-none text-foreground flex-1 text-sm"
-                    />
-                  </div>
-                </label>
-
-                <label className="block">
                   <span className="text-[11px] uppercase tracking-widest text-foreground/40">{t('signupPage.locationLabel')}</span>
                   <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
                     <MapPin className="w-4 h-4 text-emerald-400" />
@@ -300,7 +281,7 @@ export default function SignupPage() {
                 </button>
                 <button
                   onClick={createAccount}
-                  disabled={!name || !kyc || !location || busy}
+                  disabled={!name || !location || busy}
                   className="px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm inline-flex items-center gap-2"
                 >
                   {busy ? <><Loader2 className="w-4 h-4 animate-spin" /> {t('signupPage.creating')}</> : <>{t('signupPage.finish')} <ArrowRight className="w-4 h-4" /></>}
