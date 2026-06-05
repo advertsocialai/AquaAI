@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ShieldCheck, BadgeCheck, Smartphone, Building2, Landmark,
@@ -8,13 +9,13 @@ import {
 
 type Step = 'aadhaar' | 'aadhaar-otp' | 'pan' | 'gst' | 'bank' | 'done';
 
-const STEPS: { id: Step; label: string; icon: React.ElementType }[] = [
-  { id: 'aadhaar',      label: 'Aadhaar',     icon: ShieldCheck },
-  { id: 'aadhaar-otp',  label: 'OTP',         icon: KeyRound },
-  { id: 'pan',          label: 'PAN',         icon: BadgeCheck },
-  { id: 'gst',          label: 'GST',         icon: Building2 },
-  { id: 'bank',         label: 'Bank',        icon: Landmark },
-  { id: 'done',         label: 'Done',        icon: Check },
+const STEPS: { id: Step; labelKey: string; icon: React.ElementType }[] = [
+  { id: 'aadhaar',      labelKey: 'kycPage.stepAadhaar',  icon: ShieldCheck },
+  { id: 'aadhaar-otp',  labelKey: 'kycPage.stepOtp',      icon: KeyRound },
+  { id: 'pan',          labelKey: 'kycPage.stepPan',      icon: BadgeCheck },
+  { id: 'gst',          labelKey: 'kycPage.stepGst',      icon: Building2 },
+  { id: 'bank',         labelKey: 'kycPage.stepBank',     icon: Landmark },
+  { id: 'done',         labelKey: 'kycPage.stepDone',     icon: Check },
 ];
 
 function maskAadhaar(raw: string) {
@@ -28,15 +29,17 @@ function Pending() {
 }
 
 function VerifiedBadge({ value }: { value: string }) {
+  const { t } = useTranslation();
   return (
     <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-emerald-400/10 border border-emerald-400/30 text-emerald-300 text-sm">
-      <Check className="w-4 h-4" /> Verified · {value}
+      <Check className="w-4 h-4" /> {t('kycPage.verified')} · {value}
     </div>
   );
 }
 
 export default function KycPage() {
-  useEffect(() => { document.title = 'KYC — AquaI'; }, []);
+  const { t } = useTranslation();
+  useEffect(() => { document.title = t('kycPage.docTitle'); }, [t]);
   const [step, setStep] = useState<Step>('aadhaar');
   const idx = STEPS.findIndex((s) => s.id === step);
 
@@ -110,16 +113,15 @@ export default function KycPage() {
           <span className="font-semibold">AquaI</span>
         </Link>
         <div className="text-[11px] text-foreground/30 inline-flex items-center gap-1.5">
-          <Lock className="w-3 h-3" /> NSDL e-KYC · DPDPA compliant · India-hosted
+          <Lock className="w-3 h-3" /> {t('kycPage.complianceTag')}
         </div>
       </header>
 
       <main className="container mx-auto px-6 lg:px-8 max-w-3xl pb-16">
-        <div className="text-[11px] uppercase tracking-widest text-foreground/30 mb-2">Identity verification</div>
-        <h1 className="text-2xl md:text-3xl font-bold mb-2">KYC verification</h1>
+        <div className="text-[11px] uppercase tracking-widest text-foreground/30 mb-2">{t('kycPage.eyebrow')}</div>
+        <h1 className="text-2xl md:text-3xl font-bold mb-2">{t('kycPage.heroTitle')}</h1>
         <p className="text-sm text-foreground/50 mb-8 max-w-xl">
-          We verify your identity once and re-use the result across the platform — for hatchery
-          B2B contracts, bank underwriting, MPEDA license linking and Razorpay payouts.
+          {t('kycPage.heroDesc')}
         </p>
 
         <div className="flex items-center gap-2 mb-10">
@@ -139,7 +141,7 @@ export default function KycPage() {
                   {done ? <Check className="w-3.5 h-3.5" /> : <Icon className="w-3.5 h-3.5" />}
                 </div>
                 <div className={`text-[10px] uppercase tracking-widest ${active ? 'text-foreground' : done ? 'text-foreground/50' : 'text-foreground/30'}`}>
-                  {s.label}
+                  {t(s.labelKey)}
                 </div>
                 {i < STEPS.length - 1 && <div className={`flex-1 h-px ${done ? 'bg-emerald-400/40' : 'bg-card'}`} />}
               </div>
@@ -158,7 +160,7 @@ export default function KycPage() {
               className="space-y-4"
             >
               <label className="block">
-                <span className="text-[11px] uppercase tracking-widest text-foreground/40">12-digit Aadhaar number</span>
+                <span className="text-[11px] uppercase tracking-widest text-foreground/40">{t('kycPage.aadhaarLabel')}</span>
                 <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
                   <ShieldCheck className="w-4 h-4 text-teal-400" />
                   <input
@@ -171,7 +173,7 @@ export default function KycPage() {
                   />
                 </div>
                 <div className="text-[11px] text-foreground/30 mt-1">
-                  We never display your full Aadhaar after entry. NSDL handles the e-KYC; we store only the last 4 digits.
+                  {t('kycPage.aadhaarHelp')}
                 </div>
               </label>
               <button
@@ -179,7 +181,7 @@ export default function KycPage() {
                 disabled={aadhaar.length !== 12}
                 className="w-full sm:w-auto px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 text-black font-semibold text-sm inline-flex items-center gap-2"
               >
-                Send Aadhaar OTP <ArrowRight className="w-4 h-4" />
+                {t('kycPage.sendOtpBtn')} <ArrowRight className="w-4 h-4" />
               </button>
             </motion.form>
           )}
@@ -194,11 +196,11 @@ export default function KycPage() {
               className="space-y-4"
             >
               <div className="text-sm text-foreground/70">
-                OTP sent by NSDL to the mobile linked to your Aadhaar.{' '}
-                <button type="button" onClick={() => setStep('aadhaar')} className="text-teal-400 hover:underline">change</button>
+                {t('kycPage.otpSent')}{' '}
+                <button type="button" onClick={() => setStep('aadhaar')} className="text-teal-400 hover:underline">{t('kycPage.changeLink')}</button>
               </div>
               <label className="block">
-                <span className="text-[11px] uppercase tracking-widest text-foreground/40">6-digit OTP</span>
+                <span className="text-[11px] uppercase tracking-widest text-foreground/40">{t('kycPage.otpLabel')}</span>
                 <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
                   <KeyRound className="w-4 h-4 text-teal-400" />
                   <input
@@ -218,7 +220,7 @@ export default function KycPage() {
                 disabled={otp.length !== 6 || otpVerifying}
                 className="w-full sm:w-auto px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 text-black font-semibold text-sm inline-flex items-center gap-2"
               >
-                Verify <Check className="w-4 h-4" />
+                {t('kycPage.verifyBtn')} <Check className="w-4 h-4" />
               </button>
             </motion.form>
           )}
@@ -234,7 +236,7 @@ export default function KycPage() {
               <VerifiedBadge value={`Aadhaar XXXX ${aadhaar.slice(-4)}`} />
               <form onSubmit={submitPan} className="space-y-4">
                 <label className="block">
-                  <span className="text-[11px] uppercase tracking-widest text-foreground/40">PAN (ABCDE1234F)</span>
+                  <span className="text-[11px] uppercase tracking-widest text-foreground/40">{t('kycPage.panLabel')}</span>
                   <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
                     <BadgeCheck className="w-4 h-4 text-violet-400" />
                     <input
@@ -251,7 +253,7 @@ export default function KycPage() {
                   disabled={!/^[A-Z]{5}[0-9]{4}[A-Z]$/.test(pan)}
                   className="px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 text-black font-semibold text-sm inline-flex items-center gap-2"
                 >
-                  Verify PAN <ArrowRight className="w-4 h-4" />
+                  {t('kycPage.verifyPanBtn')} <ArrowRight className="w-4 h-4" />
                 </button>
               </form>
             </motion.div>
@@ -269,7 +271,7 @@ export default function KycPage() {
               <VerifiedBadge value={`PAN ${pan}`} />
               <form onSubmit={submitGst} className="space-y-4">
                 <label className="block">
-                  <span className="text-[11px] uppercase tracking-widest text-foreground/40">GSTIN (15 chars · skip if individual)</span>
+                  <span className="text-[11px] uppercase tracking-widest text-foreground/40">{t('kycPage.gstLabel')}</span>
                   <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
                     <Building2 className="w-4 h-4 text-amber-400" />
                     <input
@@ -287,14 +289,14 @@ export default function KycPage() {
                     disabled={gst.length < 15}
                     className="px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 text-black font-semibold text-sm inline-flex items-center gap-2"
                   >
-                    Verify GST <ArrowRight className="w-4 h-4" />
+                    {t('kycPage.verifyGstBtn')} <ArrowRight className="w-4 h-4" />
                   </button>
                   <button
                     type="button"
                     onClick={() => setStep('bank')}
                     className="text-sm text-foreground/40 hover:text-foreground"
                   >
-                    Skip — individual
+                    {t('kycPage.skipIndividual')}
                   </button>
                 </div>
               </form>
@@ -315,7 +317,7 @@ export default function KycPage() {
               <form onSubmit={runPennyDrop} className="space-y-4">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <label className="block">
-                    <span className="text-[11px] uppercase tracking-widest text-foreground/40">Account number</span>
+                    <span className="text-[11px] uppercase tracking-widest text-foreground/40">{t('kycPage.accountLabel')}</span>
                     <div className="mt-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
                       <input
                         value={accountNo}
@@ -326,7 +328,7 @@ export default function KycPage() {
                     </div>
                   </label>
                   <label className="block">
-                    <span className="text-[11px] uppercase tracking-widest text-foreground/40">IFSC</span>
+                    <span className="text-[11px] uppercase tracking-widest text-foreground/40">{t('kycPage.ifscLabel')}</span>
                     <div className="mt-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
                       <input
                         value={ifsc}
@@ -343,11 +345,11 @@ export default function KycPage() {
                   className="px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 text-black font-semibold text-sm inline-flex items-center gap-2"
                 >
                   {pennyDrop === 'running' ? <Pending /> : <Smartphone className="w-4 h-4" />}
-                  Run penny-drop verification
+                  {t('kycPage.pennyDropBtn')}
                 </button>
                 {pennyDrop === 'fail' && (
                   <div className="flex items-center gap-2 text-sm text-red-300">
-                    <X className="w-4 h-4" /> Bank refused penny-drop. Try a different account.
+                    <X className="w-4 h-4" /> {t('kycPage.pennyDropFail')}
                   </div>
                 )}
               </form>
@@ -364,22 +366,22 @@ export default function KycPage() {
               <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald-400/10 border border-emerald-400/30 mb-6">
                 <ShieldCheck className="w-10 h-10 text-emerald-400" />
               </div>
-              <h2 className="text-2xl font-bold mb-2">All verified</h2>
+              <h2 className="text-2xl font-bold mb-2">{t('kycPage.doneTitle')}</h2>
               <p className="text-foreground/50 mb-6 max-w-md mx-auto">
-                Account holder confirmed as <span className="text-foreground">{accountHolder}</span>.
-                Your KYC is now linked to every transaction on AquaI.
+                {t('kycPage.accountHolderPrefix')} <span className="text-foreground">{accountHolder}</span>.
+                {' '}{t('kycPage.kycLinked')}
               </p>
               <div className="grid sm:grid-cols-2 gap-3 max-w-md mx-auto text-left mb-8">
                 <VerifiedBadge value={`Aadhaar XXXX ${aadhaar.slice(-4)}`} />
                 <VerifiedBadge value={`PAN ${pan}`} />
                 {gstVerified && <VerifiedBadge value="GST" />}
-                <VerifiedBadge value="Bank · penny-drop OK" />
+                <VerifiedBadge value={t('kycPage.bankBadge')} />
               </div>
               <Link
                 to="/aquaai#dashboard"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 text-black font-semibold text-sm"
               >
-                Continue to dashboard <ArrowRight className="w-4 h-4" />
+                {t('kycPage.continueDashboard')} <ArrowRight className="w-4 h-4" />
               </Link>
             </motion.div>
           )}

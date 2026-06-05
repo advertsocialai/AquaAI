@@ -17,7 +17,8 @@ const NAV = [
 ];
 
 export function Header() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isIndic = ['te', 'hi', 'bn', 'od'].includes(i18n.language);
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -97,7 +98,7 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-3">
             <span className="text-lg font-bold text-white tracking-wider">
-              AQUA<span className="font-light"> RUDRA</span>
+              {isIndic ? t('brand.wordmark') : <>AQUA<span className="font-light"> RUDRA</span></>}
             </span>
           </Link>
 

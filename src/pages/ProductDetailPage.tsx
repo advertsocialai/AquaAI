@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Phone } from 'lucide-react';
 import { toast } from 'sonner';
 import { MobileBackBar } from '@/components/mobile/MobileChrome';
@@ -21,6 +22,7 @@ function Field({ label, value }: { label: string; value: string }) {
 }
 
 export default function ProductDetailPage() {
+  const { t } = useTranslation();
   const { productId } = useParams<{ productId: string }>();
   const navigate = useNavigate();
   const product = productId ? getAquaProduct(productId) : undefined;
@@ -35,11 +37,11 @@ export default function ProductDetailPage() {
   if (!product) {
     return (
       <div className="min-h-screen bg-neutral-50 text-neutral-900">
-        <MobileBackBar title="Product Details" />
+        <MobileBackBar title={t('productDetailPage.backBarTitle')} />
         <main className="max-w-md mx-auto px-5 pt-16 text-center">
-          <p className="text-neutral-500">This product is no longer available.</p>
+          <p className="text-neutral-500">{t('productDetailPage.notAvailable')}</p>
           <Link to="/shop" className="mt-4 inline-block text-rose-600 font-semibold">
-            Back to Aqua Products
+            {t('productDetailPage.backToProducts')}
           </Link>
         </main>
       </div>
@@ -50,21 +52,21 @@ export default function ProductDetailPage() {
     e.preventDefault();
     const qty = Number(quantity);
     if (!qty || qty <= 0) {
-      toast.error('Please enter a valid quantity.');
+      toast.error(t('productDetailPage.invalidQuantity'));
       return;
     }
     if (!delivery) {
-      toast.error('Please choose a delivery option.');
+      toast.error(t('productDetailPage.chooseDelivery'));
       return;
     }
-    toast.success('Request submitted — our team will contact you shortly.');
+    toast.success(t('productDetailPage.requestSubmitted'));
     setQuantity('');
     setDelivery('');
   }
 
   return (
     <div className="min-h-screen bg-neutral-50 text-neutral-900">
-      <MobileBackBar title="Product Details" />
+      <MobileBackBar title={t('productDetailPage.backBarTitle')} />
 
       <main className="max-w-md mx-auto px-5 pt-5 pb-16">
         {/* Product summary card */}
@@ -79,17 +81,17 @@ export default function ProductDetailPage() {
           </div>
 
           <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-5">
-            <Field label="Category" value={product.category} />
-            <Field label="Price" value={`MRP ${product.mrp} /-`} />
+            <Field label={t('productDetailPage.categoryLabel')} value={product.category} />
+            <Field label={t('productDetailPage.priceLabel')} value={t('productDetailPage.priceValue', { mrp: product.mrp })} />
             <div className="col-span-2">
-              <Field label="Purpose" value={product.purpose} />
+              <Field label={t('productDetailPage.purposeLabel')} value={product.purpose} />
             </div>
           </div>
         </section>
 
         {/* Order form */}
         <form onSubmit={handleSubmit} className="mt-8 space-y-5">
-          <h2 className="text-base font-medium text-neutral-700">Enter Details</h2>
+          <h2 className="text-base font-medium text-neutral-700">{t('productDetailPage.enterDetails')}</h2>
 
           <input
             type="number"
@@ -97,21 +99,21 @@ export default function ProductDetailPage() {
             min={1}
             value={quantity}
             onChange={(e) => setQuantity(e.target.value)}
-            placeholder="Enter Quantity (In Kg)"
-            aria-label="Enter Quantity (In Kg)"
+            placeholder={t('productDetailPage.quantityPlaceholder')}
+            aria-label={t('productDetailPage.quantityPlaceholder')}
             className="w-full rounded-2xl border border-neutral-200 bg-white py-4 px-5 text-lg placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-rose-500/40"
           />
 
           <Select value={delivery} onValueChange={(v) => setDelivery(v as Delivery)}>
             <SelectTrigger
-              aria-label="Delivery option"
+              aria-label={t('productDetailPage.deliveryAriaLabel')}
               className="w-full rounded-2xl border border-neutral-200 bg-white py-4 px-5 h-auto text-lg data-[placeholder]:text-neutral-500"
             >
-              <SelectValue placeholder="Select delivery option" />
+              <SelectValue placeholder={t('productDetailPage.deliveryPlaceholder')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="immediate" className="text-lg py-3">Immediate</SelectItem>
-              <SelectItem value="later" className="text-lg py-3">Later</SelectItem>
+              <SelectItem value="immediate" className="text-lg py-3">{t('productDetailPage.deliveryImmediate')}</SelectItem>
+              <SelectItem value="later" className="text-lg py-3">{t('productDetailPage.deliveryLater')}</SelectItem>
             </SelectContent>
           </Select>
 
@@ -119,7 +121,7 @@ export default function ProductDetailPage() {
             type="submit"
             className="w-full rounded-2xl bg-rose-600 hover:bg-rose-500 text-white font-semibold py-4 text-lg active:scale-[0.99] transition"
           >
-            Submit
+            {t('productDetailPage.submit')}
           </button>
 
           <Link
@@ -127,7 +129,7 @@ export default function ProductDetailPage() {
             className="flex items-center justify-center gap-2 w-full rounded-2xl border border-rose-200 text-rose-600 font-semibold py-4 text-lg active:scale-[0.99] transition"
           >
             <Phone className="w-5 h-5" />
-            Contact Us
+            {t('productDetailPage.contactUs')}
           </Link>
         </form>
       </main>

@@ -161,3 +161,25 @@
 .animate-orbit1-glow { animation: orbit1Glow 4s ease-in-out infinite; }
 .animate-orbit2-glow { animation: orbit2Glow 4s ease-in-out infinite 0.6s; }
 .animate-orbit3-glow { animation: orbit3Glow 4s ease-in-out infinite 1.2s; }
+
+/* ------------------------------------------------------------------ */
+/* Indic-script alignment.                                            */
+/* Telugu/Hindi/Bengali/Odia carry stacked vowel signs (matras) above */
+/* and below the base glyph that clip and crowd under the tight Latin  */
+/* line-heights used across the UI. When one of these languages is     */
+/* active (html[lang] is kept in sync in src/lib/i18n.ts) we relax     */
+/* heading line-height and add a hair of bottom space so descenders    */
+/* and gradient-clipped text render cleanly everywhere — consistently  */
+/* across all pages, not per-component.                                */
+/* ------------------------------------------------------------------ */
+:is(html:lang(te), html:lang(hi), html:lang(bn), html:lang(od)) :is(h1, h2, h3, h4, h5, h6) {
+  line-height: 1.3;
+  padding-bottom: 0.06em;
+}
+
+/* Multi-line body text: keep comfortable leading so wrapped Telugu/Indic */
+/* lines don't overlap. Limited to text-heavy elements so single-line UI   */
+/* controls (buttons, badges, inputs) keep their intended fixed heights.   */
+:is(html:lang(te), html:lang(hi), html:lang(bn), html:lang(od)) :is(p, li) {
+  line-height: 1.55;
+}

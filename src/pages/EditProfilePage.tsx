@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Loader2, MapPin, Crosshair, Camera } from 'lucide-react';
 import { toast } from 'sonner';
 import { useAuth } from '@/lib/auth';
@@ -38,7 +39,8 @@ const triggerClass =
   'w-full rounded-2xl border border-neutral-200 bg-white py-3.5 px-4 h-auto text-lg data-[placeholder]:text-neutral-400';
 
 export default function EditProfilePage() {
-  useEffect(() => { document.title = 'Edit Profile — Aqua Rudra'; }, []);
+  const { t } = useTranslation();
+  useEffect(() => { document.title = t('editProfilePage.docTitle'); }, [t]);
   const navigate = useNavigate();
   const { user, loading } = useAuth();
 
@@ -114,7 +116,7 @@ export default function EditProfilePage() {
 
   function useMyLocation() {
     if (!('geolocation' in navigator)) {
-      toast.error('Location is not supported on this device.');
+      toast.error(t('editProfilePage.toastGeoUnsupported'));
       return;
     }
     setLocating(true);
@@ -123,11 +125,11 @@ export default function EditProfilePage() {
         setLat(pos.coords.latitude);
         setLng(pos.coords.longitude);
         setLocating(false);
-        toast.success('Location captured.');
+        toast.success(t('editProfilePage.toastLocationCaptured'));
       },
       () => {
         setLocating(false);
-        toast.error('Could not get your location. Allow location access and try again.');
+        toast.error(t('editProfilePage.toastLocationFailed'));
       },
       { enableHighAccuracy: true, timeout: 10000 },
     );
@@ -137,19 +139,19 @@ export default function EditProfilePage() {
     const file = e.target.files?.[0];
     e.target.value = '';
     if (!file || !user || !supabase) return;
-    if (!file.type.startsWith('image/')) { toast.error('Please choose an image file.'); return; }
-    if (file.size > 5 * 1024 * 1024) { toast.error('Image must be under 5 MB.'); return; }
+    if (!file.type.startsWith('image/')) { toast.error(t('editProfilePage.toastChooseImage')); return; }
+    if (file.size > 5 * 1024 * 1024) { toast.error(t('editProfilePage.toastImageTooLarge')); return; }
     setUploading(true);
     const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
     const path = `${user.id}/avatar.${ext}`;
     const { error: upErr } = await supabase.storage
       .from('avatars')
       .upload(path, file, { upsert: true, contentType: file.type });
-    if (upErr) { setUploading(false); toast.error('Upload failed. Please try again.'); return; }
+    if (upErr) { setUploading(false); toast.error(t('editProfilePage.toastUploadFailed')); return; }
     const { data } = supabase.storage.from('avatars').getPublicUrl(path);
     setAvatarUrl(`${data.publicUrl}?t=${Date.now()}`);
     setUploading(false);
-    toast.success('Photo updated.');
+    toast.success(t('editProfilePage.toastPhotoUpdated'));
   }
 
   async function handleResetPassword() {
@@ -159,14 +161,16 @@ export default function EditProfilePage() {
       redirectTo: `${window.location.origin}/forgot-password`,
     });
     toast[error ? 'error' : 'success'](
-      error ? 'Could not send reset link.' : `Password reset link sent to ${user.email}.`,
+      error
+        ? t('editProfilePage.toastResetFailed')
+        : t('editProfilePage.toastResetSent', { email: user.email }),
     );
   }
 
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
     if (!user || !supabase) return;
-    if (!fullName.trim()) { toast.error('Please enter your name.'); return; }
+    if (!fullName.trim()) { toast.error(t('editProfilePage.toastEnterName')); return; }
     setSaving(true);
     const { error } = await supabase.from('profiles').upsert({
       id: user.id,
@@ -190,8 +194,8 @@ export default function EditProfilePage() {
     });
     await supabase.auth.updateUser({ data: { lang, name: fullName.trim() } });
     setSaving(false);
-    if (error) { toast.error('Could not save. Please try again.'); return; }
-    toast.success('Profile updated.');
+    if (error) { toast.error(t('editProfilePage.toastSaveFailed')); return; }
+    toast.success(t('editProfilePage.toastProfileUpdated'));
     navigate('/profile/details');
   }
 
@@ -203,12 +207,12 @@ export default function EditProfilePage() {
     );
   }
 
-  const coordLabel = lat != null && lng != null ? `${lat.toFixed(5)}, ${lng.toFixed(5)}` : 'Not set';
+  const coordLabel = lat != null && lng != null ? `${lat.toFixed(5)}, ${lng.toFixed(5)}` : t('editProfilePage.coordNotSet');
   const districtList = DISTRICTS_BY_STATE[stateName];
 
   return (
     <div className="min-h-screen bg-white text-neutral-900">
-      <MobileBackBar title="Edit Profile" />
+      <MobileBackBar title={t('editProfilePage.backBarTitle')} />
 
       <form onSubmit={handleSave} className="max-w-md mx-auto px-5 pt-4 pb-28 space-y-6">
         {/* Identity */}
@@ -217,110 +221,110 @@ export default function EditProfilePage() {
             type="button"
             onClick={() => fileRef.current?.click()}
             className="relative w-28 h-28 rounded-2xl bg-muted overflow-hidden flex items-center justify-center active:scale-[0.98] transition"
-            aria-label="Change profile photo"
+            aria-label={t('editProfilePage.changePhotoAria')}
           >
             {avatarUrl ? (
-              <img src={avatarUrl} alt="Profile" className="w-full h-full object-cover" />
+              <img src={avatarUrl} alt={t('editProfilePage.profileAlt')} className="w-full h-full object-cover" />
             ) : (
               <span className="text-4xl font-bold text-rose-600">{fullName.trim().charAt(0).toUpperCase() || 'A'}</span>
             )}
             <span className="absolute bottom-0 inset-x-0 bg-black/45 text-white flex items-center justify-center gap-1 py-1.5 text-xs">
               {uploading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Camera className="w-3.5 h-3.5" />}
-              {uploading ? 'Uploading' : 'Edit'}
+              {uploading ? t('editProfilePage.uploading') : t('editProfilePage.edit')}
             </span>
           </button>
           <input ref={fileRef} type="file" accept="image/*" onChange={handlePhoto} className="hidden" />
-          <div className="mt-3 text-2xl font-bold">{fullName || 'Your name'}</div>
+          <div className="mt-3 text-2xl font-bold">{fullName || t('editProfilePage.yourNamePlaceholder')}</div>
           {mobile && <div className="text-neutral-500">{mobile}</div>}
           <button type="button" onClick={handleResetPassword} className="mt-1 text-rose-600 font-medium hover:underline">
-            Reset Password
+            {t('editProfilePage.resetPassword')}
           </button>
         </div>
 
         {/* Core fields */}
-        <Labeled label="Enter name" required>
-          <input className={inputClass} value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Your name" />
+        <Labeled label={t('editProfilePage.labelName')} required>
+          <input className={inputClass} value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder={t('editProfilePage.phName')} />
         </Labeled>
 
-        <Labeled label="Enter address" required>
-          <textarea className={`${inputClass} min-h-[80px] resize-none`} value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Enter address" />
+        <Labeled label={t('editProfilePage.labelAddress')} required>
+          <textarea className={`${inputClass} min-h-[80px] resize-none`} value={address} onChange={(e) => setAddress(e.target.value)} placeholder={t('editProfilePage.phAddress')} />
         </Labeled>
 
-        <Labeled label="Email">
-          <input type="email" className={inputClass} value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter a valid email (Optional)" />
+        <Labeled label={t('editProfilePage.labelEmail')}>
+          <input type="email" className={inputClass} value={email} onChange={(e) => setEmail(e.target.value)} placeholder={t('editProfilePage.phEmail')} />
         </Labeled>
 
-        <Labeled label="City/Village/Town Name" required>
-          <input className={inputClass} value={village} onChange={(e) => setVillage(e.target.value)} placeholder="City/Village/Town Name" />
+        <Labeled label={t('editProfilePage.labelVillage')} required>
+          <input className={inputClass} value={village} onChange={(e) => setVillage(e.target.value)} placeholder={t('editProfilePage.phVillage')} />
         </Labeled>
 
-        <Labeled label="Select role" required>
+        <Labeled label={t('editProfilePage.labelRole')} required>
           <Select value={roleSel} onValueChange={setRoleSel}>
-            <SelectTrigger className={triggerClass}><SelectValue placeholder="Please select role" /></SelectTrigger>
+            <SelectTrigger className={triggerClass}><SelectValue placeholder={t('editProfilePage.phRole')} /></SelectTrigger>
             <SelectContent>
               {PROFILE_ROLES.map((r) => <SelectItem key={r} value={r} className="text-lg py-3">{r}</SelectItem>)}
             </SelectContent>
           </Select>
         </Labeled>
 
-        <Labeled label="Select state" required>
+        <Labeled label={t('editProfilePage.labelState')} required>
           <Select value={stateName} onValueChange={onStateChange}>
-            <SelectTrigger className={triggerClass}><SelectValue placeholder="Please select state" /></SelectTrigger>
+            <SelectTrigger className={triggerClass}><SelectValue placeholder={t('editProfilePage.phState')} /></SelectTrigger>
             <SelectContent>
               {INDIAN_STATES.map((s) => <SelectItem key={s} value={s} className="text-lg py-3">{s}</SelectItem>)}
             </SelectContent>
           </Select>
         </Labeled>
 
-        <Labeled label="Select the district" required>
+        <Labeled label={t('editProfilePage.labelDistrict')} required>
           {districtList ? (
             <Select value={district} onValueChange={setDistrict}>
-              <SelectTrigger className={triggerClass}><SelectValue placeholder="Please select district" /></SelectTrigger>
+              <SelectTrigger className={triggerClass}><SelectValue placeholder={t('editProfilePage.phDistrictSelect')} /></SelectTrigger>
               <SelectContent>
                 {districtList.map((d) => <SelectItem key={d} value={d} className="text-lg py-3">{d}</SelectItem>)}
               </SelectContent>
             </Select>
           ) : (
-            <input className={inputClass} value={district} onChange={(e) => setDistrict(e.target.value)} placeholder="Enter district" />
+            <input className={inputClass} value={district} onChange={(e) => setDistrict(e.target.value)} placeholder={t('editProfilePage.phDistrictInput')} />
           )}
         </Labeled>
 
         {/* Additional details */}
-        <h2 className="text-lg text-neutral-700 pt-2">More details</h2>
+        <h2 className="text-lg text-neutral-700 pt-2">{t('editProfilePage.moreDetails')}</h2>
 
         <div className="grid grid-cols-2 gap-4">
-          <Labeled label="Date of Birth">
+          <Labeled label={t('editProfilePage.labelDob')}>
             <input type="date" className={inputClass} value={dob} onChange={(e) => setDob(e.target.value)} />
           </Labeled>
-          <Labeled label="Mobile">
-            <input type="tel" inputMode="numeric" className={inputClass} value={mobile} onChange={(e) => setMobile(e.target.value)} placeholder="Mobile number" />
+          <Labeled label={t('editProfilePage.labelMobile')}>
+            <input type="tel" inputMode="numeric" className={inputClass} value={mobile} onChange={(e) => setMobile(e.target.value)} placeholder={t('editProfilePage.phMobile')} />
           </Labeled>
-          <Labeled label="WhatsApp / Alternate">
-            <input type="tel" inputMode="numeric" className={inputClass} value={altMobile} onChange={(e) => setAltMobile(e.target.value)} placeholder="WhatsApp number" />
+          <Labeled label={t('editProfilePage.labelAltMobile')}>
+            <input type="tel" inputMode="numeric" className={inputClass} value={altMobile} onChange={(e) => setAltMobile(e.target.value)} placeholder={t('editProfilePage.phAltMobile')} />
           </Labeled>
-          <Labeled label="Gender">
+          <Labeled label={t('editProfilePage.labelGender')}>
             <Select value={gender} onValueChange={setGender}>
-              <SelectTrigger className={triggerClass}><SelectValue placeholder="Select" /></SelectTrigger>
+              <SelectTrigger className={triggerClass}><SelectValue placeholder={t('editProfilePage.phGender')} /></SelectTrigger>
               <SelectContent>
-                <SelectItem value="male" className="text-lg py-3">Male</SelectItem>
-                <SelectItem value="female" className="text-lg py-3">Female</SelectItem>
-                <SelectItem value="other" className="text-lg py-3">Other</SelectItem>
+                <SelectItem value="male" className="text-lg py-3">{t('editProfilePage.genderMale')}</SelectItem>
+                <SelectItem value="female" className="text-lg py-3">{t('editProfilePage.genderFemale')}</SelectItem>
+                <SelectItem value="other" className="text-lg py-3">{t('editProfilePage.genderOther')}</SelectItem>
               </SelectContent>
             </Select>
           </Labeled>
-          <Labeled label="Mandal">
-            <input className={inputClass} value={mandal} onChange={(e) => setMandal(e.target.value)} placeholder="Mandal" />
+          <Labeled label={t('editProfilePage.labelMandal')}>
+            <input className={inputClass} value={mandal} onChange={(e) => setMandal(e.target.value)} placeholder={t('editProfilePage.phMandal')} />
           </Labeled>
-          <Labeled label="Pincode">
-            <input inputMode="numeric" maxLength={6} className={inputClass} value={pincode} onChange={(e) => setPincode(e.target.value)} placeholder="6-digit PIN" />
+          <Labeled label={t('editProfilePage.labelPincode')}>
+            <input inputMode="numeric" maxLength={6} className={inputClass} value={pincode} onChange={(e) => setPincode(e.target.value)} placeholder={t('editProfilePage.phPincode')} />
           </Labeled>
         </div>
 
-        <Labeled label="Aadhaar / KYC ID">
-          <input inputMode="numeric" className={inputClass} value={kycId} onChange={(e) => setKycId(e.target.value)} placeholder="Aadhaar / KYC reference" />
+        <Labeled label={t('editProfilePage.labelKyc')}>
+          <input inputMode="numeric" className={inputClass} value={kycId} onChange={(e) => setKycId(e.target.value)} placeholder={t('editProfilePage.phKyc')} />
         </Labeled>
 
-        <Labeled label="Preferred Language">
+        <Labeled label={t('editProfilePage.labelLanguage')}>
           <Select value={lang} onValueChange={setLang}>
             <SelectTrigger className={triggerClass}><SelectValue /></SelectTrigger>
             <SelectContent>
@@ -333,7 +337,7 @@ export default function EditProfilePage() {
         <div className="rounded-2xl border border-neutral-200 p-4">
           <div className="flex items-center gap-2 text-neutral-700">
             <MapPin className="w-5 h-5 text-rose-600" />
-            <span className="font-medium">GPS Location</span>
+            <span className="font-medium">{t('editProfilePage.gpsLocation')}</span>
           </div>
           <p className="mt-1 text-sm text-neutral-500">{coordLabel}</p>
           <button
@@ -343,7 +347,7 @@ export default function EditProfilePage() {
             className="mt-3 inline-flex items-center gap-2 rounded-xl border border-rose-200 text-rose-600 font-semibold px-4 py-2.5 active:scale-[0.99] transition disabled:opacity-50"
           >
             {locating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Crosshair className="w-4 h-4" />}
-            Use my location
+            {t('editProfilePage.useMyLocation')}
           </button>
         </div>
 
@@ -353,7 +357,7 @@ export default function EditProfilePage() {
           className="w-full rounded-2xl bg-rose-600 hover:bg-rose-500 text-white font-semibold py-4 text-lg active:scale-[0.99] transition disabled:opacity-50 inline-flex items-center justify-center gap-2"
         >
           {saving && <Loader2 className="w-5 h-5 animate-spin" />}
-          Save
+          {t('editProfilePage.save')}
         </button>
       </form>
     </div>

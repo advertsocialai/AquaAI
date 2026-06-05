@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Header } from '@/components/layout/Header';
@@ -145,6 +146,7 @@ const ARTICLES: Article[] = [
 ];
 
 export default function KnowledgeArticlePage() {
+  const { t } = useTranslation();
   const { slug = '' } = useParams<{ slug: string }>();
   const article = useMemo(() => ARTICLES.find((a) => a.slug === slug), [slug]);
   const related = useMemo(
@@ -153,18 +155,18 @@ export default function KnowledgeArticlePage() {
   );
 
   useEffect(() => {
-    document.title = article ? `${article.title} — Aqua Rudra` : 'Article not found — Aqua Rudra';
-  }, [article]);
+    document.title = article ? `${article.title} — Aqua Rudra` : t('knowledgeArticlePage.docTitleNotFound');
+  }, [article, t]);
 
   if (!article) {
     return (
       <div className="min-h-screen bg-background text-foreground">
         <Header />
         <main className="container mx-auto px-6 lg:px-8 py-32 text-center">
-          <h1 className="text-3xl font-bold mb-2">Article not found</h1>
-          <p className="text-foreground/50 mb-8">We couldn't find the article you're looking for.</p>
+          <h1 className="text-3xl font-bold mb-2">{t('knowledgeArticlePage.notFoundTitle')}</h1>
+          <p className="text-foreground/50 mb-8">{t('knowledgeArticlePage.notFoundBody')}</p>
           <Link to="/knowledge" className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border hover:bg-muted text-sm">
-            <ArrowLeft className="w-4 h-4" /> Back to Knowledge Hub
+            <ArrowLeft className="w-4 h-4" /> {t('knowledgeArticlePage.backToHub')}
           </Link>
         </main>
         <Footer />
@@ -183,13 +185,13 @@ export default function KnowledgeArticlePage() {
             to="/knowledge"
             className="inline-flex items-center gap-2 text-xs text-foreground/50 hover:text-foreground tracking-widest uppercase mb-6"
           >
-            <ArrowLeft className="w-3 h-3" /> Knowledge Hub
+            <ArrowLeft className="w-3 h-3" /> {t('knowledgeArticlePage.knowledgeHub')}
           </Link>
           <div className="flex items-center gap-3 mb-4 text-[11px]">
             <span className="px-2 py-0.5 rounded-full border border-teal-400/30 bg-teal-400/10 text-teal-300 uppercase tracking-wide">
               {article.category}
             </span>
-            <span className="inline-flex items-center gap-1 text-foreground/40"><Clock className="w-3 h-3" /> {article.readMin} min read</span>
+            <span className="inline-flex items-center gap-1 text-foreground/40"><Clock className="w-3 h-3" /> {t('knowledgeArticlePage.minRead', { count: article.readMin })}</span>
             <span className="text-foreground/20">·</span>
             <span className="text-foreground/40">{new Date(article.publishedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
           </div>
@@ -254,13 +256,13 @@ export default function KnowledgeArticlePage() {
 
           {/* Share strip */}
           <div className="mt-12 pt-6 border-t border-border flex flex-wrap items-center justify-between gap-3">
-            <div className="text-[11px] text-foreground/30 uppercase tracking-widest">Found this useful?</div>
+            <div className="text-[11px] text-foreground/30 uppercase tracking-widest">{t('knowledgeArticlePage.foundUseful')}</div>
             <div className="flex items-center gap-2">
               <button className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-border bg-card hover:bg-muted text-xs text-foreground/70">
-                <Share2 className="w-3.5 h-3.5" /> Share
+                <Share2 className="w-3.5 h-3.5" /> {t('knowledgeArticlePage.share')}
               </button>
               <button className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-border bg-card hover:bg-muted text-xs text-foreground/70">
-                <Bookmark className="w-3.5 h-3.5" /> Save
+                <Bookmark className="w-3.5 h-3.5" /> {t('knowledgeArticlePage.save')}
               </button>
             </div>
           </div>
@@ -271,8 +273,8 @@ export default function KnowledgeArticlePage() {
       {related.length > 0 && (
         <section className="py-20 border-t border-border mt-16 bg-card">
           <div className="container mx-auto px-6 lg:px-8 max-w-5xl">
-            <div className="text-xs text-teal-300 uppercase tracking-widest mb-2">Related reading</div>
-            <h2 className="text-2xl font-bold mb-8">More from {article.category}</h2>
+            <div className="text-xs text-teal-300 uppercase tracking-widest mb-2">{t('knowledgeArticlePage.relatedReading')}</div>
+            <h2 className="text-2xl font-bold mb-8">{t('knowledgeArticlePage.moreFrom', { category: article.category })}</h2>
             <div className="grid sm:grid-cols-3 gap-4">
               {related.map((r) => (
                 <Link
@@ -289,7 +291,7 @@ export default function KnowledgeArticlePage() {
                       {r.title}
                     </div>
                     <div className="text-[11px] text-foreground/40 mt-2 inline-flex items-center gap-1">
-                      <Clock className="w-3 h-3" /> {r.readMin} min read
+                      <Clock className="w-3 h-3" /> {t('knowledgeArticlePage.minRead', { count: r.readMin })}
                     </div>
                   </div>
                 </Link>
@@ -300,7 +302,7 @@ export default function KnowledgeArticlePage() {
                 to="/knowledge"
                 className="inline-flex items-center gap-2 text-sm text-teal-300 hover:text-teal-200"
               >
-                <BookOpen className="w-4 h-4" /> Browse all articles <ArrowRight className="w-4 h-4" />
+                <BookOpen className="w-4 h-4" /> {t('knowledgeArticlePage.browseAll')} <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>

@@ -6,6 +6,7 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { AnnouncementDialog } from '@/components/AnnouncementDialog';
 import { WeatherTimeWidget } from '@/components/WeatherTimeWidget';
+import { ScanScreen } from '@/components/home/ScanScreen';
 import {
   BuiltForRoles, Testimonials,
   MobileAppCta, FaqSection, FinalCta,
@@ -40,7 +41,10 @@ const MODULES: { icon: ElementType; key: string; accent: string; to?: string; la
 ];
 
 const Index = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  // Indic scripts (Telugu/Hindi/Bengali/Odia) have stacked vowel signs that clip
+  // with tight heading line-heights — give them more leading.
+  const isIndic = ['te', 'hi', 'bn', 'od'].includes(i18n.language);
   useEffect(() => { document.title = 'Aqua Rudra — Aquaculture Intelligence'; }, []);
 
   return (
@@ -57,7 +61,7 @@ const Index = () => {
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl">
             <motion.h1
-              className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.05] mb-8"
+              className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-8 ${isIndic ? 'leading-[1.3] pb-1' : 'leading-[1.05]'}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
@@ -100,6 +104,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Scan & Screen — camera screening (screening, not diagnosis) */}
+      <ScanScreen />
 
       {/* Live time + weather */}
       <section className="border-t border-border py-10">

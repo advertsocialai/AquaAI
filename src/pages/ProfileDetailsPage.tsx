@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ChevronLeft, Pencil, Loader2 } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { supabase } from '@/lib/supabase';
@@ -34,6 +35,7 @@ function SectionHeader({ children }: { children: React.ReactNode }) {
 }
 
 export default function ProfileDetailsPage() {
+  const { t } = useTranslation();
   useEffect(() => { document.title = 'Profile — Aqua Rudra'; }, []);
   const navigate = useNavigate();
   const { user, loading } = useAuth();
@@ -70,7 +72,7 @@ export default function ProfileDetailsPage() {
 
   // Prefer the live profile row; fall back to auth metadata while it loads.
   const m = user.user_metadata ?? {};
-  const name = profile?.full_name || (m.name as string | undefined) || user.email?.split('@')[0] || 'Member';
+  const name = profile?.full_name || (m.name as string | undefined) || user.email?.split('@')[0] || t('profileDetailsPage.memberFallback');
   const pondsCount = String(profile?.ponds_count ?? ponds.length ?? 0);
   const dob = profile?.dob || (m.dob as string | undefined) || '---';
   const location = profile?.location || (m.location as string | undefined) || '---';
@@ -84,7 +86,7 @@ export default function ProfileDetailsPage() {
     profile?.latitude != null && profile?.longitude != null
       ? `${profile.latitude.toFixed(5)}, ${profile.longitude.toFixed(5)}`
       : '---';
-  const LANG_LABELS: Record<string, string> = { en: 'English', te: 'Telugu', hi: 'Hindi' };
+  const LANG_LABELS: Record<string, string> = { en: t('profileDetailsPage.langEnglish'), te: t('profileDetailsPage.langTelugu'), hi: t('profileDetailsPage.langHindi') };
   const language = LANG_LABELS[(m.lang as string) ?? ''] ?? '---';
   const whatsapp = profile?.alt_mobile || '---';
   const gender = profile?.gender ? profile.gender[0].toUpperCase() + profile.gender.slice(1) : '---';
@@ -96,61 +98,61 @@ export default function ProfileDetailsPage() {
       <header className="sticky top-0 z-30 bg-white/95 backdrop-blur">
         <div className="max-w-md mx-auto px-5 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <button onClick={() => navigate(-1)} aria-label="Back" className="p-1 -ml-1">
+            <button onClick={() => navigate(-1)} aria-label={t('profileDetailsPage.back')} className="p-1 -ml-1">
               <ChevronLeft className="w-7 h-7 text-neutral-900" />
             </button>
-            <h1 className="text-2xl font-bold">Profile</h1>
+            <h1 className="text-2xl font-bold">{t('profileDetailsPage.title')}</h1>
           </div>
           <Link to="/profile/edit" className="inline-flex items-center gap-2 text-rose-600 font-semibold">
-            <Pencil className="w-5 h-5" /> Edit Profile
+            <Pencil className="w-5 h-5" /> {t('profileDetailsPage.editProfile')}
           </Link>
         </div>
       </header>
 
       <main className="max-w-md mx-auto px-5 pt-4 pb-28 space-y-7">
-        <SectionHeader>Personal Details</SectionHeader>
+        <SectionHeader>{t('profileDetailsPage.personalDetails')}</SectionHeader>
 
-        <Field label="Full Name" value={name} />
+        <Field label={t('profileDetailsPage.fullName')} value={name} />
 
         <div className="grid grid-cols-2 gap-6">
-          <Field label="No Of Ponds/Tanks" value={pondsCount} />
-          <Field label="Date of Birth" value={dob} />
+          <Field label={t('profileDetailsPage.noOfPonds')} value={pondsCount} />
+          <Field label={t('profileDetailsPage.dateOfBirth')} value={dob} />
         </div>
 
         <div className="grid grid-cols-2 gap-6">
-          <Field label="Mobile" value={mobile} />
-          <Field label="WhatsApp / Alternate" value={whatsapp} />
-          <Field label="Gender" value={gender} />
-          <Field label="Preferred Language" value={language} />
+          <Field label={t('profileDetailsPage.mobile')} value={mobile} />
+          <Field label={t('profileDetailsPage.whatsappAlternate')} value={whatsapp} />
+          <Field label={t('profileDetailsPage.gender')} value={gender} />
+          <Field label={t('profileDetailsPage.preferredLanguage')} value={language} />
         </div>
 
-        <Field label="Aadhaar / KYC ID" value={kycMasked} />
+        <Field label={t('profileDetailsPage.aadhaarKyc')} value={kycMasked} />
 
-        <SectionHeader>Location</SectionHeader>
+        <SectionHeader>{t('profileDetailsPage.location')}</SectionHeader>
 
-        <Field label="Address" value={location} />
+        <Field label={t('profileDetailsPage.address')} value={location} />
 
         <div className="grid grid-cols-2 gap-6">
-          <Field label="Village" value={village} />
-          <Field label="Mandal" value={mandal} />
-          <Field label="District" value={district} />
-          <Field label="State" value={stateName} />
-          <Field label="Pincode" value={pincode} />
-          <Field label="GPS (lat, long)" value={coords} />
+          <Field label={t('profileDetailsPage.village')} value={village} />
+          <Field label={t('profileDetailsPage.mandal')} value={mandal} />
+          <Field label={t('profileDetailsPage.district')} value={district} />
+          <Field label={t('profileDetailsPage.state')} value={stateName} />
+          <Field label={t('profileDetailsPage.pincode')} value={pincode} />
+          <Field label={t('profileDetailsPage.gps')} value={coords} />
         </div>
 
-        <SectionHeader>Pond/Tank Details</SectionHeader>
+        <SectionHeader>{t('profileDetailsPage.pondTankDetails')}</SectionHeader>
 
         {ponds.length === 0 ? (
-          <p className="text-neutral-400">No ponds/tanks added yet.</p>
+          <p className="text-neutral-400">{t('profileDetailsPage.noPondsYet')}</p>
         ) : (
           <div className="space-y-3">
             {ponds.map((p) => (
               <div key={p.id} className="rounded-2xl border border-neutral-200 p-4">
                 <div className="text-lg font-semibold text-neutral-900">{p.name}</div>
                 <div className="mt-0.5 text-sm text-neutral-500">
-                  {[p.area_sqm != null && `${p.area_sqm} m²`, p.depth_m != null && `${p.depth_m} m deep`]
-                    .filter(Boolean).join(' · ') || 'No size details'}
+                  {[p.area_sqm != null && `${p.area_sqm} m²`, p.depth_m != null && t('profileDetailsPage.depthDeep', { depth: p.depth_m })]
+                    .filter(Boolean).join(' · ') || t('profileDetailsPage.noSizeDetails')}
                 </div>
               </div>
             ))}

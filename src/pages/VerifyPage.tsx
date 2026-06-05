@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import {
   ShieldCheck, AlertTriangle, Loader2, Fish, ArrowRight, MapPin,
   Clock, Building2, BadgeCheck, QrCode, FileText, ExternalLink,
@@ -32,13 +33,14 @@ const GRADE_COLOR: Record<Cert['grade'], string> = {
 };
 
 export default function VerifyPage() {
+  const { t } = useTranslation();
   const { certId = '' } = useParams<{ certId: string }>();
   const [result, setResult] = useState<VerifyResult>({ state: 'loading' });
 
   useEffect(() => {
-    document.title = `Verify ${certId} — AquaI`;
+    document.title = t('verifyPage.documentTitle', { certId });
     verifyCert(certId).then(setResult);
-  }, [certId]);
+  }, [certId, t]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -48,16 +50,15 @@ export default function VerifyPage() {
           <span className="font-semibold">AquaI</span>
         </Link>
         <div className="text-[11px] text-foreground/30 inline-flex items-center gap-1.5">
-          <QrCode className="w-3 h-3" /> Public verification
+          <QrCode className="w-3 h-3" /> {t('verifyPage.publicVerification')}
         </div>
       </header>
 
       <main className="container mx-auto px-6 lg:px-8 max-w-2xl pb-20">
-        <div className="text-[11px] uppercase tracking-widest text-foreground/30 mb-2">Certificate</div>
+        <div className="text-[11px] uppercase tracking-widest text-foreground/30 mb-2">{t('verifyPage.certificateLabel')}</div>
         <h1 className="text-2xl md:text-3xl font-bold mb-2 font-mono">{certId}</h1>
         <p className="text-sm text-foreground/50 mb-10">
-          AquaI QC certificates are HMAC-signed. This page recomputes the signature against
-          the canonical record and reports whether the document you have matches.
+          {t('verifyPage.heroDescription')}
         </p>
 
         {result.state === 'loading' && (
@@ -67,7 +68,7 @@ export default function VerifyPage() {
             className="flex items-center justify-center py-20 text-foreground/40 text-sm"
           >
             <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-            Recomputing signature…
+            {t('verifyPage.recomputingSignature')}
           </motion.div>
         )}
 
@@ -82,14 +83,13 @@ export default function VerifyPage() {
                 <AlertTriangle className="w-5 h-5 text-red-300" />
               </div>
               <div>
-                <div className="text-xs uppercase tracking-widest text-red-300">Not verified</div>
-                <div className="text-lg font-bold text-foreground">Signature does not match</div>
+                <div className="text-xs uppercase tracking-widest text-red-300">{t('verifyPage.notVerified')}</div>
+                <div className="text-lg font-bold text-foreground">{t('verifyPage.signatureDoesNotMatch')}</div>
               </div>
             </div>
-            <p className="text-sm text-foreground/70">{result.reason}</p>
+            <p className="text-sm text-foreground/70">{t('verifyPage.reasonNotFound')}</p>
             <p className="text-[11px] text-foreground/40 mt-4">
-              If you believe this certificate is genuine, the PDF may have been edited after
-              signing or the ID may have been mistyped. Contact the issuing hatchery.
+              {t('verifyPage.invalidHelp')}
             </p>
           </motion.div>
         )}
@@ -106,10 +106,10 @@ export default function VerifyPage() {
                   <ShieldCheck className="w-6 h-6 text-emerald-300" />
                 </div>
                 <div>
-                  <div className="text-xs uppercase tracking-widest text-emerald-300">Verified</div>
-                  <div className="text-xl font-bold text-foreground">Signature matches canonical record</div>
+                  <div className="text-xs uppercase tracking-widest text-emerald-300">{t('verifyPage.verified')}</div>
+                  <div className="text-xl font-bold text-foreground">{t('verifyPage.signatureMatches')}</div>
                   <div className="text-[11px] text-foreground/50 mt-1">
-                    HMAC-SHA256 over certId + batchId + QS + disease status + timestamp
+                    {t('verifyPage.hmacDetail')}
                   </div>
                 </div>
               </div>
@@ -119,7 +119,7 @@ export default function VerifyPage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <FileText className="w-4 h-4 text-teal-400" />
-                  <span className="text-sm font-semibold text-foreground">Certificate details</span>
+                  <span className="text-sm font-semibold text-foreground">{t('verifyPage.certificateDetails')}</span>
                 </div>
                 <div
                   className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide border"
@@ -134,39 +134,39 @@ export default function VerifyPage() {
               </div>
 
               <div className="grid sm:grid-cols-2 gap-2 text-xs">
-                <Row k="Hatchery" v={result.cert.hatcheryName} icon={Building2} />
-                <Row k="License"  v={result.cert.hatcheryLicense} icon={BadgeCheck} />
-                <Row k="Batch"    v={`${result.cert.batchId} · ${result.cert.species} ${result.cert.size}`} />
-                <Row k="Count"    v={result.cert.count} />
-                <Row k="QS score" v={`${result.cert.qsScore} / 100`} />
-                <Row k="Disease"  v={result.cert.diseaseStatus + (result.cert.diseaseName ? ` · ${result.cert.diseaseName}` : '')} />
-                <Row k="Captured" v={result.cert.capturedAt} icon={Clock} />
-                <Row k="GPS"      v={`${result.cert.gps.lat.toFixed(4)}, ${result.cert.gps.lng.toFixed(4)}`} icon={MapPin} />
-                <Row k="Signed by" v={result.cert.signedBy} />
+                <Row k={t('verifyPage.rowHatchery')} v={result.cert.hatcheryName} icon={Building2} />
+                <Row k={t('verifyPage.rowLicense')}  v={result.cert.hatcheryLicense} icon={BadgeCheck} />
+                <Row k={t('verifyPage.rowBatch')}    v={`${result.cert.batchId} · ${result.cert.species} ${result.cert.size}`} />
+                <Row k={t('verifyPage.rowCount')}    v={result.cert.count} />
+                <Row k={t('verifyPage.rowQsScore')} v={`${result.cert.qsScore} / 100`} />
+                <Row k={t('verifyPage.rowDisease')}  v={result.cert.diseaseStatus + (result.cert.diseaseName ? ` · ${result.cert.diseaseName}` : '')} />
+                <Row k={t('verifyPage.rowCaptured')} v={result.cert.capturedAt} icon={Clock} />
+                <Row k={t('verifyPage.rowGps')}      v={`${result.cert.gps.lat.toFixed(4)}, ${result.cert.gps.lng.toFixed(4)}`} icon={MapPin} />
+                <Row k={t('verifyPage.rowSignedBy')} v={result.cert.signedBy} />
               </div>
             </div>
 
             <div className="flex flex-wrap items-center gap-3 text-[11px] text-foreground/40">
               <span className="inline-flex items-center gap-1.5">
                 <ShieldCheck className="w-3 h-3 text-emerald-400" />
-                MPEDA-aligned format
+                {t('verifyPage.mpedaFormat')}
               </span>
               <span className="text-foreground/20">·</span>
-              <span>DPDPA-compliant data residency in Mumbai</span>
+              <span>{t('verifyPage.dpdpaResidency')}</span>
               <span className="text-foreground/20">·</span>
-              <span>OIE/WOAH disease nomenclature</span>
+              <span>{t('verifyPage.oieNomenclature')}</span>
             </div>
 
             <div className="pt-3 border-t border-border flex items-center justify-between text-xs">
               <Link to="/aquaai" className="text-teal-400 hover:underline inline-flex items-center gap-1">
-                Visit AquaI <ArrowRight className="w-3 h-3" />
+                {t('verifyPage.visitAquaI')} <ArrowRight className="w-3 h-3" />
               </Link>
               <a
                 href={`/verify/${certId}.json`}
                 onClick={(e) => e.preventDefault()}
                 className="text-foreground/40 hover:text-foreground inline-flex items-center gap-1"
               >
-                Raw JSON record <ExternalLink className="w-3 h-3" />
+                {t('verifyPage.rawJsonRecord')} <ExternalLink className="w-3 h-3" />
               </a>
             </div>
           </motion.div>

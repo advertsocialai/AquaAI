@@ -22,7 +22,7 @@ export function MobileTopBar({ title }: { title: string }) {
     <header className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-neutral-100">
       <div className="max-w-md mx-auto px-5 h-16 flex items-center justify-between">
         <span className="text-2xl font-bold text-neutral-900">{title}</span>
-        <a href="tel:+919705713399" className="text-rose-600 font-bold">Call us</a>
+        <a href="tel:+919553282325" className="text-rose-600 font-bold">Call us</a>
       </div>
     </header>
   );

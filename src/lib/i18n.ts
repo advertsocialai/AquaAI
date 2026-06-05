@@ -36,4 +36,12 @@ i18n
     },
   });
 
+// Keep <html lang> in sync with the active language so language-aware CSS
+// (e.g. extra line-height for Indic scripts) can target it.
+if (typeof document !== 'undefined') {
+  const applyLang = (lng: string) => { document.documentElement.lang = lng; };
+  applyLang(i18n.language || 'en');
+  i18n.on('languageChanged', applyLang);
+}
+
 export default i18n;

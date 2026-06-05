@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { Linkedin } from 'lucide-react';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
@@ -9,15 +10,16 @@ import founderOneImg from '@/assets/founder-one.jpg';
 const founders = [
   {
     name: "Chaitanya Gowtham",
-    role: "Founder",
-    bio: "Architect of scalable AI platforms enabling secure, cloud-native deployment of advanced machine learning and generative AI systems.\nExpert in building production-grade AI infrastructure that powers biomedical research, large-scale data processing, and intelligent automation.",
+    roleKey: "foundersPage.founderOneRole",
+    bioKey: "foundersPage.founderOneBio",
     image: founderOneImg,
     linkedin: "https://www.linkedin.com/in/chaitanya-gowtham/",
   },
 ];
 
 const FoundersPage = () => {
-  useEffect(() => { document.title = "Founders — Aqua Rudra"; }, []);
+  const { t } = useTranslation();
+  useEffect(() => { document.title = t('foundersPage.documentTitle'); }, [t]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -33,7 +35,7 @@ const FoundersPage = () => {
         <div className="container mx-auto px-6 lg:px-8 relative z-10 pb-24">
           <div className="max-w-2xl">
             <TextReveal
-              text="Our Founders"
+              text={t('foundersPage.heroTitle')}
               as="h1"
               className="text-5xl md:text-7xl font-bold text-foreground uppercase tracking-tight leading-[1.05] mb-6"
             />
@@ -43,7 +45,7 @@ const FoundersPage = () => {
               transition={{ duration: 1, delay: 0.5 }}
               className="text-base md:text-lg text-foreground/70 max-w-lg leading-relaxed"
             >
-              The team behind Aqua Rudra — engineers and researchers on a mission to decode aquaculture for India's farmers, hatcheries and government bodies.
+              {t('foundersPage.heroSubtitle')}
             </motion.p>
           </div>
         </div>
@@ -59,7 +61,7 @@ const FoundersPage = () => {
             transition={{ duration: 1 }}
             className="text-2xl md:text-3xl font-bold text-foreground uppercase tracking-tight leading-[1.2] mb-6"
           >
-            "We started Aqua Rudra because the biggest problems in Indian aquaculture won't be solved by incremental progress — they need a fundamentally different approach."
+            {t('foundersPage.visionQuote')}
           </motion.blockquote>
           <motion.p
             initial={{ opacity: 0 }}
@@ -68,7 +70,7 @@ const FoundersPage = () => {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="text-xs text-muted-foreground tracking-[0.3em] uppercase"
           >
-            — The Founders
+            {t('foundersPage.visionAttribution')}
           </motion.p>
         </div>
       </section>
@@ -95,10 +97,10 @@ const FoundersPage = () => {
                   {founder.name}
                 </h3>
                 <p className="text-xs text-muted-foreground uppercase tracking-[0.2em] mb-4">
-                  {founder.role}
+                  {t(founder.roleKey)}
                 </p>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                  {founder.bio}
+                  {t(founder.bioKey)}
                 </p>
                 <a
                   href={founder.linkedin}
@@ -107,7 +109,7 @@ const FoundersPage = () => {
                   className="inline-flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors tracking-wider uppercase"
                 >
                   <Linkedin className="w-4 h-4" strokeWidth={1.5} />
-                  LinkedIn
+                  {t('foundersPage.linkedin')}
                 </a>
               </motion.div>
             ))}

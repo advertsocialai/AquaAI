@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import {
   Camera, Microscope, Droplets, Bell, ArrowRight, MapPin, Calendar,
   TrendingUp, Activity, BookOpen,
@@ -11,6 +12,7 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { WeatherTimeWidget } from '@/components/WeatherTimeWidget';
 import { MarketPriceBoard } from '@/components/market/MarketPriceBoard';
+import { ScanScreen } from '@/components/home/ScanScreen';
 import { AnnouncementModal } from '@/components/dashboard/AnnouncementModal';
 import { StoreButtons } from '@/components/StoreButtons';
 import { useFarmerDashboard } from '@/hooks/useFarmerDashboard';
@@ -36,14 +38,14 @@ const TODAYS_ACTIONS = [
 ];
 
 const QUICK_TOOLS = [
-  { icon: Microscope, label: 'Disease detector', sub: 'Snap a sample',     to: '/tools/disease', accent: 'text-rose-300',     bg: 'bg-rose-400/10' },
-  { icon: Camera,     label: 'Seed counter',     sub: 'Tray photo → count', to: '/tools/seed',    accent: 'text-emerald-300',  bg: 'bg-emerald-400/10' },
-  { icon: Droplets,   label: 'Water quality',    sub: 'Sample → grade',     to: '/tools/water',   accent: 'text-teal-300',     bg: 'bg-teal-400/10' },
-  { icon: BookOpen,   label: 'Knowledge',        sub: 'Articles · schemes', to: '/knowledge',        accent: 'text-amber-300',    bg: 'bg-amber-400/10' },
-  { icon: IndianRupee,label: 'Live Rates',       sub: 'Mandi + FOB',        to: '/rates',            accent: 'text-emerald-300',  bg: 'bg-emerald-400/10' },
-  { icon: Wrench,     label: 'Aqua Tools',       sub: 'Survival · feed',    to: '/tools',            accent: 'text-sky-300',      bg: 'bg-sky-400/10' },
-  { icon: Store,      label: 'Shop Farm',        sub: 'Inputs · sell',      to: '/shop',             accent: 'text-lime-300',     bg: 'bg-lime-400/10' },
-  { icon: Truck,      label: 'Logistics',        sub: 'Transport · O₂',     to: '/logistics',        accent: 'text-orange-300',   bg: 'bg-orange-400/10' },
+  { icon: Microscope, label: 'Disease detector', labelKey: 'farmerDashboardPage.toolDiseaseLabel', subKey: 'farmerDashboardPage.toolDiseaseSub', to: '/tools/disease', accent: 'text-rose-300',     bg: 'bg-rose-400/10' },
+  { icon: Camera,     label: 'Seed counter',     labelKey: 'farmerDashboardPage.toolSeedLabel',    subKey: 'farmerDashboardPage.toolSeedSub',    to: '/tools/seed',    accent: 'text-emerald-300',  bg: 'bg-emerald-400/10' },
+  { icon: Droplets,   label: 'Water quality',    labelKey: 'farmerDashboardPage.toolWaterLabel',   subKey: 'farmerDashboardPage.toolWaterSub',   to: '/tools/water',   accent: 'text-teal-300',     bg: 'bg-teal-400/10' },
+  { icon: BookOpen,   label: 'Knowledge',        labelKey: 'farmerDashboardPage.toolKnowledgeLabel', subKey: 'farmerDashboardPage.toolKnowledgeSub', to: '/knowledge',        accent: 'text-amber-300',    bg: 'bg-amber-400/10' },
+  { icon: IndianRupee,label: 'Live Rates',       labelKey: 'farmerDashboardPage.toolRatesLabel',   subKey: 'farmerDashboardPage.toolRatesSub',   to: '/rates',            accent: 'text-emerald-300',  bg: 'bg-emerald-400/10' },
+  { icon: Wrench,     label: 'Aqua Tools',       labelKey: 'farmerDashboardPage.toolAquaToolsLabel', subKey: 'farmerDashboardPage.toolAquaToolsSub', to: '/tools',            accent: 'text-sky-300',      bg: 'bg-sky-400/10' },
+  { icon: Store,      label: 'Shop Farm',        labelKey: 'farmerDashboardPage.toolShopLabel',    subKey: 'farmerDashboardPage.toolShopSub',    to: '/shop',             accent: 'text-lime-300',     bg: 'bg-lime-400/10' },
+  { icon: Truck,      label: 'Logistics',        labelKey: 'farmerDashboardPage.toolLogisticsLabel', subKey: 'farmerDashboardPage.toolLogisticsSub', to: '/logistics',        accent: 'text-orange-300',   bg: 'bg-orange-400/10' },
 ];
 
 const RECENT_ACTIVITY = [
@@ -95,14 +97,21 @@ function Sparkline({ points }: { points: number[] }) {
 }
 
 export default function FarmerDashboardPage() {
-  useEffect(() => { document.title = 'Farmer Dashboard — Aqua Rudra'; }, []);
+  const { t } = useTranslation();
+  useEffect(() => { document.title = t('farmerDashboardPage.documentTitle'); }, [t]);
 
-  const [greeting] = useState(() => {
+  const [greetingKind] = useState(() => {
     const h = new Date().getHours();
-    if (h < 12) return 'Good morning';
-    if (h < 17) return 'Good afternoon';
-    return 'Good evening';
+    if (h < 12) return 'morning';
+    if (h < 17) return 'afternoon';
+    return 'evening';
   });
+  const greeting =
+    greetingKind === 'morning'
+      ? t('farmerDashboardPage.goodMorning')
+      : greetingKind === 'afternoon'
+        ? t('farmerDashboardPage.goodAfternoon')
+        : t('farmerDashboardPage.goodEvening');
 
   // Live data from Supabase (RLS-scoped to this farmer). Falls back to the
   // sample content below when the account has no farm/readings yet.
@@ -114,7 +123,7 @@ export default function FarmerDashboardPage() {
     (user?.user_metadata?.name as string | undefined)?.trim() ||
     user?.email?.split('@')[0] ||
     live.farmName ||
-    'Farmer';
+    t('farmerDashboardPage.defaultFarmerName');
   const summary = hasFarm
     ? {
         ponds: live.ponds,
@@ -138,9 +147,9 @@ export default function FarmerDashboardPage() {
 
       <AnnouncementModal
         id="farmer-2026-06"
-        title="New: AI Disease Detector v2"
-        description="On-device screening is faster — it now flags EHP and white-spot in under 3 seconds, fully offline."
-        ctaLabel="Try it now"
+        title={t('farmerDashboardPage.announcementTitle')}
+        description={t('farmerDashboardPage.announcementDescription')}
+        ctaLabel={t('farmerDashboardPage.announcementCta')}
         ctaTo="/aquaai#dashboard"
         showStoreButtons
       />
@@ -154,8 +163,8 @@ export default function FarmerDashboardPage() {
               <div>
                 <div className="text-xs uppercase tracking-widest text-teal-300 mb-2">{greeting}, {farmerName}</div>
                 <h1 className="text-3xl md:text-4xl font-bold leading-tight">
-                  Day {summary.dayOfCycle} of cycle ·{' '}
-                  <span className="text-foreground/60 font-normal">{summary.activeBatches} active batches</span>
+                  {t('farmerDashboardPage.dayOfCycle', { day: summary.dayOfCycle })} ·{' '}
+                  <span className="text-foreground/60 font-normal">{t('farmerDashboardPage.activeBatches', { count: summary.activeBatches })}</span>
                 </h1>
                 <div className="flex items-center gap-2 text-sm text-foreground/55 mt-2">
                   <MapPin className="w-3.5 h-3.5" />
@@ -166,25 +175,30 @@ export default function FarmerDashboardPage() {
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-4 md:gap-6 lg:gap-8 lg:text-right">
-                <Metric label="Ponds"          value={summary.ponds} />
-                <Metric label="Area (acre)"    value={summary.totalAreaAcre} />
-                <Metric label="Stock (kg)"     value={summary.estStockKg.toLocaleString('en-IN')} />
+                <Metric label={t('farmerDashboardPage.metricPonds')}          value={summary.ponds} />
+                <Metric label={t('farmerDashboardPage.metricArea')}    value={summary.totalAreaAcre} />
+                <Metric label={t('farmerDashboardPage.metricStock')}     value={summary.estStockKg.toLocaleString('en-IN')} />
               </div>
             </div>
+          </section>
+
+          {/* ── Scan & Screen (camera screening, not diagnosis) ───────────── */}
+          <section className="rounded-2xl border border-border bg-card p-5 md:p-6">
+            <ScanScreen compact />
           </section>
 
           {/* ── Today's actions ──────────────────────────────────────────── */}
           <section>
             <div className="flex items-end justify-between mb-4">
               <div>
-                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Today</div>
-                <h2 className="text-xl md:text-2xl font-bold">What needs your attention</h2>
+                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">{t('farmerDashboardPage.todayEyebrow')}</div>
+                <h2 className="text-xl md:text-2xl font-bold">{t('farmerDashboardPage.todayHeading')}</h2>
               </div>
               <Bell className="w-5 h-5 text-teal-300" />
             </div>
             <div className="grid md:grid-cols-3 gap-4">
               {actions.map((a, i) => {
-                const t = tone[a.kind as keyof typeof tone];
+                const tn = tone[a.kind as keyof typeof tone];
                 return (
                   <motion.div
                     key={a.title}
@@ -192,15 +206,15 @@ export default function FarmerDashboardPage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.05 }}
-                    className={`p-5 rounded-2xl border bg-card ${t.bar}`}
+                    className={`p-5 rounded-2xl border bg-card ${tn.bar}`}
                   >
-                    <div className={`inline-flex items-center justify-center w-9 h-9 rounded-lg mb-3 ${t.chip}`}>
-                      <Bell className={`w-4 h-4 ${t.icon}`} />
+                    <div className={`inline-flex items-center justify-center w-9 h-9 rounded-lg mb-3 ${tn.chip}`}>
+                      <Bell className={`w-4 h-4 ${tn.icon}`} />
                     </div>
                     <div className="text-sm font-semibold text-foreground leading-snug mb-1">{a.title}</div>
                     <div className="text-xs text-foreground/50">{a.meta}</div>
-                    <Link to={a.to} className={`inline-flex items-center gap-1 mt-3 text-xs ${t.icon} hover:underline`}>
-                      Open <ArrowRight className="w-3 h-3" />
+                    <Link to={a.to} className={`inline-flex items-center gap-1 mt-3 text-xs ${tn.icon} hover:underline`}>
+                      {t('farmerDashboardPage.open')} <ArrowRight className="w-3 h-3" />
                     </Link>
                   </motion.div>
                 );
@@ -212,15 +226,15 @@ export default function FarmerDashboardPage() {
           <section>
             <div className="flex items-end justify-between mb-4">
               <div>
-                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Surveillance</div>
+                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">{t('farmerDashboardPage.surveillanceEyebrow')}</div>
                 <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
-                  <MapPin className="w-5 h-5 text-amber-300" /> Nearby disease alerts
+                  <MapPin className="w-5 h-5 text-amber-300" /> {t('farmerDashboardPage.nearbyAlertsHeading')}
                 </h2>
               </div>
             </div>
             {outbreaks.length === 0 ? (
               <div className="rounded-2xl border border-emerald-400/30 bg-emerald-400/5 p-5 text-sm text-emerald-200">
-                No outbreaks reported near you.
+                {t('farmerDashboardPage.noOutbreaks')}
               </div>
             ) : (
               <div className="grid md:grid-cols-2 gap-4">
@@ -233,7 +247,7 @@ export default function FarmerDashboardPage() {
                       </span>
                     </div>
                     <div className="text-xs text-foreground/55 mt-1">
-                      {o.km != null ? `${o.km} km away` : 'in your district'} · {o.when}
+                      {o.km != null ? t('farmerDashboardPage.kmAway', { km: o.km }) : t('farmerDashboardPage.inYourDistrict')} · {o.when}
                     </div>
                   </div>
                 ))}
@@ -250,28 +264,28 @@ export default function FarmerDashboardPage() {
           <section className="rounded-2xl border border-border bg-card p-5 md:p-6">
             <div className="flex items-end justify-between mb-4">
               <div>
-                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Water quality</div>
+                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">{t('farmerDashboardPage.waterQualityEyebrow')}</div>
                 <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
-                  <Droplets className="w-5 h-5 text-teal-300" /> Dissolved O₂ trend
+                  <Droplets className="w-5 h-5 text-teal-300" /> {t('farmerDashboardPage.doTrendHeading')}
                 </h2>
               </div>
               <div className="text-right">
-                <div className="text-2xl font-bold tabular-nums">{trend[trend.length - 1].doMgl.toFixed(1)}<span className="text-sm font-normal text-foreground/40"> ppm</span></div>
-                <div className="text-[11px] text-foreground/45">latest · pH {trend[trend.length - 1].ph.toFixed(1)}</div>
+                <div className="text-2xl font-bold tabular-nums">{trend[trend.length - 1].doMgl.toFixed(1)}<span className="text-sm font-normal text-foreground/40"> {t('farmerDashboardPage.ppm')}</span></div>
+                <div className="text-[11px] text-foreground/45">{t('farmerDashboardPage.latestPh', { ph: trend[trend.length - 1].ph.toFixed(1) })}</div>
               </div>
             </div>
             <Sparkline points={trend.map((t) => t.doMgl)} />
             <div className="mt-2 text-[11px] text-foreground/45">
-              Dashed line = 4 ppm safe minimum. Last {trend.length} readings.
+              {t('farmerDashboardPage.trendNote', { count: trend.length })}
             </div>
           </section>
 
           {/* ── Live rates (full board, same as home / rates) ────────────── */}
           <section className="rounded-2xl border border-border bg-card p-5 md:p-6">
             <div className="mb-4">
-              <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Live mandi prices</div>
+              <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">{t('farmerDashboardPage.liveMandiEyebrow')}</div>
               <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-emerald-300" /> What your pond is worth today
+                <TrendingUp className="w-5 h-5 text-emerald-300" /> {t('farmerDashboardPage.pondWorthHeading')}
               </h2>
             </div>
             <MarketPriceBoard />
@@ -280,8 +294,8 @@ export default function FarmerDashboardPage() {
           {/* ── Your ponds ───────────────────────────────────────────────── */}
           <section>
             <div className="mb-4">
-              <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Ponds</div>
-              <h2 className="text-xl md:text-2xl font-bold">Your ponds</h2>
+              <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">{t('farmerDashboardPage.pondsEyebrow')}</div>
+              <h2 className="text-xl md:text-2xl font-bold">{t('farmerDashboardPage.yourPondsHeading')}</h2>
             </div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {pondCards.map((p, i) => (
@@ -291,19 +305,19 @@ export default function FarmerDashboardPage() {
                     <span className={`text-[10px] uppercase tracking-widest px-2 py-1 rounded-full ${
                       p.alert ? 'text-rose-300 bg-rose-400/10' : 'text-emerald-300 bg-emerald-400/10'
                     }`}>
-                      {p.alert ? 'Check' : 'OK'}
+                      {p.alert ? t('farmerDashboardPage.pondCheck') : t('farmerDashboardPage.pondOk')}
                     </span>
                   </div>
                   <div className="text-xs text-foreground/50 mt-1">
-                    {p.docDays != null ? `Day ${p.docDays}` : 'Not stocked'} · {(p.areaSqm / 4047).toFixed(2)} ac
+                    {p.docDays != null ? t('farmerDashboardPage.pondDay', { day: p.docDays }) : t('farmerDashboardPage.notStocked')} · {(p.areaSqm / 4047).toFixed(2)} {t('farmerDashboardPage.acreShort')}
                   </div>
                   <div className="mt-4 grid grid-cols-2 gap-2">
                     <div>
-                      <div className="text-[11px] text-foreground/45">DO</div>
-                      <div className="font-bold tabular-nums">{p.doMgl != null ? p.doMgl.toFixed(1) : '—'}<span className="text-[10px] font-normal text-foreground/40"> ppm</span></div>
+                      <div className="text-[11px] text-foreground/45">{t('farmerDashboardPage.doLabel')}</div>
+                      <div className="font-bold tabular-nums">{p.doMgl != null ? p.doMgl.toFixed(1) : '—'}<span className="text-[10px] font-normal text-foreground/40"> {t('farmerDashboardPage.ppm')}</span></div>
                     </div>
                     <div>
-                      <div className="text-[11px] text-foreground/45">pH</div>
+                      <div className="text-[11px] text-foreground/45">{t('farmerDashboardPage.phLabel')}</div>
                       <div className="font-bold tabular-nums">{p.ph != null ? p.ph.toFixed(1) : '—'}</div>
                     </div>
                   </div>
@@ -315,27 +329,26 @@ export default function FarmerDashboardPage() {
           {/* ── Harvest readiness ────────────────────────────────────────── */}
           <section className="rounded-2xl border border-border bg-card p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
             <div>
-              <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Harvest readiness</div>
+              <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">{t('farmerDashboardPage.harvestEyebrow')}</div>
               <h2 className="text-xl md:text-2xl font-bold">
-                {harvest.daysLeft > 0 ? `~${harvest.daysLeft} days to harvest` : 'Ready to harvest'}
+                {harvest.daysLeft > 0 ? t('farmerDashboardPage.daysToHarvest', { days: harvest.daysLeft }) : t('farmerDashboardPage.readyToHarvest')}
               </h2>
               <p className="text-sm text-foreground/55 mt-1 max-w-xl">
-                Target harvest around <span className="font-semibold text-foreground/80">{harvest.harvestDate}</span> (≈120-day cycle).
-                Check live rates to time your sale.
+                {t('farmerDashboardPage.harvestTargetPrefix')} <span className="font-semibold text-foreground/80">{harvest.harvestDate}</span> {t('farmerDashboardPage.harvestTargetSuffix')}
               </p>
             </div>
             <Link
               to="/rates"
               className="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-emerald-400/40 text-emerald-300 hover:bg-emerald-400/10 font-semibold text-sm transition"
             >
-              View live rates <ArrowRight className="w-4 h-4" />
+              {t('farmerDashboardPage.viewLiveRates')} <ArrowRight className="w-4 h-4" />
             </Link>
           </section>
 
           {/* ── Quick tools ──────────────────────────────────────────────── */}
           <section>
             <div className="mb-4">
-              <h2 className="text-xl md:text-2xl font-bold">Quick tools</h2>
+              <h2 className="text-xl md:text-2xl font-bold">{t('farmerDashboardPage.quickToolsHeading')}</h2>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
               {QUICK_TOOLS.map((tool) => (
@@ -347,8 +360,8 @@ export default function FarmerDashboardPage() {
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${tool.bg}`}>
                     <tool.icon className={`w-5 h-5 ${tool.accent}`} />
                   </div>
-                  <div className="text-sm font-semibold text-foreground leading-tight">{tool.label}</div>
-                  <div className="text-[11px] text-foreground/50 mt-0.5">{tool.sub}</div>
+                  <div className="text-sm font-semibold text-foreground leading-tight">{t(tool.labelKey)}</div>
+                  <div className="text-[11px] text-foreground/50 mt-0.5">{t(tool.subKey)}</div>
                 </Link>
               ))}
             </div>
@@ -358,13 +371,13 @@ export default function FarmerDashboardPage() {
           <section>
             <div className="flex items-end justify-between mb-4">
               <div>
-                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Aqua news</div>
+                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">{t('farmerDashboardPage.aquaNewsEyebrow')}</div>
                 <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
-                  <Newspaper className="w-5 h-5 text-teal-300" /> Latest for your farm
+                  <Newspaper className="w-5 h-5 text-teal-300" /> {t('farmerDashboardPage.aquaNewsHeading')}
                 </h2>
               </div>
               <Link to="/knowledge" className="text-xs text-teal-300 hover:underline inline-flex items-center gap-1">
-                All news <ArrowRight className="w-3 h-3" />
+                {t('farmerDashboardPage.allNews')} <ArrowRight className="w-3 h-3" />
               </Link>
             </div>
             <div className="grid sm:grid-cols-3 gap-4">
@@ -380,7 +393,7 @@ export default function FarmerDashboardPage() {
                   <div className="p-4">
                     <div className="text-[11px] uppercase tracking-widest text-teal-300 mb-1">{a.category}</div>
                     <div className="text-sm font-semibold text-foreground leading-snug line-clamp-2">{a.title}</div>
-                    <div className="text-[11px] text-foreground/50 mt-1">{a.readMin} min read</div>
+                    <div className="text-[11px] text-foreground/50 mt-1">{t('farmerDashboardPage.minRead', { count: a.readMin })}</div>
                   </div>
                 </Link>
               ))}
@@ -391,13 +404,13 @@ export default function FarmerDashboardPage() {
           <section>
             <div className="flex items-end justify-between mb-4">
               <div>
-                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Recent activity</div>
+                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">{t('farmerDashboardPage.recentActivityEyebrow')}</div>
                 <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
-                  <Activity className="w-5 h-5 text-teal-300" /> Your farm log
+                  <Activity className="w-5 h-5 text-teal-300" /> {t('farmerDashboardPage.farmLogHeading')}
                 </h2>
               </div>
               <Link to="/aquaai#dashboard" className="text-xs text-teal-300 hover:underline inline-flex items-center gap-1">
-                Full history <ArrowRight className="w-3 h-3" />
+                {t('farmerDashboardPage.fullHistory')} <ArrowRight className="w-3 h-3" />
               </Link>
             </div>
             <div className="rounded-2xl border border-border bg-card divide-y divide-border">
@@ -415,7 +428,7 @@ export default function FarmerDashboardPage() {
                         : 'text-emerald-300 bg-emerald-400/10'
                     }`}
                   >
-                    {row.status === 'alert' ? 'Action' : 'OK'}
+                    {row.status === 'alert' ? t('farmerDashboardPage.statusAction') : t('farmerDashboardPage.pondOk')}
                   </span>
                 </div>
               ))}
@@ -425,10 +438,10 @@ export default function FarmerDashboardPage() {
           {/* ── Get the app ──────────────────────────────────────────────── */}
           <section className="rounded-2xl border border-border bg-card p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
             <div>
-              <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Mobile app</div>
-              <h2 className="text-xl md:text-2xl font-bold">Take your farm dashboard offline</h2>
+              <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">{t('farmerDashboardPage.mobileAppEyebrow')}</div>
+              <h2 className="text-xl md:text-2xl font-bold">{t('farmerDashboardPage.mobileAppHeading')}</h2>
               <p className="text-sm text-foreground/55 mt-1 max-w-xl">
-                Scan, diagnose, and log readings pond-side — even with no signal. Syncs when you're back online.
+                {t('farmerDashboardPage.mobileAppBody')}
               </p>
             </div>
             <StoreButtons className="shrink-0" />

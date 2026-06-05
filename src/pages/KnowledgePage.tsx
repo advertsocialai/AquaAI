@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
@@ -256,7 +257,8 @@ const POPULAR_SLUGS = [
 const PER_PAGE = 6;
 
 export default function KnowledgePage() {
-  useEffect(() => { document.title = 'Knowledge Hub — Aqua Rudra'; }, []);
+  const { t } = useTranslation();
+  useEffect(() => { document.title = t('knowledgePage.docTitle'); }, [t]);
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
   const [email, setEmail] = useState('');
@@ -306,21 +308,19 @@ export default function KnowledgePage() {
                 initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
               >
                 <BookOpen className="w-4 h-4" />
-                Knowledge Hub
+                {t('knowledgePage.heroBadge')}
               </motion.div>
               <motion.h1
                 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
                 className="text-4xl md:text-6xl font-bold leading-[1.05] mb-5"
               >
-                Unlocking <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-ocean">Boundless</span> Aquatic Wisdom
+                {t('knowledgePage.heroTitleBefore')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-ocean">{t('knowledgePage.heroTitleHighlight')}</span> {t('knowledgePage.heroTitleAfter')}
               </motion.h1>
               <motion.p
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
                 className="text-base md:text-lg text-foreground/70 max-w-xl leading-relaxed mb-8"
               >
-                Field-tested guides, disease playbooks and farmer case studies — sourced from
-                ICAR-CIBA, NSPAAD, MPEDA circulars and Aqua Rudra's own diagnostic dataset. Read
-                in your language. Learn at your pace.
+                {t('knowledgePage.heroParagraph')}
               </motion.p>
 
               <form
@@ -331,7 +331,7 @@ export default function KnowledgePage() {
                 <input
                   value={query}
                   onChange={(e) => { setQuery(e.target.value); setPage(1); }}
-                  placeholder="Search articles, diseases, species…"
+                  placeholder={t('knowledgePage.searchPlaceholder')}
                   className="flex-1 bg-transparent outline-none text-foreground text-base placeholder:text-foreground/35"
                 />
                 {query && (
@@ -340,7 +340,7 @@ export default function KnowledgePage() {
                     onClick={() => { setQuery(''); setPage(1); }}
                     className="text-sm text-foreground/45 hover:text-foreground"
                   >
-                    clear
+                    {t('knowledgePage.clear')}
                   </button>
                 )}
               </form>
@@ -365,7 +365,7 @@ export default function KnowledgePage() {
             <div className="lg:col-span-2 space-y-6">
               {paged.length === 0 ? (
                 <div className="text-center py-16 text-sm text-foreground/30">
-                  No articles match "{query}"
+                  {t('knowledgePage.noResults', { query })}
                 </div>
               ) : (
                 paged.map((a, i) => <ArticleCard key={a.slug} article={a} delay={i * 0.05} />)
@@ -410,7 +410,7 @@ export default function KnowledgePage() {
             {/* Sidebar */}
             <aside className="space-y-6">
               <div className="p-5 rounded-2xl border border-border bg-card">
-                <div className="text-[11px] uppercase tracking-widest text-teal-300 mb-4">Popular posts</div>
+                <div className="text-[11px] uppercase tracking-widest text-teal-300 mb-4">{t('knowledgePage.popularPosts')}</div>
                 <ol className="space-y-3">
                   {popular.map((a, i) => (
                     <li key={a.slug} className="flex gap-3">
@@ -431,18 +431,17 @@ export default function KnowledgePage() {
               <div className="p-5 rounded-2xl border border-emerald-400/30 bg-emerald-400/5">
                 <div className="flex items-center gap-2 mb-2">
                   <Mail className="w-4 h-4 text-emerald-300" />
-                  <span className="text-sm font-semibold text-foreground">Subscribe to stay updated</span>
+                  <span className="text-sm font-semibold text-foreground">{t('knowledgePage.subscribeTitle')}</span>
                 </div>
                 <p className="text-xs text-foreground/60 mb-4">
-                  Weekly newsletter — disease alerts, pricing trends, new articles. In your
-                  language.
+                  {t('knowledgePage.subscribeBlurb')}
                 </p>
                 <form onSubmit={subscribe} className="flex items-center gap-2">
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="your@email.in"
+                    placeholder={t('knowledgePage.emailPlaceholder')}
                     className="flex-1 px-3 py-2 rounded-lg bg-card border border-border text-sm text-foreground outline-none focus:border-emerald-400/40"
                   />
                   <button
@@ -450,7 +449,7 @@ export default function KnowledgePage() {
                     disabled={subscribed}
                     className="px-3 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 disabled:opacity-60 text-black text-xs font-semibold"
                   >
-                    {subscribed ? 'Done' : 'Subscribe'}
+                    {subscribed ? t('knowledgePage.subscribedDone') : t('knowledgePage.subscribeButton')}
                   </button>
                 </form>
               </div>
@@ -526,6 +525,7 @@ function KnowledgeIllustration() {
 }
 
 function ArticleCard({ article, delay }: { article: Article; delay: number }) {
+  const { t } = useTranslation();
   return (
     <motion.article
       initial={{ opacity: 0, y: 16 }}
@@ -544,7 +544,7 @@ function ArticleCard({ article, delay }: { article: Article; delay: number }) {
             <span className="px-2 py-0.5 rounded-full border border-teal-400/30 bg-teal-400/10 text-teal-300 uppercase tracking-wide">
               {article.category}
             </span>
-            <span className="inline-flex items-center gap-1"><Clock className="w-3 h-3" /> {article.readMin} min read</span>
+            <span className="inline-flex items-center gap-1"><Clock className="w-3 h-3" /> {t('knowledgePage.minRead', { count: article.readMin })}</span>
             <span>·</span>
             <span>{new Date(article.publishedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
           </div>
@@ -553,7 +553,7 @@ function ArticleCard({ article, delay }: { article: Article; delay: number }) {
           </h3>
           <p className="text-sm text-foreground/60 leading-relaxed mb-4 line-clamp-3">{article.excerpt}</p>
           <div className="inline-flex items-center gap-1 text-xs text-teal-300">
-            Read article <ArrowRight className="w-3 h-3" />
+            {t('knowledgePage.readArticle')} <ArrowRight className="w-3 h-3" />
           </div>
         </div>
       </Link>

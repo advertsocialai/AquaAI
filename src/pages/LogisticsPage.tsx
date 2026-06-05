@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { ServiceProviders } from '@/components/ServiceProviders';
@@ -9,7 +10,8 @@ import { ServiceProviders } from '@/components/ServiceProviders';
  * place. Linked from the home "Logistics" module.
  */
 export default function LogisticsPage() {
-  useEffect(() => { document.title = 'Logistics & Services — Aqua Rudra'; }, []);
+  const { t } = useTranslation();
+  useEffect(() => { document.title = t('logisticsPage.documentTitle'); }, [t]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">

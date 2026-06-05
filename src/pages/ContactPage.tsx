@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
@@ -7,6 +8,7 @@ import {
 } from 'lucide-react';
 
 export default function ContactPage() {
+  const { t } = useTranslation();
   useEffect(() => { document.title = 'Contact — Aqua Rudra'; }, []);
 
   const [name, setName] = useState('');
@@ -54,20 +56,19 @@ export default function ContactPage() {
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-teal-400/30 bg-teal-400/10 text-teal-300 text-xs tracking-widest uppercase mb-6"
             initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
           >
-            Contact us · We're here to help!
+            {t('contactPage.heroBadge')}
           </motion.div>
           <motion.h1
             className="text-4xl md:text-6xl font-bold mb-4"
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
           >
-            Get in touch
+            {t('contactPage.heroTitle')}
           </motion.h1>
           <motion.p
             className="text-base text-foreground/60 max-w-2xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
           >
-            We would love to hear from you. Whether you have a question, feedback, or want to
-            partner — our team is here to assist you.
+            {t('contactPage.heroSubtitle')}
           </motion.p>
         </div>
       </section>
@@ -82,24 +83,24 @@ export default function ContactPage() {
               className="lg:col-span-3 p-6 lg:p-8 rounded-2xl border border-border bg-card space-y-4"
             >
               <div className="grid sm:grid-cols-2 gap-4">
-                <Field icon={User}   label="Name"    value={name} onChange={setName}  placeholder="Your name" />
-                <Field icon={AtSign} label="E-mail"  value={email} onChange={setEmail} placeholder="you@example.in" type="email" />
+                <Field icon={User}   label={t('contactPage.nameLabel')}    value={name} onChange={setName}  placeholder={t('contactPage.namePlaceholder')} />
+                <Field icon={AtSign} label={t('contactPage.emailLabel')}  value={email} onChange={setEmail} placeholder="you@example.in" type="email" />
               </div>
-              <Field icon={Phone} label="Phone (optional)" value={phone} onChange={setPhone} placeholder="+91 98765 43210" type="tel" />
+              <Field icon={Phone} label={t('contactPage.phoneLabel')} value={phone} onChange={setPhone} placeholder="+91 98765 43210" type="tel" />
 
               <label className="block">
-                <span className="text-[11px] uppercase tracking-widest text-foreground/40">Message</span>
+                <span className="text-[11px] uppercase tracking-widest text-foreground/40">{t('contactPage.messageLabel')}</span>
                 <textarea
                   value={msg}
                   onChange={(e) => setMsg(e.target.value)}
                   rows={5}
-                  placeholder="Tell us how we can help…"
+                  placeholder={t('contactPage.messagePlaceholder')}
                   className="mt-2 w-full px-4 py-3 rounded-xl border border-border bg-card text-foreground text-sm outline-none focus:border-teal-400/40 resize-none"
                 />
               </label>
 
               <label className="block">
-                <span className="text-[11px] uppercase tracking-widest text-foreground/40">Attachment (optional)</span>
+                <span className="text-[11px] uppercase tracking-widest text-foreground/40">{t('contactPage.attachmentLabel')}</span>
                 <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-dashed border-border bg-card cursor-pointer hover:bg-muted">
                   <Upload className="w-4 h-4 text-teal-400" />
                   <input
@@ -109,7 +110,7 @@ export default function ContactPage() {
                     onChange={(e) => setFileName(e.target.files?.[0]?.name ?? null)}
                   />
                   <label htmlFor="file" className="flex-1 text-sm cursor-pointer">
-                    {fileName ?? <span className="text-foreground/40">PDF, image or doc — up to 10 MB</span>}
+                    {fileName ?? <span className="text-foreground/40">{t('contactPage.attachmentHint')}</span>}
                   </label>
                 </div>
               </label>
@@ -119,33 +120,33 @@ export default function ContactPage() {
                 disabled={!name || !email || !msg || sent}
                 className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-50 text-black font-semibold text-sm transition"
               >
-                {sent ? <><Check className="w-4 h-4" /> Message sent — we'll reply within 24 h</>
-                      : <><Send  className="w-4 h-4" /> Send a message</>}
+                {sent ? <><Check className="w-4 h-4" /> {t('contactPage.sentLabel')}</>
+                      : <><Send  className="w-4 h-4" /> {t('contactPage.sendLabel')}</>}
               </button>
             </form>
 
             {/* Sidebar */}
             <aside className="lg:col-span-2 space-y-4">
-              <ContactBlock icon={Phone}  title="Call us"  value="+91 95532 82325"      href="tel:+919553282325" />
-              <ContactBlock icon={Mail}   title="Email"    value="info@aquarudra.com"   href="mailto:info@aquarudra.com" />
-              <ContactBlock icon={MessageCircle} title="WhatsApp" value="+91 95532 82325" href="https://wa.me/919553282325" />
+              <ContactBlock icon={Phone}  title={t('contactPage.callUsTitle')}  value="+91 95532 82325"      href="tel:+919553282325" />
+              <ContactBlock icon={Mail}   title={t('contactPage.emailTitle')}    value="info@aquarudra.com"   href="mailto:info@aquarudra.com" />
+              <ContactBlock icon={MessageCircle} title={t('contactPage.whatsappTitle')} value="+91 95532 82325" href="https://wa.me/919553282325" />
               <div className="p-5 rounded-2xl border border-border bg-card">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="p-2 rounded-lg bg-emerald-400/10 border border-emerald-400/20">
                     <MapPin className="w-4 h-4 text-emerald-300" />
                   </div>
-                  <div className="text-sm font-semibold text-foreground">Office</div>
+                  <div className="text-sm font-semibold text-foreground">{t('contactPage.officeTitle')}</div>
                 </div>
                 <p className="text-sm text-foreground/70 leading-relaxed">
                   Aqua Rudra<br />
-                  Andhra Pradesh, India<br />
-                  <span className="text-foreground/40 text-xs">Field offices in Bhimavaram, Nellore, Vizag</span>
+                  {t('contactPage.officeLocation')}<br />
+                  <span className="text-foreground/40 text-xs">{t('contactPage.fieldOffices')}</span>
                 </p>
               </div>
               <div className="p-5 rounded-2xl border border-teal-400/20 bg-teal-400/5">
-                <div className="text-[11px] uppercase tracking-widest text-teal-300 mb-2">Response time</div>
-                <div className="text-sm text-foreground">Within 24 hours on business days.</div>
-                <div className="text-xs text-foreground/50 mt-1">Outbreak emergencies — within 1 hour.</div>
+                <div className="text-[11px] uppercase tracking-widest text-teal-300 mb-2">{t('contactPage.responseTimeTitle')}</div>
+                <div className="text-sm text-foreground">{t('contactPage.responseTimeValue')}</div>
+                <div className="text-xs text-foreground/50 mt-1">{t('contactPage.responseTimeEmergency')}</div>
               </div>
             </aside>
           </div>

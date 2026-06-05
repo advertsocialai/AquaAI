@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { TextReveal } from '@/components/ui/text-reveal';
 
 const CollaboratePage = () => {
+  const { t } = useTranslation();
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', organization: '', message: '' });
 
-  useEffect(() => { document.title = "Collaborate — Aqua Rudra"; }, []);
+  useEffect(() => { document.title = t('collaboratePage.documentTitle'); }, [t]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +36,7 @@ const CollaboratePage = () => {
         <div className="container mx-auto px-6 lg:px-8 relative z-10 pb-24">
           <div className="max-w-2xl">
             <TextReveal
-              text="Collaborate With Us"
+              text={t('collaboratePage.heroTitle')}
               as="h1"
               className="text-5xl md:text-7xl font-bold text-foreground uppercase tracking-tight leading-[1.05] mb-6"
             />
@@ -44,7 +46,7 @@ const CollaboratePage = () => {
               transition={{ duration: 1, delay: 0.5 }}
               className="text-base md:text-lg text-foreground/70 max-w-lg leading-relaxed"
             >
-              Whether you're a researcher, institution, or investor — we're looking for partners who share our vision.
+              {t('collaboratePage.heroSubtitle')}
             </motion.p>
           </div>
         </div>
@@ -53,7 +55,7 @@ const CollaboratePage = () => {
       {/* Contact Info */}
       <section className="py-16 bg-background border-b border-border">
         <div className="container mx-auto px-6 lg:px-8 max-w-xl text-center space-y-4">
-          <p className="text-xs text-muted-foreground uppercase tracking-[0.3em] mb-2">Get In Touch</p>
+          <p className="text-xs text-muted-foreground uppercase tracking-[0.3em] mb-2">{t('collaboratePage.getInTouch')}</p>
           <a href="mailto:support@aquai.in" className="block text-sm text-foreground hover:text-foreground/70 transition-colors tracking-wider">
             support@aquai.in
           </a>
@@ -74,10 +76,10 @@ const CollaboratePage = () => {
               className="text-center py-16"
             >
               <h2 className="text-2xl font-bold text-foreground uppercase tracking-tight mb-4">
-                Thank You
+                {t('collaboratePage.thankYouTitle')}
               </h2>
               <p className="text-muted-foreground">
-                We'll be in touch soon.
+                {t('collaboratePage.thankYouMessage')}
               </p>
             </motion.div>
           ) : (
@@ -90,7 +92,7 @@ const CollaboratePage = () => {
               className="space-y-8"
             >
               <div>
-                <label className="block text-xs text-muted-foreground uppercase tracking-[0.2em] mb-2">Name</label>
+                <label className="block text-xs text-muted-foreground uppercase tracking-[0.2em] mb-2">{t('collaboratePage.labelName')}</label>
                 <input
                   type="text"
                   required
@@ -100,7 +102,7 @@ const CollaboratePage = () => {
                 />
               </div>
               <div>
-                <label className="block text-xs text-muted-foreground uppercase tracking-[0.2em] mb-2">Email</label>
+                <label className="block text-xs text-muted-foreground uppercase tracking-[0.2em] mb-2">{t('collaboratePage.labelEmail')}</label>
                 <input
                   type="email"
                   required
@@ -110,7 +112,7 @@ const CollaboratePage = () => {
                 />
               </div>
               <div>
-                <label className="block text-xs text-muted-foreground uppercase tracking-[0.2em] mb-2">Organization</label>
+                <label className="block text-xs text-muted-foreground uppercase tracking-[0.2em] mb-2">{t('collaboratePage.labelOrganization')}</label>
                 <input
                   type="text"
                   value={formData.organization}
@@ -119,7 +121,7 @@ const CollaboratePage = () => {
                 />
               </div>
               <div>
-                <label className="block text-xs text-muted-foreground uppercase tracking-[0.2em] mb-2">Message</label>
+                <label className="block text-xs text-muted-foreground uppercase tracking-[0.2em] mb-2">{t('collaboratePage.labelMessage')}</label>
                 <textarea
                   required
                   rows={4}
@@ -132,7 +134,7 @@ const CollaboratePage = () => {
                 type="submit"
                 className="border border-foreground/40 text-foreground text-xs tracking-[0.25em] font-medium px-8 py-4 hover:bg-foreground hover:text-background transition-all duration-300 uppercase"
               >
-                Send Message
+                {t('collaboratePage.sendMessage')}
               </button>
             </motion.form>
           )}

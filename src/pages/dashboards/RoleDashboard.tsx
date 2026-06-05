@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Bell, ArrowRight, MapPin, Calendar, TrendingUp, Activity, ShieldCheck } from 'lucide-react';
@@ -15,15 +16,22 @@ const tone = {
 };
 
 export function RoleDashboard({ role }: { role: Role }) {
+  const { t } = useTranslation();
   const config = ROLE_DASHBOARDS[role];
   useEffect(() => { if (config) document.title = config.title; }, [config]);
 
-  const [greeting] = useState(() => {
+  const [greetingTime] = useState(() => {
     const h = new Date().getHours();
-    if (h < 12) return 'Good morning';
-    if (h < 17) return 'Good afternoon';
-    return 'Good evening';
+    if (h < 12) return 'morning';
+    if (h < 17) return 'afternoon';
+    return 'evening';
   });
+  const greeting =
+    greetingTime === 'morning'
+      ? t('roleDashboard.goodMorning')
+      : greetingTime === 'afternoon'
+      ? t('roleDashboard.goodAfternoon')
+      : t('roleDashboard.goodEvening');
 
   if (!config) return null;
 
@@ -66,14 +74,14 @@ export function RoleDashboard({ role }: { role: Role }) {
           <section>
             <div className="flex items-end justify-between mb-4">
               <div>
-                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Today</div>
-                <h2 className="text-xl md:text-2xl font-bold">What needs your attention</h2>
+                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">{t('roleDashboard.todayEyebrow')}</div>
+                <h2 className="text-xl md:text-2xl font-bold">{t('roleDashboard.attentionHeading')}</h2>
               </div>
               <Bell className="w-5 h-5 text-teal-300" />
             </div>
             <div className="grid md:grid-cols-3 gap-4">
               {config.actions.map((a, i) => {
-                const t = tone[a.kind];
+                const tn = tone[a.kind];
                 return (
                   <motion.div
                     key={a.title}
@@ -81,15 +89,15 @@ export function RoleDashboard({ role }: { role: Role }) {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.05 }}
-                    className={`p-5 rounded-2xl border bg-card ${t.bar}`}
+                    className={`p-5 rounded-2xl border bg-card ${tn.bar}`}
                   >
-                    <div className={`inline-flex items-center justify-center w-9 h-9 rounded-lg mb-3 ${t.chip}`}>
-                      <Bell className={`w-4 h-4 ${t.icon}`} />
+                    <div className={`inline-flex items-center justify-center w-9 h-9 rounded-lg mb-3 ${tn.chip}`}>
+                      <Bell className={`w-4 h-4 ${tn.icon}`} />
                     </div>
                     <div className="text-sm font-semibold text-foreground leading-snug mb-1">{a.title}</div>
                     <div className="text-xs text-foreground/50">{a.meta}</div>
-                    <Link to={a.to} className={`inline-flex items-center gap-1 mt-3 text-xs ${t.icon} hover:underline`}>
-                      Open <ArrowRight className="w-3 h-3" />
+                    <Link to={a.to} className={`inline-flex items-center gap-1 mt-3 text-xs ${tn.icon} hover:underline`}>
+                      {t('roleDashboard.open')} <ArrowRight className="w-3 h-3" />
                     </Link>
                   </motion.div>
                 );
@@ -101,7 +109,7 @@ export function RoleDashboard({ role }: { role: Role }) {
           <section>
             <div className="flex items-end justify-between mb-4">
               <div>
-                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Quick tools</div>
+                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">{t('roleDashboard.quickToolsEyebrow')}</div>
                 <h2 className="text-xl md:text-2xl font-bold">{config.toolsHeading}</h2>
               </div>
             </div>
@@ -127,7 +135,7 @@ export function RoleDashboard({ role }: { role: Role }) {
             <section className="rounded-2xl border border-border bg-card p-5 md:p-6">
               <div className="flex items-end justify-between mb-4">
                 <div>
-                  <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Live mandi prices</div>
+                  <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">{t('roleDashboard.livePricesEyebrow')}</div>
                   <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
                     <TrendingUp className="w-5 h-5 text-emerald-300" /> {config.pricesHeading}
                   </h2>
@@ -141,13 +149,13 @@ export function RoleDashboard({ role }: { role: Role }) {
           <section>
             <div className="flex items-end justify-between mb-4">
               <div>
-                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">Recent activity</div>
+                <div className="text-xs uppercase tracking-widest text-teal-300 mb-1">{t('roleDashboard.recentActivityEyebrow')}</div>
                 <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
                   <Activity className="w-5 h-5 text-teal-300" /> {config.activityHeading}
                 </h2>
               </div>
               <Link to="/aquaai#dashboard" className="text-xs text-teal-300 hover:underline inline-flex items-center gap-1">
-                Full history <ArrowRight className="w-3 h-3" />
+                {t('roleDashboard.fullHistory')} <ArrowRight className="w-3 h-3" />
               </Link>
             </div>
             <div className="rounded-2xl border border-border bg-card divide-y divide-border">
@@ -165,7 +173,7 @@ export function RoleDashboard({ role }: { role: Role }) {
                         : 'text-emerald-300 bg-emerald-400/10'
                     }`}
                   >
-                    {row.status === 'alert' ? 'Action' : 'OK'}
+                    {row.status === 'alert' ? t('roleDashboard.statusAction') : t('roleDashboard.statusOk')}
                   </span>
                 </div>
               ))}

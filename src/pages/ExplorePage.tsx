@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ArrowRight, Share2, Lightbulb, GraduationCap } from 'lucide-react';
 import { MobileTopBar, MobileTabBar } from '@/components/mobile/MobileChrome';
 
@@ -24,24 +25,25 @@ function ExploreCard({
 }
 
 export default function ExplorePage() {
-  useEffect(() => { document.title = 'Explore — Aqua Rudra'; }, []);
+  const { t } = useTranslation();
+  useEffect(() => { document.title = t('explorePage.docTitle'); }, [t]);
 
   return (
     <div className="min-h-screen bg-neutral-50 text-neutral-900">
-      <MobileTopBar title="Explore" />
+      <MobileTopBar title={t('explorePage.topBarTitle')} />
 
       <main className="max-w-md mx-auto px-5 pt-5 pb-28 space-y-6">
         <ExploreCard
           to="/knowledge"
-          title="Aqua Feed"
-          desc="Like, Comment and Share Daily updates on Fish and Shrimp culture farming"
+          title={t('explorePage.feedTitle')}
+          desc={t('explorePage.feedDesc')}
           gradient="from-[#a7e0cf] to-[#d6f0e4]"
           Icon={Share2}
         />
         <ExploreCard
           to="/knowledge"
-          title="Aqua School"
-          desc="Explore, Learn and Grow in various aspects of Shrimp culture farming"
+          title={t('explorePage.schoolTitle')}
+          desc={t('explorePage.schoolDesc')}
           gradient="from-[#74c0f0] to-[#a9d8f6]"
           Icon={Lightbulb}
         />
@@ -51,8 +53,8 @@ export default function ExplorePage() {
           <div className="w-24 h-24 rounded-full border-4 border-teal-600/30 flex items-center justify-center bg-white shadow-sm">
             <GraduationCap className="w-11 h-11 text-teal-700" strokeWidth={1.4} />
           </div>
-          <p className="mt-4 text-neutral-700">In collaboration with</p>
-          <p className="text-rose-600 font-bold text-lg">Acharya Nagarjuna University</p>
+          <p className="mt-4 text-neutral-700">{t('explorePage.collabLabel')}</p>
+          <p className="text-rose-600 font-bold text-lg">{t('explorePage.universityName')}</p>
         </div>
       </main>
 

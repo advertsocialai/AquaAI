@@ -9,10 +9,10 @@ import { supabase } from '@/lib/supabase';
 
 // Placeholder URLs until verified handles exist on each platform.
 const SOCIAL = {
-  facebook:  'https://facebook.com/aquarudra',
+  facebook:  'https://www.facebook.com/profile.php?id=61590549454026',
   instagram: 'https://www.instagram.com/aquarudra',
-  whatsapp:  'https://wa.me/919705713399',
-  youtube:   'https://youtube.com/@aquarudra',
+  whatsapp:  'https://whatsapp.com/channel/0029VbD3guq9cDDip8CjG333',
+  youtube:   'https://www.youtube.com/channel/UCWef0h9mcdS0hDuekLHmQCA',
 };
 
 const PRIMARY_EMAIL   = 'info@aquarudra.com';
@@ -22,7 +22,8 @@ const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=in.aquai.m
 const APP_STORE_URL  = 'https://apps.apple.com/in/app/aqua-rudra/id0000000000';
 
 export function Footer() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isIndic = ['te', 'hi', 'bn', 'od'].includes(i18n.language);
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
@@ -61,7 +62,7 @@ export function Footer() {
         {/* Col 1 — brand + app badges */}
         <div className="space-y-4">
           <Link to="/" className="inline-flex items-center gap-3">
-            <span className="text-lg font-bold text-foreground tracking-wider">AQUA<span className="font-light"> RUDRA</span></span>
+            <span className="text-lg font-bold text-foreground tracking-wider">{isIndic ? t('brand.wordmark') : <>AQUA<span className="font-light"> RUDRA</span></>}</span>
           </Link>
           <div className="flex flex-col gap-2 pt-1 w-fit">
             <a
@@ -133,7 +134,7 @@ export function Footer() {
 
         {/* Col 4 — Connect with us */}
         <div>
-          <div className="text-xs uppercase tracking-widest text-teal-300 mb-4">Connect with us</div>
+          <div className="text-xs uppercase tracking-widest text-teal-300 mb-4">{t('footer.connect')}</div>
           <form onSubmit={subscribe} className="flex items-center gap-2 mb-5">
             <div className="flex items-center gap-2 flex-1 min-w-0 px-3 py-2.5 rounded-lg border border-border bg-card focus-within:border-teal-400/40">
               <Mail className="w-4 h-4 text-teal-400 shrink-0" />

@@ -5,18 +5,20 @@ import {
   ChevronRight, Trash2, Loader2, AlertTriangle, X, Phone, Mail, Headphones, Instagram,
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
 import { WhatsappIcon } from '@/components/icons/WhatsappIcon';
 
 const INSTAGRAM_URL = 'https://www.instagram.com/aquarudra';
-const WHATSAPP_URL = 'https://wa.me/919705713399';
+const WHATSAPP_URL = 'https://wa.me/919553282325';
 import { useAuth } from '@/lib/auth';
 import { supabase } from '@/lib/supabase';
 
-const SUPPORT_PHONE = '+919705713399';
+const SUPPORT_PHONE = '+919553282325';
 const SUPPORT_EMAIL = 'support@aquarudra.com';
 const APP_NAME = 'Aqua Rudra';
 
 export default function ProfilePage() {
+  const { t } = useTranslation();
   useEffect(() => { document.title = 'Profile — Aqua Rudra'; }, []);
   const navigate = useNavigate();
   const { user, signOut, loading } = useAuth();
@@ -52,7 +54,7 @@ export default function ProfilePage() {
     );
   }
 
-  const name = (user.user_metadata?.name as string | undefined) || user.email?.split('@')[0] || 'Member';
+  const name = (user.user_metadata?.name as string | undefined) || user.email?.split('@')[0] || t('profilePage.defaultName');
   const initial = name.charAt(0).toUpperCase();
 
   async function handleLogout() {
@@ -75,19 +77,19 @@ export default function ProfilePage() {
       redirectTo: `${window.location.origin}/forgot-password`,
     });
     toast[error ? 'error' : 'success'](
-      error ? 'Could not send reset link.' : `Password reset link sent to ${user.email}.`,
+      error ? t('profilePage.resetError') : t('profilePage.resetSuccess', { email: user.email }),
     );
   }
 
   async function handleShare() {
     const url = window.location.origin;
-    const text = `Install & Join ${APP_NAME} — One stop solution for aquaculture farmers. ${url}`;
+    const text = t('profilePage.shareText', { app: APP_NAME, url });
     try {
       if (navigator.share) {
         await navigator.share({ title: APP_NAME, text, url });
       } else {
         await navigator.clipboard.writeText(text);
-        toast.success('Invite link copied to clipboard.');
+        toast.success(t('profilePage.inviteCopied'));
       }
     } catch {
       /* user dismissed the share sheet */
@@ -95,7 +97,7 @@ export default function ProfilePage() {
   }
 
   function handleRate() {
-    toast('Thanks for the love! In-app rating is coming soon.');
+    toast(t('profilePage.rateToast'));
   }
 
   return (
@@ -103,8 +105,8 @@ export default function ProfilePage() {
       <div className="container mx-auto px-6 max-w-2xl py-8">
         {/* Header row */}
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-bold">Menu</h1>
-          <Link to="/home" className="text-rose-600 font-medium hover:underline">Close</Link>
+          <h1 className="text-3xl font-bold">{t('profilePage.menuTitle')}</h1>
+          <Link to="/home" className="text-rose-600 font-medium hover:underline">{t('profilePage.close')}</Link>
         </div>
 
         {/* Identity card */}
@@ -115,36 +117,36 @@ export default function ProfilePage() {
               : <span className="text-4xl font-bold text-emerald-500">{initial}</span>}
           </Link>
           <div className="mt-3 text-2xl font-bold">{name}</div>
-          {mobile && <div className="text-foreground/60">Mobile: {mobile}</div>}
-          <Link to="/profile/edit" className="mt-1 text-rose-600 font-medium hover:underline">Edit Profile</Link>
+          {mobile && <div className="text-foreground/60">{t('profilePage.mobileLabel', { mobile })}</div>}
+          <Link to="/profile/edit" className="mt-1 text-rose-600 font-medium hover:underline">{t('profilePage.editProfile')}</Link>
         </div>
 
         {/* Menu rows */}
         <div className="divide-y divide-border border-y border-border">
-          <MenuRow label="How It Works" to="/aquaai" />
-          <MenuRow label="Customer Support" onClick={() => setShowSupport(true)} />
-          <MenuRow label="Rate Us" onClick={handleRate} />
-          <MenuRow label="Share App" onClick={handleShare} />
-          <MenuRow label="Privacy Policy" to="/privacy" />
-          <MenuRow label="Reset Password" onClick={handleResetPassword} />
-          <MenuRow label="Logout" onClick={handleLogout} disabled={busy} />
-          <MenuRow label="Delete Account" onClick={() => setConfirmDelete(true)} />
+          <MenuRow label={t('profilePage.howItWorks')} to="/aquaai" />
+          <MenuRow label={t('profilePage.customerSupport')} onClick={() => setShowSupport(true)} />
+          <MenuRow label={t('profilePage.rateUs')} onClick={handleRate} />
+          <MenuRow label={t('profilePage.shareApp')} onClick={handleShare} />
+          <MenuRow label={t('profilePage.privacyPolicy')} to="/privacy" />
+          <MenuRow label={t('profilePage.resetPassword')} onClick={handleResetPassword} />
+          <MenuRow label={t('profilePage.logout')} onClick={handleLogout} disabled={busy} />
+          <MenuRow label={t('profilePage.deleteAccount')} onClick={() => setConfirmDelete(true)} />
         </div>
 
         {/* Footer */}
         <div className="text-center mt-12 space-y-1.5">
-          <div className="font-semibold text-foreground/80">Follow Us</div>
+          <div className="font-semibold text-foreground/80">{t('profilePage.followUs')}</div>
           <div className="flex items-center justify-center gap-5 py-1">
-            <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+            <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" aria-label={t('profilePage.instagramAria')}
                className="text-foreground/60 hover:text-rose-600 transition">
               <Instagram className="w-6 h-6" />
             </a>
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" aria-label={t('profilePage.whatsappAria')}
                className="text-foreground/60 hover:text-emerald-600 transition">
               <WhatsappIcon className="w-6 h-6" />
             </a>
           </div>
-          <div className="text-sm text-foreground/60">Visit our website</div>
+          <div className="text-sm text-foreground/60">{t('profilePage.visitWebsite')}</div>
           <a
             href="https://aquarudra.com"
             target="_blank"
@@ -167,18 +169,18 @@ export default function ProfilePage() {
           >
             <div className="relative bg-sky-100 h-40 flex items-center justify-center">
               <Headphones className="w-16 h-16 text-sky-500" strokeWidth={1.4} />
-              <button onClick={() => setShowSupport(false)} aria-label="Close" className="absolute top-3 right-3 p-1.5 rounded-full bg-white/70 hover:bg-white">
+              <button onClick={() => setShowSupport(false)} aria-label={t('profilePage.close')} className="absolute top-3 right-3 p-1.5 rounded-full bg-white/70 hover:bg-white">
                 <X className="w-4 h-4 text-neutral-700" />
               </button>
             </div>
             <div className="p-6 space-y-5">
               <div>
-                <div className="flex items-center gap-2 text-foreground/70"><Phone className="w-4 h-4" /> Call us @</div>
+                <div className="flex items-center gap-2 text-foreground/70"><Phone className="w-4 h-4" /> {t('profilePage.callUs')}</div>
                 <a href={`tel:${SUPPORT_PHONE}`} className="text-lg font-semibold text-sky-600">{SUPPORT_PHONE}</a>
-                <span className="text-foreground/60"> 9 am to 6 pm (Mon-Sat)</span>
+                <span className="text-foreground/60"> {t('profilePage.supportHours')}</span>
               </div>
               <div>
-                <div className="flex items-center gap-2 text-foreground/70"><Mail className="w-4 h-4" /> Write to us @</div>
+                <div className="flex items-center gap-2 text-foreground/70"><Mail className="w-4 h-4" /> {t('profilePage.writeToUs')}</div>
                 <a href={`mailto:${SUPPORT_EMAIL}`} className="text-lg font-semibold text-sky-600 break-all">{SUPPORT_EMAIL}</a>
               </div>
             </div>
@@ -198,18 +200,17 @@ export default function ProfilePage() {
               <div className="p-2 rounded-lg bg-red-400/10">
                 <AlertTriangle className="w-5 h-5 text-red-400" />
               </div>
-              <h2 className="text-lg font-bold">Delete account?</h2>
+              <h2 className="text-lg font-bold">{t('profilePage.deleteConfirmTitle')}</h2>
             </div>
             <p className="text-sm text-foreground/60 mb-6">
-              This will sign you out and start the account-deletion request. Your
-              data is removed per our privacy policy. This can't be undone.
+              {t('profilePage.deleteConfirmBody')}
             </p>
             <div className="flex gap-3">
               <button
                 onClick={() => setConfirmDelete(false)}
                 className="flex-1 py-2.5 rounded-xl border border-border text-sm font-medium hover:bg-muted"
               >
-                Cancel
+                {t('profilePage.cancel')}
               </button>
               <button
                 onClick={handleDelete}
@@ -217,7 +218,7 @@ export default function ProfilePage() {
                 className="flex-1 py-2.5 rounded-xl bg-red-500 hover:bg-red-400 text-white text-sm font-semibold inline-flex items-center justify-center gap-2 disabled:opacity-40"
               >
                 {busy ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
-                Delete
+                {t('profilePage.delete')}
               </button>
             </div>
           </motion.div>
