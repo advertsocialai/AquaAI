@@ -29,8 +29,9 @@ test("AquaAI dashboard route is reachable", async ({ page }) => {
   const resp = await page.goto("/aquaai");
   expect(resp?.status(), "HTTP status for /aquaai").toBeLessThan(400);
   await page.waitForLoadState("domcontentloaded");
-  const body = (await page.locator("body").innerText()).trim();
-  expect(body.length, "/aquaai body should render real content").toBeGreaterThan(300);
+  // /aquaai is a canvas/3D-heavy page with little body text, so anchor on
+  // the interactive chat control instead of rendered character count.
+  await expect(page.getByRole("button", { name: /open chat/i })).toBeVisible();
 });
 
 test("Login page renders the mobile entry form", async ({ page }) => {
