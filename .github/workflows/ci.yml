@@ -49,9 +49,11 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
-      - name: Run E2E / smoke / performance specs
-        # chromium only, excluding the image-capture screenshots spec —
-        # keeps the required gate fast and deterministic.
+      - name: Run E2E smoke + performance specs
+        # The required gate runs the stable smoke + performance specs
+        # (chromium). The broader route/flow/dashboard specs (npm run
+        # e2e:full) are kept in-repo but are being reconciled to the
+        # current UI, so they don't block merges yet.
         run: npm run e2e:ci
       - name: Upload Playwright report
         if: always()

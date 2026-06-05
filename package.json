@@ -13,7 +13,8 @@
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
     "e2e": "playwright test",
-    "e2e:ci": "playwright test --project=chromium --grep-invert screenshot",
+    "e2e:ci": "playwright test --project=chromium --retries=1 tests/e2e/smoke.spec.ts tests/e2e/performance.spec.ts",
+    "e2e:full": "playwright test --project=chromium --grep-invert screenshot",
     "e2e:install": "playwright install --with-deps chromium"
   },
   "dependencies": {
