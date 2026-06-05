@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase';
+import type { Json } from '@/lib/supabase-types';
 import type { ToolId, ToolRecord, ToolResult } from '@/features/quick-tools/types';
 
 /**
@@ -31,7 +32,8 @@ async function pushOne(rec: ToolRecord, userId: string): Promise<boolean> {
     user_id: userId,
     tool: rec.tool,
     certificate_id: rec.certificateId,
-    result: rec.result,
+    // ToolResult is a typed union; tool_scans.result is a JSONB column.
+    result: rec.result as unknown as Json,
   });
   if (error) return false;
   markSynced(rec.certificateId);

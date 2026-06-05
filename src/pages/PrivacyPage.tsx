@@ -43,7 +43,7 @@ const PrivacyPage = () => {
               your Personal Information including and not limited to professional information while
               using our websites, web applications, and/or mobile applications (&ldquo;<strong>Apps</strong>&rdquo;)
               for you to avail the services (&ldquo;<strong>Services</strong>&rdquo;) offered by our
-              Company (hereinafter referred to as &ldquo;<strong>{{ company: COMPANY }}</strong>&rdquo;, &ldquo;we&rdquo;,
+              Company (hereinafter referred to as &ldquo;<strong>{COMPANY}</strong>&rdquo;, &ldquo;we&rdquo;,
               &ldquo;us&rdquo; or &ldquo;our&rdquo;).
             </Trans>
           </p>
