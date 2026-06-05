@@ -18,7 +18,7 @@ test("home page renders the brand", async ({ page }) => {
 
 test("AquaAI dashboard is reachable and shows the role selector", async ({ page }) => {
   await page.goto("/aquaai");
-  await page.waitForLoadState("networkidle");
+  await page.waitForLoadState("domcontentloaded");
   await expect(page.getByText(/View [Aa]s/).first()).toBeVisible();
   await expect(page.getByText("Farmer").first()).toBeVisible();
   await expect(page.getByText("Hatchery").first()).toBeVisible();
@@ -42,7 +42,7 @@ test("Signup wizard shows role selection", async ({ page }) => {
 
 test("ChatBot floating button opens the chat panel", async ({ page }) => {
   await page.goto("/aquaai");
-  await page.waitForLoadState("networkidle");
+  await page.waitForLoadState("domcontentloaded");
   await page.getByRole("button", { name: /open chat/i }).click();
   // The panel header reads "AquaI Assistant"; the welcome message also
   // contains the phrase, so match the header exactly to avoid strict-mode hits.

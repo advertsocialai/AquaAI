@@ -22,11 +22,11 @@ const TARGETS: { slug: string; path: string }[] = [
 for (const t of TARGETS) {
   test(`screenshot ${t.slug}`, async ({ page }, testInfo) => {
     await page.goto(t.path);
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
     const enterBtn = page.getByRole("button", { name: /enter/i });
     if (await enterBtn.isVisible().catch(() => false)) {
       await enterBtn.click();
-      await page.waitForLoadState("networkidle");
+      await page.waitForLoadState("domcontentloaded");
     }
     await page.waitForTimeout(400);
     await page.screenshot({

@@ -5,6 +5,11 @@ on:
     branches: [main, acqua-ai]
   pull_request:
 
+# A newer push to the same ref cancels older in-flight runs (frees runners).
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   web:
     name: Web · lint · type-check · build · coverage
@@ -34,6 +39,7 @@ jobs:
   e2e:
     name: E2E · smoke · performance (Playwright)
     runs-on: ubuntu-latest
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -44,7 +50,9 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
       - name: Run E2E / smoke / performance specs
-        run: npm run e2e
+        # chromium only, excluding the image-capture screenshots spec —
+        # keeps the required gate fast and deterministic.
+        run: npm run e2e:ci
       - name: Upload Playwright report
         if: always()
         uses: actions/upload-artifact@v4

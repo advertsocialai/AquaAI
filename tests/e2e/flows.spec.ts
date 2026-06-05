@@ -68,7 +68,7 @@ test("Login → invalid mobile number is rejected", async ({ page }) => {
 
 test("Knowledge → article card opens an article page", async ({ page }) => {
   await page.goto("/knowledge");
-  await page.waitForLoadState("networkidle");
+  await page.waitForLoadState("domcontentloaded");
   // Find the first article link. KnowledgePage renders cards as <a href="/knowledge/...">.
   const firstArticleLink = page
     .locator('a[href^="/knowledge/"]')
@@ -76,7 +76,7 @@ test("Knowledge → article card opens an article page", async ({ page }) => {
     .first();
   await expect(firstArticleLink).toBeVisible();
   await firstArticleLink.click();
-  await page.waitForLoadState("networkidle");
+  await page.waitForLoadState("domcontentloaded");
   await expect(page).toHaveURL(/\/knowledge\/[a-z0-9-]+/i);
   // PageTransition fades in via framer-motion; wait for the article's h1 to be
   // both attached AND fully visible before reading body text (innerText returns
@@ -103,7 +103,7 @@ test("PWA manifest is served", async ({ page, request }) => {
 
 test("AquaAI dashboard role switch updates the view", async ({ page }) => {
   await page.goto("/aquaai");
-  await page.waitForLoadState("networkidle");
+  await page.waitForLoadState("domcontentloaded");
   // Click "Hatchery" role. The dashboard should re-render with hatchery copy.
   await page.getByText("Hatchery").first().click();
   await page.waitForTimeout(500);
