@@ -56,10 +56,17 @@ export default function LoginPage() {
     setError(null);
     const { error: err } = await supabase.auth.signInWithOtp({
       phone: `+91${phone.trim()}`,
-      options: { shouldCreateUser: true },
+      options: { shouldCreateUser: false },
     });
     setBusy(false);
-    if (err) { setError(err.message); return; }
+    if (err) {
+      setError(
+        /not found|signups? not allowed|user/i.test(err.message)
+          ? t('loginPage.errNoAccount', 'No account for this number. Please create one first.')
+          : err.message,
+      );
+      return;
+    }
     setOtpSent(true);
   }
 
@@ -76,7 +83,7 @@ export default function LoginPage() {
       type: 'sms',
     });
     setBusy(false);
-    if (err) { setError(err.message === 'Token has expired or is invalid' ? t('loginPage.errCodeInvalid') : err.message); return; }
+    if (err) { setError(t('loginPage.errCodeInvalid', 'That code is wrong or expired.')); return; }
     goToDashboard(data.user);
   }
 
@@ -186,10 +193,10 @@ export default function LoginPage() {
                 disabled={!phoneValid || busy}
                 className="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm transition flex items-center justify-center gap-2"
               >
-                {busy ? <><Loader2 className="w-4 h-4 animate-spin" /> {t('loginPage.sendingCode')}</> : <>{t('loginPage.sendMeACode')} <ArrowRight className="w-4 h-4" /></>}
+                {busy ? <><Loader2 className="w-4 h-4 animate-spin" /> {t('loginPage.sendingCode', 'Sending code…')}</> : <>{t('loginPage.sendMeACode', 'Send me a code')} <ArrowRight className="w-4 h-4" /></>}
               </button>
               <p className="text-[11px] text-foreground/40 text-center">
-                {t('loginPage.otpHelper', { target: t('loginPage.otpTargetMobile') })}
+                {t('loginPage.otpHelperSms', "We'll send a 6-digit code to your mobile by SMS.")}
               </p>
             </motion.form>
           )}
@@ -202,10 +209,10 @@ export default function LoginPage() {
               className="space-y-4"
             >
               <p className="text-sm text-foreground/60">
-                {t('loginPage.enterCodePrefix')} <span className="text-foreground font-medium">+91 {phone}</span>{t('loginPage.enterCodeSuffix')}
+                {t('loginPage.enterCodePrefix', 'Enter the code sent to')} <span className="text-foreground font-medium">+91 {phone}</span>
               </p>
               <label className="block">
-                <span className="text-xs text-foreground/40 uppercase tracking-widest">{t('loginPage.verificationCodeLabel')}</span>
+                <span className="text-xs text-foreground/40 uppercase tracking-widest">{t('loginPage.verificationCodeLabel', 'Verification code')}</span>
                 <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
                   <KeyRound className="w-4 h-4 text-teal-400" />
                   <input
@@ -229,10 +236,10 @@ export default function LoginPage() {
               </button>
               <div className="flex items-center justify-between text-xs">
                 <button type="button" onClick={() => { setOtpSent(false); setOtp(''); setError(null); }} className="text-foreground/50 hover:text-foreground">
-                  {t('loginPage.useDifferentNumber')}
+                  {t('loginPage.useDifferentNumber', 'Use a different number')}
                 </button>
                 <button type="button" onClick={sendOtp} disabled={busy} className="text-teal-400 hover:underline disabled:opacity-40">
-                  {t('loginPage.resendCode')}
+                  {t('loginPage.resendCode', 'Resend code')}
                 </button>
               </div>
             </motion.form>

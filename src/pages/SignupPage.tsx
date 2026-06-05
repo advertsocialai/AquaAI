@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Fish, ArrowRight, ArrowLeft, Check, Mail, Lock,
-  Languages, MapPin, BadgeCheck, AlertCircle, Loader2,
+  Fish, ArrowRight, ArrowLeft, Check, KeyRound,
+  Languages, MapPin, Smartphone, AlertCircle, Loader2,
 } from 'lucide-react';
 import { ROLES, type Role } from '@/components/dashboard/RoleSelector';
 import { DASHBOARD_ROUTE } from '@/pages/dashboards/configs';
@@ -12,25 +12,14 @@ import { supabase } from '@/lib/supabase';
 import { TypewriterEffect } from '@/components/ui/typewriter-effect';
 
 const LANGUAGES = ['English', 'తెలుగు (Telugu)', 'ଓଡ଼ିଆ (Odia)', 'বাংলা (Bengali)', 'हिन्दी (Hindi)'];
-const STEPS = ['Role', 'Account', 'Details', 'Done'] as const;
+const STEPS = ['Role', 'Details', 'Verify', 'Done'] as const;
 type StepId = typeof STEPS[number];
 
 const STEP_LABEL_KEY: Record<StepId, string> = {
   Role: 'signupPage.stepRole',
-  Account: 'signupPage.stepAccount',
   Details: 'signupPage.stepDetails',
+  Verify: 'signupPage.stepVerify',
   Done: 'signupPage.stepDone',
-};
-
-const KYC_FIELDS: Record<Role, { labelKey: string; hintKey: string }> = {
-  farmer:      { labelKey: 'signupPage.kycFarmerLabel',      hintKey: 'signupPage.kycFarmerHint' },
-  vle:         { labelKey: 'signupPage.kycVleLabel',         hintKey: 'signupPage.kycVleHint' },
-  hatchery:    { labelKey: 'signupPage.kycHatcheryLabel',    hintKey: 'signupPage.kycHatcheryHint' },
-  transporter: { labelKey: 'signupPage.kycTransporterLabel', hintKey: 'signupPage.kycTransporterHint' },
-  supplier:    { labelKey: 'signupPage.kycSupplierLabel',    hintKey: 'signupPage.kycSupplierHint' },
-  trader:      { labelKey: 'signupPage.kycTraderLabel',      hintKey: 'signupPage.kycTraderHint' },
-  bank:        { labelKey: 'signupPage.kycBankLabel',        hintKey: 'signupPage.kycBankHint' },
-  govt:        { labelKey: 'signupPage.kycGovtLabel',        hintKey: 'signupPage.kycGovtHint' },
 };
 
 export default function SignupPage() {
@@ -41,42 +30,49 @@ export default function SignupPage() {
   const [step, setStep] = useState<StepId>('Role');
   const [role, setRole] = useState<Role | null>(null);
   const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [otp, setOtp] = useState('');
   const [lang, setLang] = useState(LANGUAGES[0]);
-  const [kyc, setKyc] = useState('');
   const [location, setLocation] = useState('');
   const [name, setName] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const idx = STEPS.indexOf(step);
-  const next = () => setStep(STEPS[Math.min(idx + 1, STEPS.length - 1)]);
   const prev = () => setStep(STEPS[Math.max(idx - 1, 0)]);
 
   const phoneValid = /^[6-9]\d{9}$/.test(phone.trim());
-  const emailValid = email.trim() === '' || /^\S+@\S+\.\S+$/.test(email.trim());
-  const pwOk = password.length >= 8 && /[A-Z]/.test(password) && /\d/.test(password);
 
-  async function createAccount() {
-    if (!role) return;
+  // Send the OTP and create the account with its profile metadata.
+  async function sendCode() {
+    if (!role || !name || !location || !phoneValid) return;
     if (!supabase) { setError(t('signupPage.errorAuthNotConfigured')); return; }
     setBusy(true);
     setError(null);
-    // Phone-primary signup; email is optional (kept in metadata).
-    const { error: err } = await supabase.auth.signUp({
+    const { error: err } = await supabase.auth.signInWithOtp({
       phone: `+91${phone.trim()}`,
-      password,
       options: {
-        data: { name, role, lang, kyc_ref: kyc, location, email: email.trim().toLowerCase() || null },
+        shouldCreateUser: true,
+        data: { name, role, lang, location, phone: `+91${phone.trim()}` },
       },
     });
     setBusy(false);
-    if (err) {
-      setError(err.message);
-      setStep('Account');
-      return;
-    }
+    if (err) { setError(err.message); return; }
+    setStep('Verify');
+  }
+
+  // Verify the typed code; this signs the new user in.
+  async function verifyAndFinish() {
+    if (otp.trim().length < 6) return;
+    if (!supabase) { setError(t('signupPage.errorAuthNotConfigured')); return; }
+    setBusy(true);
+    setError(null);
+    const { error: err } = await supabase.auth.verifyOtp({
+      phone: `+91${phone.trim()}`,
+      token: otp.trim(),
+      type: 'sms',
+    });
+    setBusy(false);
+    if (err) { setError(t('signupPage.errCodeInvalid', 'That code is wrong or expired.')); return; }
     setStep('Done');
   }
 
@@ -149,7 +145,6 @@ export default function SignupPage() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="text-sm font-semibold text-foreground">{label}</div>
-                        <div className="text-[11px] text-foreground/40 truncate">{t(KYC_FIELDS[id].labelKey)}</div>
                       </div>
                       {selected && <Check className="w-4 h-4 text-teal-400 shrink-0" />}
                     </button>
@@ -157,7 +152,7 @@ export default function SignupPage() {
                 })}
               </div>
               <button
-                onClick={next}
+                onClick={() => setStep('Details')}
                 disabled={!role}
                 className="w-full sm:w-auto px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm transition inline-flex items-center justify-center gap-2"
               >
@@ -166,9 +161,9 @@ export default function SignupPage() {
             </motion.div>
           )}
 
-          {/* STEP 2: ACCOUNT (email + password) */}
-          {step === 'Account' && (
-            <motion.div key="account" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}>
+          {/* STEP 2: DETAILS (name, mobile, location, language) */}
+          {step === 'Details' && role && (
+            <motion.div key="details" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}>
               <TypewriterEffect
                 words={[
                   { text: t('signupPage.accountWord1'), className: 'text-foreground' },
@@ -177,89 +172,13 @@ export default function SignupPage() {
                 ]}
                 className="text-2xl md:text-3xl text-left mb-2"
               />
-              <p className="text-sm text-foreground/50 mb-8">{t('signupPage.accountSubtitle')}</p>
-
-              <div className="space-y-4 max-w-md">
-                <div>
-                  <span className="text-xs text-foreground/40 uppercase tracking-widest">{t('signupPage.mobileNumberLabel')}</span>
-                  <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
-                    <span className="text-sm text-foreground/70 font-medium select-none">+91</span>
-                    <input
-                      autoFocus
-                      type="tel"
-                      inputMode="numeric"
-                      autoComplete="tel-national"
-                      maxLength={10}
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
-                      placeholder="98765 43210"
-                      className="bg-transparent outline-none text-foreground flex-1 text-sm"
-                    />
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
-                  <Lock className="w-4 h-4 text-teal-400" />
-                  <input
-                    type="password"
-                    autoComplete="new-password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder={t('signupPage.passwordPlaceholder')}
-                    className="bg-transparent outline-none text-foreground flex-1 text-sm"
-                  />
-                </div>
-                {password && !pwOk && (
-                  <div className="flex items-center gap-2 text-xs text-amber-300">
-                    <AlertCircle className="w-3.5 h-3.5" /> {t('signupPage.passwordHint')}
-                  </div>
-                )}
-
-                <div className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
-                  <Mail className="w-4 h-4 text-foreground/40" />
-                  <input
-                    type="email"
-                    autoComplete="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder={t('signupPage.emailPlaceholder')}
-                    className="bg-transparent outline-none text-foreground flex-1 text-sm"
-                  />
-                </div>
-
-                <div className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card">
-                  <Languages className="w-4 h-4 text-violet-400" />
-                  <select value={lang} onChange={(e) => setLang(e.target.value)} className="bg-transparent outline-none text-foreground flex-1 text-sm">
-                    {LANGUAGES.map((l) => <option key={l} value={l} className="bg-background">{l}</option>)}
-                  </select>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 mt-8">
-                <button onClick={prev} className="px-5 py-3 rounded-xl border border-border bg-card hover:bg-muted text-sm text-foreground/70 inline-flex items-center gap-2">
-                  <ArrowLeft className="w-4 h-4" /> {t('signupPage.back')}
-                </button>
-                <button
-                  onClick={next}
-                  disabled={!phoneValid || !pwOk || !emailValid}
-                  className="px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm inline-flex items-center gap-2"
-                >
-                  {t('signupPage.continue')} <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
-            </motion.div>
-          )}
-
-          {/* STEP 3: KYC + DETAILS */}
-          {step === 'Details' && role && (
-            <motion.div key="details" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}>
-              <h1 className="text-2xl md:text-3xl font-bold mb-2">{t('signupPage.detailsHeading')}</h1>
               <p className="text-sm text-foreground/50 mb-8">{t('signupPage.detailsSubtitle')}</p>
 
               <div className="space-y-4 max-w-md">
                 <label className="block">
                   <span className="text-[11px] uppercase tracking-widest text-foreground/40">{t('signupPage.fullNameLabel')}</span>
                   <input
+                    autoFocus
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder={t('signupPage.fullNamePlaceholder')}
@@ -268,13 +187,18 @@ export default function SignupPage() {
                 </label>
 
                 <label className="block">
-                  <span className="text-[11px] uppercase tracking-widest text-foreground/40">{t(KYC_FIELDS[role].labelKey)}</span>
+                  <span className="text-[11px] uppercase tracking-widest text-foreground/40">{t('signupPage.mobileNumberLabel')}</span>
                   <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
-                    <BadgeCheck className="w-4 h-4 text-teal-400" />
+                    <Smartphone className="w-4 h-4 text-teal-400" />
+                    <span className="text-sm text-foreground/70 font-medium select-none">+91</span>
                     <input
-                      value={kyc}
-                      onChange={(e) => setKyc(e.target.value)}
-                      placeholder={t(KYC_FIELDS[role].hintKey)}
+                      type="tel"
+                      inputMode="numeric"
+                      autoComplete="tel-national"
+                      maxLength={10}
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
+                      placeholder="98765 43210"
                       className="bg-transparent outline-none text-foreground flex-1 text-sm"
                     />
                   </div>
@@ -292,6 +216,13 @@ export default function SignupPage() {
                     />
                   </div>
                 </label>
+
+                <div className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card">
+                  <Languages className="w-4 h-4 text-violet-400" />
+                  <select value={lang} onChange={(e) => setLang(e.target.value)} className="bg-transparent outline-none text-foreground flex-1 text-sm">
+                    {LANGUAGES.map((l) => <option key={l} value={l} className="bg-background">{l}</option>)}
+                  </select>
+                </div>
               </div>
 
               <div className="flex items-center gap-2 mt-8">
@@ -299,11 +230,56 @@ export default function SignupPage() {
                   <ArrowLeft className="w-4 h-4" /> {t('signupPage.back')}
                 </button>
                 <button
-                  onClick={createAccount}
-                  disabled={!name || !kyc || !location || busy}
+                  onClick={sendCode}
+                  disabled={!name || !location || !phoneValid || busy}
                   className="px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm inline-flex items-center gap-2"
                 >
-                  {busy ? <><Loader2 className="w-4 h-4 animate-spin" /> {t('signupPage.creating')}</> : <>{t('signupPage.finish')} <ArrowRight className="w-4 h-4" /></>}
+                  {busy ? <><Loader2 className="w-4 h-4 animate-spin" /> {t('signupPage.creating')}</> : <>{t('signupPage.sendCode', 'Send code')} <ArrowRight className="w-4 h-4" /></>}
+                </button>
+              </div>
+            </motion.div>
+          )}
+
+          {/* STEP 3: VERIFY OTP */}
+          {step === 'Verify' && role && (
+            <motion.div key="verify" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}>
+              <h1 className="text-2xl md:text-3xl font-bold mb-2">{t('signupPage.verifyHeading', 'Verify your mobile')}</h1>
+              <p className="text-sm text-foreground/50 mb-8">
+                {t('signupPage.verifySubtitle', 'Enter the 6-digit code sent to')} <span className="text-foreground font-medium">+91 {phone}</span>
+              </p>
+
+              <div className="space-y-4 max-w-md">
+                <label className="block">
+                  <span className="text-[11px] uppercase tracking-widest text-foreground/40">{t('signupPage.verificationCodeLabel', 'Verification code')}</span>
+                  <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                    <KeyRound className="w-4 h-4 text-teal-400" />
+                    <input
+                      autoFocus
+                      inputMode="numeric"
+                      autoComplete="one-time-code"
+                      maxLength={6}
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
+                      placeholder="000000"
+                      className="bg-transparent outline-none text-foreground flex-1 text-sm tracking-[0.5em] font-mono"
+                    />
+                  </div>
+                </label>
+              </div>
+
+              <div className="flex items-center gap-2 mt-8">
+                <button onClick={() => { setStep('Details'); setOtp(''); setError(null); }} className="px-5 py-3 rounded-xl border border-border bg-card hover:bg-muted text-sm text-foreground/70 inline-flex items-center gap-2">
+                  <ArrowLeft className="w-4 h-4" /> {t('signupPage.back')}
+                </button>
+                <button
+                  onClick={verifyAndFinish}
+                  disabled={otp.length < 6 || busy}
+                  className="px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm inline-flex items-center gap-2"
+                >
+                  {busy ? <><Loader2 className="w-4 h-4 animate-spin" /> {t('signupPage.creating')}</> : <>{t('signupPage.finish')} <Check className="w-4 h-4" /></>}
+                </button>
+                <button type="button" onClick={sendCode} disabled={busy} className="ml-auto text-xs text-teal-400 hover:underline disabled:opacity-40">
+                  {t('signupPage.resendCode', 'Resend code')}
                 </button>
               </div>
             </motion.div>

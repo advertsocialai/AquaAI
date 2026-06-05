@@ -70,3 +70,13 @@ playwright/.cache/
 backend/aquaai_dev.db
 backend/*.db
 supabase/.temp/
+
+# Test coverage reports
+coverage/
+
+# Python test coverage
+.coverage
+backend/.coverage
+htmlcov/
+.pytest_cache/
+backend/coverage.json

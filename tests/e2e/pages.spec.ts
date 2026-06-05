@@ -91,13 +91,13 @@ for (const route of ROUTES) {
     const errs = watchConsole(page);
     const resp = await page.goto(route.path);
     expect(resp?.status(), `HTTP status for ${route.path}`).toBeLessThan(400);
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
 
     // Dismiss any splash gate so we actually reach the page chrome.
     const enterBtn = page.getByRole("button", { name: /enter/i });
     if (await enterBtn.isVisible().catch(() => false)) {
       await enterBtn.click();
-      await page.waitForLoadState("networkidle");
+      await page.waitForLoadState("domcontentloaded");
     }
 
     if (route.expectsText) {
@@ -122,13 +122,13 @@ test("NotFound page renders for unknown routes", async ({ page }) => {
   const resp = await page.goto("/this-route-does-not-exist-xyz");
   // SPA always returns 200; the 404 view shows in-app.
   expect(resp?.status()).toBeLessThan(400);
-  await page.waitForLoadState("networkidle");
+  await page.waitForLoadState("domcontentloaded");
   await expect(page.getByText(/404|not found|page.*missing/i).first()).toBeVisible();
 });
 
 test("Language switcher rotates AquaAI dashboard", async ({ page }) => {
   await page.goto("/aquaai");
-  await page.waitForLoadState("networkidle");
+  await page.waitForLoadState("domcontentloaded");
   // The dashboard has a language menu. Open it and pick Telugu, then check
   // a glyph from the Telugu script appears — proves i18n actually swapped.
   const langTrigger = page

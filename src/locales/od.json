@@ -840,7 +840,7 @@
     "accountWord1": "ଆପଣଙ୍କ",
     "accountWord2": "ଖାତା",
     "accountWord3": "ସୃଷ୍ଟି କରନ୍ତୁ",
-    "accountSubtitle": "ଆପଣଙ୍କ ମୋବାଇଲ୍ ନମ୍ବର ଏବଂ ଏକ ପାସୱାର୍ଡ ବ୍ୟବହାର କରନ୍ତୁ। ଇମେଲ ବୈକଳ୍ପିକ।",
+    "accountSubtitle": "ଆପଣଙ୍କ ମୋବାଇଲ୍ ନମ୍ବର ଏବଂ ଏକ ପାସୱାର୍ଡ ବ୍ୟବହାର କରନ୍ତୁ।",
     "mobileNumberLabel": "ମୋବାଇଲ୍ ନମ୍ବର",
     "passwordPlaceholder": "ଅତିକମରେ ୮ ଅକ୍ଷର · ୧ ବଡ଼ ଅକ୍ଷର · ୧ ସଂଖ୍ୟା",
     "passwordHint": "୮+ ଅକ୍ଷର, ଗୋଟିଏ ବଡ଼ ଅକ୍ଷର, ଗୋଟିଏ ସଂଖ୍ୟା ଆବଶ୍ୟକ।",
@@ -871,7 +871,8 @@
     "kycBankLabel": "ସାଂସ୍ଥାନିକ ଆଇଡି + ଏପିଆଇ",
     "kycBankHint": "ସହଭାଗିତା ଦଳ ମାଧ୍ୟମରେ ଅନବୋର୍ଡିଂ",
     "kycGovtLabel": "ସରକାରୀ ଆଇଡି + ଅଧିକାର କ୍ଷେତ୍ର",
-    "kycGovtHint": "ଅଫିସର ଇମେଲ ଡୋମେନ ଯାଞ୍ଚ ହୋଇଛି"
+    "kycGovtHint": "ଅଫିସର ଇମେଲ ଡୋମେନ ଯାଞ୍ଚ ହୋଇଛି",
+    "stepVerify": "ଯାଞ୍ଚ କରନ୍ତୁ"
   },
   "traderDashboardPage": {
     "documentTitle": "ଟ୍ରେଡର ଡ୍ୟାସବୋର୍ଡ — Aqua Rudra",

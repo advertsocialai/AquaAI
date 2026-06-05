@@ -840,7 +840,7 @@
     "accountWord1": "अपना",
     "accountWord2": "खाता",
     "accountWord3": "बनाएं",
-    "accountSubtitle": "अपना मोबाइल नंबर और एक पासवर्ड उपयोग करें। ईमेल वैकल्पिक है।",
+    "accountSubtitle": "अपना मोबाइल नंबर और एक पासवर्ड उपयोग करें।",
     "mobileNumberLabel": "मोबाइल नंबर",
     "passwordPlaceholder": "कम से कम 8 अक्षर · 1 बड़ा अक्षर · 1 अंक",
     "passwordHint": "8+ अक्षर, एक बड़ा अक्षर, एक अंक आवश्यक है।",
@@ -871,7 +871,8 @@
     "kycBankLabel": "संस्थागत आईडी + एपीआई",
     "kycBankHint": "साझेदारी टीम के माध्यम से ऑनबोर्डिंग",
     "kycGovtLabel": "सरकारी आईडी + क्षेत्राधिकार",
-    "kycGovtHint": "अधिकारी ईमेल डोमेन सत्यापित"
+    "kycGovtHint": "अधिकारी ईमेल डोमेन सत्यापित",
+    "stepVerify": "सत्यापित करें"
   },
   "traderDashboardPage": {
     "documentTitle": "ट्रेडर डैशबोर्ड — Aqua Rudra",

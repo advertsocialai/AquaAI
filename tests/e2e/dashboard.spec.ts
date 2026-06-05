@@ -60,7 +60,7 @@ for (const { label, role } of TABS) {
   test(`AquaAI dashboard tab → ${label} loads cleanly`, async ({ page }) => {
     const { errors } = watchConsole(page);
     await page.goto("/aquaai");
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
 
     // Role-gated tab? Click the role tile in the RoleSelector first.
     if (role) {
@@ -95,7 +95,7 @@ for (const { label, role } of TABS) {
 
 test("Chat panel opens, accepts input, and posts a reply", async ({ page }) => {
   await page.goto("/aquaai");
-  await page.waitForLoadState("networkidle");
+  await page.waitForLoadState("domcontentloaded");
   await page.getByRole("button", { name: /open chat/i }).click();
   await expect(page.getByText(/^AquaI Assistant$/i).first()).toBeVisible();
 
@@ -114,7 +114,7 @@ test("Chat panel opens, accepts input, and posts a reply", async ({ page }) => {
 
 test("Chat panel close button hides the panel", async ({ page }) => {
   await page.goto("/aquaai");
-  await page.waitForLoadState("networkidle");
+  await page.waitForLoadState("domcontentloaded");
   const openBtn = page.getByRole("button", { name: /open chat/i });
   await openBtn.click();
   await expect(page.getByText(/^AquaI Assistant$/i).first()).toBeVisible();

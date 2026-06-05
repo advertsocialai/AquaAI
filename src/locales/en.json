@@ -982,7 +982,7 @@
     "accountWord1": "Create",
     "accountWord2": "your",
     "accountWord3": "account",
-    "accountSubtitle": "Use your mobile number and a password. Email is optional.",
+    "accountSubtitle": "Use your mobile number and a password.",
     "mobileNumberLabel": "Mobile number",
     "passwordPlaceholder": "At least 8 chars · 1 capital · 1 number",
     "passwordHint": "Needs 8+ chars, one capital, one digit.",
@@ -1013,7 +1013,8 @@
     "kycBankLabel": "Institutional ID + API",
     "kycBankHint": "Onboarding via partnerships team",
     "kycGovtLabel": "Govt ID + jurisdiction",
-    "kycGovtHint": "Officer email domain verified"
+    "kycGovtHint": "Officer email domain verified",
+    "stepVerify": "Verify"
   },
   "traderDashboardPage": {
     "documentTitle": "Trader Dashboard — Aqua Rudra",

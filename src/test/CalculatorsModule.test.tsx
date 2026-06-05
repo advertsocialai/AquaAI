@@ -3,12 +3,13 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { CalculatorsModule } from "@/components/dashboard/CalculatorsModule";
 
 describe("<CalculatorsModule />", () => {
-  it("shows all six calculator entries", () => {
+  it("shows all calculator entries", () => {
     render(<CalculatorsModule />);
     // Each label may appear in the sidebar AND the active card header — accept ≥ 1.
     for (const label of [
+      "Survival Calculator",
+      "Feed Calculator",
       "Shrimp Count",
-      "Daily Feed",
       "Aeration HP",
       "Liming Requirement",
       "Pond Volume",

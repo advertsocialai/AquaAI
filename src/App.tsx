@@ -51,6 +51,7 @@ const ProductDetailPage = lazy(() => import("./pages/ProductDetailPage"));
 const SeedTool = lazy(() => import("./features/quick-tools/seed/SeedTool"));
 const DiseaseTool = lazy(() => import("./features/quick-tools/disease/DiseaseTool"));
 const WaterTool = lazy(() => import("./features/quick-tools/water/WaterTool"));
+const CoverageDashboardPage = lazy(() => import("./pages/CoverageDashboardPage"));
 
 const queryClient = new QueryClient();
 
@@ -106,6 +107,7 @@ function AnimatedRoutes() {
           <Route path="/tools/seed" element={<RequireAuth><PageTransition><SeedTool /></PageTransition></RequireAuth>} />
           <Route path="/tools/disease" element={<RequireAuth><PageTransition><DiseaseTool /></PageTransition></RequireAuth>} />
           <Route path="/tools/water" element={<RequireAuth><PageTransition><WaterTool /></PageTransition></RequireAuth>} />
+          <Route path="/internal/coverage" element={<PageTransition><CoverageDashboardPage /></PageTransition>} />
           <Route path="/farmer" element={<RequireAuth role="farmer"><PageTransition><FarmerDashboardPage /></PageTransition></RequireAuth>} />
           <Route path="/trader" element={<RequireAuth role="trader"><PageTransition><TraderDashboardPage /></PageTransition></RequireAuth>} />
           <Route path="/vle" element={<RequireAuth role="vle"><PageTransition><RoleDashboard role="vle" /></PageTransition></RequireAuth>} />

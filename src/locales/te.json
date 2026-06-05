@@ -982,7 +982,7 @@
     "accountWord1": "మీ",
     "accountWord2": "ఖాతాను",
     "accountWord3": "సృష్టించండి",
-    "accountSubtitle": "మీ మొబైల్ నంబర్ మరియు పాస్‌వర్డ్‌ను ఉపయోగించండి. ఇమెయిల్ ఐచ్ఛికం.",
+    "accountSubtitle": "మీ మొబైల్ నంబర్ మరియు పాస్‌వర్డ్‌ను ఉపయోగించండి.",
     "mobileNumberLabel": "మొబైల్ నంబర్",
     "passwordPlaceholder": "కనీసం 8 అక్షరాలు · 1 పెద్ద అక్షరం · 1 సంఖ్య",
     "passwordHint": "8+ అక్షరాలు, ఒక పెద్ద అక్షరం, ఒక సంఖ్య అవసరం.",
@@ -1013,7 +1013,8 @@
     "kycBankLabel": "సంస్థాగత ID + API",
     "kycBankHint": "భాగస్వామ్య బృందం ద్వారా ఆన్‌బోర్డింగ్",
     "kycGovtLabel": "ప్రభుత్వ ID + అధికార పరిధి",
-    "kycGovtHint": "అధికారి ఇమెయిల్ డొమైన్ ధృవీకరించబడింది"
+    "kycGovtHint": "అధికారి ఇమెయిల్ డొమైన్ ధృవీకరించబడింది",
+    "stepVerify": "ధృవీకరించండి"
   },
   "traderDashboardPage": {
     "documentTitle": "ట్రేడర్ డ్యాష్‌బోర్డ్ — Aqua Rudra",
