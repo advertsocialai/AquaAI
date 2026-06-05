@@ -16,7 +16,7 @@ const MODEL_VERSION = 'stub-0.1';
 /** Stable 0..1 hash of a data URL so stub numbers are deterministic per image. */
 function seedFrom(dataUrl: string): number {
   let h = 2166136261;
-  for (let i = 0; i < dataUrl.length; i += 257) {
+  for (let i = 0; i < dataUrl.length; i += 7) {
     h ^= dataUrl.charCodeAt(i);
     h = Math.imul(h, 16777619);
   }
