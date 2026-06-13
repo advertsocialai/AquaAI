@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Fish, ArrowRight, ArrowLeft, Check, KeyRound,
-  Languages, MapPin, Smartphone, AlertCircle, Loader2,
+  Languages, MapPin, Smartphone, AlertCircle, Loader2, Mail, Lock,
 } from 'lucide-react';
 import { ROLES, type Role } from '@/components/dashboard/RoleSelector';
 import { DASHBOARD_ROUTE } from '@/pages/dashboards/configs';
@@ -29,8 +29,11 @@ export default function SignupPage() {
 
   const [step, setStep] = useState<StepId>('Role');
   const [role, setRole] = useState<Role | null>(null);
+  const [method, setMethod] = useState<'mobile' | 'email'>('mobile');
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [lang, setLang] = useState(LANGUAGES[0]);
   const [location, setLocation] = useState('');
   const [name, setName] = useState('');
@@ -41,6 +44,9 @@ export default function SignupPage() {
   const prev = () => setStep(STEPS[Math.max(idx - 1, 0)]);
 
   const phoneValid = /^[6-9]\d{9}$/.test(phone.trim());
+  const emailValid = /^\S+@\S+\.\S+$/.test(email.trim());
+  const pwOk = password.length >= 8 && /[A-Z]/.test(password) && /\d/.test(password);
+  const detailsValid = !!name && !!location && (method === 'mobile' ? phoneValid : emailValid && pwOk);
 
   // Send the OTP and create the account with its profile metadata.
   async function sendCode() {
@@ -75,6 +81,42 @@ export default function SignupPage() {
     if (err) { setError(t('signupPage.errCodeInvalid', 'That code is wrong or expired.')); return; }
     setStep('Done');
   }
+
+  // Email + password account creation. New users are auto-confirmed by a DB
+  // trigger, so we sign in straight away and skip the OTP verify step.
+  async function createEmailAccount() {
+    if (!role || !name || !location || !emailValid || !pwOk) return;
+    if (!supabase) { setError(t('signupPage.errorAuthNotConfigured')); return; }
+    setBusy(true);
+    setError(null);
+    const cleanEmail = email.trim().toLowerCase();
+    const { data, error: err } = await supabase.auth.signUp({
+      email: cleanEmail,
+      password,
+      options: { data: { name, role, lang, location, email: cleanEmail } },
+    });
+    if (err) {
+      setBusy(false);
+      setError(/already registered|exists/i.test(err.message)
+        ? t('signupPage.errEmailExists', 'An account with this email already exists. Please sign in.')
+        : err.message);
+      return;
+    }
+    // If no session came back (e.g. confirmation still required), sign in now.
+    if (!data.session) {
+      const { error: signInErr } = await supabase.auth.signInWithPassword({ email: cleanEmail, password });
+      if (signInErr) {
+        setBusy(false);
+        setError(signInErr.message);
+        return;
+      }
+    }
+    setBusy(false);
+    setStep('Done');
+  }
+
+  // Details step submit — branch on the chosen method.
+  const submitDetails = () => (method === 'mobile' ? sendCode() : createEmailAccount());
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -186,23 +228,80 @@ export default function SignupPage() {
                   />
                 </label>
 
-                <label className="block">
-                  <span className="text-[11px] uppercase tracking-widest text-foreground/40">{t('signupPage.mobileNumberLabel')}</span>
-                  <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
-                    <Smartphone className="w-4 h-4 text-teal-400" />
-                    <span className="text-sm text-foreground/70 font-medium select-none">+91</span>
-                    <input
-                      type="tel"
-                      inputMode="numeric"
-                      autoComplete="tel-national"
-                      maxLength={10}
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
-                      placeholder="98765 43210"
-                      className="bg-transparent outline-none text-foreground flex-1 text-sm"
-                    />
-                  </div>
-                </label>
+                <div className="flex gap-1 p-1 rounded-xl border border-border bg-card">
+                  <button
+                    type="button"
+                    onClick={() => { setMethod('mobile'); setError(null); }}
+                    className={`flex-1 py-2 rounded-lg text-xs font-semibold inline-flex items-center justify-center gap-1.5 transition ${method === 'mobile' ? 'bg-teal-500 text-black' : 'text-foreground/60 hover:text-foreground'}`}
+                  >
+                    <Smartphone className="w-3.5 h-3.5" /> {t('signupPage.tabMobile', 'Mobile')}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setMethod('email'); setError(null); }}
+                    className={`flex-1 py-2 rounded-lg text-xs font-semibold inline-flex items-center justify-center gap-1.5 transition ${method === 'email' ? 'bg-teal-500 text-black' : 'text-foreground/60 hover:text-foreground'}`}
+                  >
+                    <Mail className="w-3.5 h-3.5" /> {t('signupPage.tabEmail', 'Email')}
+                  </button>
+                </div>
+
+                {method === 'mobile' && (
+                  <label className="block">
+                    <span className="text-[11px] uppercase tracking-widest text-foreground/40">{t('signupPage.mobileNumberLabel')}</span>
+                    <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                      <Smartphone className="w-4 h-4 text-teal-400" />
+                      <span className="text-sm text-foreground/70 font-medium select-none">+91</span>
+                      <input
+                        type="tel"
+                        inputMode="numeric"
+                        autoComplete="tel-national"
+                        maxLength={10}
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
+                        placeholder="98765 43210"
+                        className="bg-transparent outline-none text-foreground flex-1 text-sm"
+                      />
+                    </div>
+                  </label>
+                )}
+
+                {method === 'email' && (
+                  <>
+                    <label className="block">
+                      <span className="text-[11px] uppercase tracking-widest text-foreground/40">{t('signupPage.emailLabel', 'Email')}</span>
+                      <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                        <Mail className="w-4 h-4 text-teal-400" />
+                        <input
+                          type="email"
+                          autoComplete="email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="you@example.com"
+                          className="bg-transparent outline-none text-foreground flex-1 text-sm"
+                        />
+                      </div>
+                    </label>
+                    <label className="block">
+                      <span className="text-[11px] uppercase tracking-widest text-foreground/40">{t('signupPage.passwordLabel', 'Password')}</span>
+                      <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                        <Lock className="w-4 h-4 text-teal-400" />
+                        <input
+                          type="password"
+                          autoComplete="new-password"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          placeholder={t('signupPage.passwordPlaceholder', 'At least 8 characters')}
+                          className="bg-transparent outline-none text-foreground flex-1 text-sm"
+                        />
+                      </div>
+                      {password && !pwOk && (
+                        <span className="mt-1.5 flex items-center gap-1.5 text-[11px] text-amber-300">
+                          <AlertCircle className="w-3 h-3" /> {t('signupPage.passwordRequirement', 'Use 8+ characters with a capital letter and a number.')}
+                        </span>
+                      )}
+                    </label>
+                  </>
+                )}
 
                 <label className="block">
                   <span className="text-[11px] uppercase tracking-widest text-foreground/40">{t('signupPage.locationLabel')}</span>
@@ -230,11 +329,13 @@ export default function SignupPage() {
                   <ArrowLeft className="w-4 h-4" /> {t('signupPage.back')}
                 </button>
                 <button
-                  onClick={sendCode}
-                  disabled={!name || !location || !phoneValid || busy}
+                  onClick={submitDetails}
+                  disabled={!detailsValid || busy}
                   className="px-6 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm inline-flex items-center gap-2"
                 >
-                  {busy ? <><Loader2 className="w-4 h-4 animate-spin" /> {t('signupPage.creating')}</> : <>{t('signupPage.sendCode', 'Send code')} <ArrowRight className="w-4 h-4" /></>}
+                  {busy ? <><Loader2 className="w-4 h-4 animate-spin" /> {t('signupPage.creating')}</> : method === 'email'
+                    ? <>{t('signupPage.createAccount', 'Create account')} <ArrowRight className="w-4 h-4" /></>
+                    : <>{t('signupPage.sendCode', 'Send code')} <ArrowRight className="w-4 h-4" /></>}
                 </button>
               </div>
             </motion.div>

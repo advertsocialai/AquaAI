@@ -4,7 +4,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   ShieldCheck, Activity, IndianRupee,
-  BadgeCheck, ArrowRight, Fish, AlertCircle, Loader2, KeyRound, Smartphone,
+  BadgeCheck, ArrowRight, Fish, AlertCircle, Loader2, KeyRound, Smartphone, Mail, Lock,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { DASHBOARD_ROUTE } from '@/pages/dashboards/configs';
@@ -26,9 +26,12 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const from = (location.state as { from?: string } | null)?.from;
+  const [method, setMethod] = useState<'mobile' | 'email'>('mobile');
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
   const [otpSent, setOtpSent] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [propIdx, setPropIdx] = useState(0);
@@ -41,6 +44,7 @@ export default function LoginPage() {
   const prop = VALUE_PROPS[propIdx];
   const PropIcon = prop.icon;
   const phoneValid = PHONE_RE.test(phone.trim());
+  const emailValid = /^\S+@\S+\.\S+$/.test(email.trim());
 
   function goToDashboard(user: { user_metadata?: Record<string, unknown> } | null) {
     const role = (user?.user_metadata?.role as Role | undefined) ?? null;
@@ -84,6 +88,29 @@ export default function LoginPage() {
     });
     setBusy(false);
     if (err) { setError(t('loginPage.errCodeInvalid', 'That code is wrong or expired.')); return; }
+    goToDashboard(data.user);
+  }
+
+  // Email + password sign-in.
+  async function signInWithEmail(e: React.FormEvent) {
+    e.preventDefault();
+    if (!emailValid || !password) return;
+    if (!supabase) { setError(t('loginPage.errAuthNotConfigured')); return; }
+    setBusy(true);
+    setError(null);
+    const { data, error: err } = await supabase.auth.signInWithPassword({
+      email: email.trim().toLowerCase(),
+      password,
+    });
+    setBusy(false);
+    if (err) {
+      setError(
+        /invalid login credentials/i.test(err.message)
+          ? t('loginPage.errBadCredentials', 'Wrong email or password.')
+          : err.message,
+      );
+      return;
+    }
     goToDashboard(data.user);
   }
 
@@ -163,6 +190,25 @@ export default function LoginPage() {
           )}
 
           {!otpSent && (
+            <div className="flex gap-1 p-1 mb-6 rounded-xl border border-border bg-card max-w-xs">
+              <button
+                type="button"
+                onClick={() => { setMethod('mobile'); setError(null); }}
+                className={`flex-1 py-2 rounded-lg text-xs font-semibold inline-flex items-center justify-center gap-1.5 transition ${method === 'mobile' ? 'bg-teal-500 text-black' : 'text-foreground/60 hover:text-foreground'}`}
+              >
+                <Smartphone className="w-3.5 h-3.5" /> {t('loginPage.tabMobile', 'Mobile')}
+              </button>
+              <button
+                type="button"
+                onClick={() => { setMethod('email'); setError(null); }}
+                className={`flex-1 py-2 rounded-lg text-xs font-semibold inline-flex items-center justify-center gap-1.5 transition ${method === 'email' ? 'bg-teal-500 text-black' : 'text-foreground/60 hover:text-foreground'}`}
+              >
+                <Mail className="w-3.5 h-3.5" /> {t('loginPage.tabEmail', 'Email')}
+              </button>
+            </div>
+          )}
+
+          {!otpSent && method === 'mobile' && (
             <motion.form
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -198,6 +244,59 @@ export default function LoginPage() {
               <p className="text-[11px] text-foreground/40 text-center">
                 {t('loginPage.otpHelperSms', "We'll send a 6-digit code to your mobile by SMS.")}
               </p>
+            </motion.form>
+          )}
+
+          {!otpSent && method === 'email' && (
+            <motion.form
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              onSubmit={signInWithEmail}
+              className="space-y-4"
+            >
+              <label className="block">
+                <span className="text-xs text-foreground/40 uppercase tracking-widest">{t('loginPage.emailLabel', 'Email')}</span>
+                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                  <Mail className="w-4 h-4 text-teal-400" />
+                  <input
+                    autoFocus
+                    type="email"
+                    autoComplete="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@example.com"
+                    className="bg-transparent outline-none text-foreground flex-1 text-sm"
+                  />
+                </div>
+              </label>
+
+              <label className="block">
+                <span className="text-xs text-foreground/40 uppercase tracking-widest">{t('loginPage.passwordLabel', 'Password')}</span>
+                <div className="mt-2 flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card focus-within:border-teal-400/40">
+                  <Lock className="w-4 h-4 text-teal-400" />
+                  <input
+                    type="password"
+                    autoComplete="current-password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="bg-transparent outline-none text-foreground flex-1 text-sm"
+                  />
+                </div>
+              </label>
+
+              <button
+                type="submit"
+                disabled={!emailValid || !password || busy}
+                className="w-full py-3 rounded-xl bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-black font-semibold text-sm transition flex items-center justify-center gap-2"
+              >
+                {busy ? <><Loader2 className="w-4 h-4 animate-spin" /> {t('loginPage.signingIn', 'Signing in…')}</> : <>{t('loginPage.signIn', 'Sign in')} <ArrowRight className="w-4 h-4" /></>}
+              </button>
+              <div className="text-right">
+                <Link to="/forgot-password" className="text-[11px] text-teal-400 hover:underline">
+                  {t('loginPage.forgotPassword', 'Forgot password?')}
+                </Link>
+              </div>
             </motion.form>
           )}
 
